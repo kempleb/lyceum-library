@@ -82,8 +82,10 @@ def _reading(dictionary, entry: dict) -> str:
         # Several work keys may carry the title ("AËT." DEFAULT and "de
         # plac."; "SEXT." DEFAULT and "adv. math."): take the first form the
         # verifier's parser for this source can read.
+        # (No backslash inside the f-string: CI runs Python 3.9.)
+        trailing_p = re.compile(r"\s*p\.$")
         readings = [
-            f"{a['variants'][0]}{'' if wk == 'DEFAULT' else ' ' + re.sub(r'\s*p\.$', '', wk)} "
+            f"{a['variants'][0]}{'' if wk == 'DEFAULT' else ' ' + trailing_p.sub('', wk)} "
             f"{entry['locus']}".strip()
             for wk, w in a["works"].items() if w["title"] == entry["work"]["title"]]
         spec = verifier.SOURCES.get(_source_name(entry))
