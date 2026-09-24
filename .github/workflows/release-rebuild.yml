@@ -1,0 +1,128 @@
+name: Release rebuild
+
+# Proves the roadmap claim (CANON.md): a fresh machine, given only a
+# published data release, can build the deployable site with no TLG/PHI
+# corpus, no sibling repository, and no secrets — see
+# docs/release-from-dist.md's "Proven without source access" rehearsal,
+# which this workflow automates.
+#
+# Not on push/pull_request: the release download is ~390 MB, too heavy for
+# every commit. workflow_dispatch (optionally naming a version) and a weekly
+# schedule keep the proof current without slowing normal CI.
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: >-
+          Release version to rebuild from (e.g. 2026.09.23-5f84ae1). Leave
+          blank to use whatever version the staging Worker currently serves.
+        required: false
+        type: string
+  schedule:
+    # Monday 06:00 UTC.
+    - cron: '0 6 * * 1'
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  rebuild:
+    name: rebuild from release
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+
+      # docs/release-from-dist.md's prerequisites for a fresh checkout:
+      # `--from-dist` mode reads its interpreter straight from this venv
+      # (build-public.mjs's PY), never through `uv run`.
+      - name: Install pipeline dependencies
+        run: cd pipeline && uv sync --python 3.9
+
+      - name: Install app dependencies
+        run: cd app && npm ci
+
+      # The deployed staging Worker's service worker bakes in the same-origin
+      # data root it built with (app/scripts/postbuild-sw.mjs), so its own
+      # release version is publicly readable at a fixed, stable address
+      # without needing a dedicated version endpoint. Prefer an explicit
+      # dispatch input when one is given.
+      - name: Determine release version
+        id: version
+        # Both sources are untrusted text (a form field, a public file), so
+        # they reach the script only through the environment, never through
+        # expression interpolation, and must match the release-version rule of
+        # scripts/lib/data-source-mode.mjs before anything uses them.
+        env:
+          INPUT_VERSION: ${{ github.event.inputs.version }}
+        run: |
+          set -euo pipefail
+          VERSION_RE='^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$'
+          if [ -n "$INPUT_VERSION" ]; then
+            VERSION="$INPUT_VERSION"
+            echo "Using dispatch input version"
+          else
+            SW_JS="$(curl -fsSL https://lyceum-library-staging.lyceum-institute.workers.dev/sw.js)"
+            MATCHES="$(printf '%s' "$SW_JS" | grep -oE 'DATA_ROOT = "/data/[^"]+"' || true)"
+            if [ "$(printf '%s' "$MATCHES" | grep -c . || true)" -ne 1 ]; then
+              echo "::error::expected exactly one DATA_ROOT line in the staging Worker's sw.js" >&2
+              exit 1
+            fi
+            VERSION="$(printf '%s' "$MATCHES" | sed -E 's#.*/data/([^"]+)".*#\1#')"
+            echo "Discovered release version from the deployed staging Worker"
+          fi
+          if ! printf '%s' "$VERSION" | grep -qE "$VERSION_RE"; then
+            echo "::error::release version is not a valid version name" >&2
+            exit 1
+          fi
+          echo "Release version: $VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      # HTTPS transport only (docs/release-from-dist.md) -- no rclone, no R2
+      # credentials, nothing from this machine. fetch-release.mjs verifies
+      # the download against RELEASE.json's own sizes/sha256 before handing
+      # it back.
+      - name: Fetch release
+        env:
+          RELEASE_VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          node scripts/fetch-release.mjs "$RELEASE_VERSION" \
+            "${RUNNER_TEMP}/release" \
+            --from-url https://lyceum-library-staging.lyceum-institute.workers.dev/data
+
+      # No TLG_DIR, no PHI_DIR, no ~/Developer sibling repos, no
+      # PUBLIC_SITE_ORIGIN (staging rule, CLAUDE.md), no secrets. --from-dist
+      # mode skips the per-work text pipeline entirely (docs/release-from-dist.md).
+      - name: Build from release (--from-dist)
+        run: npm run build:public -- --from-dist "${RUNNER_TEMP}/release"
+
+      # Re-asserts, as its own labeled CI step, the two checks
+      # docs/release-from-dist.md's rehearsal used to prove the release was
+      # rebuilt faithfully -- build-public.mjs already runs both internally
+      # and would have failed the previous step first, but a separate step
+      # keeps each assertion's result visible on its own.
+      - name: Assert regenerated files match the release
+        run: node scripts/verify-release.mjs build/dist
+
+      - name: Assert no broken links in the built site
+        run: node scripts/check-links.mjs app/dist/client
