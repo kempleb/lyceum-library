@@ -81,6 +81,7 @@ work:
   expected_sourcedesc: 'Gorgias Rhet., Soph., Fragmenta (0593: 003) "Die Fragmente der Vorsokratiker, vol. 2'
 
 citation:
+  expand_citations: true  # DK source-citation expansion, rule E (John, 2026-09-24)
   scheme: dk
   series: B
   # Quote-mark polarity fix (owner ruling 2026-08-05, "we fix it and

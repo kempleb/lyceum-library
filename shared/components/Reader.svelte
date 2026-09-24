@@ -1849,12 +1849,20 @@
   // that begins before a chapterStarts cut and continues past it is counted
   // exactly once, at its true start line, regardless of where blocks later
   // slice it. Parallel in order to `seg.expandedCitation`'s runs.
+  // Same three rules as stage1_citation_expansion._segment_context: a head
+  // opens a context run (a dash with nothing citable after it still counts),
+  // or a dash opens a later context line with a head after it ("—*48."), or
+  // a dash opens a line the spine marks as text ("— —τόν τε Ὅμηρον").
   function runStartLines(lines: RLine[]): number[] {
     const starts: number[] = [];
     let prevRole: string | undefined;
     for (const line of lines) {
+      const dash = /^[—–]/.test(line.text.trim());
+      const head = isSourceHeadOnlyText(line.text) || !!peelSourceHeadPrefix(line.text);
       if (line.role === 'context' && prevRole !== 'context') {
-        if (isSourceHeadOnlyText(line.text) || peelSourceHeadPrefix(line.text)) starts.push(line.n);
+        if (head || dash) starts.push(line.n);
+      } else if (line.role === 'context' ? dash && head : line.role === 'text' && dash) {
+        starts.push(line.n);
       }
       prevRole = line.role;
     }
@@ -3703,8 +3711,8 @@
                         <div class="expanded-citation">
                           {#each run as entry, i}
                             {#if i > 0}<span class="expanded-citation-sep">; </span>{/if}
-                            {#if entry.resolution === 'direct'}
-                              <span class="expanded-citation-entry">{entry.authorDisplay}, {#if entry.work?.italic}<em>{entry.work.title}</em>{:else}{entry.work?.title}{/if} {entry.locus}{entry.apparatus ? ` ${entry.apparatus}` : ''}</span>
+                            {#if entry.resolution === 'direct' || entry.resolution === 'dash'}
+                              <span class="expanded-citation-entry">{#if entry.authorDisplay}{`${entry.authorDisplay}, `}{/if}{#if entry.work?.italic}<em>{entry.work.title}</em>{:else}{entry.work?.title}{/if}{entry.locus ? ` ${entry.locus}` : ''}{entry.apparatus ? ` ${entry.apparatus}` : ''}</span>{#if entry.note}{' '}<span class="context-english-credit">{entry.note}</span>{/if}
                             {:else}
                               <span class="expanded-citation-entry expanded-citation-verbatim">{entry.verbatim}</span>
                             {/if}
@@ -4042,7 +4050,8 @@
                    head actually sits (a multi-block/multi-run segment no
                    longer dumps every run onto the last block, and two
                    unrelated runs never merge into one false attribution). A
-                   `direct` entry prints "Author, Work locus [apparatus]" with
+                   `direct` entry -- and a `dash` entry, identically (rule E,
+                   John 2026-09-24) -- prints "Author, Work locus [apparatus]" with
                    the work title italic only when `work.italic` says so
                    (never baked markup) and any Doxographi/editor apparatus
                    ref kept verbatim, unexpanded; a `verbatim` entry --
@@ -4056,8 +4065,8 @@
                 <div class="expanded-citation">
                   {#each run as entry, i}
                     {#if i > 0}<span class="expanded-citation-sep">; </span>{/if}
-                    {#if entry.resolution === 'direct'}
-                      <span class="expanded-citation-entry">{entry.authorDisplay}, {#if entry.work?.italic}<em>{entry.work.title}</em>{:else}{entry.work?.title}{/if} {entry.locus}{entry.apparatus ? ` ${entry.apparatus}` : ''}</span>
+                    {#if entry.resolution === 'direct' || entry.resolution === 'dash'}
+                      <span class="expanded-citation-entry">{#if entry.authorDisplay}{`${entry.authorDisplay}, `}{/if}{#if entry.work?.italic}<em>{entry.work.title}</em>{:else}{entry.work?.title}{/if}{entry.locus ? ` ${entry.locus}` : ''}{entry.apparatus ? ` ${entry.apparatus}` : ''}</span>{#if entry.note}{' '}<span class="context-english-credit">{entry.note}</span>{/if}
                     {:else}
                       <span class="expanded-citation-entry expanded-citation-verbatim">{entry.verbatim}</span>
                     {/if}

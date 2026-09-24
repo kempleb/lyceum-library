@@ -66,6 +66,7 @@
 # five-word "Ξενοφάνης ... φησιν·" attribution tag immediately before the
 # quote begins) -- reviewed case by case, not a blanket rule.
 citation:
+  expand_citations: true  # DK source-citation expansion, rule E (John, 2026-09-24)
   scheme: dk
   series: B
   # dk_witness.py's owner-verified apparatus split (stage7_emit wiring):

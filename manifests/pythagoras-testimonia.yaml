@@ -78,6 +78,7 @@ work:
   expected_sourcedesc: 'Pythagoras Phil., Testimonia (0632: 006) "Die Fragmente der Vorsokratiker, vol. 1'
 
 citation:
+  expand_citations: true  # DK source-citation expansion, rule E (John, 2026-09-24)
   scheme: dk
   no_series: true
   # dk_witness.py's owner-verified apparatus split (stage7_emit wiring):

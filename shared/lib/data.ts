@@ -400,7 +400,11 @@ export interface ContextEnglishAlt {
 // DK source-citation expansion (docs/citation-expansion-wiring-design.md):
 // one entry per apparatus citation head the pipeline resolved for this
 // column's context run(s). `resolution: "direct"` carries a full lookup
-// (`authorDisplay`/`work`/`locus`); `resolution: "verbatim"` is the honest
+// (`authorDisplay`/`work`/`locus`), and so does `resolution: "dash"` -- a DK
+// dash filled in by rule E, rendered exactly like a direct entry (John,
+// 2026-09-24), except that an edition with no author (Bekker's Anecdota
+// Graeca, John's ruling 2026-09-24) omits `authorDisplay` and the line
+// opens with the work; `resolution: "verbatim"` is the honest
 // unresolved case — only `verbatim` + `flags` are populated, never an
 // invented author or title. `work.italic: false` marks a DEFAULT/opaque
 // work title (e.g. "(commentary on Aristotle)") that must never render as
@@ -410,13 +414,16 @@ export interface ContextEnglishAlt {
 // carried none (memo §2, "Apparatus is never expanded").
 export interface ExpandedCitationEntry {
   verbatim: string;
-  resolution: 'direct' | 'verbatim';
+  resolution: 'direct' | 'dash' | 'verbatim';
   authorDisplay?: string;
   work?: { title: string; italic: boolean };
   locus?: string;
   apparatus?: string;
   flags: string[];
   dashInherited?: boolean;
+  // A DK misprint printed corrected (John, 2026-09-24): the note the reader
+  // shows after the citation, e.g. what DK prints instead.
+  note?: string;
 }
 
 export interface Segment {

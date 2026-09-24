@@ -1,0 +1,156 @@
+{
+ "_about": "John Boyer's rulings on DK dash heads that rule E (2026-09-24) cannot settle from the print: {work: {column: ruling}}. `head` is the whole printed dash head, matched exactly (whitespace aside). A reading ruling carries `reading`: {author, work} as citation-dictionary.json keys plus the locus and any apparatus, or null while the ruling is pending (the head then stays verbatim, flagged by `pending`, default awaiting-adjudication). A correction (`type`: correction) fixes a DK misprint: `printed` is the misprint as the head prints it, `reading` the corrected citation, `readerNote` the note the reader shows after it (DRAFT copy until John approves it). `note` records the ruling and is never shown. The stage fails the build if a ruling's head is no longer in the text, or the citation above it names another author and work.",
+ "_as_printed": {
+  "CLEM Strom.": "John, 2026-09-24: Clement's Stromateis keeps DK's own section numbers. The TLG's Stromateis numbers some of these sections one or two apart; the dash check (pipeline/tests/test_dash_citations_verified.py) accepts such a near miss in the same book, and nothing else."
+ },
+ "antiphon-sophist-fragments": {
+  "B107": {
+   "head": "—V 441",
+   "type": "correction",
+   "printed": "V 441",
+   "reading": {"author": "POLL", "work": "DEFAULT", "locus": "V 141"},
+   "readerNote": "DK prints “V 441”.",
+   "note": "John, 2026-09-24: a DK misprint, printed corrected with a note. The TLG Pollux (0542.001) has the gloss at V 141."
+  },
+  "B69": {
+   "head": "—",
+   "reading": null,
+   "pending": "awaiting-print-check",
+   "note": "Default pending John's check, 2026-09-24 (lexicon headword check): rule E reads Harpocration s.v. the word DK prints after the dash, but that word is no entry of the TLG Harpocration (1389.001); the only entry sharing its first letters, p. 70, 9, is the same word in another case. Stays as printed until John checks the print."
+  },
+  "B91": {
+   "head": "—",
+   "reading": null,
+   "pending": "awaiting-print-check",
+   "note": "Default pending John's check, 2026-09-24 (lexicon headword check): rule E reads Harpocration s.v. the two words DK prints after the dash, but they are no entry of the TLG Harpocration (1389.001); the nearest entry, p. 112, 1, is a one-word adverb. Stays as printed until John checks the print."
+  },
+  "B110": {
+   "head": "—VI 183 Ἀ.",
+   "reading": null,
+   "pending": "awaiting-print-check",
+   "note": "Default pending John's check, 2026-09-24 (review item 8): rule E reads POLL. VI 183; the TLG Pollux (0542.001) check finds the one-word gloss there only as strongly as at II 231 and VI 180 (one word probe each). Stays as printed until John checks the print."
+  }
+ },
+ "critias-fragments": {
+  "B55": {
+   "head": "— —148",
+   "reading": null,
+   "pending": "awaiting-print-check",
+   "note": "John, 2026-09-24: rule E reads POLL. II 148; the TLG Pollux has the gloss at II 149. Stays as printed until John checks the print."
+  }
+ },
+ "democritus-fragments": {
+  "B132": {
+   "head": "—",
+   "reading": null,
+   "pending": "awaiting-print-check",
+   "note": "Default pending John's check, 2026-09-24 (lexicon headword check): rule E reads Hesychius s.v. the word DK prints after the dash, but neither Hesychius text in the TLG (4085.002 Latte, .003 Schmidt) has it as an entry or anywhere in its text. Stays as printed until John checks the print."
+  },
+  "B164": {
+   "head": "—VII 116",
+   "reading": null,
+   "pending": "awaiting-print-check",
+   "note": "Default pending John's check, 2026-09-24 (review item 8): rule E reads SEXT. adv. math. VII 116; the TLG Sextus (0544.002) has only one short stretch of the passage at VII 116 and most of it at VII 117-118 (45 and 25 probes). DK may cite where it begins; stays as printed until John checks the print."
+  },
+  "B232": {
+   "head": "— —37",
+   "reading": null,
+   "pending": "awaiting-print-check",
+   "note": "Default pending John's check, 2026-09-24 (review item 8): rule E reads STOB. III 17, 37; the TLG Stobaeus (2037.001) has the saying just as strongly at III 6, 59 (5 probes each). Stays as printed until John checks the print."
+  },
+  "B32": {
+   "head": "— —94 (I 214, 9 St.)",
+   "reading": {"author": "CLEM", "work": "Paed.", "locus": "II 94", "apparatus": "(I 214, 9 St.)"},
+   "note": "John, 2026-09-24: located in the TLG Clement (Paedagogus) at II 94; Staehlin I 214, 9 falls in Paed. II, while the citation above is Paed. I 6. DK's line does not print the book. (Head narrowed the same day to the Clement part: the stage now reads the rest of DK's line, \"Hipp. Ref. VIII 14 (p. 234, 5 W.).\", as a second source, Hippolytus; the ruling itself is unchanged.)"
+  },
+  "B177": {
+   "head": "— —40",
+   "reading": {"author": "STOB", "work": "DEFAULT", "locus": "II 15, 40"},
+   "note": "John, 2026-09-24: located in TLG 2037 (Stobaeus) at II 15, 40; DK's line omits the chapter (the citation above is II 9, 5)."
+  },
+  "B217": {
+   "head": "— —30",
+   "reading": {"author": "STOB", "work": "DEFAULT", "locus": "III 9, 30"},
+   "note": "John, 2026-09-24: located in TLG 2037 (Stobaeus) at III 9, 30; DK's line omits the chapter (the citation above is III 7, 74)."
+  },
+  "B226": {
+   "head": "— —47",
+   "reading": {"author": "STOB", "work": "DEFAULT", "locus": "III 13, 47"},
+   "note": "John, 2026-09-24: located in TLG 2037 (Stobaeus) at III 13, 47; DK's line hides the chapter change (the citation above is III 12, 13)."
+  },
+  "B245": {
+   "head": "— —53",
+   "reading": {"author": "STOB", "work": "DEFAULT", "locus": "III 38, 53"},
+   "note": "John, 2026-09-24: located in TLG 2037 (Stobaeus) at III 38, 53; DK's line hides the chapter change (the citation above is III 31, 7)."
+  },
+  "B256": {
+   "head": "— —14",
+   "reading": {"author": "STOB", "work": "DEFAULT", "locus": "IV 2, 14"},
+   "note": "John, 2026-09-24: located in TLG 2037 (Stobaeus) at IV 2, 14; DK's line omits the chapter (the citation above is IV 1, 46)."
+  },
+  "B285": {
+   "head": "— —65",
+   "reading": {"author": "STOB", "work": "DEFAULT", "locus": "IV 34, 65"},
+   "note": "John, 2026-09-24: located in TLG 2037 (Stobaeus) at IV 34, 65; DK's line hides the chapter change (the citations above are in IV 33)."
+  },
+  "B292": {
+   "head": "— —19",
+   "reading": {"author": "STOB", "work": "DEFAULT", "locus": "IV 46, 19"},
+   "note": "John, 2026-09-24: located in TLG 2037 (Stobaeus) at IV 46, 19; DK's line omits the chapter (the citation above is IV 44, 70)."
+  }
+ },
+ "empedocles-testimonia": {
+  "A59": {
+   "head": "—II 24, 7 (D. 354)",
+   "reading": null,
+   "pending": "awaiting-print-check",
+   "note": "Default pending John's check, 2026-09-24 (review item 8): rule E reads AËT. II 24, 7; the TLG Placita (0094.003) check finds the passage's words as often in book II chapter 25 as in chapter 24 (2 word probes each). Stays as printed until John checks the print."
+  }
+ },
+ "heraclitus-fragments": {
+  "B87": {
+   "head": "—de aud. 7 p. 41 A",
+   "reading": null,
+   "pending": "awaiting-adjudication",
+   "note": "Default pending John's ruling, 2026-09-24 (Sol review finding 1, independent probe counts): rule E reads PLUT. de aud. 7 p. 41 A (De recta ratione audiendi), and the TLG Plutarch (0007.069) has the passage there, but only as one stretch of overlapping probes (1 independent); Plutarch quotes the same saying at Quomodo adolescens poetas audire debeat 28 D (0007.068), with as much independent evidence (1). Stays as printed until John rules."
+  },
+  "B118": {
+   "head": "— —8",
+   "reading": null,
+   "pending": "awaiting-print-check",
+   "note": "Default pending John's check, 2026-09-24 (review item 8): rule E reads STOB. Flor. V 8 (Meineke; Wachsmuth-Hense III 5, 8); the TLG Stobaeus (2037.001) has the passage more strongly at III 17, 42 (3 probes against 2). Stays as printed until John checks the print."
+  },
+  "B99": {
+   "head": "—aqu. et ign. comp. 7 p. 957 A; vgl. de fort. 3. p. 98 C",
+   "reading": null,
+   "pending": "awaiting-print-check",
+   "note": "John, 2026-09-24: the TLG check did not find the passage at Plutarch's Aqua an ignis 7 p. 957 A (a weak hit falls in De fortuna 98 C, the page DK's own vgl. names). Stays as printed until John checks the print."
+  }
+ },
+ "heraclitus-testimonia": {
+  "A11": {
+   "head": "—II 13, 8 (D. 342)",
+   "reading": null,
+   "pending": "awaiting-print-check",
+   "note": "Orchestrator default, 2026-09-24, as for parmenides-testimonia A42: the TLG check did not find the passage after Aëtius II 13, 8 in the Placita text (0 of 4 probes). Stays as printed until John checks the print."
+  }
+ },
+ "parmenides-testimonia": {
+  "A42": {
+   "head": "—II 25, 3 (D. 356) Π.",
+   "reading": null,
+   "pending": "awaiting-print-check",
+   "note": "Independent-reviewer TLG check, 2026-09-24: the passage after Aëtius II 25, 3 is too short to locate against the Placita text (0 of 2 probes found; a weak short-probe hit falls elsewhere, at book I chapter 25). Stays as printed until John checks the print."
+  }
+ },
+ "thales-testimonia": {
+  "A17b": {
+   "head": "—II 27, 5 (D. 358) Θ.",
+   "type": "correction",
+   "printed": "II 27, 5",
+   "reading": {"author": "AET", "work": "DEFAULT", "locus": "II 28, 5", "apparatus": "(D. 358)"},
+   "readerNote": "DK prints “II 27, 5”.",
+   "note": "John, 2026-09-24: a DK misprint, printed corrected with a note. The TLG Placita (0094.003) has the passage in book II, chapter 28."
+  }
+ }
+}

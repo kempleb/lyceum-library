@@ -51,6 +51,7 @@
 # against their well-attested printed text (see the report's hand-review
 # list) — not left to the mechanical heuristic below.
 citation:
+  expand_citations: true  # DK source-citation expansion, rule E (John, 2026-09-24)
   scheme: dk
   series: B
   # dk_witness.py's owner-verified apparatus split (stage7_emit wiring):

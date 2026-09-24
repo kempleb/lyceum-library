@@ -31,10 +31,16 @@ CENSUS = json.load(open(os.path.join(SELF_DIR, "citation-heads-census.json")))["
 #   flag "diels-doxographi"  : "(D. NNN)" -> Diels, Doxographi Graeci p. NNN (kept in parens)
 #   flag "editor-page-bracket": "[II 438, 9 St.]" etc. -> apparatus, preserved verbatim, unexpanded
 
-def w(title, tmpl, notes=None, ital=True, locus_includes_work=False):
+def w(title, tmpl, notes=None, ital=True, locus_includes_work=False, **extra):
+    # extra (2026-09-24): `column_letters` (a page may carry Stephanus-style
+    # column letters though the template is opaque), `volume_by_part`
+    # ([[part, first page, last page, volume], ...]: the stage prints the
+    # volume before the locus), `locus_prefix` (printed before the locus: the
+    # lexicon a head names only in its author slot).
     e = {"title": title, "title_italic": ital, "locus_template": tmpl}
     if notes: e["notes"] = notes
     if locus_includes_work: e["locus_includes_work"] = True
+    e.update(extra)
     return e
 
 # Shorthand Aristotle works (shared by ARISTOT / ARIST / [ARISTOT] via reference)
@@ -97,11 +103,18 @@ PLATO_WORKS = {
     "Hipp. minor": w("Hippias Minor", "stephanus"),
     "Hipp. min.": w("Hippias Minor", "stephanus"),
     "de rep.": w("Respublica", "stephanus"),
+    # 2026-09-24 (content review): R3 dash titles DK prints that had no key.
+    "Phileb.": w("Philebus", "stephanus", "Gorgias A26 '—Phileb. 58A'; Philebus, St. II 11A-67B."),
+    "Lach.": w("Laches", "stephanus", "Prodicus A17 '—Lach. 197 B'; Laches, St. II 178A-201C."),
+    "Charmid.": w("Charmides", "stephanus", "Prodicus A18 '—Charmid. 163 A B'; Charmides, St. II 153A-176D."),
+    "Hipp min.": w("Hippias Minor", "stephanus",
+                   "Hippias A10 '—Hipp min. 364c' (DK prints no period after 'Hipp'); Hippias Minor, St. I 363A-376C."),
 }
 
 PLUT_WORKS = {
     # Lives (vita template) and Moralia (moralia template). DEFAULT keeps work from head.
-    "DEFAULT": w("(unspecified work of Plutarch)", "opaque", "Work named in printed head.", ital=False),
+    "DEFAULT": w("(unspecified work of Plutarch)", "opaque", "Work named in printed head.", ital=False,
+                 column_letters=True),
     "Quaest. conv.": w("Quaestiones Convivales", "moralia"),
     "Quaest. conviv.": w("Quaestiones Convivales", "moralia"),
     "Quaest. conv..": w("Quaestiones Convivales", "moralia"),
@@ -160,6 +173,33 @@ PLUT_WORKS = {
     "de prof. in virt.": w("De Profectibus in Virtute", "moralia"),
     "de sanit. praec.": w("De Tuenda Sanitate Praecepta", "moralia"),
     "de sollert. anim.": w("De Sollertia Animalium", "moralia"),
+    # 2026-09-24 (content review): R3 dash titles DK prints that had no key.
+    # Stephanus ranges and work numbers from the TLG Plutarch (0007) titles.
+    "cons. ad Apoll.": w("Consolatio ad Apollonium", "moralia",
+                         "Heraclitus B88 '—cons. ad Apoll. 10 p. 106 E'; Mor. 101F-122A (TLG "
+                         "0007.076, which marks it spurious; DK does not bracket it, so it "
+                         "stays under Plutarch as printed)."),
+    "an seni resp.": w("An Seni Respublica Gerenda Sit", "moralia",
+                       "Heraclitus B97 '—an seni resp. 7 p. 787C'; Mor. 783B-797F (TLG 0007.117)."),
+    "fac. lun.": w("De Facie in Orbe Lunae", "moralia",
+                   "Heraclitus B98 '—fac. lun. 28 p. 943 E' (DK drops the 'de'); Mor. "
+                   "920B-945E (TLG 0007.126)."),
+    "aqu. et ign. comp.": w("Aquane an Ignis Sit Utilior", "moralia",
+                            "Heraclitus B99 '—aqu. et ign. comp. 7 p. 957 A'; Mor. 955D-958E "
+                            "(TLG 0007.128, marked spurious there; DK does not bracket it). B99 "
+                            "itself stays as printed pending John's print check "
+                            "(dash-adjudications.json)."),
+    "Qu. Plat.": w("Quaestiones Platonicae", "moralia",
+                   "Heraclitus B100 '—Qu. Plat. 8, 4 p. 1007 D'; Mor. 999C-1011E (TLG 0007.133)."),
+    "Reip. ger. praec.": w("Praecepta Gerendae Reipublicae", "moralia",
+                           "Democritus B153 '—Reip. ger. praec. 28 p. 821 A'; Mor. 798A-825F "
+                           "(TLG 0007.118)."),
+    "de glor. Ath.": w("De Gloria Atheniensium", "moralia",
+                       "Gorgias B23 '—de glor. Ath. 5 p. 348c'; Mor. 345C-351B (TLG 0007.088)."),
+    "fragm. de libid. et aegr.": w("De Libidine et Aegritudine", "section",
+                                   "Democritus B159 '—fragm. de libid. et aegr. 2': the fragment "
+                                   "'Utrum animae an corporis sit libido et aegritudo' (Moralia fr., "
+                                   "TLG 0007.143), cited by section."),
 }
 
 # ---------------------------------------------------------------------------
@@ -232,13 +272,17 @@ add("CIC", "Cicero", ["CIC.", "CICERO"],
      "Tusc.": w("Tusculanae Disputationes", "book-para"),
      "de div.": w("De Divinatione", "book-para"),
      "de divin.": w("De Divinatione", "book-para"),
-     "de div. i": w("De Divinatione", "book-para"),
+     # 2026-09-24: the former key "de div. i" swallowed the book numeral
+     # (matching is case-folded, so it also took "de div. I 20, 39" and
+     # printed "20, 39"); removed, the book stays in the locus.
      "Brut.": w("Brutus", "section"),
      "Cato": w("Cato Maior de Senectute", "section"),
      "Epist.": w("Epistulae ad Familiares", "opaque"),
      "Orat.": w("Orator", "section"),
      "de fato": w("De Fato", "book-para"),
      "de nat. deor.": w("De Natura Deorum", "book-para"),
+     "de nat. d.": w("De Natura Deorum", "book-para",
+                     "Anaximenes A10 '—de nat. d. I 10, 26' (after CIC. Acad.); Cic. N.D. 1.26."),
      "ad Qu.": w("Epistulae ad Quintum Fratrem", "opaque")},
     flags=[])
 
@@ -248,7 +292,10 @@ add("PROCL", "Proclus", ["PROCL."],
      "in Tim. I": w("in Platonis Timaeum (vol. I)", "page-line", "Diehl vol/page,line."),
      "in Tim. II": w("in Platonis Timaeum (vol. II)", "page-line"),
      "in Tim. III": w("in Platonis Timaeum (vol. III)", "page-line"),
-     "in Parm. I p.": w("in Platonis Parmenidem", "page-line", "Cousin col./page."),
+     "in Parm.": w("in Platonis Parmenidem", "page-line",
+                   "Cousin col./page. 2026-09-24: replaces the key 'in Parm. I p.', which "
+                   "swallowed the book I ('PROCL. in Parm. I p. 708, 16', Parmenides B5; "
+                   "'—in Parm. I p. 665, 17', A18); the book now stays in the locus."),
      "in Parm. p.": w("in Platonis Parmenidem", "page-line"),
      "in Rep. II": w("in Platonis Rem Publicam (vol. II)", "page-line", "Kroll."),
      "in remp. II": w("in Platonis Rem Publicam (vol. II)", "page-line"),
@@ -258,11 +305,16 @@ add("PROCL", "Proclus", ["PROCL."],
      "DEFAULT": w("(commentary of Proclus)", "page-line", ital=False)},
     flags=["title-is-commentary"])
 
-add("HIPPOL", "Hippolytus", ["HIPPOL.", "HIPPOLYT."],
+add("HIPPOL", "Hippolytus", ["HIPPOL.", "HIPPOLYT.", "Hipp."],
     {"Ref.": w("Refutatio Omnium Haeresium", "book-chapter-section", "Also '(D. NNN, W. NNN)' = Diels DG / Wendland pages."),
      "Refut.": w("Refutatio Omnium Haeresium", "book-chapter-section"),
      "DEFAULT": w("Refutatio Omnium Haeresium", "book-chapter-section", "Bare HIPPOL. + '(D. ..., W. ...)' = Refutatio.")},
     flags=["diels-doxographi"])
+# 2026-09-24: Democritus B32 prints a second source after Clement, "Hipp.
+# Ref. VIII 14 (p. 234, 5 W.)" -- Hippolytus, Refutatio VIII 14 (Wendland's
+# GCS page 234). "Hipp." is also Plato's Hippias (a dash-misparse token), so
+# it names Hippolytus only when one of his titles follows it.
+CANON["HIPPOL"]["variants_need_work"] = ["Hipp."]
 # 'HIPP.' is shared between Hippolytus and Hippocrates; author is fixed by the work.
 add("HIPP_SHARED", "Hippolytus / Hippocrates (shared abbrev.)", ["HIPP."],
     {"Ref.": w("Refutatio Omnium Haeresium", "book-chapter-section", "Author = Hippolytus."),
@@ -315,7 +367,10 @@ add("AEL", "Aelian", ["AEL.", "AELIAN."],
     {"DEFAULT": w("(work of Aelian)", "opaque", "'V. H.' = Varia Historia (book + chapter); 'N. H.'/'H. N.' = De Natura Animalium.", ital=False),
      "H. N.": w("De Natura Animalium", "book-section"),
      "N. H.": w("De Natura Animalium", "book-section"),
-     "Nat. an": w("De Natura Animalium", "book-section")},
+     "Nat. an": w("De Natura Animalium", "book-section"),
+     "V. H.": w("Varia Historia", "book-section",
+                "2026-09-24: 'AEL. V. H. VIII 19' (Anaxagoras A24) etc. = Varia Historia, "
+                "book + chapter; before this key the DEFAULT printed 'V. H.' in the locus.")},
     flags=[])
 
 # --- Lexicographers / reference (title = the work itself; bare heads) ---
@@ -330,9 +385,45 @@ add("HESYCH", "Hesychius", ["HESYCH."],
 add("PHOT", "Photius", ["PHOT.", "PHOTIUS"],
     {"DEFAULT": w("Lexicon", "opaque", "Also Bibliotheca ('Bibl. cod. NNN') where the head names it.")},
     flags=["cited-by-lemma"])
-add("HEROD_GRAMM", "Herodian (grammarian)", ["HERODIAN.", "HEROD.", "HERODIAN"],
-    {"DEFAULT": w("(grammatical work)", "opaque", "Aelius Herodianus, grammarian. Distinct from Herodotus (HERODOT.).", ital=False)},
-    flags=["ambiguous-abbrev"])
+# Herodian's works as DK names them (Grok content review item 6, 2026-09-24:
+# the head stopped at the Greek title, so every one printed an empty locus).
+# Titles: house convention (John's ruling (b), 2026-09-24) puts work titles
+# in Latin, so Περὶ μονήρους λέξεως and Περὶ διχρόνων render as *De Dictione
+# Singulari* and *De Dichronis* -- the TLG canon (TLG0087.IDT) gives no Latin
+# title for either, but "De prosodia catholica" and "Schematismi Homerici"
+# do carry one there and stay as the TLG gives them. John has since reopened
+# Greek vs. Latin titles as an editorial question (see README); these two
+# stay Latin until he rules. The locus is whatever DK prints after the
+# title, as printed (`locus_as_printed`): a page and line, or a "bei
+# <author> ..." note naming the text that preserves the passage, which the
+# stage keeps as apparatus.
+_HDN = dict(locus_as_printed=True)
+add("HEROD_GRAMM", "Herodian (grammarian)", ["HERODIAN.", "HERODIAN"],
+    {"DEFAULT": w("(grammatical work)", "opaque", "Aelius Herodianus, grammarian. Distinct from Herodotus (HERODOT.).", ital=False),
+     "π. μον. λέξ.": w("De Dictione Singulari", "opaque",
+                       "Xenophanes B37, B38; Critias B41 ('HEROD. π. μον. λέξ. p. 40, 14').", **_HDN),
+     "π. μον. λέξεως": w("De Dictione Singulari", "opaque", "Xenophanes B42.", **_HDN),
+     "π. διχρ.": w("De Dichronis", "opaque",
+                   "Xenophanes B10, B36; Cramer, Anecdota Oxoniensia III.", **_HDN),
+     "π. καθολ. προσ.": w("De Prosodia Catholica", "opaque",
+                          "Democritus B127-128, preserved by Eustathius and Theognostus; "
+                          "Lentz's volume, page and line in the bracket ('[I 355, 19 L.]').", **_HDN),
+     "schematismi Hom.": w("Schematismi Homerici", "opaque",
+                           "Empedocles B51, from the Darmstadt codex in Sturz's Etymologicum "
+                           "Gudianum p. 745.", **_HDN)},
+    flags=[])
+# 2026-09-24: DK's "HEROD." is Herodotus in Pythagoras 1-2 ("HEROD. II 123",
+# "—IV 95": Hdt. 2.123, 4.95), Thales A6/A16 (Hdt. 1.75, 2.20) and
+# Anaxagoras A91 (Hdt. 2.22), but Herodian in Critias B41 ("HEROD. π. μον.
+# λέξ. p. 40, 14", Herodian's Περὶ μονήρους λέξεως). It is therefore no
+# author's variant; the stage decides from the evidence (meta
+# `ambiguous_variants`) and keeps the head as printed when there is none.
+AMBIGUOUS_VARIANTS = {
+    "HEROD.": {
+        "book-chapter": "HERODOT",   # a book numeral + chapter follows (Historiae)
+        "greek-title": "HEROD_GRAMM",  # a Greek "π. ..." title follows (Herodian's works)
+    },
+}
 
 # --- Aristotle (real) ---
 add("ARISTOT", "Aristotle", ["ARISTOT.", "ARIST.", "ARISTOTELES"], dict(ARIST_WORKS), flags=[])
@@ -351,6 +442,9 @@ add("THEOPHR", "Theophrastus", ["THEOPHR.", "THEOPHRAST."],
      "de sensu": w("De Sensibus", "section"),
      "de caus. pl.": w("De Causis Plantarum", "book-chapter-section"),
      "de caus. plant.": w("De Causis Plantarum", "book-chapter-section"),
+     "d. c. pl.": w("De Causis Plantarum", "book-chapter-section",
+                    "2026-09-24: Democritus A131 'THEOPHR. d. c. pl. VI 2, 3' = De causis "
+                    "plantarum VI 2, 3 (as A129 'de caus. plant. VI 1, 6')."),
      "H. plant.": w("Historia Plantarum", "book-chapter-section"),
      "Metaphys.": w("Metaphysica", "opaque"),
      "de igne": w("De Igne", "section")},
@@ -396,6 +490,10 @@ add("DAVID", "David (Elias)", ["DAVID"],
 add("IAMBL", "Iamblichus", ["IAMBL.", "IAMBLICH.", "IAMBLICHUS"],
     {"DEFAULT": w("(work of Iamblichus)", "opaque", "'V. P.'/'V. Pyth.' = De Vita Pythagorica (section).", ital=False),
      "de myst.": w("De Mysteriis", "book-para"),
+     "de anima": w("De Anima", "opaque",
+                   "Heraclitus B70 '—de anima [Stob. Ecl. II 1, 16]' (after IAMBL. de myst.): "
+                   "Iamblichus' De anima, preserved only in Stobaeus' Eclogae, which DK's "
+                   "bracket locates."),
      "in Nicom. p.": w("in Nicomachi Arithmeticam", "page-line"),
      "in Nic. p.": w("in Nicomachi Arithmeticam", "page-line")},
     flags=[])
@@ -501,8 +599,13 @@ add("MACROB", "Macrobius", ["MACROB."],
     flags=[])
 add("AMMIAN", "Ammianus Marcellinus", ["AMMIAN.", "AMMIAN. MARCELL."],
     {"DEFAULT": w("Res Gestae", "book-chapter-section")}, flags=[])
-add("APUL", "Apuleius", ["APUL."],
-    {"Florida": w("Florida", "section")}, flags=[])
+# "APULEIUS" in full: Thales A19 (content review item 7).
+add("APUL", "Apuleius", ["APUL.", "APULEIUS"],
+    {"Florida": w("Florida", "section"),
+     "Flor.": w("Florida", "section",
+                "2026-09-24: Protagoras A4 'APUL. Flor. 18' = Apuleius, Florida 18 (the "
+                "Protagoras-Euathlus story); A4 was fatal without this key.")},
+    flags=[])
 add("VARRO", "Varro", ["VARRO"],
     {"DEFAULT": w("(work of Varro)", "opaque", "'Sat.' = Saturae Menippeae.", ital=False)},
     flags=["obscure"])
@@ -552,7 +655,11 @@ add("LYCURG", "Lycurgus", ["LYCURG."],
 add("ARISTOPH", "Aristophanes", ["ARISTOPH."],
     {"DEFAULT": w("(comedy of Aristophanes)", "section", ital=False),
      "Aves": w("Aves", "section"),
-     "Nub.": w("Nubes", "section")},
+     "Nub.": w("Nubes", "section"),
+     "Vesp.": w("Vespae", "section", "Gorgias A5a '—Vesp. 420' (after ARISTOPH. Aves 1694); Wasps, by line."),
+     "Tagenistae": w("Tagenistae", "opaque",
+                     "Prodicus A5 '—Tagenistae fr. 490 K.' (after ARISTOPH. Nub. 360): the lost "
+                     "comedy Tagenistae (Fryers), cited by Kock's fragment number (CAF I).")},
     flags=[])
 add("MENANDER", "Menander (rhetor)", ["MENANDER"],
     {"DEFAULT": w("(rhetorical treatise)", "book-chapter-section", "Menander Rhetor, Peri epideiktikon.", ital=False)},
@@ -575,7 +682,15 @@ add("POLL", "Julius Pollux", ["POLL.", "POLLUX"],
 add("MOERIS", "Moeris", ["MOERIS"],
     {"DEFAULT": w("Lexicon Atticum", "page-line", "Bekker page.")}, flags=[])
 add("PHRYNICH", "Phrynichus", ["PHRYNICH."],
-    {"DEFAULT": w("Praeparatio Sophistica", "opaque")}, flags=[])
+    {"DEFAULT": w("Praeparatio Sophistica", "opaque"),
+     # 2026-09-24: Critias A20 "PHRYNICH. Praepar. sophist. [Phot. Bibl. 158
+     # p. 101b 4 Bekk.]" -- DK prints no page/number of his own after the
+     # title abbreviation, only the bracket naming where Photius preserves
+     # the passage; that bracket is apparatus, kept as printed
+     # (`editor_apparatus`, reusing the gnomologia mechanism), and the locus
+     # is then empty (no page/number to print).
+     "Praepar. sophist.": w("Praeparatio Sophistica", "opaque", editor_apparatus=True)},
+    flags=[])
 add("EROTIAN", "Erotianus", ["EROTIAN."],
     {"DEFAULT": w("Vocum Hippocraticarum Collectio", "page-line")}, flags=[])
 add("HERMOG", "Hermogenes", ["HERMOG.", "HERMOGENES"],
@@ -660,9 +775,13 @@ add("APOLLON_CIT", "Apollonius of Citium", ["APOLLON. Cit."],
     {"in Hipp. p.": w("in Hippocratis De Articulis", "page-line")}, flags=[])
 add("PALAEPHAT", "Palaephatus", ["PALAEPHAT."],
     {"de incredib. p.": w("De Incredibilibus", "page-line", "Festa.")}, flags=[])
-add("CAELIUS", "Caelius Aurelianus", ["CAELIUS"],
-    {"AURE": w("(work of Caelius Aurelianus)", "opaque", "Token truncated ('AUREL. Morb. chron.' = Morbi Chronici).", ital=False)},
-    flags=["truncated-token"])
+add("CAELIUS", "Caelius Aurelianus", ["CAELIUS", "CAELIUS AUREL."],
+    {"Morb. chron.": w("De Morbis Chronicis", "opaque",
+        "2026-09-24: Empedocles A98 'CAELIUS AUREL. Morb. chron. I 5 p. 25 Sich.' = Caelius "
+        "Aurelianus, De morbis chronicis (Tardae passiones) I 5, page 25 of Sichard's "
+        "edition (Basel 1529). Replaces the census key 'AURE' (the truncated 'AUREL.'), "
+        "which matched no printed head and made A98 fatal.")},
+    flags=[])
 
 # --- Apollonius Dyscolus / grammatical ---
 add("APOLL_DYSC", "Apollonius Dyscolus", ["APOLL. DYSC.", "APOLLON."],
@@ -672,17 +791,63 @@ add("APOLL_DYSC", "Apollonius Dyscolus", ["APOLL. DYSC.", "APOLLON."],
 add("HERODIAN_note","x",[],{}); del CANON["HERODIAN_note"]
 
 # --- Anthology / gnomologia / anecdota (edition-based) ---
-add("GNOMOL", "Gnomologium", ["GNOMOL.", "GNOM."],
-    {"DEFAULT": w("(Gnomologium)", "opaque", "Named by manuscript/collection (Vaticanum, Vindobonense, Parisinum, Monacense); edition ref in brackets.", ital=False),
-     "VATIC.": w("Gnomologium Vaticanum", "opaque"),
-     "VINDOB.": w("Gnomologium Vindobonense", "opaque")},
+# A gnomologium is a collection, not an author (Grok content review item 4,
+# 2026-09-24: "Gnomologium, Gnomologium Parisinum" printed the name twice):
+# like Bekker's Anecdota it has no author (canonical None) and renders as the
+# collection's title; the locus is DK's codex and saying number ("743 n.
+# 312"), the editor or edition DK names is apparatus, as printed
+# (`editor_apparatus`: "ed. Sternbach", "Sternb.", "[Ac. Cracov. XX 152]").
+_GNOM = dict(editor_apparatus=True)
+add("GNOMOL", None, ["GNOMOL.", "GNOM."],
+    {"DEFAULT": w("(Gnomologium)", "opaque", "Named by manuscript/collection (Vaticanum, Vindobonense, Parisinum, Monacense); edition ref in brackets.", ital=False, **_GNOM),
+     "VATIC.": w("Gnomologium Vaticanum", "opaque", **_GNOM),
+     "VINDOB.": w("Gnomologium Vindobonense", "opaque", **_GNOM),
+     "PARIS.": w("Gnomologium Parisinum", "opaque",
+                 "2026-09-24: Empedocles A20 'GNOM. PARIS. n. 153 [Ac. Cracov. XX 152]' and "
+                 "Heraclitus B131 '—Paris. ed. Sternbach n. 209' = L. Sternbach's Gnomologium "
+                 "Parisinum ineditum (Rozprawy Akademii Umiejętności, Kraków, XX, 1893).", **_GNOM),
+     "Monac. lat.": w("Gnomologium Monacense Latinum", "opaque",
+                 "2026-09-24: Heraclitus B130 'GNOMOL. Monac. lat. I 19 (Caecil. Balb. Wölfflin "
+                 "...)' = the Latin Munich gnomologium printed by Wölfflin with Caecilius Balbus, "
+                 "De nugis philosophorum (Basel 1855).", **_GNOM)},
     flags=["edition-keyed"])
-add("ANECD_BEKK", "Anecdota (Bekker)", ["ANECD. BEKK.", "ANECD. Bekk.", "AN. BEKK.", "ANTIATT. BEKK.", "ANTIATT. Bekk."],
-    {"DEFAULT": w("Anecdota Graeca (ed. Bekker)", "page-line",
-       "Bekker Anecdota; 'Antiattic.'/'An.' = Antiatticista. Edition-keyed, not a single author."),
-     "Lex.": w("Anecdota Graeca (Lexica)", "page-line"),
-     "Antiattic.": w("Antiatticista", "page-line"),
-     "An.": w("Antiatticista", "page-line")},
+# Bekker's Anecdota Graeca -- John's ruling, 2026-09-24: "AN. BEKK. Lex. VI p.
+# 418, 6" renders as the work *Anecdota Graeca* with NO author, locus "I, Lex.
+# VI p. 418, 6" (volume, lexicon, page, line). canonical_author None = no
+# author printed.
+# The volume (volume_by_part; Sol review finding 2): Bekker's three volumes
+# each start at p. 1 (I Berlin 1814, II 1816, III 1821), so a page alone
+# never names one. A volume numeral DK prints ("ANECD. Bekk. I 337, 13",
+# Empedocles B47) is the volume. Otherwise only a part known to lie in vol.
+# I, with its page inside that part, gives vol. I -- the Lexica Segueriana
+# of Coislin. 345 fill vol. I: the TLG's canon (DOCCAN2) gives "Anecdota
+# Graeca, vol. 1, Bekker, Berlin 1814" for 4289.001-004, pp. 75-116 (the
+# Antiatticista), 117-180, 181-194, 195-318 (Lex. V); Lex. VI, the Synagoge
+# (Συναγωγὴ λέξεων χρησίμων), pp. 319-476, closes the volume (DK's own "I
+# 337, 13 [Συναγωγὴ λέξεων χρησ.]"). DK cites only the Antiatticista and
+# Lex. VI, so only they are listed; any other head stays as printed,
+# flagged edition-volume-unknown.
+_SYNAGOGE = [["Lex. VI", 319, 476, "I"]]
+add("ANECD_BEKK", None, ["ANECD. BEKK.", "ANECD. Bekk.", "AN. BEKK."],
+    {"DEFAULT": w("Anecdota Graeca", "page-line",
+        "Bekker, Anecdota Graeca; DK names the volume itself here ('I 337, 13').",
+        volume_by_part=[]),
+     "Lex.": w("Anecdota Graeca", "page-line",
+        "'Lex. VI p. 470, 25' = Bekker's sixth lexicon (the Synagoge), vol. I.",
+        locus_includes_work=True, volume_by_part=_SYNAGOGE),
+     "Antiattic.": w("Anecdota Graeca", "page-line",
+        "'Antiattic. 114, 28' = the Antiatticista, vol. I pp. 75-116.",
+        locus_includes_work=True, volume_by_part=[["Antiattic.", 75, 116, "I"]])},
+    flags=["edition-keyed", "not-single-author"])
+# The Antiatticista named in the author slot ("ANTIATT. Bekk. An. 78, 20",
+# "ANTIATT. BEKK. p. 94, 1"): the same edition; DK's own "Antiatt." goes
+# before the page so the lexicon is not lost ('An.' = Anecdota, dropped).
+_ANTIATT = [["Antiatt.", 75, 116, "I"]]
+add("ANTIATT_BEKK", None, ["ANTIATT. BEKK.", "ANTIATT. Bekk."],
+    {"DEFAULT": w("Anecdota Graeca", "page-line", "Antiatticista, vol. I pp. 75-116.",
+        locus_prefix="Antiatt.", volume_by_part=_ANTIATT),
+     "An.": w("Anecdota Graeca", "page-line", "'An.' = Anecdota: Antiatticista, vol. I pp. 75-116.",
+        locus_prefix="Antiatt.", volume_by_part=_ANTIATT)},
     flags=["edition-keyed", "not-single-author"])
 add("ANECD_PAR", "Anecdota Parisina", ["ANECD. PAR."],
     {"DEFAULT": w("Anecdota Graeca Parisiensia", "page-line", "Cramer.")}, flags=["edition-keyed"])
@@ -707,6 +872,11 @@ add("SCHOL_APOLL", "Scholia in Apollonium Rhodium", ["SCHOL. APOLL."], schol("Ap
 add("SCHOL_ARISTOPH", "Scholia in Aristophanem", ["SCHOL. ARISTOPH.", "SCHOL. ARIST."], schol("Aristophanem"), flags=["scholia"])
 add("SCHOL_ARAT", "Scholia in Aratum", ["SCHOL. ARAT."], schol("Aratum"), flags=["scholia"])
 add("SCHOL_PIND", "Scholia in Pindarum", ["SCHOL. PIND."], schol("Pindarum"), flags=["scholia"])
+CANON["SCHOL_PIND"]["works"]["Nem."] = w(
+    "Scholia in Pindarum", "opaque",
+    "2026-09-24: Hippias B15 '—Nem. 7, 53' (after 'SCHOL. PIND. Pyth. 4, 288') = scholia "
+    "on Pindar's Nemean 7 (Drachmann, Scholia vetera III). The ode stays in the locus as "
+    "printed, like 'Pyth.' under the DEFAULT.", ital=False, locus_includes_work=True)
 add("SCHOL_NIC", "Scholia in Nicandrum", ["SCHOL. NICANDR.", "SCHOL. Nic."], schol("Nicandrum"), flags=["scholia"])
 add("SCHOL_EUR", "Scholia in Euripidem", ["SCHOL. EUR.", "SCHOL. EURIP."], schol("Euripidem"), flags=["scholia"])
 add("SCHOL_AESCHIN", "Scholia in Aeschinem", ["SCHOL. AESCHIN."], schol("Aeschinem"), flags=["scholia"])
@@ -731,7 +901,12 @@ add("TZETZ", "John Tzetzes", ["TZETZ.", "TZETZES"],
     {"DEFAULT": w("(work of Tzetzes)", "opaque", ital=False),
      "Alleg.": w("Allegoriae Iliadis", "opaque"),
      "ad Dion.": w("Scholia in Dionysium Periegetam", "opaque", "'ad Dion. Perieg.'"),
-     "ad Aristoph.": w("Scholia in Aristophanem", "opaque")},
+     "ad Aristoph.": w("Scholia in Aristophanem", "opaque"),
+     "Schol. z. Hesiod": w("Scholia in Hesiodum", "opaque",
+                           "2026-09-24: Democritus B5 'TZETZES Schol. z. Hesiod (Gaisford Poet. "
+                           "gr. min. III 58)' = Tzetzes' scholia on Hesiod as printed in "
+                           "Gaisford, Poetae minores Graeci III (scholia ad Hesiodum). DK names "
+                           "no poem, so neither does the title.", ital=False)},
     flags=[])
 add("PLANUD", "Maximus Planudes", ["PLANUD."],
     {"ad Hermog.": w("in Hermogenem", "opaque", "Walz Rhet. Gr."),
@@ -743,12 +918,23 @@ add("EUSTATH", "Eustathius", ["EUSTATH."],
     flags=["truncated-token"])
 add("PSEUDODIONYS", "pseudo-Dionysius (rhetor)", ["PSEUDODIONYS."],
     {"DEFAULT": w("Ars Rhetorica", "opaque")}, flags=["pseudo"])
-add("CEBREN", "(Cebren / Anecd.)", ["CEBREN."],
-    {"DEFAULT": w("(Bekker Anecdota)", "page-line", ital=False)}, flags=["obscure"])
+# Grok content review item 5 (2026-09-24): DK's "CEBREN." (Anaxagoras A10,
+# "CEBREN. I 165, 18 Bekk.") is Georgius Cedrenus, Compendium historiarum,
+# cited by volume, page and line of Bekker's Bonn edition (CSHB, 1838-39) --
+# not Bekker's Anecdota, as this entry had it.
+add("CEBREN", "Georgius Cedrenus", ["CEBREN."],
+    {"DEFAULT": w("Compendium Historiarum", "book-page-line",
+                  "Volume + page + line of Bekker's Bonn edition ('I 165, 18 Bekk.').")},
+    flags=[])
 add("HERMIPPUS", "Hermippus (astrol.)", ["HERMIPPUS"],
     {"DEFAULT": w("De Astrologia", "book-chapter-section", "Byzantine dialogue; Kroll-Viereck.")}, flags=["obscure"])
-add("CORPUS_PAR", "Corpus Parisinum", ["CORPUS"],
-    {"DEFAULT": w("Corpus Parisinum Profanum", "section", "Anonymous gnomological corpus.")}, flags=["anonymous"])
+# A gnomological collection too (item 4): no author; "CORPUS PARISINUM
+# PROFANUM [Cod. Paris. gr. 1168 nach Elter]: 166" (Democritus B302) printed
+# "PARISINUM PROFANUM" again in its locus.
+add("CORPUS_PAR", None, ["CORPUS"],
+    {"DEFAULT": w("Corpus Parisinum Profanum", "section", "Anonymous gnomological corpus.", **_GNOM),
+     "PARISINUM PROFANUM": w("Corpus Parisinum Profanum", "section", "Anonymous gnomological corpus.", **_GNOM)},
+    flags=["anonymous"])
 
 # --- Dionysius of Halicarnassus ---
 add("DIONYS_HAL", "Dionysius of Halicarnassus", ["DIONYS.", "DIONYSIUS"],
@@ -774,7 +960,10 @@ add("PHILODEM", "Philodemus", ["PHILODEM.", "PHILOD."],
      "de ira": w("De Ira", "page-line", "Gomperz."),
      "de morte": w("De Morte", "page-line", "Mekler."),
      "de piet. p.": w("De Pietate", "page-line", "Gomperz."),
-     "de piet. c.": w("De Pietate", "page-line")},
+     "de piet. c.": w("De Pietate", "page-line"),
+     "de music.": w("De Musica", "opaque",
+                    "Democritus B144 '—de music. Δ 31 p. 108, 29 Kemke' (after PHILODEM. de ira): "
+                    "Philodemus, De musica IV, Kemke's edition (1884).")},
     flags=[])
 
 # --- Marcus Aurelius ---
@@ -891,7 +1080,11 @@ add("PS_PLATO", "pseudo-Plato", ["[PLATO]"],
     flags=["pseudo"])
 add("PS_ARIST_note","x",[],{}); del CANON["PS_ARIST_note"]
 add("PS_LUCIAN", "pseudo-Lucian", ["[LUC.]", "[LUCIAN.]"],
-    {"Macrob.": w("Macrobii", "section", "'Macrob.' = Macrobii (Long-livers).")},
+    {"Macrob.": w("Macrobii", "section", "'Macrob.' = Macrobii (Long-livers)."),
+     "Macrob": w("Macrobii", "section",
+                 "2026-09-24: Gorgias A13 prints '[LUC.] Macrob 23' with no period = "
+                 "[Lucian], Macrobii 23 (Gorgias lived 108 years); A13 was fatal without "
+                 "this key.")},
     flags=["pseudo"])
 add("PS_GEMIN", "pseudo-Geminus", ["[GEMIN.]"],
     {"Isag.": w("Isagoge (Elementa Astronomiae)", "page-line", "Manitius.")},
@@ -986,6 +1179,10 @@ for key, e in CANON.items():
         resolver[vv] = key
 DASH_MISPARSE = {nfc(x) for x in DASH_MISPARSE}
 UNMAPPABLE = {nfc(x) for x in UNMAPPABLE}
+NEED_WORK = {nfc(v) for e in CANON.values() for v in e.get("variants_need_work", [])}
+for v in AMBIGUOUS_VARIANTS:
+    if nfc(v) in resolver:
+        print("AMBIGUOUS VARIANT ALSO AN AUTHOR VARIANT:", v, file=sys.stderr)
 
 census_authors = {}
 for r in CENSUS:
@@ -1000,7 +1197,9 @@ for a0, occ in census_authors.items():
     a = nfc(a0)
     if a == DASH_KEY:
         dash_occ += occ
-    elif a in resolver:
+    elif a in NEED_WORK and a in DASH_MISPARSE:
+        misparse_occ += occ  # "Hipp." alone: Plato's Hippias after a lost dash
+    elif a in resolver or a in AMBIGUOUS_VARIANTS:
         matched_occ += occ
     elif a in DASH_MISPARSE:
         misparse_occ += occ
@@ -1027,7 +1226,10 @@ default_work_occ = 0
 for r in CENSUS:
     a = nfc(r["author_abbrev"])
     key = resolver.get(a)
-    if not key:
+    if a in AMBIGUOUS_VARIANTS:
+        named_work_occ += r["occurrences"]  # the author (and so the work) comes from the evidence
+        continue
+    if not key or (a in NEED_WORK and a in DASH_MISPARSE):
         continue
     works = CANON[key]["works"]
     wk = r["work_abbrev"]
@@ -1083,7 +1285,14 @@ OUT = {
                 "cited-by-lemma": "no numeric locus; cited by headword (s.v.).",
                 "title-is-commentary": "title is a commentary 'in <Aristotelem/Platonem>'; locus is the commentary page, not the base text.",
                 "pseudo": "bracketed/spurious attribution ([ARISTOT.] -> pseudo-Aristotle).",
-                "ambiguous-abbrev": "abbrev shared by >1 author; disambiguate from work or head context.",
+                "ambiguous-abbrev": "abbrev shared by >1 author; disambiguate from work or head context. "
+                                    "An abbreviation in `ambiguous_variants` is no author's variant: the stage picks "
+                                    "the author from what follows it, else keeps the head as printed with this flag.",
+                "author-inferred": "(set by the stage) the author was picked from an ambiguous abbreviation by what "
+                                   "follows it; on the head and every dash built on it. A Herodotus reading so "
+                                   "picked must be confirmed in the TLG (tests/test_dash_citations_verified.py).",
+                "edition-volume-unknown": "a work with `volume_by_part` whose head prints no volume and names "
+                                          "no listed part with its page inside that part: the head stays as printed.",
                 "edition-keyed / ms-shelfmark / scholia / anonymous / obscure / truncated-token": "see per-entry notes."
             },
             "multi_source_heads": "A head naming several witnesses (e.g. 'PLUT. adv. Col. 10 p. 1111 F. AËT. I 30, 1 (D. 326, 10)') "
@@ -1101,6 +1310,27 @@ OUT = {
             "pct_heads_covered_dictionary_only": round(100.0 * matched_occ / total, 1)
         },
         "dash_misparse_tokens": sorted(DASH_MISPARSE),
+        "ambiguous_variants": AMBIGUOUS_VARIANTS,
+        "ambiguous_variants_rules": {
+            "book-chapter": "a Roman book numeral and a number follow the abbreviation in the head",
+            "greek-title": "nothing follows it in the head, and the text after the head opens with a "
+                           "Greek title abbreviation in 'π.' (Περὶ ...)"},
+        "work_fields": {
+            "column_letters": "true: the locus may end in Stephanus/Casaubon column letters ('1113 AB') "
+                              "although the template is not stephanus / moralia / bekker / book-page-col",
+            "volume_by_part": "[[part, first page, last page, volume], ...]: an edition in volumes that "
+                              "each start at p. 1. A volume numeral the head prints wins; else a locus "
+                              "opening with a listed part whose page lies in it gets that volume, printed "
+                              "first ('I, Lex. VI p. 418, 6'); else the head stays as printed",
+            "locus_prefix": "printed before the locus (the lexicon a head names in its author slot)",
+            "locus_as_printed": "true: the locus is everything the head prints after the title, untrimmed; "
+                                "a 'bei <author> ...' note (the text that preserves the passage) is apparatus "
+                                "and the locus is then empty",
+            "editor_apparatus": "true: the locus is only the numbers (codex, saying, book); the editor or "
+                                "edition DK names with it ('ed. Sternbach', 'Sternb.', a bracket) is apparatus, "
+                                "as printed",
+            "variants_need_work (author level)": "these variants name the author only when one of his "
+                                                 "titles follows them"},
         "unmappable_artifacts": sorted(UNMAPPABLE),
         "notes": "Entries keyed by normalized (NFC) author abbreviation. 'variants' lists exact census spellings folded into the key. "
                  "'—' (dash) is NOT an author entry: it is resolved by the dash-continuation rules in the companion memo."

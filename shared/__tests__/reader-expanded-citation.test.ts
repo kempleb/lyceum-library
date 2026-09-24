@@ -69,8 +69,8 @@ function bookWith(): BookData {
         // lines, never merged into one semicolon-joined false attribution.
         id: 'seg-B37', column: 'B37',
         greek: [
-          { n: 1, role: 'context', text: 'COLUMELLA VIII 4 si modo credimus Ephesio Heracleto qui ait', tokens: [] },
-          { n: 2, role: 'text', text: 'κύνες γοῦν καταβαυζουσιν', tokens: [{ t: 'κύνες', o: 0, k: 'kunes' }] },
+          { n: 1, role: 'context', text: 'COLUMELLA VIII 4 si vero credimus Empedocli Agrigentino qui dixit', tokens: [] },
+          { n: 2, role: 'text', text: 'λύκοι δὴ ὠρύονται', tokens: [{ t: 'λύκοι', o: 0, k: 'lukoi' }] },
           { n: 3, role: 'context', text: '[vgl. B 13],', tokens: [] },
         ],
         english: { text: 'Two-run English line.', notes: [], markers: [] },
@@ -180,6 +180,134 @@ function bookWithEmptyRun(): BookData {
   };
 }
 
+// Rule E (John, 2026-09-24): a filled-in dash renders exactly like any other
+// expanded citation. Two columns carry the same citation, one reached
+// directly, one through a dash; their lines must be indistinguishable.
+function bookWithDash(): BookData {
+  const cite = { authorDisplay: 'Diogenes Laertius', work: { title: 'Vitae Philosophorum', italic: true }, locus: 'IX 2' };
+  return {
+    book: 1,
+    segments: [
+      {
+        id: 'seg-D1', column: 'D1',
+        greek: [{ n: 1, text: 'DIOG. IX 2', tokens: [], role: 'context' }],
+        english: { text: 'Direct.', notes: [], markers: [] },
+        expandedCitation: [[{ verbatim: 'DIOG. IX 2', resolution: 'direct', ...cite, flags: [], dashInherited: false }]],
+      },
+      {
+        id: 'seg-D2', column: 'D2',
+        greek: [{ n: 1, text: '— —2', tokens: [], role: 'context' }],
+        english: { text: 'Dash.', notes: [], markers: [] },
+        expandedCitation: [[{ verbatim: '— —2', resolution: 'dash', ...cite, flags: ['dash-e5'], dashInherited: true }]],
+      },
+    ],
+  };
+}
+
+// A DK misprint printed corrected, with a note (John, 2026-09-24; real
+// Antiphon B107, DK "V 441" for Pollux V 141). The note follows the
+// citation in a quieter style; an entry with no note gets none.
+function bookWithCorrection(): BookData {
+  return {
+    book: 1,
+    segments: [
+      {
+        id: 'seg-C1', column: 'C1',
+        greek: [{ n: 1, text: '—V 441', tokens: [], role: 'context' }],
+        english: { text: 'Corrected.', notes: [], markers: [] },
+        expandedCitation: [[{
+          verbatim: '—V 441', resolution: 'dash', authorDisplay: 'Julius Pollux',
+          work: { title: 'Onomasticon', italic: true }, locus: 'V 141',
+          flags: ['corrected'], dashInherited: true, note: 'DK prints “V 441”.',
+        }]],
+      },
+    ],
+  };
+}
+
+// An edition with no author (John's ruling, 2026-09-24: Bekker's Anecdota
+// Graeca, real Antiphon B85 "—p. 418, 6"): the pipeline omits
+// `authorDisplay`, and the line opens with the work -- no stray comma.
+function bookWithNoAuthor(): BookData {
+  return {
+    book: 1,
+    segments: [
+      {
+        id: 'seg-N1', column: 'N1',
+        greek: [{ n: 1, text: '—p. 418, 6', tokens: [], role: 'context' }],
+        english: { text: 'No author.', notes: [], markers: [] },
+        expandedCitation: [[{
+          verbatim: '—p. 418, 6', resolution: 'dash',
+          work: { title: 'Anecdota Graeca', italic: true }, locus: 'I, Lex. VI p. 418, 6',
+          flags: ['dash-e5'], dashInherited: true,
+        }]],
+      },
+    ],
+  };
+}
+
+// A work with no locus of its own (Grok content review item 6, real
+// Democritus B127-128): Herodian's De prosodia catholica, preserved "bei
+// Theogn. p. 79 [I 355, 19 L.]" -- the note is apparatus and the locus is
+// empty. The line never prints an empty separator: one space between title
+// and apparatus, none after a title that stands alone.
+function bookWithNoLocus(): BookData {
+  const herodian = { resolution: 'direct' as const, authorDisplay: 'Herodian (grammarian)', flags: [], dashInherited: false };
+  return {
+    book: 1,
+    segments: [
+      {
+        id: 'seg-H1', column: 'H1',
+        greek: [{ n: 1, text: 'HERODIAN. π. καθολ. προσ. bei Theogn. p. 79 [I 355, 19 L.]', tokens: [], role: 'context' }],
+        english: { text: 'No locus, apparatus.', notes: [], markers: [] },
+        expandedCitation: [[{
+          ...herodian, verbatim: 'HERODIAN. π. καθολ. προσ. bei Theogn. p. 79 [I 355, 19 L.]',
+          work: { title: 'De Prosodia Catholica', italic: true }, locus: '', apparatus: 'bei Theogn. p. 79 [I 355, 19 L.]',
+        }]],
+      },
+      {
+        id: 'seg-H2', column: 'H2',
+        greek: [{ n: 1, text: 'HERODIAN. π. μον. λέξ.', tokens: [], role: 'context' }],
+        english: { text: 'No locus at all.', notes: [], markers: [] },
+        expandedCitation: [[{
+          ...herodian, verbatim: 'HERODIAN. π. μον. λέξ.',
+          work: { title: 'Περὶ μονήρους λέξεως', italic: true }, locus: '',
+        }]],
+      },
+    ],
+  };
+}
+
+// The stage also reads a dash head from a line the spine marks as text
+// (Heraclitus B42) and from a later line of a context run (Democritus B82
+// "—*48."); the reader must count those lines as run starts too, or every
+// later run lands under the wrong block.
+function bookWithDashHeadLines(): BookData {
+  const run = (a: string) => [{ verbatim: a, resolution: 'direct' as const, authorDisplay: a, work: { title: 'W', italic: true }, locus: '1', flags: [], dashInherited: false }];
+  return {
+    book: 1,
+    segments: [
+      {
+        id: 'seg-DH', column: 'DH',
+        greek: [
+          { n: 1, text: 'DIOG. IX 1', tokens: [], role: 'context' },
+          { n: 2, text: 'logos', tokens: [{ t: 'logos', o: 0, k: 'logos' }], role: 'text' },
+          { n: 3, text: '— —ὅνπερ καὶ Μίδην', tokens: [], role: 'text' },
+          { n: 4, text: 'ἔλεγεν', tokens: [], role: 'context' },
+          { n: 5, text: '—47.', tokens: [], role: 'context' },
+          { n: 6, text: '—*48. εὐδαίμων', tokens: [], role: 'context' },
+        ],
+        english: { text: 'English A. English B. English C.', notes: [], markers: [] },
+        chapterStarts: [
+          { chapter: 'B', beforeLine: 3, wordIndex: 0, engOffset: 12, bekker: 'b' },
+          { chapter: 'C', beforeLine: 5, wordIndex: 0, engOffset: 24, bekker: 'c' },
+        ],
+        expandedCitation: [run('RUN-A'), run('RUN-B'), run('RUN-C'), run('RUN-D')],
+      },
+    ],
+  };
+}
+
 async function flush(ms = 20) {
   await new Promise((r) => setTimeout(r, ms));
 }
@@ -268,6 +396,59 @@ describe('Reader.svelte DK source-citation expansion (docs/citation-expansion-wi
     // Block 2: run C, not stranded empty.
     expect(citationsOf(2)?.length).toBe(1);
     expect(citationsOf(2)?.[0]?.textContent).toContain('AuthorC');
+  });
+
+  it('rule E: a filled-in dash renders exactly like a direct citation', async () => {
+    render(Reader, { props: { work: 'ECFIX', bookNum: 1, bookData: bookWithDash() } });
+    await flush();
+    const direct = document.querySelector('#col-D1 .expanded-citation');
+    const dash = document.querySelector('#col-D2 .expanded-citation');
+    expect(dash?.textContent?.trim()).toBe('Diogenes Laertius, Vitae Philosophorum IX 2');
+    expect(dash?.innerHTML).toBe(direct?.innerHTML);
+    expect(dash?.querySelector('.expanded-citation-verbatim')).toBeNull();
+  });
+
+  it('a corrected misprint prints its note after the citation, in the muted credit style', async () => {
+    render(Reader, { props: { work: 'ECFIX', bookNum: 1, bookData: bookWithCorrection() } });
+    await flush();
+    const block = document.querySelector('#col-C1 .expanded-citation');
+    expect(block?.textContent?.trim()).toBe('Julius Pollux, Onomasticon V 141 DK prints “V 441”.');
+    const note = block?.querySelector('.context-english-credit');
+    expect(note?.textContent).toBe('DK prints “V 441”.');
+    // The note sits after the citation, never inside it.
+    expect(block?.querySelector('.expanded-citation-entry')?.textContent).toBe('Julius Pollux, Onomasticon V 141');
+    // A citation with no note carries none (bookWithDash's direct entry).
+    render(Reader, { props: { work: 'ECFIX', bookNum: 1, bookData: bookWithDash() } });
+    await flush();
+    expect(document.querySelector('#col-D1 .expanded-citation .context-english-credit')).toBeNull();
+  });
+
+  it('an entry with no author opens with the italic work (Bekker, Anecdota Graeca)', async () => {
+    render(Reader, { props: { work: 'ECFIX', bookNum: 1, bookData: bookWithNoAuthor() } });
+    await flush();
+    const entry = document.querySelector('#col-N1 .expanded-citation-entry');
+    expect(entry?.textContent).toBe('Anecdota Graeca I, Lex. VI p. 418, 6');
+    expect(entry?.querySelector('em')?.textContent).toBe('Anecdota Graeca');
+  });
+
+  it('an empty locus leaves no empty separator (Herodian, content review item 6)', async () => {
+    render(Reader, { props: { work: 'ECFIX', bookNum: 1, bookData: bookWithNoLocus() } });
+    await flush();
+    const withApparatus = document.querySelector('#col-H1 .expanded-citation-entry');
+    expect(withApparatus?.textContent).toBe('Herodian (grammarian), De Prosodia Catholica bei Theogn. p. 79 [I 355, 19 L.]');
+    const alone = document.querySelector('#col-H2 .expanded-citation-entry');
+    expect(alone?.textContent).toBe('Herodian (grammarian), Περὶ μονήρους λέξεως');
+  });
+
+  it('rule E: dash heads on a text line or later in a context run count as run starts', async () => {
+    render(Reader, { props: { work: 'ECFIX', bookNum: 1, bookData: bookWithDashHeadLines() } });
+    await flush();
+    const englishCols = document.querySelectorAll('#col-DH .english-col');
+    expect(englishCols.length).toBe(3);
+    const texts = (i: number) => [...(englishCols[i]?.querySelectorAll('.expanded-citation') ?? [])].map((d) => d.textContent?.trim().split(',')[0]);
+    expect(texts(0)).toEqual(['RUN-A']);
+    expect(texts(1)).toEqual(['RUN-B']);
+    expect(texts(2)).toEqual(['RUN-C', 'RUN-D']);
   });
 
   it('Sol finding 2 regression: an empty run slot (kept for positional alignment) renders no blank .expanded-citation line', async () => {

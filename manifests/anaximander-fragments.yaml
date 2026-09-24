@@ -56,6 +56,7 @@ work:
   expected_sourcedesc: 'Anaximander Phil., Fragmenta (0725: 002) "Die Fragmente der Vorsokratiker, vol. 1'
 
 citation:
+  expand_citations: true  # DK source-citation expansion, rule E (John, 2026-09-24)
   scheme: dk
   series: B
   hideLineNumbers: true

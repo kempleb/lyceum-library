@@ -31,6 +31,7 @@ work:
   expected_sourcedesc: 'Parmenides Poet. Phil., Testimonia (1562: 001) "Die Fragmente der Vorsokratiker, vol. 1'
 
 citation:
+  expand_citations: true  # DK source-citation expansion, rule E (John, 2026-09-24)
   scheme: dk
   series: A
   # dk_witness.py's owner-verified apparatus split (stage7_emit wiring):

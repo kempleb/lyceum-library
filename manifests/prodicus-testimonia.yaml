@@ -44,6 +44,7 @@ work:
   expected_sourcedesc: 'Prodicus Soph., Testimonia (1634: 001) "Die Fragmente der Vorsokratiker, vol. 2'
 
 citation:
+  expand_citations: true  # DK source-citation expansion, rule E (John, 2026-09-24)
   scheme: dk
   series: A
   # dk_witness.py's owner-verified apparatus split (stage7_emit wiring):

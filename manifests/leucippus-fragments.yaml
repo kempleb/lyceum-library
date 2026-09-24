@@ -26,6 +26,7 @@ work:
   expected_sourcedesc: 'Leucippus Phil., Fragmenta (1461: 002) "Die Fragmente der Vorsokratiker, vol. 2'
 
 citation:
+  expand_citations: true  # DK source-citation expansion, rule E (John, 2026-09-24)
   scheme: dk
   series: B
   hideLineNumbers: true
