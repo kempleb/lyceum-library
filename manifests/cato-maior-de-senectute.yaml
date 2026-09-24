@@ -1,0 +1,93 @@
+# Cato Maior de Senectute — pipeline manifest (Wave 2 Batch 3 round 2: the
+# new flat, bookless `section` scheme — Pipeline Change B,
+# stage1_latin.py's `_parse_flat_section`, Epictetus' Enchiridion precedent
+# for the scheme itself, manifests/enchiridion.yaml). PHI's export carries
+# NO <div type="book"> at all — top-level <div type="section"> siblings
+# only (verified against phi0474051.xml) — hence citation.div_types.page
+# overrides the scheme's registered "Chapter" to PHI's lowercase "section".
+# English: W. A. Falconer (Loeb Classical Library 154, 1923), full 85/85
+# coverage — see sources/falconer-sen/README.md and
+# pipeline/tools/extract_falconer_perseus.py for extraction/verification.
+
+work:
+  id: cato-maior-de-senectute
+  title: "Cato Maior de Senectute"
+  author: "cicero"
+  language: "lat"
+  lexicon: true
+  phi_author: "0474"
+  phi_work: "051"
+  latin_edition: "Simbeck, K. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Fasc. 47 (Leipzig: Teubner, 1917)"
+  # FATAL sourceDesc gate (De Officiis/De Rerum Natura precedent): verified
+  # verbatim against the real PHI export
+  # (build/export/Diogenes-Resources/xml/phi/phi0474051.xml).
+  expected_sourcedesc: 'M. Tullius Cicero. Cato Maior de Senectute (M. Tulli Ciceronis Scripta Quae Manserunt Omnia. Fasc. 47, ed. K. Simbeck, 1917)'
+
+citation:
+  scheme: section
+  hideLineNumbers: true
+  div_types:
+    page: "section"
+  # No cross-section print-line hyphen wraps observed in this export
+  # (verified against the real export). Declared as a re-export drift
+  # tripwire (a future re-export producing a nonzero count fails loudly).
+  cross_section_rejoins: 0
+  # Declared title-drop hash (adversarial-review Finding 2, replacing the
+  # earlier shape-heuristic title guard) — see manifests/de-officiis.yaml's
+  # matching comment for the full mechanism. No citation.flat_wrapper is
+  # declared: this export carries no wrapper div at all (top-level
+  # <div type="section"> siblings only), so Finding 3's depth-scoping check
+  # requires every section div to be a direct child of <body>.
+  title_labels:
+    - { sha256_16: "2671c60498b9a9a4", note: "work title (top-level section n=\"t\")" }
+
+english:
+  primary:
+    id: falconer
+    name: "W. A. Falconer (Loeb Classical Library, 1923)"
+    model: archive
+    file: "falconer-sen/falconer.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+
+# Digest fingerprint of the observed bare-section column spine (85 columns,
+# "1".."85") — stage2 recomputes and compares it. Computed directly against
+# the real PHI export (build/export/.../phi0474051.xml) via
+# stage1_latin's own _parse_flat_section.
+section_spine: { count: 85, sha256: "b472b2f4ea9cd29b8bcd8a1b8903cfe4458b377500bf0cceb20624f7c04fd905" }
+
+# Flat scheme: exactly one book, bounded by bare section-integer tokens.
+books:
+  - { n: 1, start: "1", end: "85" }
+
+sources:
+  phi_dir_env: "PHI_DIR"
+  phi_dir_default: "../TLG Files/PHI"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: cato-maior-de-senectute
+  title: Cato Maior de Senectute
+  abbr: Sen.
+  author: cicero
+  language: lat
+  workType: continuous
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Simbeck, K. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Fasc. 47 (Leipzig: Teubner, 1917)'
+  greekSource:
+    short: Simbeck (1917)
+    full: 'Simbeck, K. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Fasc. 47 (Leipzig: Teubner, 1917)'
+  translations:
+    - id: falconer
+      name: W. A. Falconer (Loeb Classical Library, 1923)
+      short: Falconer
+      slot: english
+  citation:
+    scheme: section
+    hideLineNumbers: true
+    copyAbbr: Cic. Sen.
+  blurb: Cato the Elder, in the last year of his long life, defends old age against the charge that it is a wretched time — arguing that it need cost no one an active, useful, or contented life.

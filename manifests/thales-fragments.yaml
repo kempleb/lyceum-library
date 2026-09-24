@@ -1,0 +1,181 @@
+# Thales of Miletus Fragments (DK 11 B) — pipeline manifest (dk scheme: one
+# flat div[@type="Fragment"][@n] per citable fragment). See
+# thales-testimonia.yaml for the non-DK Epistulae exclusion and the
+# verse-invocation control (plain export correct; zero structural verse).
+#
+# STRUCTURE: 5 divs — a title div (n="tit,1-2", stripped automatically by
+# `_DK_TITLE_N_RE`, never a column) + four ordinary citable columns B1-B4,
+# no gaps/compounds/further lettered variants. Matches the task's stated DK
+# range (frr. 1-4) exactly.
+#
+# LETTER-SPACING / SPURIOUSNESS FINDING (per the task's request to report
+# DK's own disposition of Thales' B-fragments): DK6/TLG mark B1 and B3 as
+# carrying a letter-spaced (role='text') quotation; B2 and B4 carry none
+# (`unmarked_columns`). This matches Diels' own well-known judgment that
+# ALL FOUR of Thales' "fragments" are spurious or of doubtful authenticity —
+# letter-spacing here does not certify genuineness, only that DK is quoting
+# someone's WORDS verbatim as the alleged fragment text (not paraphrasing):
+#   - B1 (Diog. Laert. I 35, letter-spaced): a nautical-astronomy work
+#     ("Ναυτικῆς ἀστρολογίας") ATTRIBUTED to Thales by some ancients but
+#     which Diogenes' own source (Kallimachos) says was really by Phokos of
+#     Samos — DK letter-spaces the disputed book-title phrase itself, not a
+#     genuine surviving quotation of Thales' own prose.
+#   - B2 (unmarked): the "Peri tropes" (On the Solstice) and "Peri isemerias"
+#     (On the Equinox) attributed by some to Thales — reported only by
+#     title/paraphrase, never quoted, hence no letter-spacing at all.
+#   - B3 (Diog. Laert. I 35, letter-spaced): the "water is the material
+#     principle of all things" doctrine given as a purported *ipsissima
+#     verba* summary ('τὰ μὲν οὖν πολυθρύλητα τέτταρα...') — again DK
+#     letter-spaces the quoted WORDS of the report, not an endorsement that
+#     they are authentically Thales' own; this is the same source-critical
+#     posture as testimonia A1/A3a (Diogenes' unreliable doxographic
+#     digest), just now presented as a "fragment" because it purports to
+#     summarize Thales' own teaching in the first person of the doctrine.
+#   - B4 (unmarked): a further work-title report, no verbatim quotation.
+# In short: DK6/TLG structure Thales' B-series exactly like an ordinary
+# fragment collection (two marked, two unmarked columns), but ancient and
+# modern scholarship agree Thales wrote nothing genuine that survives —
+# every "fragment" here is a later attribution or paraphrase-as-quotation,
+# consistent with Thales A1's own explicit testimony that he left no book.
+# No special manifest disposition is warranted beyond ordinary
+# role/unmarked-column tagging: DK's own typography already tells this
+# story (2 marked, 2 unmarked) without embellishment, and this note records
+# it for the reader-facing landing copy / John's review rather than
+# encoding any judgment call in the pipeline itself.
+
+work:
+  id: thales-fragments
+  title: "Fragments"
+  author: "thales"
+  language: "grc"
+  tlg_author: "1705"
+  tlg_work: "003"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 11 B"
+  # FATAL sourceDesc gate: stage1's _check_sourcedesc asserts this exact
+  # substring is present in the export XML's own <teiHeader><sourceDesc>
+  # text -- verified verbatim against build/export/.../tlg1705003.xml.
+  expected_sourcedesc: 'Thales Phil., Fragmenta (1705: 003) "Die Fragmente der Vorsokratiker, vol. 1'
+
+citation:
+  scheme: dk
+  series: B
+  # Quote-mark polarity fix (owner ruling 2026-08-05, "we fix it and
+  # make damn sure every instance is correct"): the raw TLG export
+  # frequently opens a Greek quotation with U+2019 instead of U+2018 --
+  # stage1_greek._dk_normalize_quote_marks fixes every BALANCED
+  # (even-count) column automatically; this is that fix's own declared
+  # count, cross-checked bidirectionally at preflight against the
+  # emitted dist's actual U+2018/U+2019 total.
+  dk_quote_marks_rewritten: 2
+  hideLineNumbers: true
+  unmarked_columns:
+    - B2
+    - B4
+  # Freeman Ancilla phase-3 sourcing queue (docs/phase3-sourcing-queue.md):
+  # B1's title-announcement shape ("(Title: 'Nautical Astronomy')") is the
+  # same mixed-typography title survival as the approved Leucippus B1 /
+  # Gorgias B9 precedent -- B1 IS letter-spaced Greek (in text_columns), so
+  # `title` ships. B2 and B4 are the two unmarked columns: no role='text'
+  # Greek survives for either (matching this file's own header note that
+  # both are later paraphrase, never quotation), so both resolve `omit`
+  # under John's 2026-07-23 ruling. B3 needs no override (verbatim, clean).
+  kind_overrides:
+    B1:
+      kind: title
+      note: >
+        Diog. Laert. I 35 letter-spaced book-title token (Ναυτικῆς
+        ἀστρολογίας); the genuine Greek title survives in text_columns --
+        Leucippus B1 / Gorgias B9 title-only precedent
+    B2:
+      kind: omit
+      reason: >
+        unmarked column, no role='text' Greek at all -- reported only by
+        later paraphrase, John's 2026-07-23 no-greek-support ruling
+    B4:
+      kind: omit
+      reason: >
+        unmarked column, no role='text' Greek at all -- a further
+        work-title report with no verbatim quotation, John's 2026-07-23
+        no-greek-support ruling
+  fragment_kinds:
+    B1: title
+    B2: omit
+    B3: verbatim
+    B4: omit
+
+# Freeman's fifth-edition numbering matches the corresponding DK6 tokens
+# exactly; no remap needed.
+freeman_concordance: {}
+
+# Freeman's one structural label ("Late forgery", before the B3 water-
+# doctrine summary), declared and hash-gated as paratext.
+group_headers:
+  - before_column: B3
+    level: 2
+    text: "Late forgery"
+    sha256_16: "2d6bdf9423ff466c"
+
+# Digest fingerprint of the observed dk column spine (4 columns, B1-B4) —
+# stage2 recomputes and compares it.
+section_spine: { count: 4, sha256: "fa53ecc08507e6e6d22b16348d83489c4becbe0c27e2277adf13b3dff73b9434" }
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion).
+books:
+  - { n: 1, start: "B1", end: "B4" }
+
+# Freeman Ancilla phase 3 (docs/phase3-sourcing-queue.md): Freeman is the
+# sole English translation; Burnet never covers Thales (he states outright
+# that Thales wrote nothing and translates no fragment).
+english:
+  primary:
+    id: freeman
+    name: "Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)"
+    model: freeman
+    file: "freeman-ancilla/freeman-thales.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Kathleen Freeman's Ancilla to the Pre-Socratic Philosophers (1948) is treated as US public domain per John's 2026-07-23 ruling (CANON.md, Freeman Ancilla copyright ruling); covered by attribution.astro's site-wide translation public-domain notice."
+    group_headers_file: "freeman-ancilla/freeman-thales.group_headers.json"
+  # John's ruling 2026-07-29: B1 is Freeman's own wholly parenthetical title
+  # gloss ("(Title: 'Nautical Astronomy')"), with no translated
+  # context-english span covering it -- labeled a summary rather than
+  # suppressed (stage1_freeman_english.py gate 5; see EnglishChunk.summary).
+  summary_labels: [B1]
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: thales-fragments
+  slug: fragments
+  title: Fragments
+  abbr: Thal. B
+  author: thales
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 11 B'
+  greekSource:
+    short: Diels–Kranz (1951–52)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 11 B'
+  translations:
+    - id: freeman
+      name: Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)
+      short: Freeman
+      slot: english
+  defaultTranslation: freeman
+  citation:
+    scheme: dk
+    copyAbbr: DK 11
+    dkChapter: 11
+    series: B
+  related:
+    - id: thales-testimonia
+      label: 'The A-testimonia: ancient reports about Thales'
+  blurb: Four short works or sayings attributed to Thales by later antiquity — a nautical star-guide, treatises on the solstices and equinoxes, and a summary of his water doctrine — all of doubtful or spurious authenticity, as DK itself signals and no genuine writing of Thales survives.

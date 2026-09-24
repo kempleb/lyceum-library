@@ -1,0 +1,21 @@
+registry:
+  id: sample-work
+  title: Sample Work
+  abbr: Samp.
+  author: sample-author
+  language: grc
+  workType: continuous
+  books: 2
+  bookLabels:
+    - '1'
+    - '2'
+  greekEdition: Fixture
+  greekSource:
+    short: Fixture
+    full: Fixture edition, full citation.
+  translations: []
+  citation:
+    scheme: book-section
+    hideLineNumbers: true
+    copyAbbr: Samp.
+  blurb: A fixture work for exercising the registry before real content lands.

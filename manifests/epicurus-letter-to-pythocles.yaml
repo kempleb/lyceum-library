@@ -1,0 +1,130 @@
+# Epicurus, Letter to Pythocles (Ep. Pyth.) — pipeline manifest. TLG
+# 0537:011, Arrighetti edition. Flat, bookless `section` scheme (Epictetus'
+# Enchiridion precedent, manifests/enchiridion.yaml); TLG's own div type is
+# "Section" (capitalized) — citation.div_types.page overrides the scheme's
+# registered default "Chapter" (see manifests/epicurus-letter-to-herodotus.yaml
+# for the same override).
+#
+# NON-1-START: this letter's numbering runs 84-116, continuing directly from
+# Ep. Herodotum's own 35-83 (Diogenes Laertius' single running Book X
+# section count) — verified against the export. Same non-issue as Ep.
+# Herodotum: the flat scheme's column IS the div's own @n, no arithmetic
+# assumes a 1-start.
+#
+# NO title/greeting div at all: unlike Ep. Herodotum/Ep. Menoeceum, this
+# export's opening salutation ("Ἐπίκουρος Πυθοκλεῖ χαίρειν.") is an
+# <l n="t"> line INSIDE section 84's own div, not a separate top-level
+# div — confirmed against the export (zero <div n="t"> in this file). It
+# flattens into section 84's text automatically, needing no manifest
+# declaration and no special-case code.
+
+work:
+  id: epicurus-letter-to-pythocles
+  title: "Letter to Pythocles"
+  author: "epicurus"
+  language: "grc"
+  tlg_author: "0537"
+  tlg_work: "011"
+  greek_edition: "Arrighetti, G. (ed.), Epicuro: Opere, 2nd ed. (Turin: Einaudi, 1973)"
+  # FATAL sourceDesc gate: verified verbatim against the real export
+  # (build/phi-test/out-epicurus/Diogenes-Resources/xml/tlg/tlg0537011.xml).
+  expected_sourcedesc: 'Epicurus Phil. (c. 4-3 B.C.), Epistula ad Pythoclem (0537: 011) "Epicuro. Opere, 2nd edn.", Ed. Arrighetti, G. Turin: Einaudi, 1973.'
+
+citation:
+  scheme: section
+  hideLineNumbers: true
+  # John's ruling (2026-08-29, docs/lined-rollout-plan.md Ruling 1/wave 1):
+  # the Greek column renders Arrighetti's own print lines, hyphenated
+  # line-end splits included, extending Discourses' treatment
+  # (docs/lined-source-plan.md) to the flat `section` scheme. Gates
+  # stage1_greek's per-<l> emission (`_lined_chapter_lines` +
+  # `_apply_lined_wraps`) inside `_parse_flat_chapter`. No
+  # `lined_section_div`: this work's column div (Section) IS the leaf — no
+  # sub-column granularity exists to record, so no line carries `sec`
+  # (Ruling 1c). Ruling 3: section 84's own `<l n="t">` greeting is an
+  # ordinary body line here, kept as column 84's first print line, needing
+  # no title declaration and no special-case code.
+  lined_source: true
+  lined_indent_max: 1
+  div_types:
+    page: "Section"
+
+# English: R. D. Hicks (1925), same shared store as the other two Letters —
+# see manifests/epicurus-letter-to-herodotus.yaml's matching comment for the
+# store/key_prefix mechanism. BOUNDARY MATTER: unlike the other two Letters,
+# this letter's own first (10.84) and last (10.116) sections both carry NO
+# leading/trailing Diogenes narrative at all — verified directly (10.84
+# opens on the letter's own words; the greeting instead lands at the tail
+# of the PRECEDING section, 10.83, outside this range; 10.116 ends cleanly
+# on the letter's own last sentence, with Diogenes' connective into the
+# Letter to Menoeceus opening the NEXT section, 10.117, also outside this
+# range) — see build_hicks_epicurus_letters.py's module docstring.
+english:
+  primary:
+    id: hicks
+    name: "R. D. Hicks (Loeb Classical Library, 1925)"
+    model: archive
+    file: "hicks-dl/hicks-epicurus-letters.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+    key_prefix: "letter-to-pythocles:"
+
+# Digest fingerprint of the observed bare-section column spine (33 columns,
+# "84".."116") — stage2 recomputes and compares it. Computed directly
+# against the real export.
+section_spine: { count: 33, sha256: "d0c2859a65392e2fb129302336259529500470b221f3bb0e8d0f980a0754a23f" }
+
+books:
+  - { n: 1, start: "84", end: "116" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: epicurus-letter-to-pythocles
+  slug: letter-to-pythocles
+  title: Letter to Pythocles
+  abbr: Ep. Pyth.
+  author: epicurus
+  language: grc
+  workType: letters
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Arrighetti, G. (ed.), Epicuro: Opere, 2nd ed. (Turin: Einaudi, 1973)'
+  greekSource:
+    short: Arrighetti (1973)
+    full: 'Arrighetti, G. (ed.), Epicuro: Opere, 2nd ed. (Turin: Einaudi, 1973)'
+  translations:
+    - id: hicks
+      name: R. D. Hicks (Loeb Classical Library, 1925)
+      short: Hicks
+      slot: english
+  citation:
+    scheme: section
+    hideLineNumbers: true
+    copyAbbr: Ep. Pyth.
+    unitNoun:
+      singular: section
+      plural: sections
+    # RULED (John, 2026-08-31, on Letter to Menoeceus): "if this is not
+    # cited by line numbers, then this needs prose reflow." These works are
+    # cited by chapter/section, never by line, so their print lines serve no
+    # citation and align no gutter apparatus (measured: 0 gutter cells), yet
+    # forced 91% of Menoeceus' lines to wrap into stubs at 375px. Prose now
+    # reflows; `linedSource` stays true so quoted verse keeps real lines.
+    proseReflow: true
+    # Reader-side flag mirroring pipeline citation.lined_source 1:1
+    # (2026-08-29, docs/lined-rollout-plan.md Stage 1/3) — see
+    # WorkMeta['citation'].linedSource in shared/lib/works.ts.
+    linedSource: true
+  related:
+    - id: lives
+      label: 'Diogenes Laertius, Book X: the same letter transcribed within his Life of Epicurus'
+    - id: epicurus-kuriai-doxai
+      label: 'Kuriai Doxai: the maxims that distill Epicurean method more generally'
+  blurb: Epicurus' account of celestial and meteorological phenomena — the sun, moon, stars, storms, and comets — argued for on strictly naturalistic grounds, admitting multiple sufficient causes rather than one, so that fear of the heavens as divine agency has nothing left to attach to.

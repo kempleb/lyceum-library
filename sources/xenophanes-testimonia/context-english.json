@@ -1,0 +1,70 @@
+{
+ "1:A1": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.18-20",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925"
+   }
+  ]
+ },
+ "1:A2": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.21",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Parmenides, a native of Elea, son of Pyres, was a pupil of Xenophanes (Theophrastus in his Epitome makes him a pupil of Anaximander)."
+    ]
+   }
+  ]
+ },
+ "1:A5": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.56",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "But Hermippus’s account is that he was an admirer not so much of Parmenides as of Xenophanes, with whom in fact he lived and whose writing of poetry he imitated"
+    ]
+   }
+  ]
+ },
+ "1:A18": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.22",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Our philosopher too commits his doctrines to verse just as did Hesiod, Xenophanes and Empedocles."
+    ]
+   }
+  ]
+ },
+ "1:A29": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Sophist",
+    "locus": "242c-242d",
+    "status": "translated",
+    "translation_credit": "Fowler, 1921",
+    "emphasis": [
+     "Every one of them seems to tell us a story, as if we were children. One says there are three principles, that some of them are sometimes waging a sort of war with each other, and sometimes",
+     "become friends and marry and have children and bring them up; and another says there are two, wet and dry or hot and cold, which he settles together and unites in marriage. And the Eleatic sect in our region, beginning with Xenophanes and even earlier, have their story that all things, as they are called, are really one."
+    ]
+   }
+  ]
+ }
+}

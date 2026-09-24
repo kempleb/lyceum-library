@@ -1,0 +1,16 @@
+{
+ "1:A5": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "2.46",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "He was sharply criticized, according to Aristotle in his third book On Poetry, by a certain Antilochus of Lemnos, and by Antiphon the soothsayer"
+    ]
+   }
+  ]
+ }
+}

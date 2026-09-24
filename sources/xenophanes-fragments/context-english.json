@@ -1,0 +1,45 @@
+{
+ "1:B19": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "1.23",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "He seems by some accounts to have been the first to study astronomy,, the first to predict eclipses of the sun and to fix the solstices; so Eudemus in his History of Astronomy. It was this which gained for him the admiration of Xenophanes and Herodotus"
+    ]
+   }
+  ]
+ },
+ "1:B7": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.36",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Xenophanes confirms the statement about his having been different people at different times in the elegiacs beginning: Now other thoughts, another path, I show. What he says of him is as follows: They say that, passing a belaboured whelp, He, full of pity, spake these words of dole: “Stay, smite not !’Tis a friend, a human soul; I knew him straight whenas I heard him yelp !”"
+    ]
+   }
+  ]
+ },
+ "1:B8": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.18-19",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "He lived to a very great age, as his own words somewhere testify:",
+     "Seven and sixty are now the years that have been tossing my cares up and down the land of Greece; and there were then twenty and five years more from my birth up, if I know how to speak truly about these things."
+    ]
+   }
+  ]
+ }
+}

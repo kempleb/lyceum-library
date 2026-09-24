@@ -1,0 +1,145 @@
+# De Fato — pipeline manifest (Wave 2 Batch 3 round 2: the new flat,
+# bookless `section` scheme — Pipeline Change B, stage1_latin.py's
+# `_parse_flat_section`, Epictetus' Enchiridion precedent for the scheme
+# itself, manifests/enchiridion.yaml). PHI's export carries NO
+# <div type="book"> at all — top-level <div type="section"> siblings only
+# (verified against phi0474054.xml) — hence citation.div_types.page
+# overrides the scheme's registered "Chapter" to PHI's lowercase "section".
+# English: C. D. Yonge's Bohn translation (1853/1878, public domain — see
+# sources/yonge-fato/README.md for the US-PD basis), attached TRUE
+# PER-SECTION (`english.primary.model: archive`, the same direct-lookup
+# path Falconer's cato-maior-de-senectute/laelius-de-amicitia/
+# de-divinatione use) via `sources/yonge-fato/yonge-sections.clean.json` —
+# 48 records keyed "1".."48", a content-anchored sentence-boundary split of
+# the 20 chapter-keyed records in yonge.clean.json, Grok-audited (2
+# boundary defects fixed, machine-reverified) and byte-complete against
+# yonge.clean.json (see sources/yonge-fato/README.md's "Per-section split"
+# section). This SUPERSEDES the wave's earlier chapter-concordance
+# attachment (20 Yonge chapters riding "sections N-M" span labels over
+# this same spine, sources/yonge-fato/concordance.json,
+# pipeline/reader_pipeline/stage1_chapter_concordance_english.py) — kept
+# only for provenance/audit trail, no longer wired to this manifest.
+#
+# NOTE on the design note (docs/wave2-batch3c-design.md): its own intro
+# line describes De Fato as "clean book-section", shipping unchanged on
+# the De Officiis machinery. That is NOT what the real export shows — PHI's
+# De Fato export carries zero <div type="book"> divs (verified directly
+# against phi0474054.xml, same top-level-section-only shape as Cato
+# Maior/Laelius/Lucullus) — so it actually needs THIS batch's new flat
+# `_parse_flat_section` walker, not the book-section path. Flagged here as
+# a real deviation from the design note's own scoping description, not an
+# improvisation: the manifest below matches what the export actually is.
+#
+# TWO PHILOLOGICAL NOTES, both non-verbatim (no corpus Latin quoted here):
+#   1. Lost opening: the surviving text does not begin at the work's
+#      original start — the dialogue's opening portion is lost in
+#      transmission, and the first numbered section (§1) begins mid-
+#      sentence (the export marks the gap with a run of ellipsis points
+#      before the first surviving words). This is a genuine transmission
+#      gap, not an extraction defect — no manifest mechanism accounts for
+#      it (the missing text was never in the corpus to begin with; nothing
+#      is being dropped here that PHI actually carries).
+#   2. Fragment tail EXCLUDED (citation.exclude_sections below): after §48,
+#      the export carries a short editorial heading div (PHI's own
+#      one-word Latin "fragments" label, itself excluded as part of the
+#      tail rather than treated as a citable section) followed by four
+#      fragment-collection sections
+#      (PHI's own section tokens "fr1"/"fr2"/"fr3"/"fr5" — apparatus
+#      fragments assembled by the editor from testimonia elsewhere, not a
+#      continuous part of the transmitted dialogue text). Presenting this
+#      as if it were a continuation of the numbered spine would misrepresent
+#      apparatus as text — the exact same class of problem the design
+#      note's Academica section (§A.2, deferred/John-gated) describes for
+#      Plasberg's fragment book-collections. Declared here as a spine
+#      exclusion (all five tokens — "fr", "fr1", "fr2", "fr3", "fr5" —
+#      confirmed present exactly once each in the real export); the
+#      citation spine ends cleanly at §48.
+
+work:
+  id: de-fato
+  title: "De Fato"
+  author: "cicero"
+  language: "lat"
+  lexicon: true
+  phi_author: "0474"
+  phi_work: "054"
+  latin_edition: "Mueller, C. F. W. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Part 4, Vol. 2 (Leipzig: Teubner, 1890)"
+  # FATAL sourceDesc gate (De Officiis/De Rerum Natura precedent): verified
+  # verbatim against the real PHI export
+  # (build/export/Diogenes-Resources/xml/phi/phi0474054.xml).
+  expected_sourcedesc: 'M. Tullius Cicero. De Fato (M. Tulli Ciceronis Scripta Quae Manserunt Omnia. Part 4, Vol. 2, ed. C. F. W. Mueller, 1890)'
+
+citation:
+  scheme: section
+  hideLineNumbers: true
+  div_types:
+    page: "section"
+  # The apparatus fragment tail (see the philological note above) — every
+  # token here must appear in the export exactly once, or stage1_latin's
+  # _check_exclude_sections fails loudly (a re-export drift tripwire, same
+  # spirit as cross_section_rejoins below).
+  exclude_sections: ["fr", "fr1", "fr2", "fr3", "fr5"]
+  # No cross-section print-line hyphen wraps observed in this export
+  # (verified against the real export, over the citable §1-48 spine).
+  # Declared as a re-export drift tripwire.
+  cross_section_rejoins: 0
+  # Declared title-drop hash (adversarial-review Finding 2, replacing the
+  # earlier shape-heuristic title guard) — see manifests/de-officiis.yaml's
+  # matching comment for the full mechanism. No citation.flat_wrapper is
+  # declared: this export carries no wrapper div at all (top-level
+  # <div type="section"> siblings only), so Finding 3's depth-scoping check
+  # requires every section div to be a direct child of <body>.
+  title_labels:
+    - { sha256_16: "be1729518af4b31f", note: "work title (top-level section n=\"t\")" }
+
+english:
+  primary:
+    id: yonge-fato
+    name: "Charles Duke Yonge (Bohn's Classical Library, 1853/1878)"
+    model: archive
+    file: "yonge-fato/yonge-sections.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+
+# Digest fingerprint of the observed bare-section column spine (48 columns,
+# "1".."48" — the fragment tail is excluded above, not part of this spine)
+# — stage2 recomputes and compares it. Computed directly against the real
+# PHI export (build/export/.../phi0474054.xml) via stage1_latin's own
+# _parse_flat_section.
+section_spine: { count: 48, sha256: "92dda9b67c366dd47fca5a5c2ecdf8c53b21c4e801535f1038fa3b5557c10467" }
+
+# Flat scheme: exactly one book, bounded by bare section-integer tokens.
+books:
+  - { n: 1, start: "1", end: "48" }
+
+sources:
+  phi_dir_env: "PHI_DIR"
+  phi_dir_default: "../TLG Files/PHI"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: de-fato
+  title: De Fato
+  abbr: Fat.
+  author: cicero
+  language: lat
+  workType: continuous
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Mueller, C. F. W. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Part 4, Vol. 2 (Leipzig: Teubner, 1890)'
+  greekSource:
+    short: Mueller (1890)
+    full: 'Mueller, C. F. W. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Part 4, Vol. 2 (Leipzig: Teubner, 1890)'
+  translations:
+    - id: yonge-fato
+      name: C. D. Yonge (Bohn's Classical Library, 1853)
+      short: Yonge
+      slot: english
+  citation:
+    scheme: section
+    hideLineNumbers: true
+    copyAbbr: Cic. Fat.
+  blurb: A dialogue on fate and free will, arguing against both Stoic determinism and the Epicurean "swerve" for a middle position that preserves human responsibility — transmitted with its opening lost and a short fragment tail appended by its editors.

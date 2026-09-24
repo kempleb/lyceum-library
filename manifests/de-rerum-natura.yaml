@@ -1,0 +1,207 @@
+# De Rerum Natura — pipeline manifest (Wave 2 Batch 2: the first `verse-line`
+# work, PHI corpus). Latin spine text, citation, search AND the lexicon layer
+# (stage4 latin-analyses.txt + stage5 Lewis & Short) — reuses Batch 1b's
+# Latin morphology machinery unchanged (docs/wave2-latin-design.md §1 Batch
+# 2, §4.2). English (H. A. J. Munro, 1864; 4th ed. 1886) is wired via the
+# dedicated stage1_verse_line_english.py builder — see that module's doc
+# comment for why verse-line's per-line spine needed its own English
+# attachment shape (each Munro record anchors to the first citation-order
+# line of its own range, not a 1:1 per-column lookup).
+#
+# PHI's verse export nests flat `<l n="…">` line divs directly under
+# `<div type="book" n="1..6">` — no section level at all, unlike
+# book-section's book>section nesting (see
+# pipeline/reader_pipeline/scheme.py's verse-line module-doc entry and
+# stage1_latin.py's `_parse_verse`/`_parse_spine_verse`).
+#
+# Three verse-line hazards, all handled per docs/wave2-latin-design.md §3
+# (plus the lacuna-role design delta the orchestrator adjudicated over §3.2 —
+# see stage1_latin.py's `_parse_verse` doc comment):
+#   * lettered-suffix lines ("47a") and ONE lacuna range token
+#     ("1094-1101") — `citation.lacunae` below declares every editorial gap
+#     (by CONTENT — a line whose text is only "* * *" — not by token shape:
+#     3.672a carries a lettered suffix but real bracketed text, and is
+#     correctly NOT a lacuna).
+#   * non-monotonic document order (transposed blocks reprinted under their
+#     original line numbers) — `citation.transpositions` below declares the
+#     exact block list stage1_latin's `_derive_transposed_blocks` computes
+#     from the real export; the reader displays CITATION order
+#     (stage7_emit's emit-time sort), with an auto-generated seam note at
+#     each block's citation-order position.
+#   * `citation.fingerprint` pins the observed spine's token SET (count +
+#     sha256 over every book.lineref column, citation-order, book-major) —
+#     preflight's dist-level re-export-drift tripwire (design memo §3.3(b)).
+
+work:
+  id: de-rerum-natura
+  title: "De Rerum Natura"
+  author: "lucretius"
+  language: "lat"
+  phi_author: "0550"
+  phi_work: "001"
+  latin_edition: "Martin, J. (ed.), T. Lucreti Cari De Rerum Natura Libri Sex (Leipzig: Teubner, 1969)"
+  lexicon: true
+  # FATAL sourceDesc gate (De Officiis precedent): verified verbatim against
+  # the real PHI export
+  # (build/phi-test/out/Diogenes-Resources/xml/phi/phi0550001.xml).
+  expected_sourcedesc: 'T. Lucretius Carus. De Rerum Natura (De Rerum Natura Libri Sex, ed. J. Martin, 1969). (0550: 001)'
+
+citation:
+  scheme: verse-line
+  div_types:
+    page: "book"
+
+  # Declared title-drop hashes (adversarial-review Finding 2, replacing the
+  # earlier shape-heuristic l-level title guard) — see
+  # manifests/de-officiis.yaml's matching comment for the general
+  # mechanism; this scheme's declaration spans the WHOLE work (not reset
+  # per book — see stage1_latin.py's `_parse_verse` doc comment), one entry
+  # per <l n="t"|"t2"> title line across all six books. The work's own
+  # title line (n="t") repeats verbatim in every book, so its hash
+  # legitimately recurs; each book's own heading line (n="t2") is distinct.
+  title_labels:
+    - { sha256_16: "6d0afd42ff960a71", note: "book 1 whole-work title line (l n=\"t\")" }
+    - { sha256_16: "29c444f04f0cbe68", note: "book 1 heading line (l n=\"t2\")" }
+    - { sha256_16: "6d0afd42ff960a71", note: "book 2 whole-work title line (l n=\"t\")" }
+    - { sha256_16: "7e0ff911ac98bd92", note: "book 2 heading line (l n=\"t2\")" }
+    - { sha256_16: "6d0afd42ff960a71", note: "book 3 whole-work title line (l n=\"t\")" }
+    - { sha256_16: "dfc1bad50c4b07c1", note: "book 3 heading line (l n=\"t2\")" }
+    - { sha256_16: "6d0afd42ff960a71", note: "book 4 whole-work title line (l n=\"t\")" }
+    - { sha256_16: "b9d4d110c50dfa15", note: "book 4 heading line (l n=\"t2\")" }
+    - { sha256_16: "6d0afd42ff960a71", note: "book 5 whole-work title line (l n=\"t\")" }
+    - { sha256_16: "473e05e932619db9", note: "book 5 heading line (l n=\"t2\")" }
+    - { sha256_16: "6d0afd42ff960a71", note: "book 6 whole-work title line (l n=\"t\")" }
+    - { sha256_16: "3961b338ef4c56bd", note: "book 6 heading line (l n=\"t2\")" }
+
+  # Every editor-marked gap, by book — verified against the real export
+  # (18 total: 1 range token + 17 lettered-suffix single-line gaps). Order
+  # within a book is not significant (stage1_latin compares as a set,
+  # bidirectionally); listed in document order here for easy cross-checking
+  # against the export.
+  lacunae:
+    "1": ["860a", "1094-1101"]
+    "2": ["164a", "465a", "528a", "903a"]
+    "3": ["97a", "823a"]
+    "4": ["126a", "144a", "289a"]
+    "5": ["1012a"]
+    "6": ["47a", "95a", "48a", "607a", "697a", "839a"]
+
+  # Every transposed block, by book, mechanically derived by
+  # `_derive_transposed_blocks` from the real export's document order (34
+  # blocks total — see stage1_latin.py's own doc comment for the algorithm
+  # and its worked examples, e.g. book 1's "14" after "15" and "50..61"
+  # after "135"; book 6's "48..91" after "95a"; book 4 the worst at 12
+  # blocks). `before` is the document-order predecessor the block is
+  # transmitted after; the reader renders an auto-generated seam note at
+  # each block's `start` (citation-order) position.
+  transpositions:
+    "1":
+      - { start: "14", end: "14", before: "15" }
+      - { start: "50", end: "61", before: "135" }
+      - { start: "155", end: "155", before: "158" }
+      - { start: "1085", end: "1085", before: "1086" }
+    "2":
+      - { start: "5", end: "5", before: "6" }
+      - { start: "660", end: "679", before: "680" }
+    "3":
+      - { start: "44", end: "45", before: "46" }
+      - { start: "858", end: "864", before: "865" }
+      - { start: "952", end: "954", before: "955" }
+    "4":
+      - { start: "26", end: "30", before: "51" }
+      - { start: "31", end: "44", before: "53" }
+      - { start: "133", end: "134", before: "135" }
+      - { start: "250", end: "250", before: "251" }
+      - { start: "260", end: "260", before: "261" }
+      - { start: "299", end: "322", before: "347" }
+      - { start: "542", end: "550", before: "552" }
+      - { start: "822", end: "825", before: "826" }
+      - { start: "863", end: "863", before: "864" }
+      - { start: "991", end: "998", before: "999" }
+      - { start: "1123", end: "1123", before: "1124" }
+      - { start: "1204", end: "1209", before: "1210" }
+    "5":
+      - { start: "26", end: "29", before: "30" }
+      - { start: "570", end: "572", before: "573" }
+      - { start: "586", end: "593", before: "595" }
+      - { start: "968", end: "974", before: "975" }
+      - { start: "1127", end: "1130", before: "1132" }
+      - { start: "1341", end: "1346", before: "1349" }
+    "6":
+      - { start: "48", end: "91", before: "95a" }
+      - { start: "930", end: "933", before: "935" }
+      - { start: "990", end: "990", before: "997" }
+      - { start: "1026", end: "1032", before: "1033" }
+      - { start: "1174", end: "1177", before: "1178" }
+      - { start: "1237", end: "1244", before: "1245" }
+      - { start: "1247", end: "1251", before: "1286" }
+
+  # Observed-spine token-SET fingerprint (design memo §3.3(b)): every
+  # emitted book.lineref column, sorted into citation order per book,
+  # book-major — 7426 columns total (1111+1178+1097+1290+1458+1292 content
+  # lines per book, matching the verified recon counts exactly). Filled in
+  # from the real export on the first pipeline run, mirroring De Officiis'
+  # section_spine workflow.
+  fingerprint: { count: 7426, sha256: "d15bb23d152f4bd7f9bb98d470e1281993f453dd3b89264a668a0822dc6204c6" }
+
+english:
+  primary:
+    id: munro
+    name: "H. A. J. Munro (1864; 4th ed. 1886)"
+    model: archive
+    file: "munro-drn/munro.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+  # The single real print-layout gap in Munro's 122-record source (see
+  # sources/INVENTORY.md and extract_munro_wikisource.py's module doc):
+  # book 3's spread-header ranges jump 60-125 -> 127-189, so no Munro
+  # record covers line 126 at all. stage1_verse_line_english.reconcile_book
+  # requires every OTHER citation-order line to fall inside exactly one
+  # record's range after reconciliation (straddled-boundary crediting to
+  # the earlier record, open trailer closing) — this is the one declared
+  # exception; any other uncovered or overlapping line is a build failure.
+  gaps: ["3:126"]
+
+books:
+  - { n: 1, start: "1.1", end: "1.1117" }
+  - { n: 2, start: "2.1", end: "2.1174" }
+  - { n: 3, start: "3.1", end: "3.1094" }
+  - { n: 4, start: "4.1", end: "4.1287" }
+  - { n: 5, start: "5.1", end: "5.1457" }
+  - { n: 6, start: "6.1", end: "6.1286" }
+
+sources:
+  phi_dir_env: "PHI_DIR"
+  phi_dir_default: "../TLG Files/PHI"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: de-rerum-natura
+  title: De Rerum Natura
+  abbr: DRN
+  author: lucretius
+  language: lat
+  workType: verse
+  books: 6
+  bookLabels:
+    - I
+    - II
+    - III
+    - IV
+    - V
+    - VI
+  greekEdition: 'Martin, J. (ed.), T. Lucreti Cari De Rerum Natura Libri Sex (Leipzig: Teubner, 1969)'
+  greekSource:
+    short: Martin (1969)
+    full: 'Martin, J. (ed.), T. Lucreti Cari De Rerum Natura Libri Sex (Leipzig: Teubner, 1969)'
+  translations:
+    - id: munro
+      name: H. A. J. Munro (1864; 4th ed. 1886)
+      short: Munro
+      slot: english
+  citation:
+    scheme: verse-line
+    copyAbbr: Lucr.
+  blurb: A six-book Latin hexameter epic expounding Epicurean physics — atoms and void, the mortal soul, and a naturalistic account of the world — composed as a cure for the fear of death and superstition.

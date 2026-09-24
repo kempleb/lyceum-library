@@ -1,0 +1,43 @@
+{
+ "1:A1": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.1-17",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925"
+   }
+  ]
+ },
+ "1:A6": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Cratylus",
+    "locus": "402a",
+    "status": "translated",
+    "translation_credit": "Fowler, 1926",
+    "emphasis": [
+     "Heracleitus says, you know, that all things move and nothing remains still, and he likens the universe to the current of a river, saying that you cannot step twice into the same stream."
+    ]
+   }
+  ]
+ },
+ "1:A10": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Sophist",
+    "locus": "242d-243a",
+    "status": "translated",
+    "translation_credit": "Fowler, 1921",
+    "emphasis": [
+     "Then some Ionian and later some Sicilian Muses reflected",
+     "that it was safest to combine the two tales and to say that being is many and one, and is (or are) held together by enmity and friendship. Str. For the more strenuous Muses say it is always simultaneously coming together and separating; but the gentler ones relaxed the strictness of the doctrine of perpetual strife; they say that the all is sometimes one and friendly, under the influence of Aphrodite,",
+     "and sometimes many and at variance with itself by reason of some sort of strife."
+    ]
+   }
+  ]
+ }
+}

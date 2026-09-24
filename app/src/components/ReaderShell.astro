@@ -1,0 +1,1014 @@
+---
+// The reader page body, mounted at:
+//   /read/<author>/<work>/<division>  — src/pages/read/[author]/[work]/[division].astro
+// (division is book-<n> by default, text/letter-<n>/chapter-<n> for others —
+// shared/lib/works.ts's divisionId; bookless works only ever have division
+// 1. The old /<author>/<work>/book/<n> address is now a forwarder —
+// src/pages/[author]/[work]/book/[n].astro).
+// `bookless` works (Categories, Poetics) are a single treatise of chapters with
+// no book level, so all book-level chrome (the "· Book N" title, the book nav
+// row, the per-book TOC grouping) is dropped.
+import { readFileSync } from 'node:fs';
+import Reader from '@shared/components/Reader.svelte';
+import BekkerJump from '@shared/components/BekkerJump.svelte';
+import CommandPalette from '@shared/components/CommandPalette.svelte';
+import Pwa from './Pwa.astro';
+import HelpButton from './HelpButton.svelte';
+import Breadcrumb from './Breadcrumb.svelte';
+import ThemeInit from './ThemeInit.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import RunningHead from '@shared/components/RunningHead.svelte';
+import LyceumBand from './LyceumBand.astro';
+import { getWork, bookLabel, isBookless, workPath, workLanding, languageLabel, authorPath, visibleTranslations, workGroupsFor, type Work } from '@shared/lib/works';
+import DkExplainer from './DkExplainer.astro';
+import { getAuthor, authorsByPeriod, AUTHOR_PERIOD_ORDER, PERIOD_LABEL } from '@shared/lib/authors';
+import { buildContents, buildLibrary, type ManifestBookRange } from '@shared/lib/contents';
+import { schemeFor, navChipsNeedFullSectionList, dottedSectionChapter, unitNounFor, pageEntriesFor, nounForCount } from '@shared/lib/citation';
+import { citeDescriptorFor, tocGroupNoun, tocGroupShowsCount, verseLineBookLineCount } from '../lib/citation-copy';
+import { speakerRoster } from '../lib/speaker-roster';
+import { SUPPORT_URL } from '../lib/support';
+import { siteNameFor } from '../lib/site';
+import { workPreset } from '../lib/lyceum-catalog';
+import { jsonLdSafe } from '../lib/jsonld';
+import { builtAuthors, builtWorks, builtWorksOf } from '../lib/built-works';
+// PUBLIC_LYCEUM_CHROME=1 turns on the Lyceum reader chrome (see the block
+// further down). Declared here because the JSON-LD breadcrumb below needs
+// siteName before that block runs. The demo wears the library name, not
+// this wing (John, 2026-09-01: Cut classical philosophy reader from the ui.
+// Lyceum reader); the flag-off site keeps SITE_NAME untouched (site.ts).
+const lyceumChrome = import.meta.env.PUBLIC_LYCEUM_CHROME === '1';
+const siteName = siteNameFor(lyceumChrome);
+
+interface Props { workId: string; n: number; }
+const { workId, n } = Astro.props as Props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const work = getWork(workId)!;
+// `work.author` is an author-registry slug, not a display name — see
+// shared/lib/works.ts's doc comment on the field.
+const authorName = getAuthor(work.author)?.name ?? work.author;
+// Breadcrumb's AUTHOR/WORK dropdown option lists — the single
+// HOME > AUTHOR > WORK breadcrumb control is the reader's author/work
+// navigation (readerNav: its work switcher resumes the target work's
+// last-read book, see components/Breadcrumb.svelte).
+const authorOptions = builtAuthors().map((a) => ({ id: a.id, name: a.name }));
+const workOptions = builtWorksOf(work.author).map((w) => ({ id: w.id, title: w.title }));
+const bookless = isBookless(work);
+// Non-Bekker works (e.g. the Isagoge) have no Bekker lines, so the "Go to
+// Bekker line" jump doesn't apply.
+const busse = work.citation?.scheme === 'busse';
+const citeScheme = schemeFor(workId);
+// Section-scheme works (stephanus page+letter, book-section book.section) are
+// cited within a page/book by section, not by chapter: their outline nav
+// lists sections (from sections.json) instead of chapters (chapters.json is
+// empty for them). See shared/lib/citation.ts's CitationScheme.hasSections.
+const hasSectionOutline = citeScheme.hasSections;
+// A dk work's `page` (see pagesOf's doc comment below) is a meaningless
+// sequential ordinal, not a real citation — its `column` ("B30") is the
+// real reference, unlike stephanus where `page` IS the citable number. The
+// outline chip/tooltip/range below read off `column` for dk so a fragment's
+// chip reads "Fragment B30" (REVIEW-CHECKLIST item 34's tooltip fix) instead
+// of the meaningless "Diels–Kranz citation 1".
+const isDk = citeScheme.id === 'dk';
+const isVerseLineScheme = citeScheme.id === 'verse-line';
+// verse-line (Lucretius' De Rerum Natura) has no chapters.json entries
+// (continuous verse has no chapter axis) and no sections.json either
+// (hasSections: false above) — so the TOC drawer's per-book count
+// (.toc-book-count, below) can't source a real count from either file. Bug
+// this fixes (commit 1798729): the drawer fell through to
+// `b.chapters.length`, always 0 for verse-line, printing "0 lines" for
+// every book. The real per-book tally lives in the pipeline's own
+// manifest.json (`books[].segments`) instead. Read once here; degrades to
+// an empty list (count then dropped, not shown as 0 — see the outline
+// build below) if the manifest isn't there yet.
+let manifestBooks: { book: number; segments: number }[] = [];
+if (isVerseLineScheme) {
+  try {
+    const manifest = JSON.parse(readFileSync(`public/data/${workId}/manifest.json`, 'utf-8'));
+    manifestBooks = manifest.books ?? [];
+  } catch { /* no manifest yet */ }
+}
+// The outline chip tooltip's plain unit noun ("Page"/"Fragment"/
+// "Testimonium") for the non-dotted-sections branch (stephanus, dk) —
+// previously the scheme's descriptive label ("Diels–Kranz citation") stood
+// in for the noun; see unitNounFor's doc comment in citation.ts.
+const chipUnitNoun = unitNounFor(workId).capitalized;
+const label = bookLabel(work, n);
+const langLabel = languageLabel(work);
+const windowedBooks = work.books > 15;
+// Driven off the registry's divisionNoun (default 'book') -- the same field
+// shared/lib/works.ts's divisionId uses for the URL, so the page and the URL
+// can never disagree (John's ruling, 2026-09-12).
+const bookNoun = work.divisionNoun ?? 'book';
+const bookNounPlural = `${bookNoun}s`;
+// Capitalized bookNoun ("Book"/"Letter"/"Chapter") for title-case copy
+// (breadcrumb, aria-labels, chapter-nav label, tab title, meta description) —
+// every place that used to hardcode "Book" reads this instead, so the URL's
+// division word and the page's own copy can never disagree.
+const bookNounCap = bookNoun.charAt(0).toUpperCase() + bookNoun.slice(1);
+const bookNounPluralCap = `${bookNounCap}s`;
+const windowBooks = windowedBooks
+  ? Array.from(
+      { length: Math.min(work.books, n + 2) - Math.max(1, n - 2) + 1 },
+      (_, i) => Math.max(1, n - 2) + i,
+    )
+  : [];
+const bookRows = windowedBooks
+  ? Array.from({ length: Math.ceil(work.books / 10) }, (_, i) => {
+      const start = i * 10 + 1;
+      const end = Math.min(start + 9, work.books);
+      return { start, end, books: Array.from({ length: end - start + 1 }, (_, j) => start + j) };
+    })
+  : [];
+
+interface ChapterRef { chapter: string; column: string; line: string; bekker: string; }
+const allChapters: Record<string, ChapterRef[]> = JSON.parse(
+  readFileSync(`public/data/${workId}/chapters.json`, 'utf-8'),
+);
+const chapters = allChapters[String(n)] ?? [];
+
+// Section outline (sections.json): { book -> ordered [{column, page, letter,
+// id}] }. Read only for a section-scheme work; the file may be absent on a
+// partial build, so degrade to an empty outline. Grouped into pages below.
+// `letter` is absent for a flat (`section`-scheme) work — its columns have no
+// section axis (see stage7_emit.emit_sections); no code here reads it.
+interface SectionRef { column: string; page: number; letter?: string; id: string; }
+let allSections: Record<string, SectionRef[]> = {};
+if (hasSectionOutline) {
+  try {
+    allSections = JSON.parse(readFileSync(`public/data/${workId}/sections.json`, 'utf-8'));
+  } catch { /* no sections yet */ }
+}
+// The book's "pages" (Stephanus/dk: several sections legitimately share a
+// page number, or increment one per fragment; book-section/letter: `page` is
+// actually constant at the book number (book-section) or letter number
+// (letter) — see `dottedSections` below, task #35 — so this degrades to ONE
+// entry per book/letter there) — the first section column at each `page`
+// value, in reading order. `column` is the anchor (`col-{column}`) the
+// page's nav entry links to.
+const pagesOf = (b: number): { page: number; column: string }[] =>
+  pageEntriesFor(citeScheme.id, allSections[String(b)] ?? []);
+const pages = pagesOf(n);
+// A numeric-section scheme's `page` value is constant across a whole
+// book/letter (the book number for book-section, the letter number for
+// letter — a pipeline artifact, task #35) rather than incrementing per
+// section, so `pagesOf` above collapses a 13-section book (or a 21-section
+// letter) to one row ("Pages 4–4"/"Sections 47–47" + a single chip). Work
+// around it here, for the nav row only, by sourcing the FULL per-book
+// section list (sectionsOf, defined below) instead of the deduped `pages` —
+// keyed on the scheme id so every other hasSections scheme (stephanus, dk,
+// flat `section`) keeps its existing, already-correct pagesOf-based chips
+// untouched. The condition itself lives in citation.ts next to the rest of
+// the scheme dispatch (navChipsNeedFullSectionList).
+const dottedSections = navChipsNeedFullSectionList(citeScheme.id);
+// Optional philosopher group headings (book-section works whose Greek TEI
+// carries name-stub headers, e.g. Diogenes Laertius — see stage7_emit.
+// emit_philosophers): { book -> ordered [{startSection, endSection, name,
+// greekName, id}] }. Absent for every other book-section work (Meditations),
+// which falls straight through to the existing pagesOf-based rendering below,
+// unchanged. Presentation-only — never a citation level.
+interface PhilosopherRef {
+  startSection: number; endSection: number; name: string; greekName: string; id: string;
+}
+let philosophers: Record<string, PhilosopherRef[]> = {};
+if (hasSectionOutline) {
+  try {
+    philosophers = JSON.parse(readFileSync(`public/data/${workId}/philosophers.json`, 'utf-8'));
+  } catch { /* no philosopher headers for this work */ }
+}
+// All of a book's individual sections, in reading order — unlike pagesOf,
+// NOT deduped by `page` (book-section's `page` is the book number, constant
+// across a book's whole section list, so pagesOf collapses it to one row;
+// see the doc comment above). Only used below when philosophers.json groups
+// a book's sections, so this never changes any other work's outline.
+const sectionsOf = (b: number): SectionRef[] => allSections[String(b)] ?? [];
+// The current book's full, un-collapsed section list — the nav row's chip
+// source when `dottedSections` (book-section's pagesOf workaround above).
+const sections = sectionsOf(n);
+// A page links to its first section's segment anchor (the Reader emits
+// `id="col-{column}"`), same-book as a hash or cross-book as a full path.
+const pageHref = (b: number, column: string) =>
+  b === n ? `#col-${column}` : `${base}${workPath(workId, b)}#col-${column}`;
+// A book-section column's chapter component ("4.1" -> "1") — chapterTitles
+// (see above) is keyed by that bare chapter string, same as bekker-scheme
+// works' chapters.json entries. Used by the TOC's pagesOf branch below and
+// by the nav row's dottedSections chip range above; every other work's
+// chapterTitles lookup misses harmlessly. Delegates to citation.ts's shared
+// implementation (dottedSectionChapter).
+const chapterOfColumn = dottedSectionChapter;
+// What the outline nav's units ARE for this scheme: Stephanus groups by
+// "Pages"; the flat `section` scheme's units are the chapters themselves
+// ("Chapters"); book-section AND letter's units within a book/letter are
+// its own dotted sections ("Sections") now that the nav lists them directly
+// (dottedSections above) instead of the broken pagesOf rows — letter's own
+// top-level unit is "letter" (see unitNounFor), but the nav picker inside
+// one open letter is browsing its sections, same as book-section. Every
+// other scheme (stephanus, dk) is sourced from unitNounFor's plural so a dk
+// work's picker reads "Fragments"/"Testimonia" instead of the old
+// catch-all "Pages" (REVIEW-CHECKLIST item 34) — non-flat/non-dotted
+// schemes keep their existing wording exactly.
+const pagesNavWord = citeScheme.id === 'section'
+  ? 'Chapters'
+  : dottedSections ? 'Sections'
+  : (({ plural }) => plural.charAt(0).toUpperCase() + plural.slice(1))(unitNounFor(workId));
+const pagesNavAria = bookless ? pagesNavWord : `${bookNounCap} ${label} ${pagesNavWord.toLowerCase()}`;
+
+// The book's reading data, read at build time and handed to the Reader island so
+// the Greek + English text is server-rendered into the static HTML (crawlable +
+// instant paint) instead of fetched client-side. Same shape fetchBook returns.
+const bookData = JSON.parse(
+  readFileSync(`public/data/${workId}/book-${String(n).padStart(2, '0')}.json`, 'utf-8'),
+);
+
+// Whole-work speaker-display roster (memoized), so speaker-name colours are
+// stable across books and match the landing cast list (see speaker-roster.ts).
+const roster = speakerRoster(workId, work.books);
+
+// Optional one-line chapter titles/descriptions for the outline sidebar, keyed
+// {book: {chapter: "…"}}. The file is written by hand/curation per work and may
+// not exist yet — the outline degrades to chapter number + Bekker range.
+let chapterTitles: Record<string, Record<string, string>> = {};
+try {
+  chapterTitles = JSON.parse(
+    readFileSync(`public/data/${workId}/chapter-titles.json`, 'utf-8'),
+  );
+} catch { /* no titles yet */ }
+
+// The full-work outline for the sidebar: every book, its chapters in order.
+// `tocCount`/`tocNoun`: the sidebar drawer's per-book "N sections" count
+// (.toc-book-count) — dottedSections (book-section): `page` is constant
+// across the whole book, so pagesOf's dedup collapses every section to one
+// row ("1 section" for a 51-section book — finding 3, Sol review). Count the
+// real per-book section list instead, same as the nav row's own dottedSections
+// workaround above. Precomputed here (not inline in the markup below) since
+// comparison/ternary logic inline confuses Astro's JSX parser elsewhere in
+// this codebase (see LemmaPage.astro's doc comment on the same rule).
+const outline = Array.from({ length: work.books }, (_, i) => {
+  const b = i + 1;
+  const tocCount = pagesOf(b).length;
+  const tocNoun = nounForCount(workId, tocCount);
+  const chaptersOfBook = allChapters[String(b)] ?? [];
+  // The drawer's per-book count (.toc-book-count, template below): real for
+  // every scheme with chapters.json data, sourced from manifestBooks for
+  // verse-line instead (see doc comment above) — null when unavailable so
+  // the template drops the count rather than show a false 0.
+  const bookCount = isVerseLineScheme ? verseLineBookLineCount(manifestBooks, b) : chaptersOfBook.length;
+  const bookCountNoun = bookCount == null ? '' : nounForCount(workId, bookCount);
+  return { book: b, label: bookLabel(work, b), chapters: chaptersOfBook, tocCount, tocNoun, bookCount, bookCountNoun };
+});
+const chapterHref = (b: number, chapter: string) =>
+  b === n ? `#ch-${b}-${chapter}` : `${base}${workPath(workId, b)}#ch-${b}-${chapter}`;
+// The visible tab title + og:title. Front-loads the work name (what people
+// search) and appends the parallel-text long-tail phrasing ("greek english
+// translation") that these deep book pages can realistically rank for, since
+// they can't win the bare head term against Wikipedia/SEP on a new domain.
+// bookNounCap (declared above, with bookNoun) fixed finding 2, Sol review:
+// this used to hardcode "Book" for every scheme, so Seneca's Epistle 47 read
+// "…, Book 47" in the tab title and meta description.
+const pageTitle = (bookless
+  ? `${work.title} — ${langLabel} Text & English Translation`
+  : `${work.title}, ${bookNounCap} ${label} — ${langLabel} Text & English Translation`)
+  // Under the flag every page's title ends with the library's name.
+  + (lyceumChrome ? ` — ${siteName}` : '');
+
+// ── SEO: server-rendered signals ───────────────────────────────────────────
+// The reading text is now server-rendered (bookData is read at build above and
+// handed to the Reader island, so the Greek/English lines are in the static
+// HTML, not a "Loading…" placeholder). These tags supply the rest of what
+// crawlers want: a canonical URL, a real description, a Schema.org Book record,
+// a semantic <h1>, and a topical intro paragraph.
+const bookSuffix = bookless ? '' : `, ${bookNounCap} ${label}`;
+const primaryTrans =
+  work.translations.find((t) => t.slot === 'english') ?? work.translations[0];
+// Translator entries read "Name (Publisher, Year)"; keep just the person name.
+const translatorName = primaryTrans?.name.split(' (')[0] ?? '';
+const canonical = Astro.site
+  ? new URL(`${base}${workPath(workId, n)}/`, Astro.site).href
+  : undefined;
+// Social share card: a branded render of a bilingual page (public/og-default.png).
+// Crawlers require an absolute URL, so it's built off Astro.site + base.
+const ogImage = Astro.site
+  ? new URL(`${base}/og-default.png`, Astro.site).href
+  : undefined;
+// "…and exact {citeWord} citation." below — see citation-copy.ts's doc
+// comment (REVIEW-CHECKLIST item 34: this hardcoded "Stephanus" for every
+// work regardless of scheme, so a dk/letter/verse-line/book-section work's
+// meta description falsely advertised Stephanus citation).
+const citeWord = citeDescriptorFor(workId);
+const metaDescription =
+  `Read ${authorName}'s ${work.title}${bookSuffix} — the original ${langLabel}` +
+  ` (${work.greekSource.short}) side by side with` +
+  (translatorName ? ` ${translatorName}'s` : ' an') +
+  ` English translation, with click-to-parse morphology, dictionary entries,` +
+  ` and ${citeWord} citation.`;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Book',
+  name: `${work.title}${bookSuffix}`,
+  ...(work.greekTitle ? { alternateName: work.greekTitle } : {}),
+  author: { '@type': 'Person', name: authorName },
+  ...(translatorName
+    ? { translator: { '@type': 'Person', name: translatorName } }
+    : {}),
+  inLanguage: [work.language, 'en'],
+  ...(canonical ? { url: canonical } : {}),
+  isPartOf: { '@type': 'CreativeWorkSeries', name: `The Works of ${authorName}` },
+  description: metaDescription,
+};
+// Breadcrumb trail (Home › Work › Book N) — gives Google the page's place in the
+// hierarchy and can render as a breadcrumb rich result in the SERP. Absolute
+// URLs required, so emitted only when Astro.site is set.
+const breadcrumbLd = Astro.site
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: siteName,
+          item: new URL(`${base}/`, Astro.site).href },
+        { '@type': 'ListItem', position: 2, name: work.title,
+          item: new URL(`${base}${workLanding(workId)}`, Astro.site).href },
+        ...(bookless
+          ? []
+          : [{ '@type': 'ListItem', position: 3, name: `${bookNounCap} ${label}`,
+              item: new URL(`${base}${workPath(workId, n)}/`, Astro.site).href }]),
+      ],
+    }
+  : null;
+const h1Text =
+  `${authorName}, ${work.title}${bookSuffix} — ${langLabel} text with English translation`;
+// A short topical paragraph (the curated one-line blurb, framed with the Greek
+// source and translator) so the page carries real descriptive prose for search
+// snippets and screen readers, distinct from the dense parallel-text body.
+const intro =
+  `${work.title}${bookSuffix} by ${authorName}, in the original ${langLabel}` +
+  ` (${work.greekSource.short})` +
+  (translatorName ? `, with the English translation of ${translatorName}` : '') +
+  `. ${work.blurb}`;
+// DK explainer condensed pointer (design note §3.6): a work reader page
+// doesn't repeat the full author-page explainer block — just a one-
+// sentence link back to it, folded into this same sr-only intro. dk-only.
+const dkChapterNum: number | null =
+  work.citation?.scheme === 'dk' ? (work.citation.dkChapter ?? null) : null;
+const dkNoSeries = work.citation?.noSeries === true;
+
+// ── Lyceum chrome (PUBLIC_LYCEUM_CHROME=1) ────────────────────────────────
+// A second reader chrome, off by default: the running head IS the navigation,
+// and the books row, the chapter row, the breadcrumb switchers and the
+// controls strip all go. Read here, in app code only, and handed down as
+// plain props — never inside shared/lib (esbuild bundles those for the search
+// adapter, where a new import.meta.env read throws at eval time).
+// `lyceumChrome` is declared beside the site.ts import above, since the
+// JSON-LD breadcrumb earlier in this frontmatter already needs `siteName`.
+
+// Per-work citation ranges, read once per build from each work's own
+// manifest.json and memoized across pages (this component renders once per
+// book page, and the library lists every built work on all of them).
+interface ManifestCache { __lyceumManifestRanges?: Map<string, ManifestBookRange[]> }
+const manifestCache = (globalThis as ManifestCache).__lyceumManifestRanges
+  ?? ((globalThis as ManifestCache).__lyceumManifestRanges = new Map());
+function citationRanges(id: string): ManifestBookRange[] {
+  const hit = manifestCache.get(id);
+  if (hit) return hit;
+  let ranges: ManifestBookRange[] = [];
+  try {
+    const m = JSON.parse(readFileSync(`public/data/${id}/manifest.json`, 'utf-8'));
+    ranges = (m.citation?.books ?? []).map((b: { n: number; start: string; end: string }) => ({
+      n: b.n, start: String(b.start), end: String(b.end),
+    }));
+  } catch { /* not built in this checkout */ }
+  manifestCache.set(id, ranges);
+  return ranges;
+}
+
+// The work's own headings, when the built data has them but chapter-titles.json
+// does not: a footnote-bearing translation's chapter titles (Ostwald's, for the
+// Nicomachean Ethics) live in third-titles.json, keyed by translation id.
+let lycChapterTitles = chapterTitles;
+if (lyceumChrome && Object.keys(lycChapterTitles).length === 0) {
+  try {
+    const third = JSON.parse(readFileSync(`public/data/${workId}/third-titles.json`, 'utf-8'));
+    const firstKey = Object.keys(third)[0];
+    if (firstKey) lycChapterTitles = third[firstKey];
+  } catch { /* no titles for this work */ }
+}
+
+const groupNoun = tocGroupNoun(workId);
+const unit = unitNounFor(workId);
+const lycContents = lyceumChrome
+  ? buildContents({
+      workTitle: work.title,
+      groupNoun,
+      bookLabels: work.bookLabels,
+      books: work.books,
+      currentBook: n,
+      bookless,
+      unit: { singular: unit.singular, plural: unit.plural },
+      manifestBooks: citationRanges(workId),
+      chapters: allChapters,
+      sections: allSections,
+      philosophers,
+      chapterTitles: lycChapterTitles,
+      bookHref: (b: number) => `${base}${workPath(workId, b)}`,
+    })
+  : null;
+
+// The library's shelves are our own period shelves (shared/lib/authors.ts's
+// AUTHOR_PERIOD_ORDER). The Lyceum wing taxonomy in fixtures/snapshot.lyceum.json
+// carries memberships for six works only, so it cannot group the whole corpus
+// yet; when it can, the shelves here are the one place to swap.
+const workExtent = (w: Work): string => {
+  const ranges = citationRanges(w.id);
+  const noun = tocGroupNoun(w.id).toLowerCase();
+  return [
+    w.books > 1 ? `${w.books} ${noun}s` : null,
+    ranges.length ? `${ranges[0].start}–${ranges[ranges.length - 1].end}` : null,
+  ].filter(Boolean).join(' · ');
+};
+const workRow = (w: Work) => ({
+  id: w.id, title: w.title, href: `${base}${workPath(w.id)}`,
+  extent: workExtent(w), current: w.id === workId,
+});
+const lycLibrary = lyceumChrome
+  ? buildLibrary({
+      shelves: AUTHOR_PERIOD_ORDER
+        .map((period) => ({
+          id: period,
+          name: PERIOD_LABEL[period],
+          authors: (authorsByPeriod().get(period) ?? [])
+            .map((a) => {
+              const built = builtWorksOf(a.id);
+              const byId = new Map(built.map((w) => [w.id, w]));
+              const groups: { label: string | null; works: ReturnType<typeof workRow>[] }[] = [];
+              const taken = new Set<string>();
+              for (const g of workGroupsFor(a.id)) {
+                const buckets = g.subcategories?.length
+                  ? g.subcategories.map((s) => ({ label: s.label, ids: s.works }))
+                  : [{ label: g.title, ids: g.works ?? [] }];
+                for (const b of buckets) {
+                  const works = b.ids.map((id) => byId.get(id)).filter((w): w is Work => !!w);
+                  works.forEach((w) => taken.add(w.id));
+                  if (works.length) groups.push({ label: b.label, works: works.map(workRow) });
+                }
+              }
+              const rest = built.filter((w) => !taken.has(w.id));
+              if (rest.length) groups.unshift({ label: null, works: rest.map(workRow) });
+              return {
+                id: a.id, name: a.name, floruit: a.floruit,
+                current: a.id === work.author, groups,
+              };
+            })
+            .filter((a) => a.groups.length > 0),
+        }))
+        .filter((s) => s.authors.length > 0),
+    })
+  : null;
+
+const lycTranslations = lyceumChrome
+  ? visibleTranslations(work).map((t) => ({ id: t.id, short: t.short, name: t.name }))
+  : [];
+// The running head's opening position, before the first scroll report.
+const lycStartColumn = sections[0]?.column ?? chapters[0]?.chapter ?? '';
+---
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- TODO: register this property in Google Search Console and add its
+       verification token here (a sibling reader's token was intentionally
+       removed from this file — it belongs to a different GSC property). -->
+  <ThemeInit />
+  <title>{pageTitle}</title>
+  <meta name="description" content={metaDescription} />
+  {canonical && <link rel="canonical" href={canonical} />}
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={metaDescription} />
+  {canonical && <meta property="og:url" content={canonical} />}
+  <meta property="og:site_name" content={siteName} />
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={metaDescription} />
+  {ogImage && <meta name="twitter:image" content={ogImage} />}
+  <script type="application/ld+json" set:html={jsonLdSafe(jsonLd)} />
+  {breadcrumbLd && <script type="application/ld+json" set:html={jsonLdSafe(breadcrumbLd)} />}
+  <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+  <link rel="icon" href={`${base}/favicon.png`} type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} sizes="180x180" />
+  <Pwa />
+</head>
+<body class={lyceumChrome ? 'lyceum-chrome' : undefined} data-preset={lyceumChrome ? workPreset(workId) : undefined}>
+  <!-- Semantic page heading + topical intro for search engines and screen
+       readers. Visually hidden because the visible title is the breadcrumb
+       control; this gives the document a real, descriptive <h1> and a prose
+       summary without altering the design. -->
+  <header class="sr-only">
+    <h1>{h1Text}</h1>
+    <p>
+      {intro}
+      {dkChapterNum != null && (
+        <DkExplainer
+          variant="condensed"
+          authorName={authorName}
+          dkChapter={dkChapterNum}
+          noSeries={dkNoSeries}
+          authorHref={`${base}${authorPath(work.author)}`}
+        />
+      )}
+    </p>
+  </header>
+  {!lyceumChrome && (
+  <header class="page-header">
+    <div class="header-bar">
+      <button type="button" class="toc-toggle" aria-expanded="false" aria-controls="toc-sidebar">
+        <span class="toc-toggle-icon" aria-hidden="true">☰</span><span class="toc-toggle-text">Contents</span>
+      </button>
+      <Breadcrumb authorId={work.author} authors={authorOptions} workId={workId} works={workOptions} readerNav client:load />
+      <div class="bar-actions">
+        <a class="header-support" href={SUPPORT_URL} target="_blank" rel="noopener" title="Support the site" aria-label="Support the site">
+          <span class="hsup-heart" aria-hidden="true">♥</span>
+          <span class="hsup-text">Support</span>
+        </a>
+        <a class="header-search" href={`${base}/search`} aria-label="Search Greek, Latin &amp; English">
+          <svg class="hs-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="6.8" cy="6.8" r="4.6"/><line x1="10.4" y1="10.4" x2="14" y2="14"/></svg>
+          <span class="hs-text">Search</span>
+          <kbd class="hs-kbd" aria-hidden="true">⌘K</kbd>
+        </a>
+        <a class="header-search header-lexicon" href={`${base}/lemma/${work.language}/`} aria-label={`${langLabel} Lexicon`}>
+          <svg class="hs-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M8 3.6C6.6 2.6 4.2 2.6 2.6 3.1v9C4.2 11.6 6.6 11.6 8 12.6M8 3.6C9.4 2.6 11.8 2.6 13.4 3.1v9C11.8 11.6 9.4 11.6 8 12.6M8 3.6v9"/></svg>
+          <span class="hs-text">Lexicon</span>
+        </a>
+        <button type="button" class="settings-toggle" aria-label="Reader settings" aria-expanded="false">
+          <svg class="settings-icon" width="18" height="14" viewBox="0 0 18 14" aria-hidden="true" fill="currentColor" stroke="none">
+            <rect x="1" y="0" width="16" height="1.5" rx="0.75"/>
+            <circle cx="5.5" cy="0.75" r="2.5"/>
+            <rect x="1" y="6.25" width="16" height="1.5" rx="0.75"/>
+            <circle cx="12.5" cy="7" r="2.5"/>
+            <rect x="1" y="12.5" width="16" height="1.5" rx="0.75"/>
+            <circle cx="7.5" cy="13.25" r="2.5"/>
+          </svg>
+          <span class="settings-text">Settings</span>
+        </button>
+        <HelpButton client:load />
+        <ThemeToggle />
+      </div>
+    </div>
+    <div class="nav-panel" id="nav-panel">
+      {!busse && <BekkerJump work={workId} inputId="bekker-input-nav" client:load />}
+      {!bookless && (
+        windowedBooks ? (
+          <>
+            <nav class="book-nav book-window-nav" aria-label={bookNounPlural[0].toUpperCase() + bookNounPlural.slice(1)}>
+              <span class="book-nav-label">{bookNounPlural[0].toUpperCase() + bookNounPlural.slice(1)}</span>
+              <span class="book-window-band">
+                {n > 1
+                  ? <a href={`${base}${workPath(workId, 1)}`} aria-label={`First ${bookNoun}`}>«</a>
+                  : <span class="book-window-disabled" aria-label={`First ${bookNoun}`} aria-disabled="true">«</span>}
+                <span class="book-window-separator" aria-hidden="true">·</span>
+                {n > 1
+                  ? <a href={`${base}${workPath(workId, n - 1)}`} aria-label={`Previous ${bookNoun}`}>◂</a>
+                  : <span class="book-window-disabled" aria-label={`Previous ${bookNoun}`} aria-disabled="true">◂</span>}
+                <span class="book-window-separator" aria-hidden="true">·</span>
+                {windowBooks[0] > 1 && <span class="book-window-ellipsis" aria-hidden="true">…</span>}
+                {windowBooks.map((book) => book === n
+                  ? <span class="book-window-current current" aria-current="page">{book}</span>
+                  : <a href={`${base}${workPath(workId, book)}`}>{book}</a>)}
+                {windowBooks[windowBooks.length - 1] < work.books && <span class="book-window-ellipsis" aria-hidden="true">…</span>}
+                <span class="book-window-separator" aria-hidden="true">·</span>
+                {n < work.books
+                  ? <a href={`${base}${workPath(workId, n + 1)}`} aria-label={`Next ${bookNoun}`}>▸</a>
+                  : <span class="book-window-disabled" aria-label={`Next ${bookNoun}`} aria-disabled="true">▸</span>}
+                <span class="book-window-separator" aria-hidden="true">·</span>
+                {n < work.books
+                  ? <a href={`${base}${workPath(workId, work.books)}`} aria-label={`Last ${bookNoun}`}>»</a>
+                  : <span class="book-window-disabled" aria-label={`Last ${bookNoun}`} aria-disabled="true">»</span>}
+              </span>
+            </nav>
+            <details class="book-overview-details">
+              <summary class="pages-summary book-overview-summary">
+                <span>all {work.books} {bookNounPlural}</span>
+                <span class="pages-caret book-overview-caret" aria-hidden="true">▸</span>
+              </summary>
+              <span class="book-overview-grid">
+                {bookRows.map((row) => (
+                  <span class="book-overview-row">
+                    <span class="book-overview-row-label">{row.start}–{row.end}</span>
+                    <span class="book-overview-links">
+                      {row.books.map((book) => (
+                        <a
+                          href={`${base}${workPath(workId, book)}`}
+                          class={book === n ? 'current' : ''}
+                          aria-current={book === n ? 'page' : undefined}
+                        >
+                          {bookLabel(work, book)}
+                        </a>
+                      ))}
+                    </span>
+                  </span>
+                ))}
+              </span>
+            </details>
+          </>
+        ) : (
+          <nav class="book-nav" aria-label={bookNounPluralCap}>
+            <span class="book-nav-label">{bookNounPluralCap}</span>
+            {Array.from({ length: work.books }, (_, i) => (
+              <>
+                <a
+                  href={`${base}${workPath(workId, i + 1)}`}
+                  class={i + 1 === n ? 'current' : ''}
+                  aria-current={i + 1 === n ? 'page' : undefined}
+                >
+                  {bookLabel(work, i + 1)}
+                </a>
+                {work.missingBooks && work.missingBooks.after === i + 1 && (
+                  <a
+                    class="book-nav-missing"
+                    href={`${base}${workPath(work.missingBooks.linkWork, work.missingBooks.linkBook)}`}
+                    title={`${work.missingBooks.label}: ${work.missingBooks.note} → ${work.missingBooks.linkLabel}`}
+                  >
+                    {work.missingBooks.label}&nbsp;→
+                  </a>
+                )}
+              </>
+            ))}
+          </nav>
+        )
+      )}
+      {hasSectionOutline && (dottedSections ? sections.length > 0 : pages.length > 0) && (
+        <nav class="chapter-nav pages-nav" aria-label={pagesNavAria}>
+          <details class="pages-details" id="pages-details">
+            {/* Label is just the bare unit word ("Pages"/"Chapters"/"Sections")
+                even in a multi-book work: the chip sits inline right after the
+                Books row (John's sketch, 2026-07-12), so the highlighted
+                current numeral already gives the book context, and Laws' 12
+                numerals leave no room for a "Book I · " prefix on one ~900px
+                line. The nav's aria-label above keeps the full context for AT
+                users. The word is scheme-driven (pagesNavWord): the flat
+                `section` scheme's units are chapters, not Stephanus-style
+                pages. For `dottedSections` (book-section), the chips are the
+                book's full section list (not pagesOf's collapsed rows — see
+                the `dottedSections` doc comment above), so the range and
+                chips below read off `sections`/`chapterOfColumn` instead of
+                `pages`/`page`; this <details> collapse is the same mechanism
+                Stephanus/dk already rely on to keep dozens of chips from
+                blowing out the header (see global.css's .pages-details). */}
+            <summary class="pages-summary">
+              <span class="chapter-nav-label">{pagesNavWord}</span>
+              <span class="pages-range">{dottedSections ? <>{chapterOfColumn(sections[0].column)}–{chapterOfColumn(sections[sections.length - 1].column)}</> : <>{isDk ? pages[0].column : pages[0].page}–{isDk ? pages[pages.length - 1].column : pages[pages.length - 1].page}</>}</span>
+              <span class="pages-caret" aria-hidden="true">▸</span>
+            </summary>
+            <span class="chapter-list">
+              {dottedSections
+                ? sections.map((s) => (
+                    <a href={pageHref(n, s.column)} data-ch={`col-${s.column}`} title={`Section ${s.column}`}>{s.column}</a>
+                  ))
+                : pages.map((p) => (
+                    <a href={pageHref(n, p.column)} data-ch={`col-${p.column}`} title={`${chipUnitNoun} ${isDk ? p.column : p.page}`}>{isDk ? p.column : p.page}</a>
+                  ))}
+            </span>
+          </details>
+        </nav>
+      )}
+      {!hasSectionOutline && chapters.length > 0 && (
+        <nav class="chapter-nav" aria-label={bookless ? 'Chapters' : `${bookNounCap} ${label} chapters`}>
+          <span class="chapter-nav-label">{bookless ? 'Chapters' : `${bookNounCap} ${label} · Chapters`}</span>
+          <span class="chapter-list">
+            {chapters.map((c) => (
+              <a href={`#ch-${n}-${c.chapter}`} data-ch={`ch-${n}-${c.chapter}`} title={
+                (chapterTitles[String(n)]?.[c.chapter] ?? `Chapter ${c.chapter}`)
+                + (work.citation?.scheme === 'busse' ? '' : ` · ${c.bekker}`)
+              }>{c.chapter}</a>
+            ))}
+          </span>
+        </nav>
+      )}
+    </div>
+  </header>
+  )}
+
+  {lyceumChrome && lycContents && lycLibrary && (
+  <div class="lyc-chrome">
+    <LyceumBand siteName={siteName} searchHref={`${base}/search`}>
+      <button type="button" class="tool" id="lyc-textsize">Text size</button>
+      <ThemeToggle />
+      <button type="button" class="tool" id="lyc-print">Print</button>
+    </LyceumBand>
+    <RunningHead
+      author={authorName}
+      workTitle={work.title}
+      workId={workId}
+      bookHeading={bookless ? null : `${groupNoun} ${label}`}
+      sourceLabel={langLabel}
+      startColumn={lycStartColumn}
+      sectionNoun={hasSectionOutline ? null : unit.capitalized}
+      library={lycLibrary}
+      contents={lycContents}
+      translations={lycTranslations}
+      client:load
+    />
+    <script is:inline>
+      (function () {
+        var chrome = document.querySelector('.lyc-chrome');
+        // The running head is the only chrome now; publish its height so the
+        // reader's (hidden) controls strip still pins directly beneath it and
+        // the scroll-spy measures its reading boundary from the right place.
+        function setH() {
+          if (!chrome) return;
+          var h = Math.round(chrome.getBoundingClientRect().height);
+          document.documentElement.style.setProperty('--lyc-chrome-h', h + 'px');
+          document.documentElement.style.setProperty('--header-h', h + 'px');
+        }
+        setH();
+        if (chrome && 'ResizeObserver' in window) new ResizeObserver(setH).observe(chrome);
+        window.addEventListener('resize', setH);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(setH);
+        var size = document.getElementById('lyc-textsize');
+        if (size) size.addEventListener('click', function () {
+          window.dispatchEvent(new CustomEvent('toggle-settings'));
+        });
+        var print = document.getElementById('lyc-print');
+        if (print) print.addEventListener('click', function () { window.print(); });
+      })();
+    </script>
+  </div>
+  )}
+
+  {!lyceumChrome && (
+  <>
+  <div class="toc-backdrop" id="toc-backdrop" hidden></div>
+  <aside class="toc-sidebar" id="toc-sidebar" aria-label={`${work.title} — table of contents`} aria-hidden="true">
+    <div class="toc-head">
+      <a class="toc-home" href={`${base}/`}>‹ All works</a>
+      <button type="button" class="toc-close" aria-label="Close contents">×</button>
+    </div>
+    <div class="toc-actions toc-actions-top">
+      {!busse && <BekkerJump work={workId} inputId="bekker-input-toc" client:load />}
+      <a class="toc-action" href={`${base}/search`}>
+        <span class="toc-action-name">Search</span>
+        <span class="toc-action-hint">Greek, Latin &amp; English</span>
+      </a>
+      <a class="toc-action" href={`${base}/lemma/${work.language}/`}>
+        <span class="toc-action-name">{langLabel} Lexicon</span>
+        <span class="toc-action-hint">Word frequency &amp; concordance</span>
+      </a>
+    </div>
+    <div class="toc-work-head"><span class="toc-work">{work.title}</span></div>
+    <nav class="toc-outline">
+      {hasSectionOutline ? (
+        bookless ? (
+          <ul class="toc-flat">
+            {pagesOf(1).map((p) => (
+              <li>
+                <a href={pageHref(1, p.column)} data-ch={`col-${p.column}`}>
+                  <span class="toc-ch-n">{p.page}</span>
+                  <span class="toc-ch-body">
+                    <span class="toc-ch-bekker">{p.column}</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          outline.map((b) => {
+            const groups = philosophers[String(b.book)] ?? [];
+            return (
+              <details class="toc-book" open={b.book === n}>
+                <summary>
+                  <span class="toc-book-label">{tocGroupNoun(workId)} {b.label}</span>
+                  {tocGroupShowsCount(workId) && (
+                    <span class="toc-book-count">{b.tocCount} {b.tocNoun}</span>
+                  )}
+                </summary>
+                <ul>
+                  {groups.length > 0 ? (
+                    sectionsOf(b.book).map((s) => (
+                      <>
+                        {groups
+                          .filter((g) => g.startSection === Number(s.letter))
+                          .map((g) => (
+                            <li class="toc-philosopher-group">
+                              <span class="toc-philosopher-name">{g.name}</span>
+                            </li>
+                          ))}
+                        <li>
+                          <a href={pageHref(b.book, s.column)} data-ch={`col-${s.column}`}>
+                            <span class="toc-ch-n">{s.letter}</span>
+                            <span class="toc-ch-body">
+                              <span class="toc-ch-bekker">{s.column}</span>
+                            </span>
+                          </a>
+                        </li>
+                      </>
+                    ))
+                  ) : (
+                    pagesOf(b.book).map((p) => (
+                      <li>
+                        <a href={pageHref(b.book, p.column)} data-ch={`col-${p.column}`}>
+                          <span class="toc-ch-n">{p.page}</span>
+                          <span class="toc-ch-body">
+                            {chapterTitles[String(b.book)]?.[chapterOfColumn(p.column)] && (
+                              <span class="toc-ch-title">{chapterTitles[String(b.book)][chapterOfColumn(p.column)]}</span>
+                            )}
+                            <span class="toc-ch-bekker">{p.column}</span>
+                          </span>
+                        </a>
+                      </li>
+                    ))
+                  )}
+                </ul>
+              </details>
+            );
+          })
+        )
+      ) : bookless ? (
+        <ul class="toc-flat">
+          {outline[0].chapters.map((c) => (
+            <li>
+              <a href={chapterHref(1, c.chapter)} data-ch={`ch-1-${c.chapter}`}>
+                <span class="toc-ch-n">{c.chapter}</span>
+                <span class="toc-ch-body">
+                  {chapterTitles['1']?.[c.chapter] && (
+                    <span class="toc-ch-title">{chapterTitles['1'][c.chapter]}</span>
+                  )}
+                  <span class="toc-ch-bekker">{c.bekker}</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        outline.map((b) => (
+          <>
+            <details class="toc-book" open={b.book === n}>
+              <summary>
+                <span class="toc-book-label">{tocGroupNoun(workId)} {b.label}</span>
+                {b.bookCount != null && (
+                  <span class="toc-book-count">{b.bookCount} {b.bookCountNoun}</span>
+                )}
+              </summary>
+              <ul>
+                {b.chapters.map((c) => (
+                  <li>
+                    <a href={chapterHref(b.book, c.chapter)} data-ch={`ch-${b.book}-${c.chapter}`}>
+                      <span class="toc-ch-n">{c.chapter}</span>
+                      <span class="toc-ch-body">
+                        {chapterTitles[String(b.book)]?.[c.chapter] && (
+                          <span class="toc-ch-title">{chapterTitles[String(b.book)][c.chapter]}</span>
+                        )}
+                        <span class="toc-ch-bekker">{c.bekker}</span>
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+            {work.missingBooks && work.missingBooks.after === b.book && (
+              <div class="toc-missing">
+                <span class="toc-missing-label">{bookNounPluralCap} {work.missingBooks.label}</span>
+                <span class="toc-missing-note">{work.missingBooks.note}</span>
+                <a href={`${base}${workPath(work.missingBooks.linkWork, work.missingBooks.linkBook)}`}>
+                  {work.missingBooks.linkLabel} →
+                </a>
+              </div>
+            )}
+          </>
+        ))
+      )}
+    </nav>
+    <div class="toc-actions toc-actions-bottom">
+      <a class="toc-action" href={`${base}/attribution`}>
+        <span class="toc-action-name">Texts &amp; Licences</span>
+      </a>
+      <button type="button" class="toc-action toc-help">
+        <span class="toc-action-name">Help</span>
+        <span class="toc-action-hint">How to use this reader</span>
+      </button>
+    </div>
+  </aside>
+  </>
+  )}
+
+  <script>
+    // Contents sidebar (full-work outline) drawer. On mobile this is the single
+    // navigation hub (the old Menu dropdown is gone); on desktop the nav panel is
+    // always visible (CSS) and the sidebar holds just the outline.
+    const header = document.querySelector('.page-header');
+    const tocToggle = header?.querySelector('.toc-toggle');
+
+    // The Search button's ⌘K hint is rendered ⌘K (macOS) by default; the command
+    // palette binds Ctrl+K on non-Mac platforms, so correct the visible label there.
+    const isMac = /Mac|iPhone|iPad|iPod/.test(navigator.platform || navigator.userAgent);
+    if (!isMac) header?.querySelector('.hs-kbd')?.replaceChildren('Ctrl K');
+    const sidebar = document.getElementById('toc-sidebar');
+    const backdrop = document.getElementById('toc-backdrop');
+    // The closed drawer is off-screen but its links/buttons stay in the DOM, so
+    // `inert` (not just aria-hidden) is what keeps them out of the tab order and
+    // the accessibility tree. Applied here at load; toggled with the drawer.
+    sidebar?.setAttribute('inert', '');
+    let tocReturnFocus: HTMLElement | null = null;
+    const focusablesIn = (el: Element) =>
+      Array.from(el.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      )).filter((n) => n.offsetParent !== null || n === document.activeElement);
+    const onTocTrap = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab' || !sidebar) return;
+      const f = focusablesIn(sidebar);
+      if (!f.length) { e.preventDefault(); sidebar.focus(); return; }
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    };
+    const setToc = (open: boolean) => {
+      const wasOpen = document.body.classList.contains('toc-open');
+      document.body.classList.toggle('toc-open', open);
+      sidebar?.setAttribute('aria-hidden', String(!open));
+      tocToggle?.setAttribute('aria-expanded', String(open));
+      if (backdrop) backdrop.hidden = !open;
+      if (open) {
+        sidebar?.removeAttribute('inert');
+        if (!wasOpen) tocReturnFocus = document.activeElement as HTMLElement | null;
+        // Move focus into the drawer (its close button) and trap Tab inside.
+        (sidebar?.querySelector('.toc-close') as HTMLElement | null)?.focus();
+        document.addEventListener('keydown', onTocTrap, true);
+      } else {
+        document.removeEventListener('keydown', onTocTrap, true);
+        // Restore focus to whatever opened it (the toggle) before inerting, so
+        // focus never lands on an inert node.
+        if (wasOpen) { (tocReturnFocus ?? tocToggle as HTMLElement | null)?.focus(); tocReturnFocus = null; }
+        sidebar?.setAttribute('inert', '');
+      }
+    };
+    tocToggle?.addEventListener('click', () =>
+      setToc(!document.body.classList.contains('toc-open')));
+    backdrop?.addEventListener('click', () => setToc(false));
+    sidebar?.querySelector('.toc-close')?.addEventListener('click', () => setToc(false));
+
+    // Settings sidebar toggle. Communicates with Reader.svelte (a Svelte island)
+    // via CustomEvents on window; the island owns the open/closed state and the
+    // panel markup so translation state can live in one place.
+    const settingsToggle = header?.querySelector('.settings-toggle');
+    settingsToggle?.addEventListener('click', () => {
+      window.dispatchEvent(new CustomEvent('toggle-settings'));
+    });
+    // Keep aria-expanded in sync when Reader.svelte reports a state change.
+    window.addEventListener('settings-state', (e) => {
+      const open = (e as CustomEvent<{ open: boolean }>).detail.open;
+      settingsToggle?.setAttribute('aria-expanded', String(open));
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (document.body.classList.contains('toc-open')) { setToc(false); return; }
+      window.dispatchEvent(new CustomEvent('close-settings'));
+    });
+    // Clicking a chapter that's on this page (a #hash link) just scrolls — close
+    // the drawer so the reader is visible. Cross-book links navigate away anyway.
+    sidebar?.querySelectorAll<HTMLAnchorElement>('.toc-outline a').forEach((a) => {
+      if (a.getAttribute('href')?.startsWith('#')) a.addEventListener('click', () => setToc(false));
+    });
+    // The sidebar "Help" entry opens the shared Help modal (HelpButton listens for
+    // this event) and closes the drawer so the modal isn't hidden behind it.
+    sidebar?.querySelector('.toc-help')?.addEventListener('click', () => {
+      setToc(false);
+      window.dispatchEvent(new CustomEvent('open-help'));
+    });
+
+    // Publish the header's height as --header-h so the reader's sticky controls
+    // strip can pin directly beneath it. The header is two rows on desktop and
+    // its height shifts with viewport width and work switches, so re-measure.
+    const setHeaderH = () => {
+      if (header) document.documentElement.style.setProperty(
+        '--header-h', `${Math.round(header.getBoundingClientRect().height)}px`);
+    };
+    setHeaderH();
+    if (header && 'ResizeObserver' in window) new ResizeObserver(setHeaderH).observe(header);
+    window.addEventListener('resize', setHeaderH);
+    window.addEventListener('load', setHeaderH);
+    // Web fonts swap in after first paint and reflow the header height.
+    if (document.fonts?.ready) document.fonts.ready.then(setHeaderH);
+
+    // Pages nav (collapsible <details>): restore the open/closed state from a
+    // previous visit, and persist future toggles. Collapsed by default (no
+    // `open` attribute server-side, so SSG output is deterministic); the
+    // --header-h ResizeObserver above already watches .page-header, so a
+    // toggle's height change re-publishes --header-h with no extra wiring.
+    const pagesDetails = document.getElementById('pages-details') as HTMLDetailsElement | null;
+    if (pagesDetails) {
+      try {
+        if (localStorage.getItem('nav-pages-open') === '1') pagesDetails.open = true;
+      } catch {}
+      pagesDetails.addEventListener('toggle', () => {
+        try {
+          localStorage.setItem('nav-pages-open', pagesDetails.open ? '1' : '0');
+        } catch {}
+      });
+    }
+  </script>
+
+  <Reader work={workId} bookNum={n} bookData={bookData} chapterTitles={chapterTitles[String(n)] ?? {}} speakerRoster={roster} grammataLookup={lyceumChrome} client:load />
+  <CommandPalette work={workId} works={builtWorks()} client:load />
+</body>
+</html>

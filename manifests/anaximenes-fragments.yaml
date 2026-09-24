@@ -1,0 +1,152 @@
+# Anaximenes of Miletus Fragments (DK 13 B) — pipeline manifest (dk scheme:
+# one flat div[@type="Fragment"][@n] per citable fragment). See
+# anaximenes-testimonia.yaml for the verse-invocation control (plain export
+# correct; zero structural verse).
+#
+# STRUCTURE: 4 divs, B1, B2, B2a, B3 — NO title div at all (confirmed
+# against the export, same as Anaximander's Fragmenta). No numeric gaps.
+# Matches the task's stated DK range (frr. 1-3, plus the genuine DK
+# sub-fragment B2a) exactly — B2 and B2a are two separate, independently
+# letter-spaced quotations from different citing sources (Aëtius for B2's
+# soul/air-cohesion doctrine; a second source for B2a's leaf comparison
+# simile, which is ALSO independently quoted, unmarked, in testimonium A15
+# — DK printing the same short phrase in both an A-testimonium and a
+# B-fragment is the same pattern already noted for Anaximander A9/B1), not
+# a compound/merge case.
+#
+# ALL FOUR columns carry <hi rend="letter-spacing"> (verified per-div) —
+# this is Anaximenes' small but directly-quoted corpus (B1's soul/air
+# simile via Aëtius, B2's air-cohesion doctrine, B2a's leaf simile, B3's
+# rarefaction term) — no `unmarked_columns` needed at all, same
+# situation as Anaxagoras' fragments (the only other Wave 1b work where
+# every citable column is directly quoted).
+
+work:
+  id: anaximenes-fragments
+  title: "Fragments"
+  author: "anaximenes"
+  language: "grc"
+  tlg_author: "0617"
+  tlg_work: "002"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 13 B"
+  # FATAL sourceDesc gate: stage1's _check_sourcedesc asserts this exact
+  # substring is present in the export XML's own <teiHeader><sourceDesc>
+  # text -- verified verbatim against build/export/.../tlg0617002.xml.
+  expected_sourcedesc: 'Anaximenes Phil., Fragmenta (0617: 002) "Die Fragmente der Vorsokratiker, vol. 1'
+
+citation:
+  scheme: dk
+  series: B
+  # Quote-mark polarity fix (owner ruling 2026-08-05, "we fix it and
+  # make damn sure every instance is correct"): the raw TLG export
+  # frequently opens a Greek quotation with U+2019 instead of U+2018 --
+  # stage1_greek._dk_normalize_quote_marks fixes every BALANCED
+  # (even-count) column automatically; this is that fix's own declared
+  # count, cross-checked bidirectionally at preflight against the
+  # emitted dist's actual U+2018/U+2019 total.
+  dk_quote_marks_rewritten: 4
+  hideLineNumbers: true
+  fragment_kinds:
+    B1: verbatim
+    B2: verbatim
+    B2a: verbatim
+    B3: verbatim
+
+freeman_concordance: {}
+
+group_headers:
+  - before_column: B3
+    level: 2
+    text: "(Spurious)"
+    sha256_16: "2333a66a08c142b3"
+
+# Digest fingerprint of the observed dk column spine (4 columns: B1, B2,
+# B2a, B3 — no gaps) — stage2 recomputes and compares it.
+section_spine: { count: 4, sha256: "709f41e0f34bbfa669d23aaa09f44943a1873d77db8c2606a1b7f301e2986e55" }
+
+# Freeman is the primary/default English. Burnet's existing translation is
+# retained as the secondary translation.
+english:
+  primary:
+    id: freeman
+    name: "Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)"
+    model: freeman
+    file: "freeman-ancilla/freeman-anaximenes.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Kathleen Freeman's Ancilla to the Pre-Socratic Philosophers (1948) is treated as US public domain per John's 2026-07-23 ruling (CANON.md, Freeman Ancilla copyright ruling); covered by attribution.astro's site-wide translation public-domain notice."
+    group_headers_file: "freeman-ancilla/freeman-anaximenes.group_headers.json"
+  secondary:
+    id: burnet
+    name: "John Burnet, Early Greek Philosophy, 3rd ed. (A. & C. Black, 1920)"
+    model: archive
+    file: "burnet-egp/burnet-anaximenes.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+
+# Burnet EGP 3rd ed. (1920, Wikisource) — task #48's
+# MICRO-PASS: a single hand-curated, exact-anchor extraction of B2 only (the
+# soul/air cohesion simile — "Just as our soul, being air, holds us
+# together..."), not a general parser over Ch. I ("The Milesian School" —
+# continuous biographical prose, no DK section tags or numbered-heading
+# listing). See sources/burnet-egp/burnet-anaximenes.clean.json (1 column)
+# and `build_anaximenes_micro` in the extractor. The formal
+# `{{fine|...}}`-wrapped quotation (S:S27's doxographical citation) is used
+# as canonical; Burnet also restates the same quotation, slightly reworded,
+# in his own S:S28 running commentary immediately after — not extracted
+# separately (same quotation, not a second fragment).
+# B1, B2a, B3: outside this wave's micro-pass scope — same rationale as
+# Anaximander's B2-B6 above (Ch. I is continuous narrative prose with
+# nothing to extract mechanically; only B2's quotation was hand-curated).
+# Genuine coverage gaps, not extraction defects (future work).
+alignment_allow_unmatched_secondary:
+    - "1:B1"
+    - "1:B2a"
+    - "1:B3"
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion).
+books:
+  - { n: 1, start: "B1", end: "B3" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: anaximenes-fragments
+  slug: fragments
+  title: Fragments
+  abbr: Anaximen. B
+  author: anaximenes
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 13 B'
+  greekSource:
+    short: Diels–Kranz (1951–52)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 13 B'
+  translations:
+    - id: freeman
+      name: Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)
+      short: Freeman
+      slot: english
+    - id: burnet
+      name: John Burnet, Early Greek Philosophy, 3rd ed. (A. & C. Black, 1920)
+      short: Burnet
+      slot: secondary
+  defaultTranslation: freeman
+  citation:
+    scheme: dk
+    copyAbbr: DK 13
+    dkChapter: 13
+    series: B
+  related:
+    - id: anaximenes-testimonia
+      label: 'The A-testimonia: ancient reports about Anaximenes'
+  blurb: The three surviving fragments of Anaximenes, comparing the soul that holds the body together by breath to the air that encompasses and holds together the whole cosmos.

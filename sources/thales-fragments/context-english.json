@@ -1,0 +1,16 @@
+{
+ "1:B4": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "1.23",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "But according to others he wrote nothing but two treatises, one On the Solstice and one On the Equinox, regarding all other matters as incognizable."
+    ]
+   }
+  ]
+ }
+}

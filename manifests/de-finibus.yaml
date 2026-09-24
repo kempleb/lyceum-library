@@ -1,0 +1,145 @@
+# De Finibus Bonorum et Malorum — pipeline manifest (Wave 2 Batch 3 round 2:
+# book-section scheme, mechanically identical to De Officiis/manifests/
+# de-officiis.yaml — see that file's header for the shared PHI book-section
+# shape (lowercase @type div convention, citation.div_types.page override).
+#
+# Pipeline Change A (superseded by adversarial-review Finding 2): De
+# Finibus' whole-work title div was longer than the original shape-heuristic
+# title guard's char ceiling. That guard has since been replaced entirely by
+# a declared-hash mechanism (see this file's `citation.title_labels` below
+# and stage1_latin.py's `_check_title_drop`/`_finalize_title_drops`), so
+# length no longer matters beyond a generous defense-in-depth cap.
+#
+# English (phase 3): C. D. Yonge's Wikisource translation (1891 George Bell
+# reprint, public domain — see sources/yonge-finibus/README.md for the
+# US-PD basis), attached as CHAPTER-LEVEL SPANS over this 5-book Latin
+# spine via the hand-verified per-book chapter->section concordance
+# (sources/yonge-finibus/concordance.json, 138 chapters across 5 books,
+# 32 mid-section chapter boundaries flagged) — `english.primary.model:
+# chapter_concordance`, the same De Fato mechanism
+# (pipeline/reader_pipeline/stage1_chapter_concordance_english.py),
+# generalized to a multi-book work: chapter numbering resets per book, and
+# each book's chapters are anchored/spanned independently against that
+# book's own Latin section range below.
+
+work:
+  id: de-finibus
+  title: "De Finibus Bonorum et Malorum"
+  author: "cicero"
+  language: "lat"
+  lexicon: true
+  phi_author: "0474"
+  phi_work: "048"
+  latin_edition: "Schiche, T. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Fasc. 43 (Leipzig: Teubner, 1915)"
+  # FATAL sourceDesc gate (De Officiis/De Rerum Natura precedent): verified
+  # verbatim against the real PHI export
+  # (build/export/Diogenes-Resources/xml/phi/phi0474048.xml).
+  expected_sourcedesc: 'M. Tullius Cicero. De Finibus Bonorum et Malorum (M. Tulli Ciceronis Scripta Quae Manserunt Omnia. Fasc. 43, ed. T. Schiche, 1915)'
+
+citation:
+  scheme: book-section
+  hideLineNumbers: true
+  lined_source: true
+  lined_cross_column_wraps: 68
+  lined_indent_max: 7
+  div_types:
+    page: "book"
+    section: "section"
+  # Declared title-drop hashes (adversarial-review Finding 2, replacing the
+  # earlier shape-heuristic title guard) — see manifests/de-officiis.yaml's
+  # matching comment for the full mechanism.
+  title_labels:
+    - { sha256_16: "61a91e630d98d6f1", note: "whole-work title (book n=\"t\")" }
+    - { sha256_16: "6587086848089b36", note: "book 1 heading (section n=\"t\")" }
+    - { sha256_16: "a0c8bc396c47f6a2", note: "book 2 heading (section n=\"t\")" }
+    - { sha256_16: "9815ea46f3ac03da", note: "book 3 heading (section n=\"t\")" }
+    - { sha256_16: "f74d435f52cf48ec", note: "book 4 heading (section n=\"t\")" }
+    - { sha256_16: "e9c24c65dbcd0611", note: "book 5 heading (section n=\"t\")" }
+
+english:
+  primary:
+    id: yonge-finibus
+    name: "Charles Duke Yonge (George Bell & Sons, 1891)"
+    model: chapter_concordance
+    file: "yonge-finibus/yonge.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Published 1891, translator d. 1891 — safely pre-1931, US public domain"
+      source_url: "https://en.wikisource.org/wiki/Index:The_academic_questions,_treatise_de_finibus,_and_Tusculan_disputations.djvu"
+    # Chapter->section concordance (sources/yonge-finibus/concordance.json):
+    # 138 hand-verified, content-anchored records (21/35/22/28/32 chapters
+    # across books 1-5), each a {book, chapter, start_section, exact,
+    # section_position, anchor_lat_sha256_16, anchor_lat_note, anchor_en}
+    # row — see that file's own header and sources/yonge-finibus/README.md
+    # for the full methodology. Every anchor is re-verified at build time
+    # against the live Latin spine, per book
+    # (stage1_chapter_concordance_english.verify_anchor) — a hash mismatch
+    # (stale concordance vs. a re-exported Latin spine) fails the build
+    # loudly rather than silently mis-anchoring English.
+    concordance: "yonge-finibus/concordance.json"
+
+# Digest fingerprint of the observed book.section column spine (443
+# columns, 1.1..5.96: book 1 has 72 sections, book 2 has 119, book 3 has
+# 76, book 4 has 80, book 5 has 96) -- stage2 recomputes and compares it.
+# Computed directly against the real PHI export
+# (build/export/.../phi0474048.xml) via stage1_latin's own
+# _parse_book_section, mirroring De Officiis' section_spine workflow.
+section_spine: { count: 443, sha256: "0b13715863dc9422536d41933650f1e61d4b972199f62d8e34aa20cb98de9323" }
+
+books:
+  - { n: 1, start: "1.1", end: "1.72" }
+  - { n: 2, start: "2.1", end: "2.119" }
+  - { n: 3, start: "3.1", end: "3.76" }
+  - { n: 4, start: "4.1", end: "4.80" }
+  - { n: 5, start: "5.1", end: "5.96" }
+
+sources:
+  phi_dir_env: "PHI_DIR"
+  phi_dir_default: "../TLG Files/PHI"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: de-finibus
+  title: De Finibus Bonorum et Malorum
+  abbr: Fin.
+  author: cicero
+  language: lat
+  workType: continuous
+  books: 5
+  bookLabels:
+    - I
+    - II
+    - III
+    - IV
+    - V
+  greekEdition: 'Schiche, T. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Fasc. 43 (Leipzig: Teubner, 1915)'
+  greekSource:
+    short: Schiche (1915)
+    full: 'Schiche, T. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Fasc. 43 (Leipzig: Teubner, 1915)'
+  translations:
+    - id: yonge-finibus
+      name: C. D. Yonge (George Bell & Sons, 1891)
+      short: Yonge
+      slot: english
+  citation:
+    scheme: book-section
+    hideLineNumbers: true
+    # Block-per-section source layout (John, 2026-08-28: extend lined display
+    # to the section-numbered texts) — see WorkMeta["citation"].linedGreek.
+    # RULED OFF (John, 2026-08-31): this work carries no gutter apparatus at
+    # all (measured: 0 filled gutter cells), so its print lines aligned
+    # nothing, while forcing one rendered line per print line wrapped most of
+    # them at phone width into stubs ("qui illas for-" / "tunas morte"). Same
+    # ruling as Lives; prose reflows, quoted verse keeps its own lines via
+    # Reader.svelte's `isVerseLine` (see `proseIndent` above -- indent(2) is
+    # an ordinary paragraph here, indent(4)+ is verse).
+    linedGreek: false
+    # This edition sets ordinary paragraph openings at indent(2) and has no
+    # indent(1) at all (measured: levels present are 2,4[,5][,7]), unlike the
+    # Greek exports which start at 1. Without this, the verse test reads every
+    # Cicero paragraph opening -- dialogue turns included -- as quoted verse.
+    proseIndent: 2
+    linedSource: true
+    copyAbbr: Cic. Fin.
+  blurb: A dialogue in five books surveying the rival Hellenistic accounts of the highest good — Epicurean pleasure, Stoic virtue, and the Peripatetic and Academic middle positions — through paired speeches and Cicero's own critical replies.

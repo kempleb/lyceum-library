@@ -1,0 +1,34 @@
+# Self-contained schema-only fixture (used by test_preflight.py's schema
+# tests, which validate manifest SHAPE only — no matching data/ tree here).
+# Multi-book, to exercise the section-token books table beyond one entry.
+work:
+  id: Republic
+  title: "Republic"
+  author: "plato"
+  language: "grc"
+  tlg_author: "0059"
+  tlg_work: "030"
+  greek_edition: "Burnet, Platonis Opera vol. 4 (OCT, 1902)"
+
+citation:
+  scheme: stephanus
+  hideLineNumbers: true
+
+english:
+  primary:
+    id: shorey
+    name: "Paul Shorey (Loeb, 1930-1935)"
+    model: perseus_stephanus
+    file: "perseus-eng/tlg0059.tlg030.perseus-eng2.xml"
+
+section_spine: { count: 400, sha256: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" }
+
+books:
+  - { n: 1, start: "327a1", end: "354c99" }
+  - { n: 2, start: "357a1", end: "383c99" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"

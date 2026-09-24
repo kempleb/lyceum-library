@@ -1,0 +1,49 @@
+{
+ "witness": "sources/hicks-dl/hicks-lives.clean.json (pipeline/tools/extract_hicks_dl_perseus.py)",
+ "source_file": "hicks-lives.clean.json",
+ "generation": {
+  "tool": "pipeline/tools/build_hicks_epicurus_letters.py",
+  "method": "Direct re-key of hicks-lives.clean.json's Book X 10.<n> entries into this corpus's flat-scheme '<letter-id>:<n>' column tokens -- no re-parsing, no rewriting of the translated text itself."
+ },
+ "known_limitations": [
+  "10.83 (letter-to-herodotus's last section) and 10.135 (letter-to-menoeceus's last section) each carry Diogenes Laertius' own connective/resumptive narrative trailing the letter's actual last sentence, kept verbatim rather than trimmed -- see the module docstring's 'Boundary-matter check' for the verified evidence and the exact trailing strings."
+ ],
+ "letters": {
+  "letter-to-herodotus": {
+   "range": [
+    35,
+    83
+   ],
+   "count": 49,
+   "boundary_matter": {
+    "leading_non_letter_text": null,
+    "trailing_non_letter_text": "Such is his epistle on Physics. Next comes the “epistle on Celestial Phenomena.” “Epicurus to Pythocles, greeting.”",
+    "kept_verbatim": true
+   }
+  },
+  "letter-to-pythocles": {
+   "range": [
+    84,
+    116
+   ],
+   "count": 33,
+   "boundary_matter": {
+    "leading_non_letter_text": null,
+    "trailing_non_letter_text": null,
+    "kept_verbatim": false
+   }
+  },
+  "letter-to-menoeceus": {
+   "range": [
+    122,
+    135
+   ],
+   "count": 14,
+   "boundary_matter": {
+    "leading_non_letter_text": null,
+    "trailing_non_letter_text": "Such are his views on life and conduct; and he has discoursed upon them at greater length elsewhere.",
+    "kept_verbatim": true
+   }
+  }
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "1:B1": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.85",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "to which he gave the title On Nature, beginning as follows: “Nature in the ordered universe was composed of unlimited and limiting elements, and so was the whole universe and all that is therein.”"
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,911 @@
+{
+ "_comment": "Chapter->section concordance for Cicero, De Natura Deorum (Yonge's chapter-keyed English translation -> the PHI Ax Latin book.section spine, 1:1-124, 2:1-168, 3:1-95). See sources/yonge-nd/README.md for the full witness identity and methodology. Each record's start_section is the Latin section number at which that chapter begins; 'exact': true means the value is a directly witnessed Mayor running-header touching-page-boundary anchor (or the definitional chapter-1-starts-section-1 anchor), 'exact': false means it is linearly interpolated (or, past the last witnessed anchor of a book, extrapolated) between anchors -- NOT independently witnessed. Small deviations from the true Ax edition boundaries are expected (see README's gate-c findings) since the witness is a different 19th-century edition, not Ax itself.",
+ "records": [
+  {
+   "book": 1,
+   "chapter": 1,
+   "start_section": 1,
+   "exact": true
+  },
+  {
+   "book": 1,
+   "chapter": 2,
+   "start_section": 3,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 3,
+   "start_section": 5,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 4,
+   "start_section": 7,
+   "exact": true
+  },
+  {
+   "book": 1,
+   "chapter": 5,
+   "start_section": 10,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 6,
+   "start_section": 12,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 7,
+   "start_section": 15,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 8,
+   "start_section": 18,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 9,
+   "start_section": 21,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 10,
+   "start_section": 24,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 11,
+   "start_section": 26,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 12,
+   "start_section": 29,
+   "exact": true
+  },
+  {
+   "book": 1,
+   "chapter": 13,
+   "start_section": 32,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 14,
+   "start_section": 36,
+   "exact": true
+  },
+  {
+   "book": 1,
+   "chapter": 15,
+   "start_section": 39,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 16,
+   "start_section": 43,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 17,
+   "start_section": 46,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 18,
+   "start_section": 49,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 19,
+   "start_section": 53,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 20,
+   "start_section": 56,
+   "exact": true
+  },
+  {
+   "book": 1,
+   "chapter": 21,
+   "start_section": 58,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 22,
+   "start_section": 61,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 23,
+   "start_section": 63,
+   "exact": true
+  },
+  {
+   "book": 1,
+   "chapter": 24,
+   "start_section": 66,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 25,
+   "start_section": 69,
+   "exact": true
+  },
+  {
+   "book": 1,
+   "chapter": 26,
+   "start_section": 72,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 27,
+   "start_section": 76,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 28,
+   "start_section": 79,
+   "exact": true
+  },
+  {
+   "book": 1,
+   "chapter": 29,
+   "start_section": 82,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 30,
+   "start_section": 85,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 31,
+   "start_section": 88,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 32,
+   "start_section": 90,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 33,
+   "start_section": 93,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 34,
+   "start_section": 96,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 35,
+   "start_section": 99,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 36,
+   "start_section": 102,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 37,
+   "start_section": 105,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 38,
+   "start_section": 108,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 39,
+   "start_section": 110,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 40,
+   "start_section": 113,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 41,
+   "start_section": 116,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 42,
+   "start_section": 119,
+   "exact": true
+  },
+  {
+   "book": 1,
+   "chapter": 43,
+   "start_section": 122,
+   "exact": false
+  },
+  {
+   "book": 1,
+   "chapter": 44,
+   "start_section": 125,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 1,
+   "start_section": 1,
+   "exact": true
+  },
+  {
+   "book": 2,
+   "chapter": 2,
+   "start_section": 4,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 3,
+   "start_section": 7,
+   "exact": true
+  },
+  {
+   "book": 2,
+   "chapter": 4,
+   "start_section": 10,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 5,
+   "start_section": 12,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 6,
+   "start_section": 15,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 7,
+   "start_section": 18,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 8,
+   "start_section": 20,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 9,
+   "start_section": 23,
+   "exact": true
+  },
+  {
+   "book": 2,
+   "chapter": 10,
+   "start_section": 26,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 11,
+   "start_section": 28,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 12,
+   "start_section": 31,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 13,
+   "start_section": 33,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 14,
+   "start_section": 36,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 15,
+   "start_section": 38,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 16,
+   "start_section": 41,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 17,
+   "start_section": 44,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 18,
+   "start_section": 46,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 19,
+   "start_section": 49,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 20,
+   "start_section": 51,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 21,
+   "start_section": 54,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 22,
+   "start_section": 56,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 23,
+   "start_section": 59,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 24,
+   "start_section": 62,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 25,
+   "start_section": 64,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 26,
+   "start_section": 67,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 27,
+   "start_section": 69,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 28,
+   "start_section": 72,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 29,
+   "start_section": 74,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 30,
+   "start_section": 77,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 31,
+   "start_section": 80,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 32,
+   "start_section": 82,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 33,
+   "start_section": 85,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 34,
+   "start_section": 87,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 35,
+   "start_section": 90,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 36,
+   "start_section": 92,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 37,
+   "start_section": 95,
+   "exact": true
+  },
+  {
+   "book": 2,
+   "chapter": 38,
+   "start_section": 98,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 39,
+   "start_section": 100,
+   "exact": true
+  },
+  {
+   "book": 2,
+   "chapter": 40,
+   "start_section": 102,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 41,
+   "start_section": 105,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 42,
+   "start_section": 107,
+   "exact": true
+  },
+  {
+   "book": 2,
+   "chapter": 43,
+   "start_section": 109,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 44,
+   "start_section": 112,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 45,
+   "start_section": 114,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 46,
+   "start_section": 117,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 47,
+   "start_section": 119,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 48,
+   "start_section": 122,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 49,
+   "start_section": 124,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 50,
+   "start_section": 127,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 51,
+   "start_section": 129,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 52,
+   "start_section": 132,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 53,
+   "start_section": 134,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 54,
+   "start_section": 137,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 55,
+   "start_section": 139,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 56,
+   "start_section": 142,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 57,
+   "start_section": 144,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 58,
+   "start_section": 147,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 59,
+   "start_section": 149,
+   "exact": true
+  },
+  {
+   "book": 2,
+   "chapter": 60,
+   "start_section": 151,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 61,
+   "start_section": 153,
+   "exact": true
+  },
+  {
+   "book": 2,
+   "chapter": 62,
+   "start_section": 155,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 63,
+   "start_section": 157,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 64,
+   "start_section": 159,
+   "exact": true
+  },
+  {
+   "book": 2,
+   "chapter": 65,
+   "start_section": 161,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 66,
+   "start_section": 164,
+   "exact": false
+  },
+  {
+   "book": 2,
+   "chapter": 67,
+   "start_section": 166,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 1,
+   "start_section": 1,
+   "exact": true
+  },
+  {
+   "book": 3,
+   "chapter": 2,
+   "start_section": 4,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 3,
+   "start_section": 6,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 4,
+   "start_section": 9,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 5,
+   "start_section": 12,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 6,
+   "start_section": 14,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 7,
+   "start_section": 17,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 8,
+   "start_section": 19,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 9,
+   "start_section": 22,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 10,
+   "start_section": 25,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 11,
+   "start_section": 27,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 12,
+   "start_section": 30,
+   "exact": true
+  },
+  {
+   "book": 3,
+   "chapter": 13,
+   "start_section": 33,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 14,
+   "start_section": 36,
+   "exact": true
+  },
+  {
+   "book": 3,
+   "chapter": 15,
+   "start_section": 38,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 16,
+   "start_section": 41,
+   "exact": true
+  },
+  {
+   "book": 3,
+   "chapter": 17,
+   "start_section": 44,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 18,
+   "start_section": 46,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 19,
+   "start_section": 48,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 20,
+   "start_section": 51,
+   "exact": true
+  },
+  {
+   "book": 3,
+   "chapter": 21,
+   "start_section": 55,
+   "exact": true
+  },
+  {
+   "book": 3,
+   "chapter": 22,
+   "start_section": 57,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 23,
+   "start_section": 60,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 24,
+   "start_section": 62,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 25,
+   "start_section": 64,
+   "exact": true
+  },
+  {
+   "book": 3,
+   "chapter": 26,
+   "start_section": 66,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 27,
+   "start_section": 69,
+   "exact": true
+  },
+  {
+   "book": 3,
+   "chapter": 28,
+   "start_section": 71,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 29,
+   "start_section": 73,
+   "exact": true
+  },
+  {
+   "book": 3,
+   "chapter": 30,
+   "start_section": 76,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 31,
+   "start_section": 78,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 32,
+   "start_section": 81,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 33,
+   "start_section": 83,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 34,
+   "start_section": 86,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 35,
+   "start_section": 88,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 36,
+   "start_section": 91,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 37,
+   "start_section": 93,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 38,
+   "start_section": 96,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 39,
+   "start_section": 98,
+   "exact": false
+  },
+  {
+   "book": 3,
+   "chapter": 40,
+   "start_section": 101,
+   "exact": false
+  }
+ ]
+}

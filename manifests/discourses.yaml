@@ -1,0 +1,134 @@
+# Discourses — pipeline manifest (book-section scheme: Epictetus' Discourses
+# is cited by book.chapter, "4.13", same convention as Marcus Aurelius'
+# Meditations — chapter-level per John's decision, not the Loeb's finer
+# chapter.section). See manifests/meditations.yaml for the scheme's TEI-shape
+# background; Discourses adds one wrinkle Meditations doesn't have: each
+# chapter's Greek title lives in <div type="section" n="t">, which
+# stage1_greek._strip_title_section excludes from the flattened chapter body
+# (see that function's docstring).
+
+work:
+  id: discourses
+  title: "Discourses"
+  author: "epictetus"
+  language: "grc"
+  tlg_author: "0557"
+  tlg_work: "001"
+  greek_edition: "Schenkl, H. (ed.), Epicteti dissertationes ab Arriano digestae (Leipzig: Teubner, 1916, repr. 1965)"
+  # FATAL sourceDesc gate (Wave 1c Sol nit, backfilled onto this committed
+  # work since verifying it was trivial): stage1's _check_sourcedesc
+  # asserts this exact substring is present in the export XML's own
+  # <teiHeader><sourceDesc> text -- verified verbatim against
+  # build/export/.../tlg0557001.xml.
+  expected_sourcedesc: 'Epictetus Phil., Dissertationes ab Arriano digestae (0557: 001) "Epicteti dissertationes ab Arriano digestae'
+
+citation:
+  scheme: book-section
+  hideLineNumbers: true
+  # John's ruling (2026-08-28, docs/lined-source-plan.md): the Greek column
+  # renders Schenkl's own print lines, hyphenated line-end splits included,
+  # in place of the re-wrapped/paragraphed prose this scheme flattens a
+  # chapter to by default. Opt-in (not shape-based — see
+  # stage1_greek._parse_flat_book_section's docstring) — gates stage1_greek's
+  # per-<l> emission (`_lined_chapter_lines` + `_apply_lined_wraps`) instead
+  # of the one-flattened-line-per-chapter default. Supersedes this work's
+  # earlier `section_paragraphs: true` (2026-07-16 ruling): the `sections`
+  # standoff channel that flag gated is retired for Discourses in favour of
+  # a `sec` field on every emitted line (plan Q4) — Enchiridion still uses
+  # `section_paragraphs`, untouched.
+  lined_source: true
+  lined_section_div: "section"
+  lined_indent_max: 3
+
+english:
+  primary:
+    id: oldfather
+    name: "W. A. Oldfather (Loeb Classical Library, vol. I 1925, vol. II 1928)"
+    model: archive
+    file: "oldfather-epictetus/oldfather-discourses.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+    # Sidecars produced alongside the clean text by
+    # pipeline/tools/extract_oldfather_wikisource.py (see its module
+    # docstring): the chapter's own italic subtitle, and every-5th-TLG-
+    # section Loeb marker offsets — both threaded through by
+    # stage1_book_section_english.py the same way english.primary.
+    # verse_sidecar already is for Diogenes Laertius' quoted verse.
+    titles_sidecar: "oldfather-epictetus/oldfather-discourses-titles.json"
+    paras_sidecar: "oldfather-epictetus/oldfather-discourses-paras.json"
+  secondary:
+    id: long
+    name: "George Long (1877; Bell & Sons, 1890)"
+    model: archive
+    file: "long-epictetus/long-discourses.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+
+# Chapter-count reconciliation (sources/INVENTORY.md): both translations are
+# 95/95 against the Greek spine's 30/26/26/13 books — exact match, no known
+# gaps, so no alignment_allow_unmatched entries are needed.
+
+# Digest fingerprint of the observed book.chapter column spine (95 columns,
+# 1.1..4.13) — stage2 recomputes and compares it.
+section_spine: { count: 95, sha256: "cad4c11abc0965515fb86d90a9651686074f1d5c8e98de2b186682e6e827602a" }
+
+books:
+  - { n: 1, start: "1.1", end: "1.30" }
+  - { n: 2, start: "2.1", end: "2.26" }
+  - { n: 3, start: "3.1", end: "3.26" }
+  - { n: 4, start: "4.1", end: "4.13" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: discourses
+  title: Discourses
+  greekTitle: Διατριβαί
+  abbr: Diss.
+  author: epictetus
+  language: grc
+  workType: continuous
+  books: 4
+  bookLabels:
+    - I
+    - II
+    - III
+    - IV
+  greekEdition: 'Schenkl, H. (ed.), Epicteti dissertationes ab Arriano digestae (Leipzig: Teubner, 1916, repr. 1965)'
+  greekSource:
+    short: Schenkl (1916)
+    full: 'Schenkl, H. (ed.), Epicteti dissertationes ab Arriano digestae (Leipzig: Teubner, 1916, repr. 1965)'
+  translations:
+    - id: oldfather
+      name: W. A. Oldfather (Loeb Classical Library, vol. I 1925, vol. II 1928)
+      short: Oldfather
+      slot: english
+    - id: long
+      name: George Long (1877; Bell & Sons, 1890)
+      short: Long
+      slot: secondary
+  citation:
+    scheme: book-section
+    hideLineNumbers: true
+    copyAbbr: Epict. Diss.
+    # Block-per-section Greek layout (2026-08-28, John's Discourses gutter-
+    # collision report; same day he ruled it extends to the other section-
+    # numbered book-section works — Lives, Cicero, Seneca's essays; Meditations
+    # stays prose-flow per the July ruling). See WorkMeta['citation'].linedGreek
+    # in shared/lib/works.ts. Citations stay "1.2" (scheme unchanged); this
+    # only changes how the source column lays out.
+    linedGreek: true
+    # Reader-side flag mirroring pipeline citation.lined_source 1:1
+    # (2026-08-29, docs/lined-rollout-plan.md Stage 1/3, extending this
+    # work's own lined treatment's flag to the five wave-1 flat-scheme
+    # works) — see WorkMeta['citation'].linedSource in shared/lib/works.ts.
+    # Discourses keeps linedGreek too (its own, book-section-only meaning:
+    # forcing lineate/block-per-section layout).
+    linedSource: true
+  blurb: Arrian’s classroom transcript of his teacher’s lectures on freedom, judgement, and what is and isn’t up to us.

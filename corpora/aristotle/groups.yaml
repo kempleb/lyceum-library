@@ -1,0 +1,69 @@
+groups:
+  - numeral: I
+    title: Logic (Organon)
+    works:
+      - Cat
+      - Int
+      - APr
+      - APo
+      - Top
+      - SE
+  - numeral: II
+    title: Natural Philosophy
+    subcategories:
+      - ref: II.a
+        label: Major Works on Nature
+        works:
+          - Phys
+          - Cael
+          - GC
+          - Mete
+          - DA
+      - ref: II.b
+        label: Short Works on Nature (Parva Naturalia)
+        works:
+          - Sens
+          - Mem
+          - Somn
+          - Insomn
+          - DivSomn
+          - Long
+          - Juv
+      - ref: II.c
+        label: Biological Works
+        works:
+          - HA
+          - PA
+          - MA
+          - IA
+          - GA
+  - numeral: III
+    title: Metaphysics
+    works:
+      - Meta
+  - numeral: IV
+    title: Moral and Political Philosophy
+    works:
+      - EN
+      - EE
+      - Pol
+  - numeral: V
+    title: Rhetoric and Poetics
+    works:
+      - Rhet
+      - Poet
+  - numeral: ''
+    title: Spurious Works
+    appendix: true
+    works:
+      - DM
+      - MXG
+      - Mech
+      - Col
+      - Aud
+      - Phgn
+      - Mirab
+      - Lin
+      - Vent
+      - VV
+      - Oec

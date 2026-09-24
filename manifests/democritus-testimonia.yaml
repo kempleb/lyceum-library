@@ -1,0 +1,269 @@
+# Democritus Testimonia (DK 68 A) — pipeline manifest (dk scheme: one flat
+# div[@type="Fragment"][@n] per citable testimonium, no nested section div).
+# Greek-only: same Burnet Ch. IX untagged-chapter posture as the Leucippus
+# manifests (see leucippus-testimonia.yaml's comment) -- both philosophers
+# share the one chapter, deferred to #48. Clean spine: 184 divs, all fit
+# the simple digit(+letter) grammar -- no title divs, no comma-compound
+# divs, no div_map/div_concat needed anywhere in this work (that
+# irregularity is confined to the Fragmenta -- see democritus-fragments.yaml).
+
+work:
+  id: democritus-testimonia
+  title: "Testimonia"
+  author: "democritus"
+  language: "grc"
+  tlg_author: "1304"
+  tlg_work: "001"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1951–52), 68 A"
+  # FATAL sourceDesc gate -- verified verbatim against
+  # build/export/.../tlg1304001.xml (DK vol. 2, atomists).
+  expected_sourcedesc: 'Democritus Phil., Testimonia (1304: 001) "Die Fragmente der Vorsokratiker, vol. 2'
+
+citation:
+  scheme: dk
+  series: A
+  # dk_witness.py's owner-verified apparatus split (stage7_emit wiring):
+  # count of this work's columns whose apparatus actually splits into
+  # 2+ witnesses, cross-checked bidirectionally at preflight against the
+  # emitted dist's own `witnesses` keys -- catches an unreviewed new
+  # split and a stale declaration alike.
+  dk_witness_split_columns: 33
+  # Quote-mark polarity fix (owner ruling 2026-08-05, "we fix it and
+  # make damn sure every instance is correct"): the raw TLG export
+  # frequently opens a Greek quotation with U+2019 instead of U+2018 --
+  # stage1_greek._dk_normalize_quote_marks fixes every BALANCED
+  # (even-count) column automatically; this is that fix's own declared
+  # count, cross-checked bidirectionally at preflight against the
+  # emitted dist's actual U+2018/U+2019 total.
+  dk_quote_marks_rewritten: 80
+  hideLineNumbers: true
+  # 149 of 184 testimonia carry no <hi rend="letter-spacing"> at all --
+  # every div individually inspected via direct rend-attribute reading (no
+  # heuristic guess: the prose dk parser derives role purely from the
+  # literal `rend="letter-spacing"` markup, so this list was computed by
+  # mechanically walking every div's markup, not by any statistical
+  # classifier -- see the Wave-atomist implementation report). Matches the
+  # Heraclitus/Milesian/Leucippus precedent at greater scale: ancient
+  # doxography about a philosopher routinely carries nothing typographically
+  # marked as his own words.
+  unmarked_columns:
+    - A2
+    - A3
+    - A4
+    - A5
+    - A6
+    - A7
+    - A8
+    - A9
+    - A10
+    - A10a
+    - A11
+    - A12
+    - A13
+    - A14
+    - A15
+    - A16
+    - A17
+    - A17a
+    - A18
+    - A19
+    - A20
+    - A21
+    - A22
+    - A23
+    - A24
+    - A25
+    - A26
+    - A27
+    - A28
+    - A29
+    - A30
+    - A31
+    - A32
+    - A34
+    - A35
+    - A35a
+    - A36
+    - A40
+    - A41
+    - A42
+    - A43
+    - A44
+    - A45
+    - A46a
+    - A48
+    - A48a
+    - A48b
+    - A50
+    - A51
+    - A52
+    - A53
+    - A55
+    - A59
+    - A60
+    - A60a
+    - A61
+    - A63
+    - A64
+    - A65
+    - A66
+    - A68
+    - A69
+    - A70
+    - A71
+    - A72
+    - A73
+    - A74
+    - A75
+    - A76
+    - A79
+    - A80
+    - A81
+    - A82
+    - A84
+    - A85
+    - A86
+    - A87
+    - A88
+    - A89
+    - A89a
+    - A90
+    - A91
+    - A92
+    - A93a
+    - A94
+    - A95
+    - A96
+    - A97
+    - A98
+    - A99
+    - A100
+    - A101
+    - A103
+    - A104
+    - A104a
+    - A105
+    - A107
+    - A108
+    - A109
+    - A110
+    - A111
+    - A112
+    - A113
+    - A114
+    - A115
+    - A116
+    - A117
+    - A118
+    - A119
+    - A120
+    - A121
+    - A122
+    - A124
+    - A126
+    - A127
+    - A129
+    - A131
+    - A132
+    - A133
+    - A134
+    - A136
+    - A137
+    - A138
+    - A139
+    - A140
+    - A141
+    - A142
+    - A143
+    - A144
+    - A145
+    - A146
+    - A147
+    - A148
+    - A149
+    - A150
+    - A154
+    - A155a
+    - A155b
+    - A156
+    - A158
+    - A159
+    - A160
+    - A161
+    - A163
+    - A164
+    - A165
+    - A168
+    - A169
+    - A170
+  # A56: Cicero's paraphrase of Democritus' void/atom doctrine (de fin. I 6,
+  # 17) carries letter-spacing on a Latin span, not Greek -- DK prints this
+  # testimonium via a Latin source with no Greek witness at all. Zero Greek
+  # tokens in its role='text' content by construction (design memo §4.4),
+  # not an extraction failure.
+  latin_fragments:
+    - A56
+  # A99a: a damaged Hibeh papyrus (Grenfell-Hunt col. 2) whose context
+  # apparatus prints lacuna periods glued directly to LOWERCASE Greek
+  # letters ("απο.λ.λιπομενης", "απ.δ..πεσθαι") with no separating space --
+  # the same damage-transcription convention as Empedocles B142, but in
+  # PROSE context and lowercase (B142 is verse and uppercase). NEW: this
+  # wave extends `citation.dk_damaged_columns` and stage1_greek's damage-
+  # period cleanup to the prose path via a separate lowercase-scoped regex
+  # (`_DK_DAMAGE_PERIOD_LOWER_RE`), opt-in per column, never touching the
+  # existing verse/uppercase B142 behavior. CANON-log-worthy / flagged for
+  # review: a parser change, not a pure data declaration, though narrowly
+  # scoped and precedented on the existing dk_damaged_columns mechanism.
+  dk_damaged_columns:
+    - A99a
+  # A54: a genuine numbering gap in DK6 vol. 2's own A-series -- no div
+  # n="54" in the export, no lettered "54a" either (unlike A10/A17/A35/A46/
+  # A48/A60/A89/A93/A104/A126/A150/A155, which DO have real content, just
+  # under a plain OR lettered n). Declared so a re-export that restores a
+  # div DK previously omitted is caught, not silently accepted (mirrors the
+  # Xenophanes A10 / Heraclitus B84 precedent).
+  expected_gaps:
+    - A54
+
+# Digest fingerprint of the observed dk column spine (184 columns: A1-A170
+# minus the A54 gap, plus the 14 lettered testimonia A10a/A17a/A35a/A46a/
+# A48a/A48b/A60a/A89a/A93a/A104a/A126a/A150a/A155a/A155b) -- stage2
+# recomputes and compares it.
+section_spine: { count: 184, sha256: "253645922693a2662f9f7c7ee8eefaa061db3cb1b36f0f03523570a295094d02" }
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion).
+books:
+  - { n: 1, start: "A1", end: "A170" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: democritus-testimonia
+  slug: testimonia
+  title: Testimonia
+  abbr: Democr. A
+  author: democritus
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1951–52), 68 A'
+  greekSource:
+    short: Diels–Kranz (1951–52)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1951–52), 68 A'
+  translations: []
+  citation:
+    scheme: dk
+    copyAbbr: DK 68
+    dkChapter: 68
+    series: A
+  related:
+    - id: democritus-fragments
+      label: 'The B-fragments: the surviving words themselves'
+  blurb: Ancient reports, paraphrases, and biography concerning Democritus of Abdera — the largest testimonia collection in the Presocratic corpus, spanning his life, his prolific writings, and doxographical summaries of atomism — the original Greek text.

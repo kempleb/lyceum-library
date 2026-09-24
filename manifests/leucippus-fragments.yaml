@@ -1,0 +1,154 @@
+# Leucippus Fragments (DK 67 B) — pipeline manifest (dk scheme: one flat
+# div[@type="Fragment"][@n] per citable fragment, no nested section div —
+# see pipeline/reader_pipeline/scheme.py's `dk` entry for the verified TEI
+# shape). Smallest dk corpus in the collection: a title div (stripped) plus
+# THREE columns -- B1 (the "Great World-System" attribution, letter-spaced),
+# B1a (a damaged Herculaneum papyrus fragment, PHerc. 1788 -- Crönert's
+# reconstruction of Philodemus reporting the Great Diakosmos' disputed
+# authorship; entirely unmarked, no letter-spacing anywhere in the div: it
+# is papyrological/biographical evidence about the book, not a verbatim
+# quotation of Leucippus' own words, so DK prints it with nothing typeset
+# as citable text), and B2 (the "nothing happens in vain" dictum, letter-
+# spaced, DK's single best-known Leucippus sentence). Greek-only: see the
+# testimonia manifest's comment -- Burnet's atomist chapter has no DK
+# section tags at all, deferred to #48.
+
+work:
+  id: leucippus-fragments
+  title: "Fragments"
+  author: "leucippus"
+  language: "grc"
+  tlg_author: "1461"
+  tlg_work: "002"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1951–52), 67 B"
+  # FATAL sourceDesc gate -- verified verbatim against
+  # build/export/.../tlg1461002.xml.
+  expected_sourcedesc: 'Leucippus Phil., Fragmenta (1461: 002) "Die Fragmente der Vorsokratiker, vol. 2'
+
+citation:
+  scheme: dk
+  series: B
+  hideLineNumbers: true
+  # B1a: the damaged-papyrus testimony div (PHerc. 1788 / Crönert's
+  # reconstruction) carries NO <hi rend="letter-spacing"> anywhere -- its
+  # entire content (a third-person report, with papyrological supplement
+  # brackets < > and lacuna dots, that "the same things were said before
+  # in the Great World-System, which they say is Leucippus'") is DK's own
+  # editorial apparatus/testimony about the book's authorship dispute, not
+  # a quotation of Leucippus' own words. Declared here rather than forced
+  # into a fabricated role='text' span.
+  unmarked_columns:
+    - B1a
+  kind_overrides:
+    B1:
+      kind: title
+      note: >
+        Protagoras B5 precedent: the surviving Greek is the book title ἐν
+        τῶι Μεγάλωι διακόσμωι, presented inside Freeman's attribution context
+    B1a:
+      kind: omit
+      reason: >
+        testimonium-only damaged-papyrus report and attached terminology
+        list; no Leucippan Greek role='text' line for Freeman's English to
+        translate, under John's 2026-07-23 ruling
+  fragment_kinds:
+    B1: title
+    B1a: omit
+    B2: verbatim
+
+freeman_concordance: {}
+
+# Digest fingerprint of the observed dk column spine (3 columns: B1, B1a,
+# B2 -- plus the stripped title div n="tit,1-1a") -- stage2 recomputes and
+# compares it.
+section_spine: { count: 3, sha256: "832ff25eda095af25f991e80751b237374241824b967b6bd9490274c33fb2439" }
+
+# Freeman is the primary/default English. Burnet's existing translation is
+# retained as the secondary translation.
+english:
+  primary:
+    id: freeman
+    name: "Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)"
+    model: freeman
+    file: "freeman-ancilla/freeman-leucippus.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Kathleen Freeman's Ancilla to the Pre-Socratic Philosophers (1948) is treated as US public domain per John's 2026-07-23 ruling (CANON.md, Freeman Ancilla copyright ruling); covered by attribution.astro's site-wide translation public-domain notice."
+    group_headers_file: "freeman-ancilla/freeman-leucippus.group_headers.json"
+  # John's ruling 2026-07-29: B1 is Freeman's own wholly parenthetical title
+  # gloss, with no translated context-english span covering it -- labeled a
+  # summary rather than suppressed (stage1_freeman_english.py gate 5; see
+  # EnglishChunk.summary).
+  summary_labels: [B1]
+  secondary:
+    id: burnet
+    name: "John Burnet, Early Greek Philosophy, 3rd ed. (A. & C. Black, 1920)"
+    model: archive
+    file: "burnet-egp/burnet-leucippus.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+
+# Burnet EGP 3rd ed. (1920, Wikisource) — task #48's
+# MICRO-PASS: a single hand-curated, exact-anchor extraction of B2 only (the
+# "naught happens for nothing" dictum), not a general parser over Ch. IX
+# ("Leukippos of Miletos" — Leucippus/Democritus covered jointly, continuous
+# narrative prose, no DK section tags anywhere in the chapter). Confirmed
+# sitting in Burnet's own MAIN running text (S:S178), not inside a
+# footnote. See sources/burnet-egp/burnet-leucippus.clean.json (1 column)
+# and `build_leucippus_micro` in the extractor.
+# B1, B1a: outside this wave's micro-pass scope — same rationale as
+# Anaximander's B2-B6 above. B1a is also this work's own declared
+# `unmarked_columns` entry (no letter-spaced Greek quotation at all — DK's
+# own testimony-about-the-book apparatus, not a quotation of Leucippus'
+# words), so it would be an edition gap even if Ch. IX were fully parsed.
+# Genuine coverage gaps, not extraction defects (future work).
+alignment_allow_unmatched_secondary:
+    - "1:B1"
+    - "1:B1a"
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion).
+books:
+  - { n: 1, start: "B1", end: "B2" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: leucippus-fragments
+  slug: fragments
+  title: Fragments
+  abbr: Leuc. B
+  author: leucippus
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1951–52), 67 B'
+  greekSource:
+    short: Diels–Kranz (1951–52)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1951–52), 67 B'
+  translations:
+    - id: freeman
+      name: Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)
+      short: Freeman
+      slot: english
+    - id: burnet
+      name: John Burnet, Early Greek Philosophy, 3rd ed. (A. & C. Black, 1920)
+      short: Burnet
+      slot: secondary
+  defaultTranslation: freeman
+  citation:
+    scheme: dk
+    copyAbbr: DK 67
+    dkChapter: 67
+    series: B
+  related:
+    - id: leucippus-testimonia
+      label: 'The A-testimonia: ancient reports about Leucippus'
+  blurb: The three surviving fragments of Leucippus, founder of atomism — an attribution to his Great World-System, a damaged papyrus report on its disputed authorship, and the "nothing happens in vain" dictum on necessity.

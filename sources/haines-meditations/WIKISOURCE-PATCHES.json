@@ -1,0 +1,57 @@
+[
+ {
+  "chapter": "8.25",
+  "replace": [
+   [
+    "Antoņinus Faustina",
+    "Antoninus Faustina"
+   ]
+  ],
+  "note": "Wikisource transcription slip (page Marcus Aurelius (Haines 1916).djvu, Book 8, pinned revid 14007301): 'Antoņinus' with a stray cedilla under the n. The 1916 print reads 'Antoninus' -- confirmed against BOTH OCR scan witnesses: thecommuningswit00marcuoft_djvu.txt:12004 ('Diotimus, then Epitynchanus; Antoninus Faustina,') and communingswithh00haingoog_djvu.txt:11517 (identical). Also internally self-correcting: the same Wikisource sentence's next clause reads 'then Antoninus' with plain n.",
+  "witness_lines": "thecommuningswit00marcuoft_djvu.txt:12004; communingswithh00haingoog_djvu.txt:11517"
+ },
+ {
+  "chapter": "9.3",
+  "replace": [
+   [
+    "deal gently with them,.yet",
+    "deal gently with them, yet"
+   ]
+  ],
+  "note": "Wikisource transcription scar (Book 9, pinned revid 14013645): 'them,.yet' -- the print has a footnote-superscript mark right after the comma ('them,® yet' / 'them,’ yet' in the two OCR scans), and the Wikisource transcription's removal of the ref left a stray '.' glued between the comma and 'yet' with the space lost. Print reading 'deal gently with them, yet' confirmed against BOTH OCR scan witnesses: thecommuningswit00marcuoft_djvu.txt:13452 ('befriend and deal gently with them,® yet it is well') and communingswithh00haingoog_djvu.txt:12857 ('befriend and deal gently with them,’ yet it is well').",
+  "witness_lines": "thecommuningswit00marcuoft_djvu.txt:13452; communingswithh00haingoog_djvu.txt:12857"
+ },
+ {
+  "chapter": "8.31",
+  "replace": [
+   [
+    "here again the dearth of a whole race",
+    "here again the death of a whole race"
+   ]
+  ],
+  "note": "Wikisource transcription slip (Book 8, pinned revid 14007301): 'dearth' for 'death'. THREE witnesses agree on 'death': (1) thecommuningswit00marcuoft_djvu.txt:12196 ('the line—here again the death of a whole race!'); (2) communingswithh00haingoog_djvu.txt:11706 (identical wording); (3) the Greek itself -- the emitted 8.31 (build/dist/meditations/book-08.json) ends 'πάλιν ὧδε ὅλου γένους θάνατον' (thanaton, accusative of thanatos, DEATH, of a whole race), and the same chapter uses θάνατος twice more, both rendered 'death' by Haines. Not ambiguous.",
+  "witness_lines": "thecommuningswit00marcuoft_djvu.txt:12196; communingswithh00haingoog_djvu.txt:11706; build/dist/meditations/book-08.json (Greek: θάνατον)"
+ },
+ {
+  "chapter": "8.31",
+  "replace": [
+   [
+    "the man s ancestors",
+    "the man's ancestors"
+   ]
+  ],
+  "note": "Wikisource transcription slip (Book 8, pinned revid 14007301): dropped apostrophe -- 'the man s ancestors' for 'the man's ancestors'. Print reading confirmed against BOTH OCR scan witnesses: thecommuningswit00marcuoft_djvu.txt:12194 ('shewn by the man's ancestors that they might leave a') and communingswithh00haingoog_djvu.txt:11704 (identical). Straight apostrophe used in the replacement to match the shipped text's own apostrophe convention (the Wikisource transcription uses straight apostrophes throughout).",
+  "witness_lines": "thecommuningswit00marcuoft_djvu.txt:12194; communingswithh00haingoog_djvu.txt:11704"
+ },
+ {
+  "chapter": "11.1",
+  "replace": [
+   [
+    "if any break oceurs",
+    "if any break occurs"
+   ]
+  ],
+  "note": "Wikisource transcription slip (Book 11, pinned revid 14031354): 'oceurs' for 'occurs' (c/e confusion, likely inherited from the transcriber's OCR starting point and missed in proofreading). The 1916 print reads 'occurs' -- confirmed against BOTH OCR scan witnesses: thecommuningswit00marcuoft_djvu.txt:16468 ('break occurs, the whole action is rendered imperfect ;') and communingswithh00haingoog_djvu.txt:15634 (identical).",
+  "witness_lines": "thecommuningswit00marcuoft_djvu.txt:16468; communingswithh00haingoog_djvu.txt:15634"
+ }
+]

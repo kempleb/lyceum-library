@@ -1,0 +1,140 @@
+# Zeno of Elea Fragments (DK 29 B) — pipeline manifest (dk scheme: one flat
+# div[@type="Fragment"][@n] per citable fragment). See zeno-testimonia.yaml
+# for the TLG0595-vs-0635-vs-2294 homonym disambiguation (0595 = the
+# Eleatic, verified via bibliography header + Achilles-paradox content
+# check) and the verse-invocation control (plain export correct; zero
+# structural verse in this author).
+#
+# STRUCTURE: 5 divs — a title div (n="tit", with a source-language label, stripped
+# automatically by `_DK_TITLE_N_RE`, never a column) + four ordinary citable
+# columns B1-B4, no gaps/compounds/lettered variants. Matches the task's
+# stated DK range (frr. 1-4) exactly. All four fragments carry
+# <hi rend="letter-spacing"> (direct Simplicius quotations of Zeno's own
+# words on plurality/divisibility) — no `unmarked_columns` needed.
+
+work:
+  id: zeno-fragments
+  title: "Fragments"
+  author: "zeno"
+  language: "grc"
+  tlg_author: "0595"
+  tlg_work: "002"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 29 B"
+  # FATAL sourceDesc gate (Wave 1c Sol nit): stage1's _check_sourcedesc
+  # asserts this exact substring is present in the export XML's own
+  # <teiHeader><sourceDesc> text -- verified verbatim against
+  # build/export/.../tlg0595002.xml. The "0595" TLG author number pins
+  # this to Zeno of Elea specifically -- the Stoic Zeno of Citium is a
+  # DIFFERENT TLG author (0635), and a stale TLG_DIR export of that author
+  # in place of this one is exactly the wrong-author re-export this gate
+  # exists to catch.
+  expected_sourcedesc: 'Zeno Phil., Fragmenta (0595: 002) "Die Fragmente der Vorsokratiker, vol. 1'
+
+citation:
+  scheme: dk
+  series: B
+  # Quote-mark polarity fix (owner ruling 2026-08-05, "we fix it and
+  # make damn sure every instance is correct"): the raw TLG export
+  # frequently opens a Greek quotation with U+2019 instead of U+2018 --
+  # stage1_greek._dk_normalize_quote_marks fixes every BALANCED
+  # (even-count) column automatically; this is that fix's own declared
+  # count, cross-checked bidirectionally at preflight against the
+  # emitted dist's actual U+2018/U+2019 total.
+  dk_quote_marks_rewritten: 12
+  hideLineNumbers: true
+  fragment_kinds:
+    B1: verbatim
+    B2: verbatim
+    B3: verbatim
+    B4: verbatim
+
+freeman_concordance: {}
+
+# Digest fingerprint of the observed dk column spine (4 columns, B1-B4) —
+# stage2 recomputes and compares it.
+section_spine: { count: 4, sha256: "fa53ecc08507e6e6d22b16348d83489c4becbe0c27e2277adf13b3dff73b9434" }
+
+# Freeman is the primary/default English. Burnet's existing translation is
+# retained as the secondary translation.
+english:
+  primary:
+    id: freeman
+    name: "Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)"
+    model: freeman
+    file: "freeman-ancilla/freeman-zeno.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Kathleen Freeman's Ancilla to the Pre-Socratic Philosophers (1948) is treated as US public domain per John's 2026-07-23 ruling (CANON.md, Freeman Ancilla copyright ruling); covered by attribution.astro's site-wide translation public-domain notice."
+    group_headers_file: "freeman-ancilla/freeman-zeno.group_headers.json"
+  secondary:
+    id: burnet
+    name: "John Burnet, Early Greek Philosophy, 3rd ed. (A. & C. Black, 1920)"
+    model: archive
+    file: "burnet-egp/burnet-zeno.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+
+# Burnet EGP 3rd ed. (1920, Wikisource) — extracted by
+# pipeline/tools/extract_burnet_wikisource.py's `build_eleatics_ch8` (task
+# #48; see sources/burnet-egp/burnet-zeno.clean.json, 3 columns: B1-B3).
+# Zeno shares Ch. VIII ("The Younger Eleatics") with Melissus, with no
+# chapter-wide DK section tags — his own S:S160 "I give them according to
+# the arrangement of Diels" numbered-heading listing is parsed directly,
+# same heading-numeral scan as Parmenides/Xenophanes/Empedokles. Plain
+# prose (no marginal sidenote markers in this listing) — no paras sidecar.
+# B4 (Diogenes Laertius ix. 72's independent one-sentence aphorism about
+# motion) is a
+# genuine Burnet coverage gap: it is not the content of any of Burnet's own
+# S:S163 four-item motion-argument paraphrase (Burnet's OWN summary of
+# Aristotle's testimonia — not a translation of any Zeno fragment, and
+# structurally excluded from extraction by construction, see the
+# extractor's module doc) — Burnet never quotes B4 anywhere in the chapter.
+alignment_allow_unmatched_secondary:
+    - "1:B4"
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion).
+books:
+  - { n: 1, start: "B1", end: "B4" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: zeno-fragments
+  slug: fragments
+  title: Fragments
+  abbr: Zen. B
+  author: zeno
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 29 B'
+  greekSource:
+    short: Diels–Kranz (1951–52)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 29 B'
+  translations:
+    - id: freeman
+      name: Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)
+      short: Freeman
+      slot: english
+    - id: burnet
+      name: John Burnet, Early Greek Philosophy, 3rd ed. (A. & C. Black, 1920)
+      short: Burnet
+      slot: secondary
+  defaultTranslation: freeman
+  citation:
+    scheme: dk
+    copyAbbr: DK 29
+    dkChapter: 29
+    series: B
+  related:
+    - id: zeno-testimonia
+      label: 'The A-testimonia: ancient reports about Zeno'
+  blurb: The four surviving fragments of Zeno of Elea, defending Parmenides’ One against plurality — the seeds of his famous paradoxes of motion.

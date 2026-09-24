@@ -1,0 +1,417 @@
+[
+ {
+  "book": 1,
+  "start_section": 1,
+  "name": "Prologue"
+ },
+ {
+  "book": 1,
+  "start_section": 22,
+  "name": "THALES"
+ },
+ {
+  "book": 1,
+  "start_section": 45,
+  "name": "SOLON"
+ },
+ {
+  "book": 1,
+  "start_section": 68,
+  "name": "CHILON"
+ },
+ {
+  "book": 1,
+  "start_section": 74,
+  "name": "PITTACUS"
+ },
+ {
+  "book": 1,
+  "start_section": 82,
+  "name": "BIAS"
+ },
+ {
+  "book": 1,
+  "start_section": 89,
+  "name": "CLEOBULUS"
+ },
+ {
+  "book": 1,
+  "start_section": 94,
+  "name": "PERIANDER"
+ },
+ {
+  "book": 1,
+  "start_section": 101,
+  "name": "ANACHARSIS"
+ },
+ {
+  "book": 1,
+  "start_section": 106,
+  "name": "MYSON"
+ },
+ {
+  "book": 1,
+  "start_section": 109,
+  "name": "EPIMENIDES"
+ },
+ {
+  "book": 1,
+  "start_section": 116,
+  "name": "PHERECYDES"
+ },
+ {
+  "book": 2,
+  "start_section": 1,
+  "name": "ANAXIMANDER"
+ },
+ {
+  "book": 2,
+  "start_section": 3,
+  "name": "ANAXIMENES"
+ },
+ {
+  "book": 2,
+  "start_section": 6,
+  "name": "ANAXAGORAS"
+ },
+ {
+  "book": 2,
+  "start_section": 16,
+  "name": "ARCHELAUS"
+ },
+ {
+  "book": 2,
+  "start_section": 18,
+  "name": "SOCRATES"
+ },
+ {
+  "book": 2,
+  "start_section": 48,
+  "name": "XENOPHON"
+ },
+ {
+  "book": 2,
+  "start_section": 60,
+  "name": "AESCHINES"
+ },
+ {
+  "book": 2,
+  "start_section": 65,
+  "name": "ARISTIPPUS"
+ },
+ {
+  "book": 2,
+  "start_section": 105,
+  "name": "PHAEDO"
+ },
+ {
+  "book": 2,
+  "start_section": 106,
+  "name": "EUCLIDES"
+ },
+ {
+  "book": 2,
+  "start_section": 113,
+  "name": "STILPO"
+ },
+ {
+  "book": 2,
+  "start_section": 121,
+  "name": "CRITO"
+ },
+ {
+  "book": 2,
+  "start_section": 122,
+  "name": "SIMON"
+ },
+ {
+  "book": 2,
+  "start_section": 124,
+  "name": "GLAUCON"
+ },
+ {
+  "book": 2,
+  "start_section": 124,
+  "name": "SIMMIAS"
+ },
+ {
+  "book": 2,
+  "start_section": 125,
+  "name": "CEBES"
+ },
+ {
+  "book": 2,
+  "start_section": 125,
+  "name": "MENEDEMUS"
+ },
+ {
+  "book": 3,
+  "start_section": 1,
+  "name": "PLATO"
+ },
+ {
+  "book": 4,
+  "start_section": 1,
+  "name": "SPEUSIPPUS"
+ },
+ {
+  "book": 4,
+  "start_section": 6,
+  "name": "XENOCRATES"
+ },
+ {
+  "book": 4,
+  "start_section": 16,
+  "name": "POLEMO"
+ },
+ {
+  "book": 4,
+  "start_section": 21,
+  "name": "CRATES"
+ },
+ {
+  "book": 4,
+  "start_section": 24,
+  "name": "CRANTOR"
+ },
+ {
+  "book": 4,
+  "start_section": 28,
+  "name": "ARCESILAUS"
+ },
+ {
+  "book": 4,
+  "start_section": 46,
+  "name": "BION"
+ },
+ {
+  "book": 4,
+  "start_section": 59,
+  "name": "LACYDES"
+ },
+ {
+  "book": 4,
+  "start_section": 62,
+  "name": "CARNEADES"
+ },
+ {
+  "book": 4,
+  "start_section": 67,
+  "name": "CLITOMACHUS"
+ },
+ {
+  "book": 5,
+  "start_section": 1,
+  "name": "ARISTOTLE"
+ },
+ {
+  "book": 5,
+  "start_section": 36,
+  "name": "THEOPHRASTUS"
+ },
+ {
+  "book": 5,
+  "start_section": 58,
+  "name": "STRATO"
+ },
+ {
+  "book": 5,
+  "start_section": 65,
+  "name": "LYCO"
+ },
+ {
+  "book": 5,
+  "start_section": 75,
+  "name": "DEMETRIUS"
+ },
+ {
+  "book": 5,
+  "start_section": 86,
+  "name": "HERACLIDES"
+ },
+ {
+  "book": 6,
+  "start_section": 1,
+  "name": "ANTISTHENES"
+ },
+ {
+  "book": 6,
+  "start_section": 20,
+  "name": "DIOGENES"
+ },
+ {
+  "book": 6,
+  "start_section": 82,
+  "name": "MONIMUS"
+ },
+ {
+  "book": 6,
+  "start_section": 84,
+  "name": "ONESICRITUS"
+ },
+ {
+  "book": 6,
+  "start_section": 85,
+  "name": "CRATES"
+ },
+ {
+  "book": 6,
+  "start_section": 94,
+  "name": "METROCLES"
+ },
+ {
+  "book": 6,
+  "start_section": 96,
+  "name": "HIPPARCHIA"
+ },
+ {
+  "book": 6,
+  "start_section": 99,
+  "name": "MENIPPUS"
+ },
+ {
+  "book": 6,
+  "start_section": 102,
+  "name": "MENEDEMUS"
+ },
+ {
+  "book": 7,
+  "start_section": 1,
+  "name": "ZENO"
+ },
+ {
+  "book": 7,
+  "start_section": 160,
+  "name": "ARISTON"
+ },
+ {
+  "book": 7,
+  "start_section": 165,
+  "name": "HERILLUS"
+ },
+ {
+  "book": 7,
+  "start_section": 166,
+  "name": "DIONYSIUS"
+ },
+ {
+  "book": 7,
+  "start_section": 168,
+  "name": "CLEANTHES"
+ },
+ {
+  "book": 7,
+  "start_section": 177,
+  "name": "SPHAERUS"
+ },
+ {
+  "book": 7,
+  "start_section": 179,
+  "name": "CHRYSIPPUS"
+ },
+ {
+  "book": 8,
+  "start_section": 1,
+  "name": "PYTHAGORAS"
+ },
+ {
+  "book": 8,
+  "start_section": 51,
+  "name": "EMPEDOCLES"
+ },
+ {
+  "book": 8,
+  "start_section": 78,
+  "name": "EPICHARMUS"
+ },
+ {
+  "book": 8,
+  "start_section": 79,
+  "name": "ARCHYTAS"
+ },
+ {
+  "book": 8,
+  "start_section": 83,
+  "name": "ALCMAEON"
+ },
+ {
+  "book": 8,
+  "start_section": 84,
+  "name": "HIPPASUS"
+ },
+ {
+  "book": 8,
+  "start_section": 84,
+  "name": "PHILOLAUS"
+ },
+ {
+  "book": 8,
+  "start_section": 86,
+  "name": "EUDOXUS"
+ },
+ {
+  "book": 9,
+  "start_section": 1,
+  "name": "HERACLITUS"
+ },
+ {
+  "book": 9,
+  "start_section": 18,
+  "name": "XENOPHANES"
+ },
+ {
+  "book": 9,
+  "start_section": 21,
+  "name": "PARMENIDES"
+ },
+ {
+  "book": 9,
+  "start_section": 24,
+  "name": "MELISSUS"
+ },
+ {
+  "book": 9,
+  "start_section": 25,
+  "name": "ZENO OF ELEA"
+ },
+ {
+  "book": 9,
+  "start_section": 30,
+  "name": "LEUCIPPUS"
+ },
+ {
+  "book": 9,
+  "start_section": 34,
+  "name": "DEMOCRITUS"
+ },
+ {
+  "book": 9,
+  "start_section": 50,
+  "name": "PROTAGORAS"
+ },
+ {
+  "book": 9,
+  "start_section": 57,
+  "name": "DIOGENES OF APOLLONIA"
+ },
+ {
+  "book": 9,
+  "start_section": 58,
+  "name": "ANAXARCHUS"
+ },
+ {
+  "book": 9,
+  "start_section": 61,
+  "name": "PYRRHO"
+ },
+ {
+  "book": 9,
+  "start_section": 109,
+  "name": "TIMON"
+ },
+ {
+  "book": 10,
+  "start_section": 1,
+  "name": "EPICURUS"
+ }
+]

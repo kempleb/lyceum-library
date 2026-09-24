@@ -1,0 +1,72 @@
+{
+ "1:A2": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "3.1",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Plato was the son of Ariston and a citizen of Athens. His mother was Perictione (or Potone), who traced back her descent to Solon. For Solon had a brother, Dropides; he was the father of Critias, who was the father of Callaeschrus, who was the father of Critias, one of the Thirty, as well as of Glaucon, who was the father of Charmides and Perictione. Thus Plato, the son of this Perictione and Ariston, was in the sixth generation from Solon."
+    ]
+   },
+   {
+    "source_author": "Plato",
+    "source_work": "Charmides",
+    "locus": "154b",
+    "status": "translated",
+    "translation_credit": "Lamb, 1927",
+    "emphasis": [
+     "our uncle Glaucon, and my cousin."
+    ]
+   },
+   {
+    "source_author": "Plato",
+    "source_work": "Charmides",
+    "locus": "157e",
+    "status": "translated",
+    "translation_credit": "Lamb, 1927",
+    "emphasis": [
+     "For your father’s house, which comes from Critias, son of Dropides, has been celebrated by Anacreon and Solon and many other poets, so that it is famed by tradition among us"
+    ]
+   }
+  ]
+ },
+ "1:A3": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Timaeus",
+    "locus": "20a",
+    "status": "translated",
+    "translation_credit": "Bury, 1929",
+    "emphasis": [
+     "As to Critias, all of us here know that he is no novice in any of the subjects we are discussing."
+    ]
+   },
+   {
+    "source_author": "Plato",
+    "source_work": "Timaeus",
+    "locus": "20d-20e",
+    "status": "translated",
+    "translation_credit": "Bury, 1929",
+    "emphasis": [
+     "Listen then, Socrates, to a tale which, though passing strange, is yet wholly true, as Solon,",
+     "the wisest of the Seven, once upon a time declared. Now Solon—as indeed he often says himself in his poems—was a relative and very dear friend of our great-grandfather Dropides; Crit. and Dropides told our grandfather Critias as the old man himself, in turn, related to us—that the exploits of this city in olden days, the record of which had perished through time and the destruction of its inhabitants, were great and marvellous"
+    ]
+   },
+   {
+    "source_author": "Plato",
+    "source_work": "Timaeus",
+    "locus": "21a-21b",
+    "status": "translated",
+    "translation_credit": "Bury, 1929",
+    "emphasis": [
+     "I will tell you: it is an old tale, and I heard it from a man not young. For indeed at that time, as he said himself,",
+     "Critias was already close upon ninety years of age, while I was somewhere about ten"
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "1:B1": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.60-61",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "This Pausanias, according to Aristippus and Satyrus, was his bosom-friend, to whom he dedicated his poem On Nature thus:",
+     "Give ear, Pausanias, thou son of Anchitus the wise!"
+    ]
+   }
+  ]
+ },
+ "1:B25": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Gorgias",
+    "locus": "498e",
+    "status": "translated",
+    "translation_credit": "Lamb, 1925",
+    "emphasis": [
+     "Then just help me to reckon up the results we get from our admissions for you know they say: That which seemeth well, ’tis well twice and also thrice to tell, and to examine too."
+    ]
+   }
+  ]
+ },
+ "1:B111": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.59",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "And thou shalt learn all the drugs that are a defence to ward off ills and old age, since for thee alone shall I accomplish all this. Thou shalt arrest the violence of the unwearied winds that arise and sweep the earth, laying waste the cornfields with their blasts; and again, if thou so will, thou shalt call back winds in requital. Thou shalt make after the dark rain a seasonable drought for men, and again after the summer drought thou shalt cause tree-nourishing streams to pour from the sky. Thou shalt bring back from Hades a dead man’s strength."
+    ]
+   }
+  ]
+ },
+ "1:B112": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.62",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925"
+   }
+  ]
+ },
+ "1:B117": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.77",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Before now I was born a boy and a maid, a bush and a bird, and a dumb fish leaping out of the sea."
+    ]
+   }
+  ]
+ },
+ "1:B155": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.43",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "They also had a son Telauges, who succeeded his father and, according to some, was Empedocles’ instructor. At all events Hippobotus makes Empedocles say: Telauges, famed Son of Theano and Pythagoras."
+    ]
+   }
+  ]
+ },
+ "1:B156": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.61",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Moreover he wrote an epigram upon him: The physician Pausanias, rightly so named, son of Anchitus, descendant of Asclepius, was born and bred at Gela. Many a wight pining in fell torments did he bring back from Persephone’s inmost shrine."
+    ]
+   }
+  ]
+ },
+ "1:B157": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.65",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "“Acron the eminent physician of Agrigentum, son of Acros, is buried beneath the steep eminence of his most eminent native city?” Others give as the second line: Is laid in an exalted tomb on a most exalted peak. Some attribute this couplet to Simonides."
+    ]
+   }
+  ]
+ }
+}

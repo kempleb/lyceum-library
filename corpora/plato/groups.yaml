@@ -1,0 +1,64 @@
+groups:
+  - numeral: I
+    title: Tetralogy I
+    works:
+      - Euthyphro
+      - Apology
+      - Crito
+      - Phaedo
+  - numeral: II
+    title: Tetralogy II
+    works:
+      - Cratylus
+      - Theaetetus
+      - Sophist
+      - Statesman
+  - numeral: III
+    title: Tetralogy III
+    works:
+      - Parmenides
+      - Philebus
+      - Symposium
+      - Phaedrus
+  - numeral: IV
+    title: Tetralogy IV
+    works:
+      - Alcibiades1
+      - Alcibiades2
+      - Hipparchus
+      - Lovers
+  - numeral: V
+    title: Tetralogy V
+    works:
+      - Theages
+      - Charmides
+      - Laches
+      - Lysis
+  - numeral: VI
+    title: Tetralogy VI
+    works:
+      - Euthydemus
+      - Protagoras
+      - Gorgias
+      - Meno
+  - numeral: VII
+    title: Tetralogy VII
+    works:
+      - HippiasMajor
+      - HippiasMinor
+      - Ion
+      - Menexenus
+  - numeral: VIII
+    title: Tetralogy VIII
+    works:
+      - Clitophon
+      - Republic
+      - Timaeus
+      - Critias
+  - numeral: IX
+    title: Tetralogy IX
+    works:
+      - Minos
+      - Laws
+      - Epinomis
+      - Letters

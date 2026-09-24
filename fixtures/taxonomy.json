@@ -1,0 +1,33 @@
+{
+  "schema_version": "taxonomy.v1",
+  "taxonomy": {
+    "author_period_order": [
+      "presocratic",
+      "sophists",
+      "classical",
+      "hellenistic",
+      "roman",
+      "imperial",
+      "late-antique"
+    ],
+    "period_label": {
+      "presocratic": "Presocratics",
+      "sophists": "Sophists",
+      "classical": "Classical",
+      "hellenistic": "Hellenistic",
+      "roman": "Roman",
+      "imperial": "Imperial",
+      "late-antique": "Late Antiquity"
+    },
+    "school_label": {
+      "milesian": "Milesians",
+      "pythagorean": "Pythagoreans",
+      "eleatic": "Eleatics",
+      "pluralist": "Pluralists",
+      "atomist": "Atomists",
+      "peripatetic": "Peripatetic",
+      "neoplatonist": "Neoplatonist"
+    }
+  },
+  "start_here": []
+}

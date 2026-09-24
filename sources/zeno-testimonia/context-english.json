@@ -1,0 +1,44 @@
+{
+ "1:A1": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.25-29",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925"
+   }
+  ]
+ },
+ "1:A10": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.57",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Aristotle in his Sophist calls Empedocles the inventor of rhetoric as Zeno of dialectic."
+    ]
+   }
+  ]
+ },
+ "1:A11": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Parmenides",
+    "locus": "127a-127d",
+    "status": "translated",
+    "translation_credit": "Fowler, 1926",
+    "emphasis": [
+     "Antiphon, then, said that Pythodorus told him",
+     "that Zeno and Parmenides once came to the Great Panathenaea; that Parmenides was already quite elderly, about sixty-five years old, very white-haired, and of handsome and noble countenance; Zeno was at that time about forty years of age; he was tall and good-looking, and there was a story that Parmenides had been in love with him.",
+     "He said that they lodged with Pythodorus outside of the wall, in Cerameicus, and that Socrates and many others with him went there because they wanted to hear Zeno’s writings, which had been brought to Athens for the first time by them. Socrates was then very young. So Zeno himself read aloud to them, and Parmenides was not in the house.",
+     "Pythodorus said the reading of the treatises was nearly finished when he came in himself with Parmenides and Aristoteles (the one who was afterwards one of the thirty), so they heard only a little that remained of the written works."
+    ]
+   }
+  ]
+ }
+}

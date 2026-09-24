@@ -1,0 +1,100 @@
+# Lucullus — pipeline manifest (Wave 2 Batch 3 round 2: the new flat,
+# bookless `section` scheme — Pipeline Change B, stage1_latin.py's
+# `_parse_flat_section`, Epictetus' Enchiridion precedent for the scheme
+# itself, manifests/enchiridion.yaml). PHI's export carries NO
+# <div type="book"> at all — top-level <div type="section"> siblings only,
+# 1-148 (verified against phi0474046.xml) — hence citation.div_types.page
+# overrides the scheme's registered "Chapter" to PHI's lowercase "section".
+# Latin-only staging (no_english): text, citation, search, and the lexicon
+# layer only. English (Yonge, Bohn 1853) is design note §D future work,
+# pending its own source-verification recon and John's copyright gate.
+#
+# REGISTRY DECISION (docs/wave2-batch3c-design.md §A, John gate #2 pending
+# formal sign-off): Lucullus (PHI 046) registers as its OWN reader work,
+# separate from Academica (PHI 045) — NOT a merged "Academica". PHI models
+# them as two works with distinct <sourceDesc> entries; Lucullus is flat
+# bookless (this manifest), Academica has a real book axis and its own
+# fragment-book complications (design note §A.2) — merging would force
+# Lucullus to be fabricated as "book 2", colliding with Academica's own
+# real book 2. Academica itself is NOT shipped in this round (John canon
+# gate pending, design note §J.1) — only Lucullus ships here.
+#
+# copyAbbr: this manifest follows the design note's own explicit choice
+# ('Luc.', section A.1: "an established standalone abbreviation... routinely
+# cited on its own") rather than the orchestrator brief's shorthand ship-list
+# text ("Cic. Luc.") — flagged as a deviation, not a silent improvisation;
+# the design note is the plan of record for this work's registry shape.
+
+work:
+  id: lucullus
+  title: "Lucullus"
+  author: "cicero"
+  language: "lat"
+  lexicon: true
+  no_english: true
+  phi_author: "0474"
+  phi_work: "046"
+  latin_edition: "Plasberg, O. (ed.), M. Tulli Ciceronis Academicorum Reliquiae cum Lucullo (Leipzig: Teubner, 1922)"
+  # FATAL sourceDesc gate (De Officiis/De Rerum Natura precedent): verified
+  # verbatim against the real PHI export
+  # (build/export/Diogenes-Resources/xml/phi/phi0474046.xml).
+  expected_sourcedesc: 'M. Tullius Cicero. Lucullus (M. Tulli Ciceronis Scripta Quae Manserunt Omnia. Fasc. 42, ed. O. Plasberg, 1922)'
+
+citation:
+  scheme: section
+  hideLineNumbers: true
+  div_types:
+    page: "section"
+  # No cross-section print-line hyphen wraps observed in this export
+  # (verified against the real export). Declared as a re-export drift
+  # tripwire (a future re-export producing a nonzero count fails loudly).
+  cross_section_rejoins: 0
+  # Declared title-drop hash (adversarial-review Finding 2, replacing the
+  # earlier shape-heuristic title guard) — see manifests/de-officiis.yaml's
+  # matching comment for the full mechanism. No citation.flat_wrapper is
+  # declared: this export carries no wrapper div at all (top-level
+  # <div type="section"> siblings only), so Finding 3's depth-scoping check
+  # requires every section div to be a direct child of <body>.
+  title_labels:
+    - { sha256_16: "01fcee8f63a7a1c6", note: "work title (top-level section n=\"t\")" }
+
+# Digest fingerprint of the observed bare-section column spine (148
+# columns, "1".."148") — stage2 recomputes and compares it. Computed
+# directly against the real PHI export (build/export/.../phi0474046.xml)
+# via stage1_latin's own _parse_flat_section. ~13.5% of sections carry an
+# editor-marked lacuna (design note §A.1) — the markers are ordinary
+# flattened text within a section (no range-token grammar, unlike
+# verse-line's lacuna role), so no manifest handling beyond this fingerprint
+# is needed.
+section_spine: { count: 148, sha256: "46744681173f19be12aaa59dc5ad4627be13d7c173a6f5b13e8aeb68d6cc02eb" }
+
+# Flat scheme: exactly one book, bounded by bare section-integer tokens.
+books:
+  - { n: 1, start: "1", end: "148" }
+
+sources:
+  phi_dir_env: "PHI_DIR"
+  phi_dir_default: "../TLG Files/PHI"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: lucullus
+  title: Lucullus
+  abbr: Luc.
+  author: cicero
+  language: lat
+  workType: continuous
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Plasberg, O. (ed.), M. Tulli Ciceronis Academicorum Reliquiae cum Lucullo (Leipzig: Teubner, 1922)'
+  greekSource:
+    short: Plasberg (1922)
+    full: 'Plasberg, O. (ed.), M. Tulli Ciceronis Academicorum Reliquiae cum Lucullo (Leipzig: Teubner, 1922)'
+  translations: []
+  citation:
+    scheme: section
+    hideLineNumbers: true
+    copyAbbr: Luc.
+  blurb: The surviving half of Cicero's first edition of the Academica — Lucullus defends the possibility of certain knowledge against Cicero's own Academic-skeptic case that nothing can be known for certain.

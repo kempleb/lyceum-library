@@ -1,0 +1,155 @@
+{
+ "1:3": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.8",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Aristoxenus says that Pythagoras got most of his moral doctrines from the Delphic priestess Themistoclea."
+    ]
+   }
+  ]
+ },
+ "1:5": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.56",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Alcidamas tells us in his treatise on Physics",
+     "Empedocles became the pupil of Anaxagoras and Pythagoras, emulating the latter in dignity of life and bearing, and the former in his physical investigations."
+    ]
+   }
+  ]
+ },
+ "1:6": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.38",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "“He would seem,” says Thrasylus, “to have been an admirer of the Pythagoreans. Moreover, he mentions Pythagoras himself, praising him in a work of his own entitled Pythagoras. He seems to have taken all his ideas from him and, if chronology did not stand in the way, he might have been thought his pupil.” Glaucus of Rhegium certainly says that he was taught by one of the Pythagoreans, and Glaucus was his contemporary."
+    ]
+   }
+  ]
+ },
+ "1:8": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.1",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "according to Aristoxenus, a Tyrrhenian from one of those islands which the Athenians held after clearing them of their Tyrrhenian inhabitants."
+    ]
+   },
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "1.118",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "But Aristoxenus in his work On Pythagoras and his School affirms that he died a natural death and was buried by Pythagoras in Delos"
+    ]
+   },
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.4-5",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925"
+   }
+  ]
+ },
+ "1:9": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.20",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "The offerings he made were always inanimate; though some say that he would offer cocks, sucking goats and porkers, as they are called, but lambs never. However, Aristoxenus has it that he consented to the eating of all other animals, and only abstained from ploughing oxen and rams."
+    ]
+   }
+  ]
+ },
+ "1:10": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Republic",
+    "locus": "600a-600b",
+    "status": "translated",
+    "translation_credit": "Shorey, 1930-1937 (per owner's pre-1940 ruling, 2026-07-28)",
+    "emphasis": [
+     "Well, then, if no public service is credited to him, is Homer reported while he lived to have been a guide in education to men who took pleasure in associating with him",
+     "and transmitted to posterity a certain Homeric way of life just as Pythagoras was himself especially honored for this, and his successors, even to this day, denominating a certain way of life the Pythagorean, are distinguished among their contemporaries?"
+    ]
+   },
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.45-46",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "He flourished in the 60th Olympiad and his school lasted until the ninth or tenth generation.",
+     "For the last of the Pythagoreans, whom Aristoxenus in his time saw, were Xenophilus from the Thracian Chalcidice, Phanton of Phlius, and Echecrates, Diocles and Polymnastus, also of Phlius, who were pupils of Philolaus and Eurytus of Tarentum."
+    ]
+   }
+  ]
+ },
+ "1:12": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.14",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "He too, according to Aristoxenus the musician, was the first to introduce weights and measures into Greece."
+    ]
+   }
+  ]
+ },
+ "1:15": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "2.46",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "He was sharply criticized, according to Aristotle in his third book On Poetry, by a certain Antilochus of Lemnos, and by Antiphon the soothsayer, just as Pythagoras was by Cylon of Croton"
+    ]
+   }
+  ]
+ },
+ "1:19": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.6-7",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925"
+   }
+  ]
+ }
+}

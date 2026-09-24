@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lyceum-reader.org/schemas/manifest.v1.json",
+  "title": "Lyceum work manifest v1",
+  "description": "The versioned manifest emitted for one work. The citation book list is the desktop-pack table of contents and must contain every book. License status 'unverified' is allowed and produces a validator warning, not a validation failure. A manifest route is only a claim: route ownership lives in the cross-corpus route registry, and the registry decides which work owns a route. Legacy pipeline statistics may remain as extra root properties.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "id",
+    "author",
+    "title",
+    "language",
+    "route",
+    "citation",
+    "editions",
+    "translations",
+    "apparatus",
+    "corpus_version"
+  ],
+  "properties": {
+    "schema_version": { "const": "manifest.v1" },
+    "id": { "type": "string", "minLength": 1 },
+    "author": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "language": { "enum": ["grc", "lat"] },
+    "route": {
+      "type": "string",
+      "pattern": "^/[^/]+/[^/]+$",
+      "description": "The work's claimed route. This does not grant ownership; route ownership lives only in the route registry."
+    },
+    "citation": { "$ref": "#/$defs/citation" },
+    "editions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/edition" }
+    },
+    "translations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/translation" },
+      "anyOf": [
+        { "maxItems": 0 },
+        {
+          "contains": {
+            "type": "object",
+            "required": ["slot"],
+            "properties": { "slot": { "const": "primary" } }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        }
+      ]
+    },
+    "apparatus": { "$ref": "#/$defs/apparatus" },
+    "corpus_version": { "type": "string", "minLength": 1 },
+    "presentation": {
+      "type": "object",
+      "description": "Verbatim copy of the work's YAML manifest `registry:` block -- the presentation contract (greekTitle, abbr, workType, bookLabels, blurb, slug, citation extras, translations display metadata, etc.; see docs/p2-plan.md §1/§5). Optional; omitted entirely for a work whose manifest declares no registry block. Never carries a `route` key -- route ownership lives only in this schema's own top-level `route` field via the cross-corpus route registry."
+    }
+  },
+  "$defs": {
+    "license": {
+      "type": "object",
+      "description": "Rights status for an edition or translation. 'unverified' remains valid and is a warning because strict provenance enforcement is not yet settled.",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": { "enum": ["public-domain-us", "licensed", "unverified", "cc"] },
+        "rationale": { "type": "string", "minLength": 1 },
+        "source_url": { "type": "string", "format": "uri" },
+        "name": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "format": "uri" }
+      }
+    },
+    "citationBook": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["n", "start", "end"],
+      "properties": {
+        "n": { "type": "integer", "minimum": 1 },
+        "start": { "type": "string", "minLength": 1 },
+        "end": { "type": "string", "minLength": 1 }
+      }
+    },
+    "bekkerRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["first_column", "last_column"],
+      "properties": {
+        "first_column": { "type": "string", "minLength": 1 },
+        "last_column": { "type": "string", "minLength": 1 }
+      }
+    },
+    "citation": {
+      "type": "object",
+      "description": "Citation rules and the complete book table of contents used by desktop packs.",
+      "additionalProperties": false,
+      "required": ["scheme", "books"],
+      "properties": {
+        "scheme": { "type": "string", "minLength": 1 },
+        "books": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/citationBook" }
+        },
+        "bekker_range": { "$ref": "#/$defs/bekkerRange" }
+      }
+    },
+    "editionSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "author", "work"],
+      "properties": {
+        "kind": { "enum": ["tlg", "phi"] },
+        "author": { "type": "string", "minLength": 1 },
+        "work": { "type": "string", "minLength": 1 }
+      }
+    },
+    "edition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["language", "edition", "source", "license"],
+      "properties": {
+        "language": { "enum": ["grc", "lat"] },
+        "edition": { "type": "string", "minLength": 1 },
+        "source": { "$ref": "#/$defs/editionSource" },
+        "license": { "$ref": "#/$defs/license" }
+      }
+    },
+    "translation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "slot", "default", "license"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "slot": {
+          "enum": ["primary", "secondary", "third", "overlay", "column"],
+          "description": "'column' is a translation that is the default English for one specific citation column only (a manifest `english.column_sources` entry), never a slot a reader picks from a menu -- see `columns`."
+        },
+        "default": { "type": "boolean" },
+        "alignment": { "type": "string", "minLength": 1 },
+        "kind": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Optional subclass of the slot, e.g. 'summary' for an overlay that is a précis of the primary translation rather than a full alternate rendering (manifest `english.summary_overlay`)."
+        },
+        "columns": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Citation columns this translation is scoped to, when it does not cover the whole work (manifest `english.summary_overlay.columns` or a single-entry `english.column_sources[].column`). Absent for a translation that covers the whole work."
+        },
+        "heading": { "type": "string", "minLength": 1 },
+        "license": { "$ref": "#/$defs/license" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "slot": { "const": "primary" } }, "required": ["slot"] },
+          "then": { "properties": { "default": { "const": true } } },
+          "else": { "properties": { "default": { "const": false } } }
+        }
+      ]
+    },
+    "apparatus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["footnotes", "sidenotes", "paratext", "figures", "sections", "philosophers"],
+      "properties": {
+        "footnotes": { "type": "boolean" },
+        "sidenotes": { "type": "boolean" },
+        "paratext": { "type": "boolean" },
+        "figures": { "type": "boolean" },
+        "sections": { "type": "boolean" },
+        "philosophers": { "type": "boolean" }
+      }
+    }
+  }
+}

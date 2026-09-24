@@ -1,0 +1,17 @@
+{
+ "1:B4": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.72",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Furthermore, they find Xenophanes, Zeno of Elea, and Democritus to be sceptics",
+     "and Zeno because he would destroy motion, saying, “A moving body moves neither where it is nor where it is not”"
+    ]
+   }
+  ]
+ }
+}

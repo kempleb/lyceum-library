@@ -1,0 +1,135 @@
+# Critias Testimonia (DK 88 A) — pipeline manifest (dk scheme: one flat
+# div[@type="Fragment"][@n] per citable testimonium, plain <p> prose, no
+# <l> lines). Greek-only work: ancient reports about Critias, not his own
+# words; no free English translation exists this wave.
+#
+# Confirmed directly against the export's own <sourceDesc>: 'Critias Eleg.,
+# Phil., Trag., Testimonia (0319: 003) "Die Fragmente der Vorsokratiker,
+# vol. 2, 6th edn.", ...'.
+#
+# NON-DK WORKS EXCLUDED (task-directed): TLG0319 also carries 001 Fragmenta
+# ("Tragicorum Graecorum fragmenta, vol. 1", Ed. Snell) and 002 Fragmenta
+# ("Iambi et elegi Graeci, vol. 2", Ed. West) -- neither is DK, both poetic
+# corpora edited independently of Diels-Kranz -- and 005 "Pirithous
+# (fragmenta)" (P. Oxy. 17.2078 % 50.3531, a modern papyrological edition,
+# "Corpus dei papiri filosofici greci e latini") -- none export-referenced
+# by any manifest.
+#
+# VERSE CHECK: exported plain (no `-y`); confirmed 0 <l> elements anywhere
+# in the export -- the export's own heuristic classified this work
+# "Testimonia (prose)" without forcing, and direct content reading (a
+# scratch two-invocation comparison, docs/tlg-phi-export.md) confirms it:
+# forcing -y on this author produces artificial print-line chopping of
+# ordinary Xenophon/Plutarch/Plato prose narrative with no metrical content
+# at all. Critias' Fragmenta (004, see critias-fragments.yaml) genuinely
+# does mix verse and prose -- Testimonia does not.
+#
+# STRUCTURE: 23 divs, n="1".."23" (consecutive, no gaps, no lettered
+# variants, no title divs). No div_map/div_concat/compound_n_map cases.
+#
+# LETTER-SPACING FINDING: 2 of 23 columns carry a
+# <hi rend="letter-spacing"> span (A19: the Greek title of the Public-
+# Speech Prologues, a work-title cross-ref to B43; A22: the phrase naming
+# the Constitutions-in-verse, a work-title cross-ref to the verse Spartan
+# Constitution, B6-B9). 21 columns are pure
+# doxographic/biographical prose with no letter-spacing at all — declared
+# `unmarked_columns` below, content-verified per column: A1-A18, A20, A21,
+# A23.
+#
+# LATIN: none found — both marked spans are Greek work titles.
+#
+# DAMAGE DOTS: none found.
+work:
+  id: critias-testimonia
+  title: "Testimonia"
+  author: "critias"
+  language: "grc"
+  tlg_author: "0319"
+  tlg_work: "003"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1952), 88 A"
+  # FATAL sourceDesc gate: stage1's _check_sourcedesc asserts this exact
+  # substring is present in the export XML's own <teiHeader><sourceDesc>
+  # text -- verified verbatim against build/export/.../tlg0319003.xml.
+  expected_sourcedesc: 'Critias Eleg., Phil., Trag., Testimonia (0319: 003) "Die Fragmente der Vorsokratiker, vol. 2'
+
+citation:
+  scheme: dk
+  series: A
+  # dk_witness.py's owner-verified apparatus split (stage7_emit wiring):
+  # count of this work's columns whose apparatus actually splits into
+  # 2+ witnesses, cross-checked bidirectionally at preflight against the
+  # emitted dist's own `witnesses` keys -- catches an unreviewed new
+  # split and a stale declaration alike.
+  dk_witness_split_columns: 3
+  # Quote-mark polarity fix (owner ruling 2026-08-05, "we fix it and
+  # make damn sure every instance is correct"): the raw TLG export
+  # frequently opens a Greek quotation with U+2019 instead of U+2018 --
+  # stage1_greek._dk_normalize_quote_marks fixes every BALANCED
+  # (even-count) column automatically; this is that fix's own declared
+  # count, cross-checked bidirectionally at preflight against the
+  # emitted dist's actual U+2018/U+2019 total.
+  dk_quote_marks_rewritten: 4
+  hideLineNumbers: true
+  unmarked_columns:
+    - A1
+    - A2
+    - A3
+    - A4
+    - A5
+    - A6
+    - A7
+    - A8
+    - A9
+    - A10
+    - A11
+    - A12
+    - A13
+    - A14
+    - A15
+    - A16
+    - A17
+    - A18
+    - A20
+    - A21
+    - A23
+
+# Digest fingerprint of the observed dk column spine (23 columns, A1-A23,
+# no gaps) — stage2 recomputes and compares it.
+section_spine: { count: 23, sha256: "195ebbbef6b96cfe366acbc059c4f632d41c33d4a7c1315644181eba2bcb0b60" }
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion).
+books:
+  - { n: 1, start: "A1", end: "A23" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: critias-testimonia
+  slug: testimonia
+  title: Testimonia
+  abbr: Crit. A
+  author: critias
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1952), 88 A'
+  greekSource:
+    short: Diels–Kranz (1952)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1952), 88 A'
+  translations: []
+  citation:
+    scheme: dk
+    copyAbbr: DK 88
+    dkChapter: 88
+    series: A
+  related:
+    - id: critias-fragments
+      label: 'The B-fragments: the surviving words themselves'
+  blurb: Ancient reports, anecdote, and biography concerning Critias — pupil of Socrates and Gorgias, leader of the oligarchic Thirty Tyrants, and his death in the civil war that overthrew them — the original Greek text.

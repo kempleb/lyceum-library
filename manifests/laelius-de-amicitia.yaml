@@ -1,0 +1,93 @@
+# Laelius de Amicitia — pipeline manifest (Wave 2 Batch 3 round 2: the new
+# flat, bookless `section` scheme — Pipeline Change B, stage1_latin.py's
+# `_parse_flat_section`, Epictetus' Enchiridion precedent for the scheme
+# itself, manifests/enchiridion.yaml). PHI's export carries NO
+# <div type="book"> at all — top-level <div type="section"> siblings only
+# (verified against phi0474052.xml) — hence citation.div_types.page
+# overrides the scheme's registered "Chapter" to PHI's lowercase "section".
+# English: W. A. Falconer (Loeb Classical Library 154, 1923), full 104/104
+# coverage — see sources/falconer-amic/README.md and
+# pipeline/tools/extract_falconer_perseus.py for extraction/verification.
+
+work:
+  id: laelius-de-amicitia
+  title: "Laelius de Amicitia"
+  author: "cicero"
+  language: "lat"
+  lexicon: true
+  phi_author: "0474"
+  phi_work: "052"
+  latin_edition: "Mueller, C. F. W. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Part 4, Vol. 3 (Leipzig: Teubner, 1890)"
+  # FATAL sourceDesc gate (De Officiis/De Rerum Natura precedent): verified
+  # verbatim against the real PHI export
+  # (build/export/Diogenes-Resources/xml/phi/phi0474052.xml).
+  expected_sourcedesc: 'M. Tullius Cicero. Laelius de Amicitia (M. Tulli Ciceronis Scripta Quae Manserunt Omnia. Part 4, Vol. 3, ed. C. F. W. Mueller, 1890)'
+
+citation:
+  scheme: section
+  hideLineNumbers: true
+  div_types:
+    page: "section"
+  # No cross-section print-line hyphen wraps observed in this export
+  # (verified against the real export). Declared as a re-export drift
+  # tripwire (a future re-export producing a nonzero count fails loudly).
+  cross_section_rejoins: 0
+  # Declared title-drop hash (adversarial-review Finding 2, replacing the
+  # earlier shape-heuristic title guard) — see manifests/de-officiis.yaml's
+  # matching comment for the full mechanism. No citation.flat_wrapper is
+  # declared: this export carries no wrapper div at all (top-level
+  # <div type="section"> siblings only), so Finding 3's depth-scoping check
+  # requires every section div to be a direct child of <body>.
+  title_labels:
+    - { sha256_16: "f2e0da5a8fd57e5e", note: "work title (top-level section n=\"t\")" }
+
+english:
+  primary:
+    id: falconer
+    name: "W. A. Falconer (Loeb Classical Library, 1923)"
+    model: archive
+    file: "falconer-amic/falconer.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+
+# Digest fingerprint of the observed bare-section column spine (104
+# columns, "1".."104") — stage2 recomputes and compares it. Computed
+# directly against the real PHI export (build/export/.../phi0474052.xml)
+# via stage1_latin's own _parse_flat_section.
+section_spine: { count: 104, sha256: "3e0477b90ce7a7755c221160861d390bf3d431920036fb0cc895f29fc62d9364" }
+
+# Flat scheme: exactly one book, bounded by bare section-integer tokens.
+books:
+  - { n: 1, start: "1", end: "104" }
+
+sources:
+  phi_dir_env: "PHI_DIR"
+  phi_dir_default: "../TLG Files/PHI"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: laelius-de-amicitia
+  title: Laelius de Amicitia
+  abbr: Amic.
+  author: cicero
+  language: lat
+  workType: continuous
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Mueller, C. F. W. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Part 4, Vol. 3 (Leipzig: Teubner, 1890)'
+  greekSource:
+    short: Mueller (1890)
+    full: 'Mueller, C. F. W. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Part 4, Vol. 3 (Leipzig: Teubner, 1890)'
+  translations:
+    - id: falconer
+      name: W. A. Falconer (Loeb Classical Library, 1923)
+      short: Falconer
+      slot: english
+  citation:
+    scheme: section
+    hideLineNumbers: true
+    copyAbbr: Cic. Amic.
+  blurb: Laelius, days after the sudden death of his friend Scipio Aemilianus, sets out what true friendship is and why it is possible only between good men.

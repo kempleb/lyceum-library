@@ -1,0 +1,12 @@
+[
+  {
+    "chapter": "3.38",
+    "replace": [
+      [
+        "while lie himself",
+        "while he himself"
+      ]
+    ],
+    "note": "Perseus transcription typo at section 3.38: the pinned phi0474.phi055.perseus-eng1.xml (commit 1066a551) emits 'while lie himself saw everything'; the 1913 Heinemann/Loeb print (archive.org deofficiiswithen00ciceuoft) reads 'while he himself saw everything'. Exact-once replace scoped to 3.38; fails loud if upstream fixes the typo or the string drifts."
+  }
+]

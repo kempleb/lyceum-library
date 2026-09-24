@@ -1,0 +1,27 @@
+{
+ "1:A1": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.30-33",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925"
+   }
+  ]
+ },
+ "1:A2": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "10.13",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Apollodorus in his Chronology tells us that our philosopher was a pupil of Nausiphanes and Praxiphanes; but in his letter to Eurylochus, Epicurus himself denies it and says that he was self-taught. Both Epicurus and Hermarchus deny the very existence of Leucippus the philosopher, though by some and by Apollodorus the Epicurean he is said to have been the teacher of Democritus."
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "1:B6": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Euthydemus",
+    "locus": "305c-305d",
+    "status": "translated",
+    "translation_credit": "Lamb, 1924",
+    "emphasis": [
+     "They are the persons, Crito, whom Prodicus described as the border-ground between philosopher and politician, yet they fancy that they are the wisest of all mankind,",
+     "since they regard themselves as moderately versed in philosophy, and moderately too in politics, on quite reasonable grounds:"
+    ]
+   }
+  ]
+ }
+}

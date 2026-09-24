@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "works": {
+    "EN": {
+      "edition": "Bywater, Aristotelis Ethica Nicomachea (OCT, 1894)",
+      "reviewed_by": null,
+      "passages": [
+        {
+          "position": "first",
+          "address": "/read/aristotle/nicomachean-ethics/book-1#col-1094a",
+          "language": "grc",
+          "opening": "Πᾶσα τέχνη καὶ πᾶσα μέθοδος, ὁμοίως δὲ πρᾶξίς τε καὶ προαίρεσις, ἀγαθοῦ τινὸς ἐφίεσθαι δοκεῖ",
+          "search": "Πᾶσα τέχνη καὶ"
+        },
+        {
+          "position": "middle",
+          "address": "/read/aristotle/nicomachean-ethics/book-5#col-1138a",
+          "language": "grc",
+          "opening": "ὁ μὴ ἀκριβοδίκαιος ἐπὶ τὸ χεῖρον ἀλλ' ἐλαττωτικός, καίπερ ἔχων τὸν νόμον βοηθόν"
+        },
+        {
+          "position": "last",
+          "address": "/read/aristotle/nicomachean-ethics/book-10#col-1181b",
+          "language": "grc",
+          "opening": "πῶς οὖν ἐκ τούτων νομοθετικὸς γένοιτ' ἄν τις, ἢ τοὺς ἀρίστους κρίναι"
+        }
+      ]
+    },
+    "heraclitus-fragments": {
+      "edition": "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951-52), 22 B",
+      "reviewed_by": null,
+      "passages": [
+        {
+          "position": "first",
+          "address": "/read/heraclitus/fragments/text#col-b1",
+          "language": "grc",
+          "opening": "SEXT. adv. math. VII 132 (Vgl. A 4. 16. B 51) τοῦ δὲ λόγου τοῦδ' ἐόντος ἀεὶ ἀξύνετοι γίνονται ἄνθρωποι",
+          "search": "τοῦ δὲ λόγου"
+        },
+        {
+          "position": "middle",
+          "address": "/read/heraclitus/fragments/text#col-b71",
+          "language": "grc",
+          "opening": "MARC. ANTON. IV 46 μεμνῆσθαι δὲ καὶ τοῦ ἐπιλανθανομένου ἧι ἡ ὁδὸς ἄγει."
+        },
+        {
+          "position": "last",
+          "address": "/read/heraclitus/fragments/text#col-b139",
+          "language": "grc",
+          "opening": "CATAL. CODD. ASTROL. GRAEC. IV 32 VII 106 Ἡρακλείτου φιλοσόφου. Ἐπειδὴ φασί τινες εἰς ἀρχὰς κεῖσθαι τὰ ἄστρα"
+        }
+      ]
+    },
+    "epistulae-morales": {
+      "edition": "Reynolds, L. D. (ed.), L. Annaei Senecae ad Lucilium Epistulae Morales, 2 vols. (Oxford Classical Texts, 1965)",
+      "reviewed_by": null,
+      "passages": [
+        {
+          "position": "first",
+          "address": "/read/seneca/epistulae-morales/letter-1#col-1.1",
+          "language": "lat",
+          "opening": "AD LVCILIVM EPISTVLAE MORALES LIBER PRIMVS SENECA LVCILIO SVO SALVTEM Ita fac, mi Lucili: vindica te tibi",
+          "search": "Ita fac, mi"
+        },
+        {
+          "position": "middle",
+          "address": "/read/seneca/epistulae-morales/letter-81#col-81.2",
+          "language": "lat",
+          "opening": "Est tanti, ut gratum invenias, experiri et ingratos. Nemo habet tam certam in beneficiis manum"
+        },
+        {
+          "position": "last",
+          "address": "/read/seneca/epistulae-morales/letter-124#col-124.24",
+          "language": "lat",
+          "opening": "Tunc beatum esse te iudica cum tibi ex te gaudium omne nascetur"
+        }
+      ]
+    }
+  }
+}

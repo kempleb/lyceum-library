@@ -1,0 +1,189 @@
+# Melissus of Samos Fragments (DK 30 B) — pipeline manifest (dk scheme:
+# one flat div[@type="Fragment"][@n] per citable fragment). See
+# melissus-testimonia.yaml for the export/verse-invocation notes (plain
+# export correct; zero structural verse; no homonym risk).
+#
+# STRUCTURE: 12 raw divs — a title div n="tit,1-10" (with a source-language
+# label, stripped automatically by `_DK_TITLE_N_RE`,
+# never a column — matches the `^tit\b` pattern despite the trailing
+# ",1-10" range suffix, same as Xenophanes' three-part title-range divs)
+# plus eleven ordinary columns B1-B11, no gaps/compounds/lettered variants.
+# B1-B10 are one continuous verbatim quotation (Simplicius, Phys. 162-111,
+# On the Nature of Being); B11 is a separate, later addendum (Palaephatus,
+# De Incredibilibus) quoting a one-line maxim attributed jointly to
+# "Melissus and Lamiscus of Samos" — DK includes it with a small-type
+# marker as a probable/associated fragment, not a mainline one, but it is a
+# genuine citable DK column (no basis to exclude it).
+#
+# GROUND-TRUTH CORRECTION (verified against the export, not assumed from
+# the task brief's stated range): the task brief anticipated "frr. 1-12";
+# the export's highest fragment div is n="11" — no div n="12" exists
+# anywhere in this work. Standard DK30B Melissus numbering runs B1-B11 (the
+# more commonly cited core is B1-B10; B11 is the Palaephatus addendum some
+# editions omit) — this export's own numbering tops out at B11, not B12.
+# CANON-log-worthy: same "task brief's DK range was an approximation, the
+# export is the ground truth" pattern the Wave 1b Anaxagoras fragmenta
+# below also hits.
+
+work:
+  id: melissus-fragments
+  title: "Fragments"
+  author: "melissus"
+  language: "grc"
+  tlg_author: "1494"
+  tlg_work: "002"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 30 B"
+  # FATAL sourceDesc gate (Wave 1c Sol nit): stage1's _check_sourcedesc
+  # asserts this exact substring is present in the export XML's own
+  # <teiHeader><sourceDesc> text -- verified verbatim against
+  # build/export/.../tlg1494002.xml. Catches a wrong-author or
+  # wrong-volume re-export (a stale TLG_DIR pointing at a different
+  # numbered file) at the earliest possible point.
+  expected_sourcedesc: 'Melissus Phil., Fragmenta (1494: 002) "Die Fragmente der Vorsokratiker, vol. 1'
+
+citation:
+  scheme: dk
+  series: B
+  # Quote-mark polarity fix (owner ruling 2026-08-05, "we fix it and
+  # make damn sure every instance is correct"): the raw TLG export
+  # frequently opens a Greek quotation with U+2019 instead of U+2018 --
+  # stage1_greek._dk_normalize_quote_marks fixes every BALANCED
+  # (even-count) column automatically; this is that fix's own declared
+  # count, cross-checked bidirectionally at preflight against the
+  # emitted dist's actual U+2018/U+2019 total.
+  dk_quote_marks_rewritten: 24
+  # FAIL-CLOSED: this work's raw export carries an ODD
+  # U+2018/U+2019 count in these column(s) -- cannot be paired,
+  # left completely untouched by the fix above (see
+  # stage1_greek._dk_normalize_quote_marks' module doc).
+  dk_unbalanced_quote_columns:
+    - B7
+    - B8
+    - B9
+  hideLineNumbers: true
+  # All 11 columns (B1-B11) carry <hi rend="letter-spacing"> — no
+  # unmarked_columns needed.
+  fragment_kinds:
+    B1: verbatim
+    B2: verbatim
+    B3: verbatim
+    B4: verbatim
+    B5: verbatim
+    B6: verbatim
+    B7: verbatim
+    B8: verbatim
+    B9: verbatim
+    B10: verbatim
+    B11: verbatim
+
+  # item 85 census addendum (2026-07-28): B7 and B8 are each one continuous
+  # quotation of Melissus's own book (Simplicius, Phys./de caelo) carrying
+  # the source's own inline ascending "(N)" listing baked into the
+  # quotation -- B7 runs (1)-(10), B8 runs (1)-(6) -- in BOTH the Greek and
+  # the default Freeman English. Unlike B11's Gorgias-speech shape, B7/B8
+  # keep their ordinary mixed role='context' (Simplicius's citation
+  # frame)/role='text' (the quotation) profile -- `whole_column_verbatim`
+  # does not apply (preflight's `_whole_column_verbatim_columns` rejects any
+  # column already carrying a role='text' line, and B7/B8 each have exactly
+  # one). This is a narrower, non-attesting declaration: it asserts nothing
+  # about authorial voice, only that the reader should paragraph-break both
+  # columns at the same points, the same way whole_column_verbatim columns
+  # already do. See preflight.py's `_validate_section_paragraph_columns`.
+  section_paragraph_columns: [B7, B8]
+
+freeman_concordance: {}
+
+group_headers:
+  - before_column: B11
+    level: 2
+    text: "Spurious"
+    sha256_16: "d3853296264bcbbd"
+
+# Digest fingerprint of the observed dk column spine (11 columns, B1-B11) —
+# stage2 recomputes and compares it.
+section_spine: { count: 11, sha256: "a587ed0bf3d658e9a0ac429c262def0258522662a253dbca96477f68b81783de" }
+
+# Freeman is the primary/default English. Burnet's existing translation is
+# retained as the secondary translation.
+english:
+  primary:
+    id: freeman
+    name: "Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)"
+    model: freeman
+    file: "freeman-ancilla/freeman-melissus.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Kathleen Freeman's Ancilla to the Pre-Socratic Philosophers (1948) is treated as US public domain per John's 2026-07-23 ruling (CANON.md, Freeman Ancilla copyright ruling); covered by attribution.astro's site-wide translation public-domain notice."
+    group_headers_file: "freeman-ancilla/freeman-melissus.group_headers.json"
+  secondary:
+    id: burnet
+    name: "John Burnet, Early Greek Philosophy, 3rd ed. (A. & C. Black, 1920)"
+    model: archive
+    file: "burnet-egp/burnet-melissus.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+
+# Burnet EGP 3rd ed. (1920, Wikisource) — extracted by
+# pipeline/tools/extract_burnet_wikisource.py's `build_eleatics_ch8` (task
+# #48; see sources/burnet-egp/burnet-melissus.clean.json, 10 columns:
+# B1-B10). Melissus' own S:S165 inline-ordinal `{{fine|(N) ...}}` listing
+# ("(1a)", "(1)"-"(10)", "(6a)") is parsed by ordinal, not by a separate
+# heading template — see `_extract_ordinal_fine_fragments`. Plain prose (no
+# marginal sidenote markers) — no paras sidecar.
+# B11 (the Palaephatus addendum, "Melissus and Lamiscus of Samos" maxim —
+# see this manifest's own module comment above) is a genuine Burnet
+# coverage gap: his own printed listing runs (1a), (1)-(10), (6a) only —
+# B11 is a later, separately-transmitted addendum outside his selection
+# entirely, not extracted from anywhere in Ch. VIII. (1a) and (6a)
+# themselves are Burnet's own declared insertions with no DK number at all
+# (see `_MELISSUS_EXCLUDED_ORDINALS` in the extractor) — collected and
+# reported, never emitted as a column, so they need no allowance entry here.
+alignment_allow_unmatched_secondary:
+    - "1:B11"
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion).
+books:
+  - { n: 1, start: "B1", end: "B11" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: melissus-fragments
+  slug: fragments
+  title: Fragments
+  abbr: Mel. B
+  author: melissus
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 30 B'
+  greekSource:
+    short: Diels–Kranz (1951–52)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 30 B'
+  translations:
+    - id: freeman
+      name: Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)
+      short: Freeman
+      slot: english
+    - id: burnet
+      name: John Burnet, Early Greek Philosophy, 3rd ed. (A. & C. Black, 1920)
+      short: Burnet
+      slot: secondary
+  defaultTranslation: freeman
+  citation:
+    scheme: dk
+    copyAbbr: DK 30
+    dkChapter: 30
+    series: B
+  related:
+    - id: melissus-testimonia
+      label: 'The A-testimonia: ancient reports about Melissus'
+  blurb: The surviving fragments of Melissus of Samos’ On Nature, or On What Is — the last and most systematic defense of Eleatic monism, arguing the One is infinite, motionless, and bodiless.

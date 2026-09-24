@@ -1,0 +1,190 @@
+# Epicurus, Vatican Sayings / Gnomologium Vaticanum Epicureum (VS) —
+# pipeline manifest. TLG 0537:014, Arrighetti edition.
+#
+# SCHEME DECISION (design memo's own open question, resolved here): VS is
+# flat and fragment-NUMBERED, in the same shape as a `dk` work's
+# div[@type="Fragment"][@n] — but it is NOT Diels-Kranz: there is no DK
+# chapter number, no A/B series, no DK-style apparatus-quotation markup
+# (<hi rend="letter-spacing">) to distinguish the philosopher's own words
+# from a citing source's narrative — every VS div is Epicurus' own
+# unmediated sentence, verbatim, the whole div is the citable text. Calling
+# this scheme `dk` would assert a false scholarly classification (DK never
+# assigned Vatican Sayings numbers). It uses the flat, bookless `section`
+# scheme instead (Epictetus' Enchiridion precedent) with
+# citation.div_types.page overridden to "Fragment" (the export's own div
+# type) — the SAME override seam the three Letters/KD use for "Section",
+# just naming a different type string. `section`'s validation_mode is
+# "observed" (trusts the observed spine, never enumerates an expected
+# rectangular range) — genuine numbering gaps need no `expected_gaps`
+# declaration at all (unlike `dk`, which requires them), so this scheme
+# honestly supports VS's real gaps for free.
+#
+# GAPS: 1-3, 5, 6, 8, 10, 12, 13, 20, 22, 30, 36, 47, 49-51, 72 are absent
+# from the export (verified) — the Vatican manuscript's own real lacunae/
+# textual-tradition gaps, not a parsing defect. Highest observed number: 81.
+#
+# COMPOUND COLUMN: one div carries the literal @n "56-57" — VS 56 and 57
+# printed as a single continuous saying in this edition (verified against
+# the export's actual Greek: one unbroken sentence, no internal break).
+# This is a genuine atomic citation token, not a range-gap marker — the
+# flat scheme's column grammar (`_FLAT_COLUMN_RE` / citation.ts's
+# `FLAT_COLUMN_RE`) was widened to accept an optional `-NN` tail for this
+# one case; see scheme.py's comment on that regex for why it sorts safely
+# (no separate "56" or "57" div exists to collide with).
+#
+# TITLE DIV: a top-level <div type="Fragment" n="t"> carrying only the
+# collection's bare Greek heading ("ΕΠΙΚΟΥΡΟΥ ΠΡΟΣΦΩΝΗΣΙΣ" — a
+# <label type="head">), no content of its own — declared as `title_labels`
+# (dropped outright), same mechanism as Kuriai Doxai's own title div.
+#
+# Unit noun: VS's numbered units are individual sayings, not chapters of a
+# continuous prose work — the frontend's per-work `citation.unitNoun`
+# override (shared/lib/works.ts / citation.ts's unitNounFor) names them
+# "saying"/"sayings" rather than the scheme's table default "chapter".
+
+work:
+  id: epicurus-vatican-sayings
+  title: "Vatican Sayings"
+  author: "epicurus"
+  language: "grc"
+  tlg_author: "0537"
+  tlg_work: "014"
+  greek_edition: "Arrighetti, G. (ed.), Epicuro: Opere, 2nd ed. (Turin: Einaudi, 1973)"
+  # FATAL sourceDesc gate: verified verbatim against the real export
+  # (build/phi-test/out-epicurus/Diogenes-Resources/xml/tlg/tlg0537014.xml).
+  expected_sourcedesc: 'Epicurus Phil. (c. 4-3 B.C.), Gnomologium Vaticanum Epicureum (0537: 014) "Epicuro. Opere, 2nd edn.", Ed. Arrighetti, G. Turin: Einaudi, 1973.'
+
+citation:
+  scheme: section
+  hideLineNumbers: true
+  # John's ruling (2026-08-29, docs/lined-rollout-plan.md Ruling 1/wave 1):
+  # the Greek column renders Arrighetti's own print lines, hyphenated
+  # line-end splits included, extending Discourses' treatment
+  # (docs/lined-source-plan.md) to the flat `section` scheme. Gates
+  # stage1_greek's per-<l> emission (`_lined_chapter_lines` +
+  # `_apply_lined_wraps`) inside `_parse_flat_chapter`. No
+  # `lined_section_div`: this work's column div (Fragment) IS the leaf — no
+  # sub-column granularity exists to record, so no line carries `sec`
+  # (Ruling 1c).
+  lined_source: true
+  lined_indent_max: 1
+  div_types:
+    page: "Fragment"
+  title_labels:
+    - sha256_16: "5d86d2e8f2836a43"
+      note: "collection title (top-level div n=\"t\", <label type=\"head\">ΕΠΙΚΟΥΡΟΥ ΠΡΟΣΦΩΝΗΣΙΣ</label>)"
+
+# English: Cyril Bailey's 1926 Clarendon translation
+# (sources/bailey-epicurus/bailey-vs.clean.json,
+# pipeline/tools/extract_bailey_epicurus.py — bare "<saying>"-keyed).
+# RECONCILED 2026-07-29 against the regenerated store (the extractor was
+# fixed after a Grok FAIL(4) against the previous, defective store; this is
+# the first reconciliation of the corrected output). The fixed store
+# carries 67 keys covering 68/81 standard-numbering sayings (66 individual
+# keys plus the compound "56-57", which covers two) — up from the old
+# store's 55/81 and its mis-keyed "57" fragment. Reconciled against this
+# work's real 62-column spine key by key:
+#
+#   * The store's compound key "56-57" now matches the spine's own
+#     compound column "56-57" exactly (verified directly) — no more
+#     mis-keyed/split English for this saying.
+#   * Five store keys ("10", "30", "36", "47", "51") match no spine column
+#     at all: each is a standard-numbering saying this manifest's own GAPS
+#     note above already documents as genuinely absent from the TLG
+#     export. Bailey's edition, translating the full standard 1-81
+#     numbering, naturally carries English for sayings this particular
+#     Greek witness doesn't preserve; nothing wrong with the English, it
+#     simply has no citable Greek column to attach to here. Excluded via
+#     `key_drop`, one-word reason each (all: the same Arrighetti gap).
+#   * Every one of the spine's remaining 62 columns now has a matching
+#     store key — zero unmatched spine columns; `alignment_allow_unmatched`
+#     is correspondingly empty (omitted below, following enchiridion.yaml's
+#     precedent for a work with no genuine gaps to declare). The store's
+#     other 13 un-recovered standard numbers (1, 2, 3, 5, 6, 8, 12, 13, 20,
+#     22, 49, 50, 72) are cross-reference-only in Bailey's own edition (see
+#     that store's meta.json "vs.cross_reference_only") and coincide
+#     exactly with 13 of this manifest's own GAPS — no store key exists for
+#     them, so no key_drop or allowance is needed either.
+english:
+  primary:
+    id: bailey
+    name: "Cyril Bailey, Epicurus: The Extant Remains (Clarendon Press, 1926)"
+    model: archive
+    file: "bailey-epicurus/bailey-vs.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+    key_drop:
+      - "10"  # gap (Arrighetti)
+      - "30"  # gap (Arrighetti)
+      - "36"  # gap (Arrighetti)
+      - "47"  # gap (Arrighetti)
+      - "51"  # gap (Arrighetti)
+
+# No alignment_allow_unmatched entries: every spine column above has a
+# matching source key now (see the reconciliation note above) — no gaps,
+# so no entries are needed.
+
+# Digest fingerprint of the observed bare-section column spine (62 columns,
+# "4".."81", with real gaps and one compound "56-57" token) — stage2
+# recomputes and compares it. Computed directly against the real export.
+section_spine: { count: 62, sha256: "5540beb560b872748ae23f48d0d36e388f759609ceb4c1fdd0c869c37c5d1e2e" }
+
+# Flat scheme: exactly one book. `start`/`end` are the observed extremes,
+# not "1"/"81" — sections 1-3 do not exist in this export (see the gaps
+# note above); `section`'s "observed" validation mode does not require a
+# rectangular range, so this is not a declared-gap list, just the true
+# boundary tokens.
+books:
+  - { n: 1, start: "4", end: "81" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: epicurus-vatican-sayings
+  slug: vatican-sayings
+  title: Vatican Sayings
+  abbr: VS
+  author: epicurus
+  language: grc
+  workType: continuous
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Arrighetti, G. (ed.), Epicuro: Opere, 2nd ed. (Turin: Einaudi, 1973)'
+  greekSource:
+    short: Arrighetti (1973)
+    full: 'Arrighetti, G. (ed.), Epicuro: Opere, 2nd ed. (Turin: Einaudi, 1973)'
+  translations:
+    - id: bailey
+      name: 'Cyril Bailey, Epicurus: The Extant Remains (Clarendon Press, 1926)'
+      short: Bailey
+      slot: english
+  citation:
+    scheme: section
+    hideLineNumbers: true
+    copyAbbr: VS
+    unitNoun:
+      singular: saying
+      plural: sayings
+    # RULED (John, 2026-08-31, on Letter to Menoeceus): "if this is not
+    # cited by line numbers, then this needs prose reflow." These works are
+    # cited by chapter/section, never by line, so their print lines serve no
+    # citation and align no gutter apparatus (measured: 0 gutter cells), yet
+    # forced 91% of Menoeceus' lines to wrap into stubs at 375px. Prose now
+    # reflows; `linedSource` stays true so quoted verse keeps real lines.
+    proseReflow: true
+    # Reader-side flag mirroring pipeline citation.lined_source 1:1
+    # (2026-08-29, docs/lined-rollout-plan.md Stage 1/3) — see
+    # WorkMeta['citation'].linedSource in shared/lib/works.ts.
+    linedSource: true
+  related:
+    - id: lives
+      label: 'Diogenes Laertius, Book X: Epicurus'' life and the letters/Kuriai Doxai he transcribes there'
+    - id: epicurus-kuriai-doxai
+      label: 'Kuriai Doxai: the companion collection of Epicurus'' maxims'
+  blurb: Eighty-one further maxims of Epicurus and his school, preserved in a single Vatican manuscript discovered in 1888 — overlapping Kuriai Doxai in places, but including sayings ("It is not the young man who should be counted happy, but the old man who has lived well") found nowhere else.

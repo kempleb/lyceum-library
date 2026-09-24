@@ -1,0 +1,114 @@
+# Tusculan Disputations — pipeline manifest (Wave 2 Batch 3a: book-section
+# scheme, mechanically identical to De Officiis/manifests/de-officiis.yaml —
+# see that file's header for the shared PHI book-section shape (lowercase
+# @type div convention, citation.div_types.page override). Latin-only
+# staging (no_english, the De Officiis/De Rerum Natura precedent): text,
+# citation, search, and the lexicon layer only.
+
+work:
+  id: tusculan-disputations
+  title: "Tusculanae Disputationes"
+  author: "cicero"
+  language: "lat"
+  lexicon: true
+  no_english: true
+  phi_author: "0474"
+  phi_work: "049"
+  latin_edition: "Pohlenz, M. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Fasc. 44 (Leipzig: Teubner, 1918)"
+  # FATAL sourceDesc gate (De Officiis/De Rerum Natura precedent): verified
+  # verbatim against the real PHI export
+  # (build/export/Diogenes-Resources/xml/phi/phi0474049.xml).
+  expected_sourcedesc: 'M. Tullius Cicero. Tusculanae Disputationes (M. Tulli Ciceronis Scripta Quae Manserunt Omnia. Fasc. 44, ed. M. Pohlenz, 1918)'
+
+citation:
+  scheme: book-section
+  hideLineNumbers: true
+  lined_source: true
+  lined_cross_column_wraps: 108
+  lined_indent_max: 7
+  div_types:
+    page: "book"
+    section: "section"
+  # Declared title-drop hashes (adversarial-review Finding 2, replacing the
+  # earlier shape-heuristic title guard) — see manifests/de-officiis.yaml's
+  # matching comment for the full mechanism.
+  title_labels:
+    - { sha256_16: "672a3f535d71b1c2", note: "whole-work title (book n=\"t\")" }
+    - { sha256_16: "6587086848089b36", note: "book 1 heading (section n=\"t\")" }
+    - { sha256_16: "a0c8bc396c47f6a2", note: "book 2 heading (section n=\"t\")" }
+    - { sha256_16: "9815ea46f3ac03da", note: "book 3 heading (section n=\"t\")" }
+    - { sha256_16: "f74d435f52cf48ec", note: "book 4 heading (section n=\"t\")" }
+    - { sha256_16: "e9c24c65dbcd0611", note: "book 5 heading (section n=\"t\")" }
+
+# Book 1's own PHI section numbering has a real, editorially-absent gap: §31
+# does not exist in this export (1.30 is directly followed by 1.32 — not an
+# extraction defect). Declared here as informational documentation of the
+# observed spine per stage2_validate's expected_section_gaps mechanism (the
+# gap does not fail section_order — it is still strictly increasing — this
+# just marks it "expected" in the human-readable report rather than an
+# unexplained jump).
+expected_section_gaps:
+  - { after: "1.30", next: "1.32" }
+
+# Digest fingerprint of the observed book.section column spine (474 columns,
+# 1.1..5.121, with 1.31 absent — book 1 has 118 real sections (119 minus the
+# missing 31), book 2 has 67, book 3 has 84, book 4 has 84, book 5 has 121)
+# -- stage2 recomputes and compares it. Computed directly against the real
+# PHI export (build/export/.../phi0474049.xml) via stage1_latin's own
+# _parse_book_section + _rejoin_cross_section_hyphens, mirroring De
+# Officiis' section_spine workflow.
+section_spine: { count: 474, sha256: "0f7bcbeab95c32383e4ecda72737d3d158b17d97b3cbed50c260a6bc97665741" }
+
+books:
+  - { n: 1, start: "1.1", end: "1.119" }
+  - { n: 2, start: "2.1", end: "2.67" }
+  - { n: 3, start: "3.1", end: "3.84" }
+  - { n: 4, start: "4.1", end: "4.84" }
+  - { n: 5, start: "5.1", end: "5.121" }
+
+sources:
+  phi_dir_env: "PHI_DIR"
+  phi_dir_default: "../TLG Files/PHI"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: tusculan-disputations
+  title: Tusculanae Disputationes
+  abbr: Tusc.
+  author: cicero
+  language: lat
+  workType: continuous
+  books: 5
+  bookLabels:
+    - I
+    - II
+    - III
+    - IV
+    - V
+  greekEdition: 'Pohlenz, M. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Fasc. 44 (Leipzig: Teubner, 1918)'
+  greekSource:
+    short: Pohlenz (1918)
+    full: 'Pohlenz, M. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Fasc. 44 (Leipzig: Teubner, 1918)'
+  translations: []
+  citation:
+    scheme: book-section
+    hideLineNumbers: true
+    # Block-per-section source layout (John, 2026-08-28: extend lined display
+    # to the section-numbered texts) — see WorkMeta["citation"].linedGreek.
+    # RULED OFF (John, 2026-08-31): this work carries no gutter apparatus at
+    # all (measured: 0 filled gutter cells), so its print lines aligned
+    # nothing, while forcing one rendered line per print line wrapped most of
+    # them at phone width into stubs ("qui illas for-" / "tunas morte"). Same
+    # ruling as Lives; prose reflows, quoted verse keeps its own lines via
+    # Reader.svelte's `isVerseLine` (see `proseIndent` above -- indent(2) is
+    # an ordinary paragraph here, indent(4)+ is verse).
+    linedGreek: false
+    # This edition sets ordinary paragraph openings at indent(2) and has no
+    # indent(1) at all (measured: levels present are 2,4[,5][,7]), unlike the
+    # Greek exports which start at 1. Without this, the verse test reads every
+    # Cicero paragraph opening -- dialogue turns included -- as quoted verse.
+    proseIndent: 2
+    linedSource: true
+    copyAbbr: Cic. Tusc.
+  blurb: Five dialogues set at Cicero's Tusculan villa, arguing in turn that death is not an evil, that pain is bearable, that grief and other disturbances of the soul can be mastered by reason, and that virtue alone suffices for a happy life.

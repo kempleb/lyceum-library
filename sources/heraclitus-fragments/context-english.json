@@ -1,0 +1,73 @@
+{
+ "1:B38": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "1.23",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "He seems by some accounts to have been the first to study astronomy",
+     "It was this which gained for him the admiration of Xenophanes and Herodotus and the notice of Heraclitus and Democritus."
+    ]
+   }
+  ]
+ },
+ "1:B39": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "1.88",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "In Priene lived Bias, son of Teutames, a man of more consideration than any."
+    ]
+   }
+  ]
+ },
+ "1:B82": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Hippias Major",
+    "locus": "289a",
+    "status": "translated",
+    "translation_credit": "Fowler, 1926",
+    "emphasis": [
+     "the most beautiful of monkeys is ugly compared with the race of man"
+    ]
+   }
+  ]
+ },
+ "1:B121": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.2",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "The Ephesians would do well to end their lives, every grown man of them, and leave the city to beardless boys, for that they have driven out Hermodorus, the worthiest man among them, saying, ‘We will have none who is worthiest among us; or if there be any such, let him go elsewhere and consort with others."
+    ]
+   }
+  ]
+ },
+ "1:B129": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.6",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Pythagoras, son of Mnesarchus, practised inquiry beyond all other men, and in this selection of his writings made himself a wisdom of his own, showing much learning but poor workmanship."
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,225 @@
+---
+// The Lyceum homepage (PUBLIC_LYCEUM_CHROME=1 only) — "the cover, then the
+// paper" of docs/design-spec.md §5, against the approved Round-5 mockup.
+// pages/index.astro renders this instead of the default home page when the
+// flag is on; with the flag off nothing here is reached.
+//
+// Every count, every ledger row, every citation on this page is computed from
+// the registry and the built data (lib/lyceum-catalog.ts) — nothing is typed.
+// All prose is DRAFT until John approves it (CLAUDE.md, human authorship).
+import CommandPalette from '@shared/components/CommandPalette.svelte';
+import LyceumBand from './LyceumBand.astro';
+import Pwa from './Pwa.astro';
+import ThemeInit from './ThemeInit.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import { lyceumCatalog, lyceumContent, readingPaths, weekPassage } from '../lib/lyceum-catalog';
+import { builtWorks } from '../lib/built-works';
+import { LYCEUM_SITE_NAME } from '../lib/site';
+import '@shared/styles/global.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const SITE = LYCEUM_SITE_NAME;
+const catalog = lyceumCatalog();
+const paths = readingPaths();
+const passage = weekPassage();
+const section = (id: string) => catalog.sections.find((s) => s.id === id);
+// A collection named after one of its own authors (Aristotle) counts works
+// only; a collection of many hands counts both.
+const counts = (id: string) => {
+  const s = section(id);
+  if (!s) return '';
+  const eponymous = s.groups.some((g) => g.authors.some((a) => a.name === s.name));
+  const authors = `${s.authorCount} ${s.authorCount === 1 ? 'author' : 'authors'}`;
+  const works = `${s.workCount} ${s.workCount === 1 ? 'work' : 'works'}`;
+  return eponymous ? works : `${authors} · ${works}`;
+};
+
+// The cover's wing-grouped destinations (spec §5.2). Group labels are fixed;
+// a destination is a link only where this build actually has it, and every
+// other one is present but visibly not open — never a link that 404s.
+// DRAFT: Homer, Plato, Drama and Grammars are named here as not-yet-open
+// destinations, following the mockup; the roadmap, not this page, decides them.
+interface Dest { name: string; href?: string; count?: string }
+// Collection ids match fixtures/editorial.seed.json's committed collections
+// (P4, docs/lyceum-shared-repo-plan.md §11.6) — 'philosophers' was the old
+// wing id; the seed's equivalent collection is 'philosophy'.
+const philosophy = section('philosophy');
+const aristotle = section('aristotle');
+const wingRows: { label: string; dests: Dest[] }[] = [
+  {
+    label: 'Greek',
+    dests: [
+      { name: 'Homer', count: 'in preparation' },
+      { name: 'Plato', count: 'in preparation' },
+      ...(aristotle ? [{ name: aristotle.name, href: `${base}/catalog/#aristotle`, count: counts('aristotle') }] : []),
+      ...(philosophy ? [{ name: philosophy.name, href: `${base}/catalog/#philosophy`, count: counts('philosophy') }] : []),
+      { name: 'Drama', count: 'in preparation' },
+    ],
+  },
+  {
+    label: 'Roman',
+    dests: [{ name: section('roman')?.name ?? 'Roman', count: 'in preparation' }],
+  },
+  {
+    label: 'American',
+    dests: [{ name: section('american')?.name ?? 'American', count: 'in preparation' }],
+  },
+  {
+    label: 'Reference',
+    dests: [
+      { name: 'Greek lexicon', href: `${base}/lemma/grc/`, count: 'LSJ' },
+      { name: 'Latin lexicon', href: `${base}/lemma/lat/`, count: 'in preparation' },
+      { name: 'Grammars', count: 'in preparation' },
+    ],
+  },
+];
+
+const description =
+  'The Lyceum Reader — classical texts in the original Greek or Latin beside their' +
+  ' English, with dictionary, morphology, citation and full-text search.';
+const canonical = Astro.site ? new URL(`${base}/`, Astro.site).href : undefined;
+---
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <ThemeInit />
+  <title>{SITE}</title>
+  <meta name="description" content={description} />
+  {canonical && <link rel="canonical" href={canonical} />}
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={SITE} />
+  <meta property="og:description" content={description} />
+  <meta property="og:site_name" content={SITE} />
+  {canonical && <meta property="og:url" content={canonical} />}
+  <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+  <link rel="icon" href={`${base}/favicon.png`} type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} sizes="180x180" />
+  <Pwa />
+</head>
+<body class="lyceum-chrome lyc-shell lyc-home">
+  <CommandPalette works={builtWorks()} client:load />
+  <div class="lyc-chrome">
+    <LyceumBand siteName={SITE} searchHref={`${base}/search`}>
+      <a class="tool" href={`${base}/catalog/`}>Catalog</a>
+      <a class="tool" href={`${base}/lemma/grc/`}>Lexica</a>
+      <ThemeToggle />
+      <a class="tool tool-signin" href="https://lyceum.institute">Sign in</a>
+    </LyceumBand>
+  </div>
+
+  <header class="cover">
+    <div class="in">
+      <span class="ghost" aria-hidden="true">Λ</span>
+      <span class="inst lbl">Lyceum Institute</span>
+      <h1>{SITE}</h1>
+      <!-- DRAFT copy pending John's approval, unless the live partner
+           catalog's presentation.content['home.description'] overrides it. -->
+      <p class="lede">{lyceumContent('home.description',
+        'A library of classical texts read in the original beside their English' +
+        ' — with the lexica and apparatus to read them well.')}</p>
+      <nav class="wings" aria-label="Collections">
+        {wingRows.map((row) => (
+          <div class="wingrow">
+            <span class="wlbl lbl">{row.label}</span>
+            {row.dests.map((d) => (
+              d.href
+                ? <a href={d.href}>{d.name}{d.count && <span class="ct2">{d.count}</span>}</a>
+                : <span class="soon" aria-disabled="true">{d.name}{d.count && <span class="ct2">{d.count}</span>}</span>
+            ))}
+          </div>
+        ))}
+      </nav>
+      <hr class="rule" />
+    </div>
+  </header>
+
+  <main class="page">
+    {passage && (
+      <section class="hero" aria-labelledby="week-label">
+        <!-- DRAFT label; the passage itself is the work's own text. -->
+        <span class="lbl" id="week-label">{passage.label}</span>
+        <div class="duo">
+          <p class="gk">{passage.source}<span class="ref">{passage.sourceRef}</span></p>
+          <p class="en">{passage.english}<span class="ref">{passage.englishRef}</span></p>
+        </div>
+        <p class="goto"><a href={passage.href}>Begin {passage.title} <span aria-hidden="true">→</span></a></p>
+      </section>
+    )}
+
+    {paths.length > 0 && (
+      <div class="ways">
+        {paths.map((p) => (
+          <div class="path">
+            {/* DRAFT where p.draft: title and description are agent-drafted; the snapshot's own path carries its curator's words. */}
+            <p class="w"><a href={p.href}>{p.title}</a></p>
+            <p>{p.description}</p>
+            <span class="ct">{p.caption}</span>
+          </div>
+        ))}
+      </div>
+    )}
+
+    {catalog.sections.map((s) => (
+      <section class={s.accent ? `ledger ${s.accent}` : 'ledger'} aria-labelledby={`led-${s.id}`}>
+        <header>
+          <h2 id={`led-${s.id}`}>{s.name}</h2>
+          {s.meta && <span class="ct">{s.meta}</span>}
+          {s.enterHref && <span class="enter"><a href={s.enterHref}>enter <span aria-hidden="true">→</span></a></span>}
+        </header>
+        {s.note && <p class="note">{s.note}</p>}
+        {s.groups.map((g) => (
+          <>
+            {g.label && <span class="perlbl lbl">{g.label}</span>}
+            {g.authors.map((a) => (
+              <div class="row">
+                <span class="au">{a.name}</span>
+                <span class="ws">{a.works.slice(0, 8).map((w, i) => (
+                  <>{i > 0 && ' · '}<a href={w.href} rel={w.external ? 'external' : undefined}>{w.title}</a>{w.external && <span class="ext">{w.external}</span>}</>
+                ))}{a.works.length > 8 && ` and ${a.works.length - 8} more`}</span>
+                <span class="rng">{a.range}</span>
+              </div>
+            ))}
+          </>
+        ))}
+      </section>
+    ))}
+
+    <!-- DRAFT copy pending John's approval. -->
+    <div class="toolrow">
+      <div>
+        <p class="w">Search the corpus</p>
+        <p>By Greek, Latin, or English; by lemma or by form. Scope it to one work,
+          one author, one collection, or the whole library.</p>
+      </div>
+      <div>
+        <p class="w">Go to a citation</p>
+        <p>Type <code>Eth. Nic. 1094a</code> or <code>DK 22 B30</code> — the library
+          takes you there.</p>
+      </div>
+      <div>
+        <p class="w">Every word answers</p>
+        <p>Tap any word in any text: its morphology and its full dictionary entry.</p>
+      </div>
+    </div>
+
+    <!-- DRAFT copy pending John's approval. -->
+    <p class="trust">Each work names its source edition and keeps its scholarly
+      citation scheme — Bekker pages, Diels–Kranz numeration, book and section.
+      Translations are public domain, verified against their printed editions.
+      Fragmentary authors appear as the evidence gives them.</p>
+
+    <footer class="lyc-foot">
+      <span class="lock">
+        <span class="lname">{SITE}</span>
+        <a class="inst lbl" href="https://lyceum.institute">Lyceum Institute <span aria-hidden="true">↗</span></a>
+      </span>
+      <span class="links">
+        <a href="https://lyceum.institute">lyceum.institute</a>
+        <a href={`${base}/attribution`}>About the texts</a>
+        <a href={`${base}/support`}>Support the library</a>
+      </span>
+    </footer>
+  </main>
+</body>
+</html>

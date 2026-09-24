@@ -1,0 +1,58 @@
+{
+ "B1": {
+  "kind": "embedded",
+  "text": "(Scholiast on Aristophanes, Clouds: The book describing the Choice of Heracles is called 'Horae').",
+  "frames": [
+   [
+    0,
+    89
+   ]
+  ]
+ },
+ "B2": {
+  "kind": "conflict",
+  "text": "(Xenophon, Memorabilia, II.1.21: The Choice of Heracles. Heracles, having come to the time when the young choose their way of life, is confronted by two women, Virtue and Vice, who set before him the rival claims of the way of pleasure and the way of honourable toil)."
+ },
+ "B3": {
+  "kind": "conflict",
+  "text": "(Title: 'On the Nature of Things')."
+ },
+ "B4": {
+  "kind": "embedded",
+  "text": "(Galen: Prodicus in his book 'On the Nature of Man' called the heated and as it were overcooked element in the bodily humours the 'phlegm', and the mucous discharge which is universally named 'phlegm' he called 'blenna', slime').",
+  "frames": [
+   [
+    0,
+    29
+   ]
+  ]
+ },
+ "B5": {
+  "kind": "conflict",
+  "text": "(Things from which benefits to human life have been derived have come to be considered deities, such as Demeter and Dionysus)."
+ },
+ "B6": {
+  "kind": "verbatim",
+  "text": "(Sophists are) on the borderline between the philosopher and the statesman."
+ },
+ "B7": {
+  "kind": "verbatim",
+  "text": "Desire when doubled is love, love when doubled is madness."
+ },
+ "B8": {
+  "kind": "conflict",
+  "text": "(Ps.-Plato, Eryxias 397D: Prodicus said that things were good or bad according to their users, for example, wealth)."
+ },
+ "B9": {
+  "kind": "conflict",
+  "text": "(Ps.-Plato, Axiochus 366B: Prodicus teaches nothing free)."
+ },
+ "B10": {
+  "kind": "conflict",
+  "text": "Fire is the best of the perfumes."
+ },
+ "B11": {
+  "kind": "conflict",
+  "text": "Milk is best if one draw it actually from the female."
+ }
+}

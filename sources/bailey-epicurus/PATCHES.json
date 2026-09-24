@@ -1,0 +1,86 @@
+[
+ {
+  "store": "kd",
+  "key": "1",
+  "replace": [
+   ["Tue blessed", "The blessed"]
+  ],
+  "note": "Raw OCR line 5098: 'I. Tue blessed and immortal nature knows no trouble...' -- 'Tue' is an OCR misread of 'The' ('h' read as 'u'). Principal Doctrine I's own opening word."
+ },
+ {
+  "store": "letters",
+  "key": "letter-to-herodotus:36",
+  "remove": [
+   "27S ad ws "
+  ],
+  "note": "Raw OCR line 701: 'things imperceptible to the senses First of all, that 27S ad ws ' followed (line 704) by 'nothing is created out of that which does not exist'. '27S ad ws' is marginal-synopsis-column noise (see the module's disclosed marginal-column limitation) bled into the main line between 'that' and 'nothing'; removing it restores the plain sentence 'First of all, that nothing is created out of that which does not exist', matching Epicurus' first physical principle."
+ },
+ {
+  "store": "letters",
+  "key": "letter-to-herodotus:57",
+  "remove": [
+   "46"
+  ],
+  "replace": [
+   ["3t will", "it will"]
+  ],
+  "note": "Two separate defects in the same section. (1) Raw OCR lines 1743-1746: '...counteracting the force of that which\\n\\n\\n46dealt the blow.' -- '46' is a stray page-bottom number glued directly onto 'dealt' with no space; removed to restore 'that which dealt the blow.' (2) Raw OCR line 1764: 'Moreover, 3t will be said that In compound...' -- '3' is an OCR misread of 'i', restoring 'Moreover, it will be said that...'."
+ },
+ {
+  "store": "letters",
+  "key": "letter-to-pythocles:95",
+  "remove": [
+   "g6 "
+  ],
+  "note": "Raw OCR lines 3514-3515: 'interposition or to any one of many causes which might be\\ng6 observed, all in harmony with phenomena.' -- 'g6' is stray marginal-column/apparatus noise glued onto 'observed' with a space; removed to restore 'which might be observed, all in harmony with phenomena.'"
+ },
+ {
+  "store": "letters",
+  "key": "letter-to-pythocles:103",
+  "remove": [
+   "1o4 ",
+   "1o5 ",
+   "x06 "
+  ],
+  "replace": [
+   ["vi 4Asmoof", "of"]
+  ],
+  "note": "Four stray page-bottom folio numbers glued onto the following word with no line break survived in this section, each an OCR misread of the plain page number ('1o4' for 104, 'vi 4Asmoof' for a marginal-column fragment fused by the dehyphenator onto the real word 'of', 'x1o5' -> '1o5' for 105, 'x06' for 106): raw OCR lines 3862 ('1o4 And thunderbolts may be produced...'), 3867-3868 ('the driving down vi 4Asmo-' / 'of a cloud into the regions below' -- 'vi 4Asmo-' is marginal noise that this tool's own hyphen-continuation logic incorrectly merged onto the genuine next word 'of', producing 'vi 4Asmoof'), 3876 ('1o5 the surrounding condensation of the atmosphere'), and 3972 ('x06 with more densely packed bodies of earth'). Removing/replacing each restores the plain sentences."
+ },
+ {
+  "store": "letters",
+  "key": "letter-to-pythocles:109",
+  "remove": [
+   "™0on’s halo. "
+  ],
+  "note": "Raw OCR line 4203: 'or when the air ™0on's halo.\\nchecks the effluences carried from the moon...' -- this is the marginal-synopsis-column topic label for this paragraph ('The Moon's halo', damaged: leading letters lost, 'o' misread as '0'), bled into the main line between 'the air' and 'checks'. Removed to restore 'or when the air checks the effluences carried from the moon...'."
+ },
+ {
+  "store": "letters",
+  "key": "letter-to-pythocles:114",
+  "remove": [
+   "o1speed™ ",
+   "m5 "
+  ],
+  "note": "Two marginal-column labels bled into the main line. Raw OCR lines 4321-4323: '114 That some stars should be seen to be left behind by (4) Difference\\nothers is caused because though they move round in the o1speed™\\nsame orbit they are carried along more slowly, and also Stars.' -- the marginal label 'Difference of speed' (split '(4) Difference' / 'o1speed' [of speed, 'f' misread as '1'] / 'Stars.') has its middle fragment glued into the body between 'the' and 'same orbit'; removed to restore 'they move round in the same orbit'. Raw OCR lines 4334-4336: '...an outburst of wind occurs, as\\n\\nm5 we explained in the case of lightning-flashes' -- 'm5' is a further stray marginal/apparatus fragment glued onto 'we'; removed to restore 'as we explained in the case of lightning-flashes'."
+ },
+ {
+  "store": "letters",
+  "key": "letter-to-menoeceus:123",
+  "remove": [
+   "Dlesse4, ",
+   "2 {0 7sa\"™ ",
+   "sou! "
+  ],
+  "note": "Three marginal-column/apparatus fragments bled into the main line. Raw OCR lines 4498-4499: 'assign to him anything alien to his immortality or ill-suited Dlesse4,\\nto his blessedness :' -- 'Dlesse4' is a damaged marginal-column fragment ('blessed'); removed to restore 'or ill-suited to his blessedness :'. Raw OCR line 4620: 'the old man to make a good end, is foolish, not merely 2 {0 7sa\"™ το because of the desirability of life' -- an apparatus footnote fragment citing the Greek τὸ τῆς ζωῆς ἀσπαστόν ('the desirability of life', glossed at raw line 19115) bled in whole; removed to restore 'is foolish, not merely because of the desirability of life'. Raw OCR line 4714: 'it is to obtain this end that we always act, namely, to avoid sou! the\\npain and fear.' -- 'sou!' is stray marginal noise between 'avoid' and 'the pain and fear' (not a completion of 'soul': inserting that word here is ungrammatical); removed to restore 'namely, to avoid the pain and fear.'"
+ },
+ {
+  "store": "vs",
+  "key": "17",
+  "replace": [
+   ["o!d", "old"],
+   ["!ived", "lived"]
+  ],
+  "note": "Raw OCR lines 5937-5938: 'happy, but an o!d man who has !ived a good life.' -- '!' is an OCR misread of 'l' in both words. Vatican Saying 17's own opening sentence."
+ }
+]

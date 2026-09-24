@@ -1,0 +1,177 @@
+{
+ "1:A1": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.50-56",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925"
+   }
+  ]
+ },
+ "1:A5": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Protagoras",
+    "locus": "317b-317c",
+    "status": "translated",
+    "translation_credit": "Lamb, 1924",
+    "emphasis": [
+     "Hence the road I have taken is one entirely opposite to theirs: I admit that I am a sophist and that I educate men;",
+     "And yet many long years have I now been in the profession, for many in total number are those that I have lived: not one of you all, but in age I might be his father."
+    ]
+   },
+   {
+    "source_author": "Plato",
+    "source_work": "Protagoras",
+    "locus": "318a",
+    "status": "translated",
+    "translation_credit": "Lamb, 1924",
+    "emphasis": [
+     "Young man, you will gain this by coming to my classes, that on the day when you join them you will go home a better man, and on the day after it will be the same; every day"
+    ]
+   },
+   {
+    "source_author": "Plato",
+    "source_work": "Protagoras",
+    "locus": "318d-319a",
+    "status": "translated",
+    "translation_credit": "Lamb, 1924",
+    "emphasis": [
+     "The generality of them maltreat the young; for when they have escaped from the arts",
+     "they bring them back against their will and force them into arts, teaching them arithmetic and astronomy and geometry and music (and here he glanced at Hippias); whereas, if he applies to me, he will learn precisely and solely that for which he has come. That learning consists of good judgement in his own affairs, showing how best to order his own home; and in the affairs of his city,",
+     "showing how he may have most influence on public affairs both in speech and in action.",
+     "for you appear to be speaking of the civic science, and undertaking to make men good citizens. That, Socrates, he replied, is exactly the purport of what I profess."
+    ]
+   },
+   {
+    "source_author": "Plato",
+    "source_work": "Protagoras",
+    "locus": "349a",
+    "status": "translated",
+    "translation_credit": "Lamb, 1924",
+    "emphasis": [
+     "publicly proclaimed to all the Greeks with the title of sophist, and have appointed yourself preceptor of culture and virtue, and are the first who has ever demanded a regular fee for such work."
+    ]
+   }
+  ]
+ },
+ "1:A8": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Meno",
+    "locus": "91d-91e",
+    "status": "translated",
+    "translation_credit": "Lamb, 1924",
+    "emphasis": [
+     "for I know of one man, Protagoras, who amassed more money by his craft than Pheidias—so famous for the noble works he produced—or any ten other sculptors.",
+     "while for more than forty years all Greece failed to notice that Protagoras was corrupting his classes and sending his pupils away in a worse state than when he took charge of them! For I believe he died about seventy years old, forty of which he spent in the practice of his art; Soc. and he retains undiminished to this day the high reputation he has enjoyed all that time"
+    ]
+   }
+  ]
+ },
+ "1:A9": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Hippias Major",
+    "locus": "282d-282e",
+    "status": "translated",
+    "translation_credit": "Fowler, 1926",
+    "emphasis": [
+     "but once, when I went to Sicily,",
+     "although Protagoras was staying there and had a great reputation and was the older, I, who was much younger,"
+    ]
+   }
+  ]
+ },
+ "1:A13": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Cratylus",
+    "locus": "385e-386a",
+    "status": "translated",
+    "translation_credit": "Fowler, 1926",
+    "emphasis": [
+     "as Protagoras said with his doctrine",
+     "that man is the measure of all things—that things are to me such as they seem to me, and to you such as they seem to you"
+    ]
+   }
+  ]
+ },
+ "1:A19": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Euthydemus",
+    "locus": "286b-286c",
+    "status": "translated",
+    "translation_credit": "Lamb, 1924",
+    "emphasis": [
+     "For, to be plain with you, this argument, though I have heard it from many people on various occasions, never fails to set me wondering—you know the followers of Protagoras made great use of it, as did others even before his time, but to me it always seems to have a wonderful way of upsetting not merely other views but itself also"
+    ]
+   }
+  ]
+ },
+ "1:A21a": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Theaetetus",
+    "locus": "166d",
+    "status": "translated",
+    "translation_credit": "Fowler, 1921"
+   },
+   {
+    "source_author": "Plato",
+    "source_work": "Theaetetus",
+    "locus": "167b-167d",
+    "status": "translated",
+    "translation_credit": "Fowler, 1921",
+    "emphasis": [
+     "thinks thoughts akin to that condition, is made by a good condition of soul to think correspondingly good thoughts; and some men, through inexperience, call these appearances true, whereas I call them better than the others, but in no wise truer. And the wise, my dear Socrates, I do not by any means call tadpoles when they have to do with the human body, I call them physicians, and when they have to do with plants, husbandmen; for I assert that these latter, when plants are sickly, instil into them good and healthy sensations,",
+     "and true ones instead of bad sensations, and that the wise and good orators make the good, instead of the evil, seem to be right to their states. For I claim that whatever seems right and honorable to a state is really right and honorable to it, so long as it believes it to be so; but the wise man causes the good, instead of that which is evil to them in each instance, to be and seem right and honorable. And on the same principle the teacher who is able to train his pupils in this manner is not only wise but is also",
+     "entitled to receive high pay from them when their education is finished. And in this sense it is true that some men are wiser than others, and that no one thinks falsely, and that you, whether you will or no, must endure to be a measure. Upon these positions my doctrine stands firm;"
+    ]
+   }
+  ]
+ },
+ "1:A23": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Theaetetus",
+    "locus": "162d-162e",
+    "status": "translated",
+    "translation_credit": "Fowler, 1921",
+    "emphasis": [
+     "Excellent boys and old men, there you sit together declaiming to the people, and you bring in the gods, the question of whose",
+     "existence or non-existence I exclude from oral and written discussion,"
+    ]
+   }
+  ]
+ },
+ "1:A26": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Phaedrus",
+    "locus": "266d-267d",
+    "status": "translated",
+    "translation_credit": "Fowler, 1914",
+    "emphasis": [
+     "You mean that there must be an introduction first, at the beginning of the discourse; these are the things you mean, are they not?—the niceties of the art.",
+     "Phaedrus. Yes. Socrates. And the narrative must come second with the testimony after it, and third the proofs, and fourth the probabilities; and confirmation and further confirmation are mentioned, I believe, by the man from Byzantium, that most excellent artist in words. Phaedrus. You mean the worthy Theodorus?",
+     "Socrates. Of course. And he tells how refutation and further refutation must be accomplished, both in accusation and in defence. Shall we not bring the illustrious Parian, Evenus, into our discussion, who invented covert allusion and indirect praises? And some say that he also wrote indirect censures, composing them in verse as an aid to memory; for he is a clever man. And shall we leave Gorgias and Tisias undisturbed, who saw that probabilities are more to be esteemed than truths, who make small things seem great and great things small",
+     "by the power of their words, and new things old and old things the reverse, and who invented conciseness of speech and measureless length on all subjects? And once when Prodicus heard these inventions, he laughed, and said that he alone had discovered the art of proper speech, that discourses should be neither long nor short, but of reasonable length. Phaedrus. O Prodicus! How clever! Socrates. And shall we not mention Hippias, our friend from Elis? I think he would agree with him. Phaedrus. Oh yes.",
+     "Socrates. And what shall we say of Polus and his shrines of learned speech, such as duplication and sententiousness and figurativeness, and what of the names with which Licymnius presented him to effect beautiful diction? Phaedrus. Were there not some similar inventions of Protagoras, Socrates? Socrates. Yes, my boy, correctness of diction, and many other fine things. For tearful speeches, to arouse pity for old age and poverty, I think the precepts of the mighty Chalcedonian hold the palm, and he is also a genius,",
+     "as he said, at rousing large companies to wrath, and soothing them again by his charms when they are angry, and most powerful in devising and abolishing calumnies on any grounds whatsoever. But all seem to be in agreement concerning the conclusion of discourses, which some call recapitulation, while others give it some other name."
+    ]
+   }
+  ]
+ }
+}

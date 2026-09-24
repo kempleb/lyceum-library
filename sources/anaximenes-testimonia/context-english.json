@@ -1,0 +1,13 @@
+{
+ "1:A1": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "2.3",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925"
+   }
+  ]
+ }
+}

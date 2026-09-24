@@ -1,0 +1,191 @@
+# Anaxagoras of Clazomenae Fragments (DK 59 B) — pipeline manifest (dk
+# scheme: one flat div[@type="Fragment"][@n] per citable fragment). See
+# anaxagoras-testimonia.yaml for the vol. 2 / verse-invocation notes (plain
+# export correct; zero structural verse; no homonym risk).
+#
+# STRUCTURE: 24 raw divs — a title div n="tit" (stripped automatically) plus
+# 23 ordinary columns: B1-B19 (19, clean consecutive), [B20 MISSING], B21,
+# B21a, B21b (three separate divs — genuinely three distinct DK sub-entries,
+# NOT a compound/merge case: each carries its own independent letter-spaced
+# quotation from a different citing source), B22. B20: Diels' own numbering
+# gap in this series (no div n="20" in the export; DK6 vol. 2's own
+# B-fragments numbering has no B20) — declared per the same precedent as
+# this work's own A27 and Heraclitus' B84/B109.
+#
+# GROUND-TRUTH CORRECTION (verified against the export, not assumed from
+# the task brief's stated range): the task brief anticipated "frr. 1-24";
+# the export's highest fragment div is n="22" (with B20 a declared gap) —
+# no div n="23" or "24" exists anywhere in this work. Standard DK59B
+# Anaxagoras numbering runs B1-B22 (with B20 a Diels-declared gap); this
+# export's own numbering confirms that ceiling exactly. Same
+# "task-brief-range-was-an-approximation" finding as Melissus' fragmenta.
+#
+# All 23 real columns carry <hi rend="letter-spacing"> (B1-B19, B21, B21a,
+# B21b, B22 — verified per-div) — this is Anaxagoras' celebrated,
+# unusually well-preserved verbatim corpus (mostly via Simplicius' direct
+# quotation) — no `unmarked_columns` needed at all, the only dk work in
+# this batch (or the whole Wave 1b roster to date) where every citable
+# column is directly quoted.
+
+work:
+  id: anaxagoras-fragments
+  title: "Fragments"
+  author: "anaxagoras"
+  language: "grc"
+  tlg_author: "0713"
+  tlg_work: "002"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1952), 59 B"
+  # FATAL sourceDesc gate (Wave 1c Sol nit): stage1's _check_sourcedesc
+  # asserts this exact substring is present in the export XML's own
+  # <teiHeader><sourceDesc> text -- verified verbatim against
+  # build/export/.../tlg0713002.xml. Catches a wrong-author or
+  # wrong-volume re-export (a stale TLG_DIR pointing at a different
+  # numbered file) at the earliest possible point.
+  expected_sourcedesc: 'Anaxagoras Phil., Fragmenta (0713: 002) "Die Fragmente der Vorsokratiker, vol. 2'
+
+citation:
+  scheme: dk
+  series: B
+  # dk_witness.py's owner-verified apparatus split (stage7_emit wiring):
+  # count of this work's columns whose apparatus actually splits into
+  # 2+ witnesses, cross-checked bidirectionally at preflight against the
+  # emitted dist's own `witnesses` keys -- catches an unreviewed new
+  # split and a stale declaration alike.
+  dk_witness_split_columns: 1
+  # Quote-mark polarity fix (owner ruling 2026-08-05, "we fix it and
+  # make damn sure every instance is correct"): the raw TLG export
+  # frequently opens a Greek quotation with U+2019 instead of U+2018 --
+  # stage1_greek._dk_normalize_quote_marks fixes every BALANCED
+  # (even-count) column automatically; this is that fix's own declared
+  # count, cross-checked bidirectionally at preflight against the
+  # emitted dist's actual U+2018/U+2019 total.
+  dk_quote_marks_rewritten: 78
+  # FAIL-CLOSED: this work's raw export carries an ODD
+  # U+2018/U+2019 count in these column(s) -- cannot be paired,
+  # left completely untouched by the fix above (see
+  # stage1_greek._dk_normalize_quote_marks' module doc).
+  dk_unbalanced_quote_columns:
+    - B9
+  hideLineNumbers: true
+  expected_gaps:
+    - B20
+
+  # Freeman Ancilla: every markup/Greek disagreement is declared here.
+  kind_overrides: {}
+  fragment_kinds:
+    B1: verbatim
+    B2: verbatim
+    B3: verbatim
+    B4: verbatim
+    B5: verbatim
+    B6: verbatim
+    B7: verbatim
+    B8: verbatim
+    B9: verbatim
+    B10: verbatim
+    B11: verbatim
+    B12: verbatim
+    B13: verbatim
+    B14: verbatim
+    B15: verbatim
+    B16: verbatim
+    B17: verbatim
+    B18: verbatim
+    B19: verbatim
+    B21: verbatim
+    B21a: verbatim
+    B21b: verbatim
+    B22: verbatim
+
+# Digest fingerprint of the observed dk column spine (23 columns: B1-B19,
+# B21, B21a, B21b, B22 — B20 a declared gap) — stage2 recomputes and
+# compares it.
+section_spine: { count: 23, sha256: "dd73e3392ad4f7b8c12c6397a4fa862258c1c44957db261337e7978974d3902f" }
+
+freeman_concordance: {}
+
+group_headers: []
+
+# Burnet EGP 3rd ed. (1920, Wikisource) English, retained as the secondary
+# translation — extracted by
+# pipeline/tools/extract_burnet_wikisource.py's `build_anaxagoras` (task
+# #48; see sources/burnet-egp/burnet-anaxagoras.clean.json, 23 columns:
+# B1-B19, B21, B21a, B21b, B22 — FULL coverage, matching this work's own
+# Greek spine exactly). Anaxagoras' own S:S126 "I give the fragments
+# according to the text and arrangement of Diels" listing sits inside ONE
+# `<section begin="AnaxFrag">` wrapper, inline-ordinal shape like Melissus
+# (see `_extract_ordinal_fine_fragments`). Plain prose (no marginal
+# sidenote markers) — no paras sidecar. Every one of the 23 emitted
+# fragments was content-spot-checked against the built Greek spine
+# (build/dist/anaxagoras-fragments/book-01.json) — see sources/INVENTORY.md.
+english:
+  primary:
+    id: freeman
+    name: "Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)"
+    model: freeman
+    file: "freeman-ancilla/freeman-anaxagoras.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Kathleen Freeman's Ancilla to the Pre-Socratic Philosophers (1948) is treated as US public domain per John's 2026-07-23 ruling (CANON.md, Freeman Ancilla copyright ruling); covered by attribution.astro's site-wide translation public-domain notice."
+    group_headers_file: "freeman-ancilla/freeman-anaxagoras.group_headers.json"
+  secondary:
+    id: burnet
+    name: "John Burnet, Early Greek Philosophy, 3rd ed. (A. & C. Black, 1920)"
+    model: archive
+    file: "burnet-egp/burnet-anaxagoras.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+
+# No alignment_allow_unmatched: Burnet's own numbered listing (1)-(22),
+# with (21a)/(21b) as separate items and (20) a Burnet-own no-DK-number
+# item (collected by the extractor as `excluded`, never emitted as a
+# column — see `_ANAXAGORAS_EXCLUDED_ORDINALS`), covers every spine column
+# exactly. B20 itself is not a spine column at all (`citation.expected_gaps`
+# above) so it needs no allowance entry either.
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion).
+books:
+  - { n: 1, start: "B1", end: "B22" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: anaxagoras-fragments
+  slug: fragments
+  title: Fragments
+  abbr: Anaxag. B
+  author: anaxagoras
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1952), 59 B'
+  greekSource:
+    short: Diels–Kranz (1952)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1952), 59 B'
+  translations:
+    - id: freeman
+      name: Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)
+      short: Freeman
+      slot: english
+    - id: burnet
+      name: John Burnet, Early Greek Philosophy, 3rd ed. (A. & C. Black, 1920)
+      short: Burnet
+      slot: secondary
+  defaultTranslation: freeman
+  citation:
+    scheme: dk
+    copyAbbr: DK 59
+    dkChapter: 59
+    series: B
+  related:
+    - id: anaxagoras-testimonia
+      label: 'The A-testimonia: ancient reports about Anaxagoras'
+  blurb: The unusually well-preserved verbatim fragments of Anaxagoras of Clazomenae, on Mind (Nous) ordering an infinity of intermingled seeds — “there is a portion of everything in everything.”

@@ -1,0 +1,163 @@
+# Gorgias of Leontini Testimonia (DK 82 A) — pipeline manifest (dk scheme:
+# one flat div[@type="Fragment"][@n] per citable testimonium, plain <p>
+# prose, no <l> lines). Greek-only work: ancient reports/paraphrases about
+# Gorgias, not his own words; no free English translation exists (Burnet
+# never covers the Sophists).
+#
+# TLG0593 IS THE SOPHIST (task-directed, verified): confirmed directly
+# against the export's own <sourceDesc>, 'Gorgias Rhet., Soph., Testimonia
+# (0593: 002) "Die Fragmente der Vorsokratiker, vol. 2, 6th edn.", ...' --
+# NOT TLG2255 (Gorgias the historian, a different person, untouched by this
+# wave; no manifest references it).
+#
+# NON-DK WORK EXCLUDED (task-directed): TLG0593 carries a THIRD work, 001
+# Testimonium (FGrH) — no Diels-Kranz number, excluded, never
+# export-referenced by any manifest.
+#
+# VERSE CHECK: exported plain (no `-y`); confirmed 0 <l> elements anywhere in
+# the export. Straight biographical/doxographical prose (PHILOSTR. V. S.,
+# SUID., DIOG. Laert., PLATO dialogues, ARISTOT., XENOPH., CIC., QUINTIL.,
+# PLIN., etc.), including substantial unmarked Latin narrative (A11-A14, A26,
+# A30-A32) and one marked all-Latin span (A32).
+#
+# STRUCTURE: 40 divs, n="1".."35" (35, consecutive, no gaps) plus five
+# lettered variants (1a, 2a, 5a, 8a, 15a), each an independently-existing
+# div (not a merge of a base "N" div — every lettered @n and its bare-number
+# counterpart are separate divs). No title divs, no div_map/div_concat/
+# compound_n_map cases.
+#
+# LETTER-SPACING FINDING: only 4 of 40 columns carry any
+# <hi rend="letter-spacing"> span (A1, A21, A27, A32) — Gorgias' testimonia
+# are overwhelmingly pure doxography/biography/anecdote with almost nothing
+# quoted verbatim, the same pattern already seen in the Milesian/Pythagorean
+# testimonia-primary authors. The other 36 columns are declared
+# `unmarked_columns` below, content-verified per column (not assumed).
+#
+# LATIN: A32 (Cicero, Orator, on Thrasymachus/Gorgias' rhetorical figures)
+# carries exactly one marked role='text' span, a single Latin noun (Cicero's
+# own word for the rhetorical "witticisms/pleasantries" he attributes to
+# Gorgias) — zero Greek tokens for this fragment, a genuine `latin_fragments`
+# case (same posture as Heraclitus B4/Protagoras B6). A11-A14/A26/A30-A31 carry
+# substantial unmarked Latin narrative (QUINT., CIC., PLIN.) but none of it
+# is letter-spaced — plain context, no `latin_fragments` declaration needed
+# for those (that gate only fires on a MARKED column whose entire role='text'
+# content is Latin).
+
+work:
+  id: gorgias-testimonia
+  title: "Testimonia"
+  author: "gorgias"
+  language: "grc"
+  tlg_author: "0593"
+  tlg_work: "002"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1952), 82 A"
+  # FATAL sourceDesc gate: stage1's _check_sourcedesc asserts this exact
+  # substring is present in the export XML's own <teiHeader><sourceDesc>
+  # text -- verified verbatim against build/export/.../tlg0593002.xml.
+  expected_sourcedesc: 'Gorgias Rhet., Soph., Testimonia (0593: 002) "Die Fragmente der Vorsokratiker, vol. 2'
+
+citation:
+  scheme: dk
+  series: A
+  # dk_witness.py's owner-verified apparatus split (stage7_emit wiring):
+  # count of this work's columns whose apparatus actually splits into
+  # 2+ witnesses, cross-checked bidirectionally at preflight against the
+  # emitted dist's own `witnesses` keys -- catches an unreviewed new
+  # split and a stale declaration alike.
+  dk_witness_split_columns: 5
+  # Quote-mark polarity fix (owner ruling 2026-08-05, "we fix it and
+  # make damn sure every instance is correct"): the raw TLG export
+  # frequently opens a Greek quotation with U+2019 instead of U+2018 --
+  # stage1_greek._dk_normalize_quote_marks fixes every BALANCED
+  # (even-count) column automatically; this is that fix's own declared
+  # count, cross-checked bidirectionally at preflight against the
+  # emitted dist's actual U+2018/U+2019 total.
+  dk_quote_marks_rewritten: 24
+  # FAIL-CLOSED: this work's raw export carries an ODD
+  # U+2018/U+2019 count in these column(s) -- cannot be paired,
+  # left completely untouched by the fix above (see
+  # stage1_greek._dk_normalize_quote_marks' module doc).
+  dk_unbalanced_quote_columns:
+    - A11
+    - A20
+  hideLineNumbers: true
+  unmarked_columns:
+    - A1a
+    - A2
+    - A2a
+    - A3
+    - A4
+    - A5
+    - A5a
+    - A6
+    - A7
+    - A8
+    - A8a
+    - A9
+    - A10
+    - A11
+    - A12
+    - A13
+    - A14
+    - A15
+    - A15a
+    - A16
+    - A17
+    - A18
+    - A19
+    - A20
+    - A22
+    - A23
+    - A24
+    - A25
+    - A26
+    - A28
+    - A29
+    - A30
+    - A31
+    - A33
+    - A34
+    - A35
+  latin_fragments:
+    - A32
+
+# Digest fingerprint of the observed dk column spine (40 columns, A1-A35
+# plus A1a/A2a/A5a/A8a/A15a, no gaps) — stage2 recomputes and compares it.
+section_spine: { count: 40, sha256: "8cd0e8a83f130113a93f7083b58886c278330a4b42cf9fbf5072c3fc55668b65" }
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion).
+books:
+  - { n: 1, start: "A1", end: "A35" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: gorgias-testimonia
+  slug: testimonia
+  title: Testimonia
+  abbr: Gorg. A
+  author: gorgias
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1952), 82 A'
+  greekSource:
+    short: Diels–Kranz (1952)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1952), 82 A'
+  translations: []
+  citation:
+    scheme: dk
+    copyAbbr: DK 82
+    dkChapter: 82
+    series: A
+  related:
+    - id: gorgias-fragments
+      label: 'The B-fragments: the surviving words themselves'
+  blurb: Ancient reports, anecdote, and biography concerning Gorgias of Leontini — his embassy to Athens, his extraordinary longevity, his students (Isocrates among them), and the golden statue the Delphians raised in his own honor while he lived — the original Greek text.

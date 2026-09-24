@@ -1,0 +1,548 @@
+---
+import ThemeInit from '../components/ThemeInit.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import Pwa from '../components/Pwa.astro';
+import '@shared/styles/global.css';
+import { WORKS, visibleTranslations } from '@shared/lib/works';
+import { jsonLdSafe } from '../lib/jsonld';
+import LyceumBand from '../components/LyceumBand.astro';
+import { siteNameFor } from '../lib/site';
+import { builtAuthors, builtWorksOf, isBuilt } from '../lib/built-works';
+import { columnCcLicenses } from '../lib/column-cc-licenses';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// PUBLIC_LYCEUM_CHROME=1 puts the sitewide Lyceum band and name on this page
+// too (docs/design-spec.md §4), so the demo origin reads as one site; with the
+// flag off every line below is the page this route has always served.
+const lyceumChrome = import.meta.env.PUBLIC_LYCEUM_CHROME === '1';
+const siteName = siteNameFor(lyceumChrome);
+
+// True only in the local/full build (PUBLIC_SHOW_PRIVATE=1), where copyright-
+// encumbered overlays are carried; every production/public build drops them
+// entirely, so the "local only" legend below is suppressed there. Routed
+// through visibleTranslations as defense in depth: private entries are
+// already stripped from WORKS at compile time (build-registry.mjs for the
+// vendored aristotle registry, Vite's define-fold for the classical
+// manifests), so this is a second, independent guard rather than the only one.
+// isBuilt() scopes this to what the translations list below actually shows
+// (GPT-6 Sol code review, docs/todo/plato-mount.md): WORKS may list a held
+// mounted corpus's works, which have no data in this checkout -- without
+// this, the "local only" note could fire for a translation nobody can see.
+const hasPrivate = WORKS.some((w) => isBuilt(w.id) && visibleTranslations(w).some((t) => t.private));
+
+// English Translations list (John's ruling, 2026-09-23): grouped by author,
+// in the same order builtAuthors() gives the breadcrumb's author dropdown
+// and [author]/index.astro's own getStaticPaths — i.e. AUTHORS registry
+// order, filtered to authors with a built work. builtWorksOf keeps each
+// author's own curated work order and drops any registered-but-unbuilt
+// work, so a work with no pipeline data in this checkout never appears here
+// (same predicate ClassicHome/Landing/the breadcrumb use — see
+// app/src/lib/built-works.ts).
+const translationsByAuthor = builtAuthors()
+  .map((author) => ({
+    author,
+    works: builtWorksOf(author.id).filter((w) => visibleTranslations(w).length > 0),
+  }))
+  .filter((g) => g.works.length > 0);
+const pageTitle = `Texts & Licences — ${siteName}`;
+const metaDescription =
+  `Source and licence information for ${siteName}: Greek and Latin texts, English translations, LSJ lexicon data, citation schemes, and open-source code.`;
+const canonical = Astro.site ? new URL(`${base}/attribution/`, Astro.site).href : undefined;
+const ogImage = Astro.site ? new URL(`${base}/og-default.png`, Astro.site).href : undefined;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: pageTitle,
+  description: metaDescription,
+  ...(canonical ? { url: canonical } : {}),
+  isPartOf: { '@type': 'WebSite', name: siteName },
+};
+---
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <ThemeInit />
+  <title>{pageTitle}</title>
+  <meta name="description" content={metaDescription} />
+  {canonical && <link rel="canonical" href={canonical} />}
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={metaDescription} />
+  <meta property="og:site_name" content={siteName} />
+  {canonical && <meta property="og:url" content={canonical} />}
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={metaDescription} />
+  {ogImage && <meta name="twitter:image" content={ogImage} />}
+  <script type="application/ld+json" set:html={jsonLdSafe(jsonLd)} />
+  <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+  <link rel="icon" href={`${base}/favicon.png`} type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} sizes="180x180" />
+  <style>
+    .attr-body {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 2rem 1rem 4rem;
+      font-family: var(--font-english);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--text);
+    }
+    h2 {
+      font-family: var(--font-ui);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin: 2rem 0 0.4rem;
+      letter-spacing: .02em;
+    }
+    h2:first-of-type { margin-top: 1rem; }
+    p { margin: 0 0 0.6rem; }
+    ul { margin: 0 0 0.6rem; padding-left: 1.3rem; }
+    li { margin: 0 0 0.35rem; }
+    a { color: var(--accent); }
+    .licence-badge {
+      display: inline-block;
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      background: var(--border);
+      border-radius: 3px;
+      padding: 0.1em 0.5em;
+      margin-left: 0.4em;
+      vertical-align: middle;
+      color: var(--text-mid);
+    }
+    .licence-badge.cc { background: #e8f4e8; color: #2a6a2a; }
+    .licence-badge.pd { background: #e8eef4; color: #2a4a6a; }
+    .licence-badge.mit { background: #f4f0e8; color: #6a4a2a; }
+    .licence-badge.local {
+      font-size: 0.65rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      background: #f4e8e8; color: #8a3a3a;
+    }
+    :global(html[data-theme="dark"]) .licence-badge.cc { background: #1f3320; color: #9ed3a0; }
+    :global(html[data-theme="dark"]) .licence-badge.pd { background: #1c2a3a; color: #9cc2e6; }
+    :global(html[data-theme="dark"]) .licence-badge.mit { background: #33291c; color: #e0b483; }
+    :global(html[data-theme="dark"]) .licence-badge.local { background: #3a1c1c; color: #e69c9c; }
+    .trans-list { list-style: none; padding-left: 0; margin: 0.75rem 0 1rem; }
+    .trans-list > li { margin: 0 0 0.9rem; }
+    .trans-list > li > strong {
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .trans-list ul {
+      list-style: none;
+      padding-left: 0.9rem;
+      margin: 0.15rem 0 0;
+      border-left: 1px solid var(--border);
+    }
+    .trans-list ul li {
+      margin: 0.1rem 0;
+      color: var(--text-mid);
+      font-size: 0.9rem;
+    }
+    .trans-list .work-title {
+      font-family: var(--font-ui);
+      font-weight: 600;
+      color: var(--text);
+    }
+    blockquote {
+      border-left: 3px solid var(--border);
+      margin: 0.75rem 0 0.75rem 1rem;
+      padding: 0.25rem 0 0.25rem 1rem;
+      color: var(--text-mid);
+      font-size: 0.9rem;
+    }
+    .greek { font-family: var(--font-greek); }
+  </style>
+  <Pwa />
+</head>
+<body class={lyceumChrome ? 'lyceum-chrome lyc-page' : undefined}>
+  {lyceumChrome ? (
+    <div class="lyc-chrome">
+      <LyceumBand siteName={siteName} searchHref={`${base}/search`}>
+        <a class="tool" href={`${base}/catalog/`}>Catalog</a>
+        <a class="tool" href={`${base}/lemma/grc/`}>Lexica</a>
+        <ThemeToggle />
+        <a class="tool tool-signin" href="https://lyceum.institute">Sign in</a>
+      </LyceumBand>
+    </div>
+  ) : (
+  <header class="simple-header">
+    <div class="header-title">
+      <a class="home-link" href={`${base}/`}>Home</a>
+      <span class="title-sep">›</span>
+      <span class="header-static">Texts &amp; Licences</span>
+    </div>
+    <nav class="header-actions" aria-label="Navigation">
+      <a href={`${base}/`} class="search-link">All works</a>
+      <a href={`${base}/search`} class="search-link">Search</a>
+      <ThemeToggle />
+    </nav>
+  </header>
+  )}
+
+  <main class="attr-body">
+    <h1 class="sr-only">Texts and licences for {siteName}</h1>
+    <h2>Texts &amp; Licences</h2>
+    <p>
+      This reader presents Greek texts, English translations, and reference
+      works. Their sources — and, where a source requires it, its licence
+      terms — are credited below.
+    </p>
+
+    <h2>
+      Greek Lexicon (LSJ)
+      <span class="licence-badge cc">CC BY-SA 3.0</span>
+    </h2>
+    <p>
+      The word popups and lemma entries are drawn from the
+      <em>Greek–English Lexicon</em> of Henry George Liddell and Robert Scott,
+      revised by Sir Henry Stuart Jones with the assistance of Roderick McKenzie
+      (Oxford: Clarendon Press, 9th ed. 1940; supplement 1996).
+    </p>
+    <p>
+      The machine-readable edition used here is the XML transcription prepared
+      by the <a href="https://www.perseus.tufts.edu/">Perseus Digital Library</a>
+      at Tufts University and is made available under a
+      <a href="https://creativecommons.org/licenses/by-sa/3.0/us/">
+        Creative Commons Attribution-ShareAlike 3.0 United States</a> licence.
+    </p>
+    <blockquote>
+      Liddell, Henry George, and Robert Scott.
+      <em>A Greek-English Lexicon.</em>
+      Revised and augmented by Henry Stuart Jones.
+      Oxford: Clarendon Press, 1940.
+      Machine-readable version: Perseus Digital Library,
+      Trustees of Tufts University.
+      <a href="https://creativecommons.org/licenses/by-sa/3.0/us/">CC BY-SA 3.0 US</a>.
+    </blockquote>
+    <p>
+      The CC BY-SA licence requires that any derivative work be distributed
+      under the same terms. This application's lexical data is a subset and
+      derivative of that work; users who redistribute it must carry this
+      attribution notice and the same CC BY-SA licence.
+    </p>
+
+    <h2>
+      English Translations
+    </h2>
+    <p>
+      The list below is generated directly from the corpus registry, so it
+      always matches what the reader carries and names each translator with
+      their year.
+    </p>
+    <ul class="trans-list">
+      {translationsByAuthor.map((g) => (
+        <li>
+          <strong>{g.author.name}</strong>
+          <ul>
+            {g.works.map((w) => (
+              <li>
+                <span class="work-title">{w.title}</span>
+                {columnCcLicenses(w.id).map((note) => (
+                  <span class="licence-badge cc">
+                    {note.columns.join(', ')}:{' '}
+                    {note.url ? (
+                      <a href={note.url} rel="license noopener">{note.name}</a>
+                    ) : note.name}
+                  </span>
+                ))}
+                <ul>
+                  {visibleTranslations(w).map((t) => (
+                    <li>
+                      {t.name}
+                      {t.private && <span class="licence-badge local">local only</span>}
+                      {t.license?.status === 'cc' && (
+                        <span class="licence-badge cc">
+                          {t.license.url ? (
+                            <a href={t.license.url} rel="license noopener">{t.license.name ?? 'CC'}</a>
+                          ) : (t.license.name ?? 'CC')}
+                        </span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ul>
+    <p>
+      Gorgias's two complete speeches, the <em>Encomium of
+      Helen</em> and the <em>Defense of Palamedes</em>
+      (<em>Fragments</em>&nbsp;B11 and&nbsp;B11a), are used under a Creative
+      Commons licence. Kathleen Freeman's <em>Ancilla</em> gives only her own
+      summaries of those two speeches, not translations of them, so the reader
+      carries the Parnassos Press translations instead. Each is credited to its
+      own translator on the page where it is read.
+    </p>
+    <p>
+      Gorgias of Leontinoi, <em>Encomium of Helen</em>, trans. Jurgen R. Gatt,
+      and <em>Defense of Palamedes</em>, trans. George Alexander Gazis (rev.
+      R.&nbsp;J. Barnes, Stamatia Dova, Jurgen Gatt, Phillip Mitsis, and
+      Heather Reid), in <em>Gorgias/Gorgias: The Sicilian Orator and the
+      Platonic Dialogue</em>, ed. S. Montgomery Ewegen and Coleen P. Zoller
+      (Parnassos Press — Fonte Aretusa, 2022). Licensed under CC BY-NC-ND 4.0
+      (<a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" rel="license noopener">https://creativecommons.org/licenses/by-nc-nd/4.0/</a>).
+      The speeches are reproduced in full, unaltered in wording; only the
+      layout is this site's own, which the licence's own definition of adapted
+      material expressly permits.
+    </p>
+    <p>
+      Where a testimonium quotes Plato, the English of the quoted passage is
+      drawn from the Loeb Classical Library translations of the dialogues —
+      by Harold N. Fowler, W. R. M. Lamb, or R. G. Bury, each published
+      before 1931 and United States public domain — via the
+      <a href="https://www.perseus.tufts.edu/">Perseus Digital Library</a>'s
+      TEI editions. Where an alternate translation is offered on such a
+      passage, it is Benjamin Jowett's <em>The Dialogues of Plato</em>
+      (3rd ed., Oxford: Clarendon Press, 1892), also United States public
+      domain. Each passage names its translator where it is read, and the
+      translation shown is the one credited when the text is copied.
+    </p>
+    <p>
+      The primary translation is C. R. Haines's Loeb Classical Library edition,
+      <em>The Communings with Himself of Marcus Aurelius Antoninus</em>
+      (London: W. Heinemann; New York: G. P. Putnam's Sons, 1916). The text is
+      taken from the <a href="https://en.wikisource.org/wiki/Marcus_Aurelius_(Haines_1916)">Wikisource
+      proofread transcription</a> of that edition
+      (<code>Marcus_Aurelius_(Haines_1916)</code>), a human transcription
+      checked page-by-page against Wikisource's scan of the 1916 printing;
+      this build pins the exact per-book revisions it was fetched from, so
+      the shipped text is reproducible against a fixed state of the
+      transcription. The secondary translation is George
+      Long's <em>Thoughts of Marcus Aurelius Antoninus</em> (1862), digitised
+      from <a href="https://www.gutenberg.org/ebooks/15877">Project Gutenberg
+      eBook&nbsp;#15877</a>, a Distributed Proofreaders transcription. Both
+      predate 1931 by a wide margin and are unambiguously United States public
+      domain.
+    </p>
+    <p>
+      Both translations are aligned to Farquharson's book-and-chapter
+      divisions (e.g.&nbsp;<em>4.23</em>) directly, chapter for chapter
+      against the Greek — Marcus is cited by book and chapter, not by page and
+      section, so no interpolation or estimation is involved in the alignment.
+    </p>
+    <p>
+      Neither translation is complete against Farquharson's chapter numbering.
+      Chapter <strong>5.37</strong> is missing from <em>both</em>
+      translations: neither the 1916 Haines nor the 1862 Long source edition
+      marks it as a separate chapter — both run it directly into 5.36, a
+      genuine numbering divergence between those translators' editions and the
+      Farquharson Greek text used here, not an extraction error. Haines
+      additionally lacks <strong>12.15</strong> — his edition's own chapter
+      numbering skips from 14 to 16 there (confirmed independently by both an
+      archive.org scan of the 1916 printing and the Wikisource transcription);
+      Long (the secondary translation) covers it, so every chapter has at
+      least one public-domain translation.
+    </p>
+    <p>
+      The <em>Discourses</em> and <em>Enchiridion</em> carry two English
+      translations each, likewise digitised from editions safely out of
+      copyright under <strong>US</strong> law. The primary translation is
+      W. A. Oldfather's Loeb Classical Library edition, <em>Epictetus: The
+      Discourses as Reported by Arrian, the Manual, and Fragments</em>
+      (vol.&nbsp;I, London: William Heinemann; Cambridge, Mass.: Harvard
+      University Press, 1925; vol.&nbsp;II, London: William Heinemann; New
+      York: G. P. Putnam's Sons, 1928). The text is taken from the
+      <a href="https://en.wikisource.org/wiki/Epictetus,_the_Discourses_as_reported_by_Arrian,_the_Manual,_and_Fragments">Wikisource
+      proofread transcription</a> of that edition, a human transcription
+      checked page-by-page against Wikisource's scans of the 1925/1928
+      printings; this build pins the exact per-chapter revisions it was
+      fetched from, so the shipped text is reproducible against a fixed state
+      of the transcription. The secondary translation is George Long's
+      <em>The Discourses of Epictetus; with the Encheiridion and Fragments</em>
+      (translation first published 1877, in Bohn's Classical Library; the
+      edition scanned and transcribed is the London: George Bell and Sons
+      reprint of 1890), digitised from the
+      <a href="https://en.wikisource.org/wiki/The_Discourses_of_Epictetus;_with_the_Encheiridion_and_Fragments">matching
+      Wikisource proofread transcription</a>. Both predate 1931 by a wide
+      margin and are unambiguously United States public domain.
+    </p>
+    <p>
+      Both translations are aligned chapter for chapter against the Greek —
+      Epictetus is cited by chapter alone (Enchiridion) or book and chapter
+      (Discourses), not by page and section, so no interpolation or
+      estimation is involved in the alignment. Chapter-count reconciliation
+      against the Schenkl Greek text is exact for both works and both
+      translations (Discourses 95/95, Enchiridion 53/53), with one edition
+      quirk worth noting: Long's printed Encheiridion merges what the modern
+      numbering (and Oldfather) count as separate sections 50 and 51 into a
+      single section. Per John's ruling, Long's text here is re-keyed to the
+      modern 1–53 numbering the Greek spine and Oldfather both use — a
+      deterministic split at the exact sentence opening his rendering of
+      modern section 51, not a silent edit — so every chapter of both works
+      carries both translations with no gaps.
+    </p>
+    <p>
+      Diogenes Laertius's <em>Lives of Eminent Philosophers</em> carries two
+      English translations, both safely out of copyright under
+      <strong>US</strong> law. The primary translation is R. D. Hicks's Loeb
+      Classical Library edition (Cambridge, Mass.: Harvard University Press;
+      London: William Heinemann Ltd; New York: G. P. Putnam's Sons, 1925).
+      The text is taken from the
+      <a href="https://catalog.perseus.org/catalog/urn:cts:greekLit:tlg0004.tlg001.opp-eng1">Perseus
+      Digital Library</a>'s <code>canonical-greekLit</code> TEI edition of the
+      Hicks translation, fetched from a pinned commit of that project's public
+      GitHub repository. The same digitised Hicks text also supplies the
+      English for Epicurus's three letters (to Herodotus, to Pythocles, to
+      Menoeceus) where they appear as their own works — Diogenes transcribes
+      all three in full within Book X, and this reader re-keys that same
+      section range rather than digitising it twice. Perseus's own TEI/EpiDoc
+      markup and editorial
+      apparatus — not the underlying 1925 Hicks translation, which is
+      independently United States public domain by its publication date — is
+      licensed <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative
+      Commons Attribution-ShareAlike 4.0</a>
+      <span class="licence-badge cc">CC BY-SA 4.0</span>. Perseus's TEI marks
+      quoted speech and doctrine with semantic tags rather than literal
+      quotation marks; this reader supplies typographic curly quotes from
+      that markup for readability. The secondary translation is Charles Duke
+      Yonge's <em>The Lives and Opinions of Eminent Philosophers</em> (1853;
+      this edition: London, G. Bell and Sons, 1915 reprint "from stereotype
+      plates"), digitised from
+      <a href="https://www.gutenberg.org/ebooks/57342">Project Gutenberg
+      eBook&nbsp;#57342</a>, a Distributed Proofreaders transcription. Both
+      predate 1931 by a wide margin and are unambiguously United States
+      public domain.
+    </p>
+    <p>
+      Hicks is aligned book and section for section against the Greek — one
+      chunk per Bekker-style section, exactly as for the Meditations and
+      Discourses above. A handful of sections are cited under one shared
+      number by a doubled or tripled numbering already present in the
+      edition (e.g.&nbsp;<em>2.125</em>, where consecutive brief Lives share
+      a single citation): both halves are shown together under that shared
+      number, cited faithfully as the edition cites them. Yonge, by contrast,
+      numbers each philosopher's Life with its own independent Roman-numeral
+      sequence rather than following the Bekker apparatus at all, so it
+      cannot be aligned section for section; it is instead shown once per
+      philosopher, at that Life's opening section, giving every book a
+      secondary translation at the level of "which philosopher" even where
+      it cannot follow Hicks section by section.
+    </p>
+    <p>
+      Epicurus's two maxim collections, <em>Kuriai Doxai</em> ("Principal
+      Doctrines") and the <em>Vatican Sayings</em>, are translated by Cyril
+      Bailey, in <em>Epicurus: The Extant Remains</em> (Oxford: Clarendon
+      Press, 1926) — safely United States public domain. The text is
+      digitised from a facing-page Greek/English scan of that edition
+      (archive.org item <code>EpicurusTheExtantRemainsBaileyOxford1926_201309</code>).
+      Bailey's own OCR recovery is incomplete: 38 of <em>Kuriai Doxai</em>'s
+      40 numbered doctrines could be recovered cleanly from the scan, and
+      the remaining two are shown as gaps rather than guessed at. The
+      <em>Vatican Sayings</em> fare better: 68 of its 81 numbered sayings
+      were recovered (66 individually, plus Sayings&nbsp;56-57 together
+      under the single number the edition prints them as). This site's
+      Greek text of the <em>Vatican Sayings</em> (Arrighetti's edition)
+      itself preserves only 62 of the 81 traditional numbers; every one of
+      those 62 now has Bailey's English aligned to it.
+    </p>
+    <p>
+      Exact source identifiers, retrieval dates, and file checksums for all
+      six translations are recorded in <code>sources/INVENTORY.md</code> in
+      this project's repository.
+      {hasPrivate && (
+        <span> Entries marked <span class="licence-badge local">local only</span> are
+        copyright-encumbered and are excluded from the public edition of this site.</span>
+      )}
+      If you hold rights to any text shown here and wish it removed, please get in
+      touch.
+    </p>
+
+    <h2>Citation</h2>
+    <p>
+      The <em>Meditations</em> is cited by <strong>book and chapter number</strong>
+      (e.g.&nbsp;<em>4.23</em>, book&nbsp;IV chapter&nbsp;23), following the
+      divisions in Farquharson's edition; the reader's "Copy Citation" abbreviates
+      this as <strong>M.Ant.</strong> (e.g.&nbsp;<em>M.Ant. 4.23</em>). There
+      are no user-facing line numbers — the chapter is the finest citation
+      unit, as is conventional for this work.
+    </p>
+    <p>
+      Both English translations are anchored to these same book/chapter
+      divisions chapter for chapter, so the Greek and English align exactly at
+      every citation point the source editions share (see the coverage gaps
+      noted above).
+    </p>
+    <p>
+      The <em>Discourses</em> is likewise cited by <strong>book and chapter
+      number</strong> (e.g.&nbsp;<em>4.13</em>), abbreviated
+      <strong>Epict. Diss.</strong>; the bookless <em>Enchiridion</em> is
+      cited by <strong>chapter number alone</strong> (e.g.&nbsp;<em>53</em>),
+      abbreviated <strong>Epict. Ench.</strong> Neither carries user-facing
+      line numbers, following the same chapter-level convention as the
+      Meditations.
+    </p>
+    <p>
+      The <em>Lives of Eminent Philosophers</em> is cited by
+      <strong>book and section number</strong> (e.g.&nbsp;<em>7.85</em>),
+      the same book-and-section convention as the Meditations and Discourses
+      above; the reader's "Copy Citation" abbreviates this as
+      <strong>D.L.</strong> (e.g.&nbsp;<em>D.L. 7.85</em>). Each book also
+      groups its sections by philosopher in the reader's table of contents,
+      derived from the Greek edition's own heading divisions rather than
+      forming a separate citation level.
+    </p>
+
+    <h2>Greek Text</h2>
+    <p>
+      The Greek text of the Meditations follows A. S. L. Farquharson's
+      edition; the Discourses and Enchiridion follow Heinrich Schenkl's
+      Teubner edition; the <em>Lives of Eminent Philosophers</em> follows
+      H. S. Long's Oxford Classical Text, all listed below.
+    </p>
+    <ul>
+      {WORKS.filter((w) => isBuilt(w.id)).map((w) => (
+        <li><strong>{w.title}</strong> — {w.greekSource.full}</li>
+      ))}
+    </ul>
+    <p>
+      The Greek served here is, for each work, the text of the edition listed
+      above — Farquharson's for the <em>Meditations</em>, Schenkl's for the
+      <em>Discourses</em> and <em>Enchiridion</em>, and H. S. Long's Oxford
+      Classical Text for the <em>Lives of Eminent Philosophers</em> (not to be
+      confused with George Long, the secondary English translator credited
+      above for the <em>Meditations</em> and the
+      <em>Discourses</em>/<em>Enchiridion</em> — a different, unrelated
+      person). What this site presents is the <em>text</em> of each edition,
+      re-lineated for the reader; the edition's critical apparatus is not
+      reproduced here.
+    </p>
+
+    <h2>
+      Morphological Data
+      <span class="licence-badge pd">Open</span>
+    </h2>
+    <p>
+      Morphological analyses (lemma, gloss, grammatical parse) are produced
+      by the Morpheus morphological analyser as distributed with
+      <a href="https://d.iogen.es/">Diogenes</a>.
+      See the Diogenes and Perseus project pages for applicable terms.
+    </p>
+
+    <h2>
+      Application Code
+      <span class="licence-badge mit">MIT</span>
+    </h2>
+    <p>
+      The pipeline and web application source code (Python and TypeScript/Svelte)
+      are released under the
+      <a href="https://opensource.org/licenses/MIT">MIT Licence</a>.
+      Data files derived from CC BY-SA sources are excluded from this grant
+      and remain subject to CC BY-SA.
+    </p>
+    <p>
+      Site by <a href="https://x.com/johnhboyer" target="_blank" rel="noopener">John H. Boyer</a>.
+    </p>
+  </main>
+</body>
+</html>

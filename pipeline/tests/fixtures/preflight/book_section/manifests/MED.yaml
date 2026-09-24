@@ -1,0 +1,35 @@
+# Self-contained book-section fixture (Marcus Aurelius-style book.section
+# citation, "4.23"). Proves a valid book-section manifest + emitted data pass
+# preflight: dotted column tokens parse, sort numerically, and validate.
+work:
+  id: MED
+  title: "Meditations (fixture)"
+  author: "marcus"
+  language: "grc"
+  tlg_author: "0562"
+  tlg_work: "001"
+  greek_edition: "Fixture Greek"
+
+citation:
+  scheme: book-section
+
+english:
+  primary:
+    id: fixture
+    name: "Fixture English"
+    model: archive
+    file: "fixture/med.xml"
+
+# Digest fingerprint (shape-only for preflight; stage2 recomputes it). count =
+# the three distinct section columns 1.1, 1.2, 2.1.
+section_spine: { count: 3, sha256: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" }
+
+books:
+  - { n: 1, start: "1.1", end: "1.2" }
+  - { n: 2, start: "2.1", end: "2.1" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"

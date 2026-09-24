@@ -1,0 +1,75 @@
+---
+// A standing explainer teaching the DK (Diels–Kranz) fragments/testimonia
+// taxonomy the fragment-presentation overhaul makes visible on the site —
+// design note docs/freeman-wave-design.md §3.6. Copy is STATIC and shared
+// across every dk-scheme author; only the chapter numeral/name and the
+// citation-form grammar (noSeries) vary. Approved verbatim by John,
+// 2026-07-23 (design note's post-draft rulings block).
+//
+// `variant`: 'full' renders the whole two-paragraph explainer (author
+// landing page, between the lede and the Works list); 'condensed' renders
+// one sentence pointing back to the author page (folded into a work
+// reader page's own intro paragraph — ReaderShell.astro).
+interface Props {
+  authorName: string;
+  dkChapter: number;
+  noSeries?: boolean;
+  variant?: 'full' | 'condensed';
+  authorHref?: string; // required when variant is 'condensed'
+}
+const { authorName, dkChapter, noSeries = false, variant = 'full', authorHref } = Astro.props as Props;
+
+// The design note's draft copy is written for the ordinary B-series
+// citation grammar ("DK {N} B30"); a no_series work (Pythagoras, DK 14)
+// swaps in its own "DK 14, 7" grammar per the design note's own
+// instruction, rather than printing a fabricated "B30" that work never
+// actually cites.
+const citationExample = noSeries ? `DK ${dkChapter}, 7` : `DK ${dkChapter} B30`;
+const jumpExample = noSeries ? '7' : 'B30';
+---
+{variant === 'full' ? (
+  <div class="dk-explainer">
+    <p>
+      <strong>Fragments and testimonia.</strong> Almost nothing the Presocratics wrote
+      survives as a whole book. Hermann Diels and Walther Kranz ("DK") gathered
+      what remains into numbered chapters, one per thinker — {authorName} is chapter
+      {' '}{dkChapter}. Each chapter holds two kinds of entry. <strong>A-numbers (testimonia)</strong> are
+      ancient <em>reports about</em> the philosopher — what later writers such as
+      Aristotle or Simplicius said he taught. <strong>B-numbers (fragments)</strong> are his
+      <em> own words</em>, quoted verbatim by a later author. This site keeps the two as
+      separate works.
+    </p>
+    <p>
+      <strong>Reading a citation.</strong> <em>{citationExample}</em> means chapter {dkChapter}, fragment 30. A
+      letter after the number (B8a, B14b) marks an entry Diels inserted between
+      two others. The jump box takes any of "{jumpExample}", "{citationExample}", or "30". Each
+      fragment also names, in smaller type, the ancient source that preserved it
+      — e.g. "GALEN. in Hipp. de hum. I 1 [XVI 37 K.]" points to the passage of
+      Galen doing the quoting. That source frame is apparatus, not the
+      philosopher's own words.
+    </p>
+  </div>
+) : (
+  <span class="dk-explainer-condensed">
+    {' '}Fragments are the philosopher's own words (B-numbers); testimonia are ancient
+    reports about him (A-numbers) — see <a href={authorHref}>the {authorName} page</a> for how DK citations work on this site.
+  </span>
+)}
+
+<style>
+  .dk-explainer {
+    font-family: var(--font-english);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--text-light);
+    background: var(--col-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    margin: 0 0 1.5rem;
+  }
+  .dk-explainer p { margin: 0 0 0.7rem; }
+  .dk-explainer p:last-child { margin-bottom: 0; }
+  .dk-explainer strong { color: var(--text); }
+  .dk-explainer-condensed { color: var(--text-light); }
+</style>

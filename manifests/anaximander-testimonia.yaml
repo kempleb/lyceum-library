@@ -1,0 +1,144 @@
+# Anaximander of Miletus Testimonia (DK 12 A) — pipeline manifest (dk
+# scheme: one flat div[@type="Fragment"][@n] per citable testimonium, plain
+# <p> prose, no <l> lines). Greek-only work: the A-testimonia are ancient
+# reports/paraphrases about Anaximander, not his own words — `english`
+# intentionally absent (Wave 1b design memo §1, §5.1's "Greek-only work
+# mode"). No homonym risk: TLG0725 is the only "Anaximander Phil." author.
+#
+# VERSE CHECK: exported plain (no `-y`); a control `-y` export of the same
+# author was run and diffed for the record — it mis-verse-broke every line
+# (283 spurious <l> elements in this work alone), discarded. Zero
+# structurally-marked verse (plain export: 0 `<l>` elements). No embedded
+# ancient verse quotations found either — straight prose doxography
+# throughout (several long Latin excerpts, all prose: Ammianus, Augustine,
+# Censorinus, Cicero x3, Pliny x2, Seneca).
+#
+# STRUCTURE: 33 divs, clean single-number/lettered @n, NO title div
+# (confirmed against the export, same as Thales' Testimonia — unlike most
+# other dk works in this wave). n=1-30 (30, consecutive, no gaps) plus
+# three lettered variants (5a, 9a, 17a). 30 + 3 = 33, matching the raw div
+# count exactly. Task brief's stated range ("test. 1-30") matches the
+# export's own numbering exactly.
+#
+# GERMAN-COMMENTARY FINDING (hand-review catch, not caught by the
+# heuristic's bounded stopword list): a single Diels editorial sentence in
+# A16 — "λέγεται γὰρ ἀμφοτέρως, falsch aus Arist. de caelo Γ 5. 303b 12.
+# Metaph. A 7. 988a 30 u. a. St. erschlossen; dagegen Phys. A 4. 187a 12" —
+# is split by an intervening Greek citation-number/title run into two
+# separate non-Greek runs at extraction time ("falsch aus Arist. de caelo"
+# and "...u. a. St. erschlossen; dagegen Phys. A 4. 187a 12"); the
+# heuristic proposer scored both "citation"/"keep-latin" because none of
+# "falsch"/"erschlossen"/"dagegen"/"u. a. St." are in dk_lang.py's small
+# bounded German-stopword list, but read together this is plainly Diels'
+# own German source-critical aside ("wrongly inferred from Aristotle's De
+# Caelo Γ5 [and] Metaph. A7, among other places; by contrast Phys. A4...")
+# judging where the "middle nature" (ἀρχή) doctrine attribution actually
+# comes from — both halves reclassified `strip-german` by hand. This is
+# exactly the "bounded stopword exemptions" case the task brief anticipated
+# and the binding per-work hand-review rule exists to catch.
+
+work:
+  id: anaximander-testimonia
+  title: "Testimonia"
+  author: "anaximander"
+  language: "grc"
+  tlg_author: "0725"
+  tlg_work: "001"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 12 A"
+  # FATAL sourceDesc gate: stage1's _check_sourcedesc asserts this exact
+  # substring is present in the export XML's own <teiHeader><sourceDesc>
+  # text -- verified verbatim against build/export/.../tlg0725001.xml.
+  expected_sourcedesc: 'Anaximander Phil., Testimonia (0725: 001) "Die Fragmente der Vorsokratiker, vol. 1'
+
+citation:
+  scheme: dk
+  series: A
+  # dk_witness.py's owner-verified apparatus split (stage7_emit wiring):
+  # count of this work's columns whose apparatus actually splits into
+  # 2+ witnesses, cross-checked bidirectionally at preflight against the
+  # emitted dist's own `witnesses` keys -- catches an unreviewed new
+  # split and a stale declaration alike.
+  dk_witness_split_columns: 6
+  # Quote-mark polarity fix (owner ruling 2026-08-05, "we fix it and
+  # make damn sure every instance is correct"): the raw TLG export
+  # frequently opens a Greek quotation with U+2019 instead of U+2018 --
+  # stage1_greek._dk_normalize_quote_marks fixes every BALANCED
+  # (even-count) column automatically; this is that fix's own declared
+  # count, cross-checked bidirectionally at preflight against the
+  # emitted dist's actual U+2018/U+2019 total.
+  dk_quote_marks_rewritten: 6
+  hideLineNumbers: true
+  # 10 of 33 testimonia carry a letter-spaced run (verified per-div against
+  # the export): A1, A9, A10, A11, A15, A16, A21, A22, A25, A30. A9 in
+  # particular quotes an abbreviated form of the SAME Simplicius passage
+  # B1 quotes in full ("ἐξ ὧν δὲ ... τάξιν [B 1]" — DK's own explicit
+  # cross-reference to the fragment), Diels' ordinary practice of citing
+  # the same ancient witness in both an A-testimonium (doctrinal report)
+  # and the B-fragment (the verbatim quotation) — no special disposition
+  # needed, both are independently citable columns.
+  unmarked_columns:
+    - A2
+    - A3
+    - A4
+    - A5
+    - A5a
+    - A6
+    - A7
+    - A8
+    - A9a
+    - A12
+    - A13
+    - A14
+    - A17
+    - A17a
+    - A18
+    - A19
+    - A20
+    - A23
+    - A24
+    - A26
+    - A27
+    - A28
+    - A29
+
+# Digest fingerprint of the observed dk column spine (33 columns, A1-A30
+# plus three lettered variants, no gaps) — stage2 recomputes and compares
+# it.
+section_spine: { count: 33, sha256: "77769f991207ef3490a7a0e4a6eda9630ade64600acf0f34d6e1af58df77c841" }
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion).
+books:
+  - { n: 1, start: "A1", end: "A30" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: anaximander-testimonia
+  slug: testimonia
+  title: Testimonia
+  abbr: Anaximand. A
+  author: anaximander
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 12 A'
+  greekSource:
+    short: Diels–Kranz (1951–52)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 12 A'
+  translations: []
+  citation:
+    scheme: dk
+    copyAbbr: DK 12
+    dkChapter: 12
+    series: A
+  related:
+    - id: anaximander-fragments
+      label: 'The B-fragments: the surviving words themselves'
+  blurb: Ancient reports, paraphrases, and biography concerning Anaximander of Miletus — his book, his map of the world, his astronomical models, and doxographical summaries of the apeiron doctrine — the original Greek text.

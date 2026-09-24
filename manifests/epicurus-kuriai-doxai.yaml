@@ -1,0 +1,137 @@
+# Epicurus, Kuriai Doxai / Ratae Sententiae (KD) — pipeline manifest. TLG
+# 0537:013, Arrighetti edition. Flat, bookless `section` scheme (Epictetus'
+# Enchiridion precedent, manifests/enchiridion.yaml); TLG's own div type is
+# "Section" (capitalized) — citation.div_types.page overrides the scheme's
+# registered default "Chapter" (same override as the three Letters).
+#
+# Numbering: 1-40, no gaps (verified against the export) — matches the
+# standard KD 1-40 count exactly.
+#
+# TITLE DIV: a top-level <div type="Section" n="t"> carrying only the bare
+# Greek work title ("ΚΥΡΙΑΙ ΔΟΞΑΙ" — a <label type="head">), no content of
+# its own — declared as `title_labels` (dropped outright), unlike the
+# Letters' `greeting_prefix_labels` (real content). See
+# stage1_greek.py's `_load_flat_title_declarations` for the mechanism.
+#
+# Unit noun: KD's 40 numbered units are doctrines/maxims, not chapters of a
+# continuous prose work (Enchiridion) — the frontend's per-work
+# `citation.unitNoun` override (shared/lib/works.ts / citation.ts's
+# unitNounFor) names them "doctrine"/"doctrines" rather than the scheme's
+# table default "chapter". See the works.ts entry for the override itself
+# (a pipeline manifest has no equivalent field — this is front-end-only).
+
+work:
+  id: epicurus-kuriai-doxai
+  title: "Kuriai Doxai"
+  author: "epicurus"
+  language: "grc"
+  tlg_author: "0537"
+  tlg_work: "013"
+  greek_edition: "Arrighetti, G. (ed.), Epicuro: Opere, 2nd ed. (Turin: Einaudi, 1973)"
+  # FATAL sourceDesc gate: verified verbatim against the real export
+  # (build/phi-test/out-epicurus/Diogenes-Resources/xml/tlg/tlg0537013.xml).
+  expected_sourcedesc: 'Epicurus Phil. (c. 4-3 B.C.), Ratae sententiae (0537: 013) "Epicuro. Opere, 2nd edn.", Ed. Arrighetti, G. Turin: Einaudi, 1973.'
+
+citation:
+  scheme: section
+  hideLineNumbers: true
+  # John's ruling (2026-08-29, docs/lined-rollout-plan.md Ruling 1/wave 1):
+  # the Greek column renders Arrighetti's own print lines, hyphenated
+  # line-end splits included, extending Discourses' treatment
+  # (docs/lined-source-plan.md) to the flat `section` scheme. Gates
+  # stage1_greek's per-<l> emission (`_lined_chapter_lines` +
+  # `_apply_lined_wraps`) inside `_parse_flat_chapter`. No
+  # `lined_section_div`: this work's column div (Section) IS the leaf — no
+  # sub-column granularity exists to record, so no line carries `sec`
+  # (Ruling 1c).
+  lined_source: true
+  lined_indent_max: 1
+  div_types:
+    page: "Section"
+  title_labels:
+    - sha256_16: "dbd1751942c3dffd"
+      note: "work title (top-level div n=\"t\", <label type=\"head\">ΚΥΡΙΑΙ ΔΟΞΑΙ</label>)"
+
+# English: Cyril Bailey's 1926 Clarendon translation
+# (sources/bailey-epicurus/bailey-kd.clean.json,
+# pipeline/tools/extract_bailey_epicurus.py — bare "<doctrine>"-keyed,
+# 38/40 doctrines recovered from the OCR text; doctrines 12 and 38 could
+# not be recovered, see that store's own meta.json). No key_drop/key_prefix
+# needed here — KD's own 38 recovered keys are an exact subset of the
+# spine's 40 columns, no mismatched keys at all. The two genuine gaps
+# render honestly via the ordinary `alignment_allow_unmatched` mechanism
+# (ANY spine column with no source key is a hard build error unless
+# declared here — see stage1_common.validate_english_source).
+english:
+  primary:
+    id: bailey
+    name: "Cyril Bailey, Epicurus: The Extant Remains (Clarendon Press, 1926)"
+    model: archive
+    file: "bailey-epicurus/bailey-kd.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+
+alignment_allow_unmatched:
+  - "1:12"
+  - "1:38"
+
+# Digest fingerprint of the observed bare-section column spine (40 columns,
+# "1".."40") — stage2 recomputes and compares it. Computed directly
+# against the real export.
+section_spine: { count: 40, sha256: "b6a72fb6f35efb6f78cb29b2abcafff800ccac6beac4531d8f81a3fbc8105798" }
+
+books:
+  - { n: 1, start: "1", end: "40" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: epicurus-kuriai-doxai
+  slug: kuriai-doxai
+  title: Kuriai Doxai
+  greekTitle: Κύριαι Δόξαι
+  abbr: KD
+  author: epicurus
+  language: grc
+  workType: continuous
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Arrighetti, G. (ed.), Epicuro: Opere, 2nd ed. (Turin: Einaudi, 1973)'
+  greekSource:
+    short: Arrighetti (1973)
+    full: 'Arrighetti, G. (ed.), Epicuro: Opere, 2nd ed. (Turin: Einaudi, 1973)'
+  translations:
+    - id: bailey
+      name: 'Cyril Bailey, Epicurus: The Extant Remains (Clarendon Press, 1926)'
+      short: Bailey
+      slot: english
+  citation:
+    scheme: section
+    hideLineNumbers: true
+    copyAbbr: KD
+    unitNoun:
+      singular: doctrine
+      plural: doctrines
+    # RULED (John, 2026-08-31, on Letter to Menoeceus): "if this is not
+    # cited by line numbers, then this needs prose reflow." These works are
+    # cited by chapter/section, never by line, so their print lines serve no
+    # citation and align no gutter apparatus (measured: 0 gutter cells), yet
+    # forced 91% of Menoeceus' lines to wrap into stubs at 375px. Prose now
+    # reflows; `linedSource` stays true so quoted verse keeps real lines.
+    proseReflow: true
+    # Reader-side flag mirroring pipeline citation.lined_source 1:1
+    # (2026-08-29, docs/lined-rollout-plan.md Stage 1/3) — see
+    # WorkMeta['citation'].linedSource in shared/lib/works.ts.
+    linedSource: true
+  related:
+    - id: lives
+      label: 'Diogenes Laertius, Book X: the same collection transcribed within his Life of Epicurus'
+    - id: epicurus-vatican-sayings
+      label: 'Vatican Sayings: a second collection of maxims, some overlapping, preserved independently in a Vatican manuscript'
+  blurb: Forty numbered maxims — the "Principal Doctrines" — distilling Epicurean physics, epistemology, and ethics (including the fourfold remedy against fear of gods and death, and the account of justice as mutual advantage) into memorizable form.

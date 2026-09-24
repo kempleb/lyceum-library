@@ -1,0 +1,296 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lyceum.institute/schemas/reader/manifest.v1.json",
+  "title": "Lyceum Reader Work Manifest v1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "work",
+    "author",
+    "title",
+    "language",
+    "citation",
+    "route",
+    "editions",
+    "schema_version",
+    "corpus_version"
+  ],
+  "properties": {
+    "work": {
+      "type": "string",
+      "pattern": "^lyceum:[a-z0-9][a-z0-9.-]*$"
+    },
+    "author": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "latin_title": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string",
+      "minLength": 2,
+      "pattern": "^[a-z]{2,3}(?:-[A-Za-z0-9]+)*$"
+    },
+    "date_label": {
+      "type": "string"
+    },
+    "citation": {
+      "type": "object",
+      "required": [
+        "scheme"
+      ],
+      "properties": {
+        "scheme": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ranges": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "extent": {
+          "type": "string"
+        }
+      }
+    },
+    "route": {
+      "type": "string",
+      "pattern": "^/[a-z0-9][a-z0-9/_-]*/$"
+    },
+    "reading_route": {
+      "type": "string",
+      "pattern": "^/[a-z0-9][a-z0-9/_-]*$"
+    },
+    "editions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "source"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "license": {
+            "type": "string"
+          },
+          "verified": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "translations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string"
+          },
+          "translator": {
+            "type": "string"
+          },
+          "date": {
+            "type": [
+              "integer",
+              "string"
+            ]
+          },
+          "rights": {
+            "type": "string"
+          },
+          "aligned": {
+            "type": "string"
+          },
+          "default": {
+            "type": "boolean"
+          },
+          "language": {
+            "type": "string",
+            "pattern": "^[a-z]{2,3}(?:-[A-Za-z0-9]+)*$"
+          }
+        }
+      }
+    },
+    "apparatus": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "navigation": {
+      "type": "object",
+      "description": "Corpus-generated structure used by adaptive reading interfaces. This is factual route and citation data, not editorial presentation.",
+      "additionalProperties": true,
+      "required": [
+        "default_locus",
+        "first_locus",
+        "final_locus",
+        "citation_aliases",
+        "language_modes",
+        "translation_ids",
+        "divisions"
+      ],
+      "properties": {
+        "default_locus": {
+          "type": "string",
+          "minLength": 1
+        },
+        "first_locus": {
+          "type": "string",
+          "minLength": 1
+        },
+        "final_locus": {
+          "type": "string",
+          "minLength": 1
+        },
+        "citation_aliases": {
+          "type": "object",
+          "description": "Aliases accepted by the corpus router, keyed by alias with canonical locus values.",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "language_modes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "original",
+              "parallel",
+              "translation"
+            ]
+          }
+        },
+        "translation_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "divisions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/navigationNode"
+          }
+        },
+        "loci": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^/[a-z0-9][a-z0-9/_-]*(?:#[a-z0-9][a-z0-9._-]*)?$"
+          }
+        }
+      }
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "corpus_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "corpus_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "original_title": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "navigationNode": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "id",
+        "label",
+        "route",
+        "first_locus",
+        "final_locus"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "route": {
+          "type": "string",
+          "pattern": "^/[a-z0-9][a-z0-9/_-]*(?:#[a-z0-9][a-z0-9._-]*)?$"
+        },
+        "citation_range": {
+          "type": "string",
+          "minLength": 1
+        },
+        "first_locus": {
+          "type": "string",
+          "minLength": 1
+        },
+        "final_locus": {
+          "type": "string",
+          "minLength": 1
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/navigationNode"
+          }
+        }
+      }
+    }
+  }
+}

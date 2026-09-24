@@ -1,0 +1,208 @@
+# Prodicus of Ceos Fragments (DK 84 B) — pipeline manifest (dk scheme: one
+# flat div[@type="Fragment"][@n] per citable fragment, plain <p> prose, no
+# <l> lines). Freeman Ancilla phase 3 (docs/phase3-sourcing-queue.md):
+# Freeman is the sole English translation; Burnet never covers the
+# Sophists.
+#
+# Confirmed directly against the export's own <sourceDesc>: 'Prodicus Soph.,
+# Fragmenta (1634: 002) "Die Fragmente der Vorsokratiker, vol. 2, 6th
+# edn.", ...'.
+#
+# TITLE DIVS (2, stripped by `_DK_TITLE_N_RE`, never columns): "tit,1-2"
+# ("Prodicus' Seasons/Horae", the title of the lost work containing the
+# Choice of Heracles), "tit,3-4" ("On Nature"). Each content-verified a pure
+# section-title header (a `<label type="head">` line only, no fragment text
+# of its own) — the plain title-div shape.
+#
+# VERSE CHECK: exported plain (no `-y`); confirmed 0 <l> elements anywhere in
+# the export.
+#
+# STRUCTURE: 13 raw divs = 2 title divs (stripped) + 11 citable columns,
+# B1-B11, consecutive, no gaps, no div_map/div_concat/compound_n_map cases.
+#
+# LETTER-SPACING FINDING: 5 of 11 columns carry at least one
+# <hi rend="letter-spacing"> span (B1, B4, B6, B7 — including the famous
+# Choice of Heracles allegory B2's OWN title-word marked in B1's
+# scholion-citation, though B2 itself, Xenophon's full paraphrase of the
+# allegory, is unmarked -- Xenophon's own retelling, not Prodicus' verbatim
+# words, so correctly carries no letter-spacing). 6 columns are unmarked —
+# declared below: B2, B5, B8, B9, B10, B11.
+#
+# LATIN: B3 (Galen/Cicero on Prodicus' physical treatise) carries exactly
+# one marked role='text' span, the standard Latin term for the treatise's
+# subject ("the nature of things") — zero Greek tokens for this fragment,
+# a genuine `latin_fragments` case (same posture as Heraclitus B4/
+# Protagoras B6/Gorgias-testimonia A32).
+
+work:
+  id: prodicus-fragments
+  title: "Fragments"
+  author: "prodicus"
+  language: "grc"
+  tlg_author: "1634"
+  tlg_work: "002"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1952), 84 B"
+  # FATAL sourceDesc gate: stage1's _check_sourcedesc asserts this exact
+  # substring is present in the export XML's own <teiHeader><sourceDesc>
+  # text -- verified verbatim against build/export/.../tlg1634002.xml.
+  expected_sourcedesc: 'Prodicus Soph., Fragmenta (1634: 002) "Die Fragmente der Vorsokratiker, vol. 2'
+
+citation:
+  scheme: dk
+  series: B
+  # dk_witness.py's owner-verified apparatus split (stage7_emit wiring):
+  # count of this work's columns whose apparatus actually splits into
+  # 2+ witnesses, cross-checked bidirectionally at preflight against the
+  # emitted dist's own `witnesses` keys -- catches an unreviewed new
+  # split and a stale declaration alike.
+  dk_witness_split_columns: 2
+  # Quote-mark polarity fix (owner ruling 2026-08-05, "we fix it and
+  # make damn sure every instance is correct"): the raw TLG export
+  # frequently opens a Greek quotation with U+2019 instead of U+2018 --
+  # stage1_greek._dk_normalize_quote_marks fixes every BALANCED
+  # (even-count) column automatically; this is that fix's own declared
+  # count, cross-checked bidirectionally at preflight against the
+  # emitted dist's actual U+2018/U+2019 total.
+  dk_quote_marks_rewritten: 4
+  hideLineNumbers: true
+  unmarked_columns:
+    - B2
+    - B5
+    - B8
+    - B9
+    - B10
+    - B11
+  latin_fragments:
+    - B3
+  # Freeman Ancilla phase 3 conflicts (docs/phase3-sourcing-queue.md): all
+  # seven of Prodicus' conflicted columns resolve `omit` -- the six
+  # unmarked testimonia/maxims have no Prodicus Greek support at all, and
+  # B3's title-announcement shape is disqualified by the latin_fragments
+  # declaration above (its one marked span is Latin, not Greek) rather than
+  # shipped as a genuine title survival. B1, B4, B6, B7 need no override.
+  kind_overrides:
+    B2:
+      kind: omit
+      reason: >
+        unmarked column, Xenophon's paraphrase of the Choice of Heracles
+        allegory, no Prodicus Greek survives
+    B3:
+      kind: omit
+      reason: >
+        latin_fragments column -- the one marked span is Latin
+        (Galen/Cicero's 'On the Nature of Things'), zero Greek tokens;
+        Latin-only fragments are omitted per the Heraclitus B4/B37/B130
+        precedent
+    B5:
+      kind: omit
+      reason: >
+        unmarked column, doxographic report, no Prodicus Greek survives
+    B8:
+      kind: omit
+      reason: >
+        unmarked column, Ps.-Plato Eryxias testimonium, no Prodicus Greek
+        survives
+    B9:
+      kind: omit
+      reason: >
+        unmarked column, Ps.-Plato Axiochus testimonium, no Prodicus
+        Greek survives
+    B10:
+      kind: omit
+      reason: >
+        unmarked column; roman-prose maxim with no letter-spacing, no
+        Prodicus Greek survives to support it
+    B11:
+      kind: omit
+      reason: >
+        unmarked column; roman-prose maxim with no letter-spacing, no
+        Prodicus Greek survives to support it
+  fragment_kinds:
+    B1: embedded
+    B2: omit
+    B3: omit
+    B4: embedded
+    B5: omit
+    B6: verbatim
+    B7: verbatim
+    B8: omit
+    B9: omit
+    B10: omit
+    B11: omit
+
+# Freeman's fifth-edition numbering matches the corresponding DK6 tokens
+# exactly; no remap needed.
+freeman_concordance: {}
+
+# Freeman's two structural labels, declared and hash-gated as paratext.
+group_headers:
+  - before_column: B8
+    level: 2
+    text: "Doubtful"
+    sha256_16: "05c26131184a526d"
+  - before_column: B10
+    level: 2
+    text: "Spurious"
+    sha256_16: "d3853296264bcbbd"
+
+# Digest fingerprint of the observed dk column spine (11 columns, B1-B11, no
+# gaps) — stage2 recomputes and compares it.
+section_spine: { count: 11, sha256: "a587ed0bf3d658e9a0ac429c262def0258522662a253dbca96477f68b81783de" }
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion).
+books:
+  - { n: 1, start: "B1", end: "B11" }
+
+english:
+  primary:
+    id: freeman
+    name: "Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)"
+    model: freeman
+    file: "freeman-ancilla/freeman-prodicus.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Kathleen Freeman's Ancilla to the Pre-Socratic Philosophers (1948) is treated as US public domain per John's 2026-07-23 ruling (CANON.md, Freeman Ancilla copyright ruling); covered by attribution.astro's site-wide translation public-domain notice."
+    group_headers_file: "freeman-ancilla/freeman-prodicus.group_headers.json"
+  # John's ruling 2026-07-29: B1/B4 are Freeman's own wholly parenthetical
+  # précis of a reporting source, with no translated context-english span
+  # covering the same material -- labeled a summary rather than suppressed
+  # (stage1_freeman_english.py gate 5; see EnglishChunk.summary).
+  summary_labels: [B1, B4]
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: prodicus-fragments
+  slug: fragments
+  title: Fragments
+  abbr: Prodic. B
+  author: prodicus
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1952), 84 B'
+  greekSource:
+    short: Diels–Kranz (1952)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1952), 84 B'
+  translations:
+    - id: freeman
+      name: Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)
+      short: Freeman
+      slot: english
+  defaultTranslation: freeman
+  citation:
+    scheme: dk
+    copyAbbr: DK 84
+    dkChapter: 84
+    series: B
+  related:
+    - id: prodicus-testimonia
+      label: 'The A-testimonia: ancient reports about Prodicus'
+  blurb: Prodicus’ own words and Xenophon’s close paraphrase of his Heracles allegory — the choice between Virtue and Vice at the crossroads, the treatise On Nature, and the hair-splitting distinctions between near-synonyms (wish vs. desire, joy vs. pleasure) that made him famous and faintly ridiculous to his rivals.

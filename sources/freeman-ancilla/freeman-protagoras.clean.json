@@ -1,0 +1,94 @@
+{
+ "B1": {
+  "kind": "verbatim",
+  "text": "(From 'Truth' or Refutatory Arguments'). Of all things the measure is Man, of the things that are, that they are, and of the things that are not, that they are not."
+ },
+ "B2": {
+  "kind": "embedded",
+  "text": "(From 'On Being'). (Porphyry: 'Few of the writings of Plato's predecessors have survived, otherwise Plato perhaps would have been detected in further plagiarisms. At any rate, in the place where I happened to have been reading in Protagoras’ book \"On Being\" the argument he uses against those who make Being One, I find that he uses the same refutatory terms. For I took the trouble to memorise the passage word for word').",
+  "frames": [
+   [
+    19,
+    30
+   ]
+  ]
+ },
+ "B3": {
+  "kind": "verbatim",
+  "text": "(From a treatise entitled 'Great Logos'). Teaching needs endowment and practice. Learning must begin in youth."
+ },
+ "B4": {
+  "kind": "verbatim",
+  "text": "(From 'On the Gods'). About the gods, I am not able to know whether they exist or do not exist, nor what they are like in form; for the factors preventing knowledge are many: the obscurity of the subject, and the shortness of human life."
+ },
+ "B5": {
+  "kind": "conflict",
+  "text": "(Title: 'Contradictory Arguments'. Plato plagiarised from this in the 'Republic')."
+ },
+ "B6": {
+  "kind": "conflict",
+  "text": "('Art of the Eristics': disputations on famous subjects. Protagoras and the other Sophists were the first to compose these set pieces known as 'common places')."
+ },
+ "B6a": {
+  "kind": "conflict",
+  "text": "(Protagoras was the first to say that there were two contradictory arguments about everything)."
+ },
+ "B6b": {
+  "kind": "verbatim",
+  "text": "To make the weaker cause the stronger."
+ },
+ "B7": {
+  "kind": "conflict",
+  "text": "(Protagoras, arguing against the definition of the mathematicians and appealing to perception, used to say that the tangent touched the circle not at a point but along a line)."
+ },
+ "B8": {
+  "kind": "embedded",
+  "text": "(Plato, Sophist 232D, E: 'Those views regarding all the arts and each art separately, what one must say against the craftsman practising each: views which stand published in writing for all to learn if they wish.—I think you must mean the views of Protagoras on wrestling and the other arts').",
+  "frames": [
+   [
+    0,
+    25
+   ]
+  ]
+ },
+ "B8a": {
+  "kind": "title",
+  "text": "'On Constitution.'"
+ },
+ "B8b": {
+  "kind": "title",
+  "text": "'On the Original Social Structure.'"
+ },
+ "B8c": {
+  "kind": "title",
+  "text": "'On Ambition.'"
+ },
+ "B8d": {
+  "kind": "title",
+  "text": "'On Virtues.'"
+ },
+ "B8e": {
+  "kind": "title",
+  "text": "'On Human Errors.'"
+ },
+ "B8f": {
+  "kind": "title",
+  "text": "'Exhortation.'"
+ },
+ "B8g": {
+  "kind": "title",
+  "text": "'Trial concerning a Fee.'"
+ },
+ "B8h": {
+  "kind": "title",
+  "text": "'On the Underworld.'"
+ },
+ "B9": {
+  "kind": "verbatim",
+  "text": "When his sons, who were fine young men, died within eight days, he (Pericles) bore it without mourning. For he held on to his serenity, from which every day he derived great benefit in happiness, freedom from suffering, and honour in the people's eyes—for all who saw him bearing his griefs valiantly thought him great-souled and brave and superior to themselves, well knowing their own helplessness in such a calamity."
+ },
+ "B10": {
+  "kind": "verbatim",
+  "text": "Art without practice, and practice without art, are nothing."
+ }
+}

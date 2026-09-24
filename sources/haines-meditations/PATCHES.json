@@ -1,0 +1,119 @@
+[
+ {
+  "chapter": "2.12",
+  "remove": [],
+  "replace": [
+   [
+    "award D Sort WAN th pind BA \" GAA @ ft 35 3! Bi pee rae vt. Uw ‘he . ‘ Sod Vi 1 ae 2 6th hv AA , r a a + , renown ;",
+    "award renown ;"
+   ]
+  ],
+  "note": "Raw lines 3177-3188 (thecommuningswit00marcuoft_djvu.txt): unrecognisable OCR garbage sitting at the bottom of the English 'BOOK II' recto page, immediately above the (correctly-detected) 'MARCUS AURELIUS' verso head at line 3191 -- so extract_haines.py's page-side tracker was still on 'english' and captured it as chapter body. Not legible Greek transliteration or footnote apparatus, just page-bottom scan noise; no genuine Haines text is lost -- the sentence 'apprehend ; as also what they really are whose conceptions and whose voices award renown ;' runs on unbroken once the noise is cut, confirmed by the Greek continuing cleanly on the facing verso ('...ylvopeva. ... renown' has no Greek-side counterpart gap either).",
+  "raw_lines": "thecommuningswit00marcuoft_djvu.txt:3177-3188"
+ },
+ {
+  "chapter": "5.4",
+  "remove": [],
+  "replace": [
+   [
+    "whence story of Nikias the painter (de Sene Polit. 4 ; Non posse suav. vivere sec. Hpicur. 11). vii. 29; viii. 47. 3x. ll. ep. 1 St. Peter, ii. 90, 4 iv, 29. ro daily",
+    "whence daily"
+   ]
+  ],
+  "note": "Raw lines 6423-6426: a footnote block (citing Nikias' story, cross-references 'vii. 29; viii. 47', and a St. Peter citation) plus a garbled page number ('ro' for '104'), sitting between 'BOOK V' body line 6420 ('...whence') and the 'MARCUS AURELIUS' verso head at line 6429 -- the footnote zone trigger this page uses (a bare page-number line) is itself OCR-mangled into 'ro}' and never matches _PAGE_NUMBER, so the footnote-zone detector never fires. Genuine text resumes at line 6486 ('daily for so many years...') on the next English page; no Haines text is lost.",
+  "raw_lines": "thecommuningswit00marcuoft_djvu.txt:6423-6426"
+ },
+ {
+  "chapter": "6.16",
+  "remove": [],
+  "replace": [
+   [
+    "find Ma 2 ii. 2 ete. fault even",
+    "find fault even"
+   ]
+  ],
+  "note": "Raw lines 8293-8296: a single marker-less footnote fragment ('Ma 2 ii. 2 ete.', an abbreviated cross-reference) sandwiched between body line 8293 ('...and in many cases find') and body line 8375 ('fault even with the Gods...'), across an intervening Greek verso page ('MARCUS AURELIUS' head at line 8302, correctly detected). The footnote has no digit/symbol trigger of its own and is too short to match _APPARATUS, so it survives as body. Genuine text resumes cleanly across the join; no Haines text is lost.",
+  "raw_lines": "thecommuningswit00marcuoft_djvu.txt:8293-8296"
+ },
+ {
+  "chapter": "10.32",
+  "remove": [],
+  "replace": [
+   [
+    "not a was the philosopher friend of Pliny and Hadrian. Nothing certain is known of the others. 3 vii. 58. good man",
+    "not a good man"
+   ]
+  ],
+  "note": "Raw lines 16003-16004: the tail of a footnote (identifying an unnamed philosopher as 'friend of Pliny and Hadrian') sitting between body line 16002 ('...that thou art not a') and body line 16078 ('good man, but let anyone...'), across an intervening Greek verso page ('MARCUS AURELIUS' head at line 16016, correctly detected). The footnote fragment has no digit/symbol trigger of its own on this page and is too short to match _APPARATUS. Genuine text resumes cleanly across the join; no Haines text is lost.",
+  "raw_lines": "thecommuningswit00marcuoft_djvu.txt:16003-16004"
+ },
+ {
+  "chapter": "9.42",
+  "remove": [],
+  "replace": [
+   [
+    "what is his. . that this section of the Thoughts was written at the time of",
+    "what is his."
+   ]
+  ],
+  "note": "Raw lines 14667-14669: the intro fragment of a footnote ('that this section of the Thoughts was written at the time of...') immediately follows the chapter's genuine closing sentence ('...and has what is his.') with no blank line separating them, so extract_haines.py's block-gap-gated apparatus trim never fires (block_opened_gap is 0, not >=2) even though the very next raw line ('the rebellion in 175, and that Marcus is here taking himself...') does trip the _APPARATUS 'Marcus' signal and correctly halts capture there. A prior attempt to trim this by loosening the gap gate was reverted (regressed other chapters); hand-patching this one splice is safer. Genuine chapter text ends at 'what is his.' -- the footnote continuation is edited-voice apparatus, not Marcus' prose, so nothing of Haines' translation is lost.",
+  "raw_lines": "thecommuningswit00marcuoft_djvu.txt:14667-14669"
+ },
+ {
+  "chapter": "11.15",
+  "remove": [],
+  "replace": [
+   [
+    "fore-Heylbut (Rhein. Mus. 39. p. 310) refers to a story in Musonius Rufus, p. 55, Hense. pat ’ St. Luke xi. 39: 7d ZowOev buav—‘‘the inward parts.” head.",
+    "forehead."
+   ]
+  ],
+  "note": "Raw lines 17018-17046: chapter 15's closing sentence breaks mid-word at the English-recto page bottom ('...ought to be written on the fore-' at line 17022), and the intervening footnote block (Heylbut's Rhein. Mus. cross-reference to Musonius Rufus, plus a St. Luke xi. 39 citation, lines 17024-17027) sits where the line-wrap continuation would be, so extract_haines.py's page-side tracker captures it as chapter body -- there is no footnote-zone trigger on this page for the general heuristic to catch, and _dehyphenate (which runs before patches) never sees 'fore-' and 'head.' as adjacent tokens because the footnote intervenes between them. The Greek verso (MARCUS AURELIUS head, line 17033) is correctly excluded; genuine English text resumes with 'head.' at the top of the next recto (BOOK XI head, line ~17046). No Haines text is lost: 'fore-' and 'head.' are the two OCR-split halves of one word, and removing the footnote junk between them restores it as 'forehead.', matching this project's existing hyphen-wrap-across-a-footnote-splice precedent (cp. the 9.42 patch above, an intra-word splice one step removed).",
+  "raw_lines": "thecommuningswit00marcuoft_djvu.txt:17022-17027"
+ },
+ {
+  "chapter": "9.21",
+  "remove": [
+   " © iv. 3835 vii. 34. 6 vy. 23; vii. 18."
+  ],
+  "replace": [],
+  "note": "Raw lines 13838-13840: chapter 21's sentence breaks at the English-recto page bottom ('...then under thy' at line 13838), and a bare footnote-marker cross-reference line ('6 iv. 383; vii. 34. 6 v. 23; vii. 18.', OCR-mangled to '© iv. 3835 vii. 34. 6 vy. 23; vii. 18.') sits immediately after it (line 13840) before the page number/signature ('243', 'R 2') and the Greek verso (MARCUS AURELIUS head, line 13845); the footnote fragment has no digit/symbol trigger the general heuristic recognises as a zone-opener here, so it survives as body between 'thy' and the continuation word 'father,' at the top of the next recto (BOOK IX head, line ~13911). A second footnote-apparatus line immediately below it ('7 iv. 3 ad fin. ; vii. 25. 8 vii. 29; ix. 38.', line 13842) IS correctly excluded by the existing heuristic, confirming this is the same footnote block with only its first line surviving. Genuine text resumes cleanly as 'thy father, and finding there many other alterations...'; no Haines text is lost.",
+  "raw_lines": "thecommuningswit00marcuoft_djvu.txt:13838-13840"
+ },
+ {
+  "chapter": "5.33",
+  "remove": [
+   " Sis me 7. 5 viii. 25; xii. 27."
+  ],
+  "replace": [],
+  "note": "Raw lines 7629-7631: after the Hesiod verse quotation closing chapter 33 ('...Up from the wide-wayed Earth have winged their flight to Olympus.', ending line 7628), a footnote cross-reference line (OCR-mangled cross-references, 'vii. 5; viii. 25; xii. 27', rendered 'Sis me 7. 5 viii. 25; xii. 27.') sits at line 7631 directly above the footnote's source attribution ('Hesiod, Op. 197...', line 7633, which IS correctly excluded by the existing footnote-zone heuristic). The cross-reference line itself has no digit/symbol trigger the heuristic recognises as a zone-opener, so it survives as body between 'to Olympus.' and the next sentence, 'What then keeps thee here?'. Genuine text resumes cleanly; no Haines text is lost.",
+  "raw_lines": "thecommuningswit00marcuoft_djvu.txt:7629-7631"
+ },
+ {
+  "chapter": "7.35",
+  "remove": [
+   "From Plato.]® "
+  ],
+  "replace": [],
+  "note": "Raw line 10421: chapter 35 opens '35. [From Plato.]6 Dost thou think...' -- '[From Plato.]' is Haines' own bracketed source-attribution label (matching the Greek facing page's '[Πλατωνικόν.]' at line ~10390), not part of the quoted Platonic dialogue that follows. extract_haines.py's chapter-marker regex strips the leading '35. [' but leaves the trailing ']6' (OCR-mangled superscript footnote-reference mark) glued onto 'Plato.', so the label survives as chapter body. Per this project's attribution-apparatus policy (same treatment as the Long-pipeline HESIOD/_Odyssey_ source-citation exclusions, see extract_long.py's _FOOTNOTE_CITE), the bracketed attribution is editorial apparatus and is removed; the quoted text itself ('Dost thou think that the life of man...') is Marcus' chosen quotation and stays. No Haines translation text is lost.",
+  "raw_lines": "thecommuningswit00marcuoft_djvu.txt:10421"
+ },
+ {
+  "chapter": "7.36",
+  "remove": [
+   "From Antisthenes.] "
+  ],
+  "replace": [],
+  "note": "Raw line 10514: chapter 36 opens '36. [From Antisthenes.] ’Tis royal to do well and be ill spoken of.' -- '[From Antisthenes.]' is Haines' own bracketed source-attribution label (matching the Greek facing page's '[Ἀντισθενικόν.]' at line ~10446), not part of the quoted verse. extract_haines.py's chapter-marker regex strips the leading '36. [' but leaves the trailing ']' glued onto 'Antisthenes.', so the label survives as chapter body. Per this project's attribution-apparatus policy (same as the 7.35 and 7.44 patches above, and the Long-pipeline HESIOD/_Odyssey_ source-citation exclusions), the bracketed attribution is removed; the quoted verse itself (’Tis royal to do well and be ill spoken of.') is Marcus' chosen quotation and stays. No Haines translation text is lost.",
+  "raw_lines": "thecommuningswit00marcuoft_djvu.txt:10514"
+ },
+ {
+  "chapter": "7.44",
+  "remove": [
+   "Citations from Plato] : "
+  ],
+  "replace": [],
+  "note": "Raw line 10538: chapter 44 opens '44. [Citations from Plato] :' as its own line, followed by the quoted passage beginning 'I might fairly answer such a questioner...' on the next line. '[Citations from Plato]' is Haines' own bracketed source-attribution label (matching the Greek facing page's '[Εκ Πλάτωνος.]' heading this section), not part of the quoted dialogue. extract_haines.py's chapter-marker regex strips the leading '44. [' but leaves the trailing '] :' glued onto 'Plato', so the label survives as chapter body. Per this project's attribution-apparatus policy (same as the 7.35 and 7.36 patches above, and the Long-pipeline HESIOD/_Odyssey_ source-citation exclusions), the bracketed attribution is removed; the quoted text itself ('I might fairly answer such a questioner...') is Marcus' chosen quotation and stays. No Haines translation text is lost.",
+  "raw_lines": "thecommuningswit00marcuoft_djvu.txt:10538"
+ }
+]

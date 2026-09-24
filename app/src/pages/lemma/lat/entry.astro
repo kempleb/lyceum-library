@@ -1,0 +1,59 @@
+---
+// One client-rendered Latin lexicon entry. The corpus can grow without adding
+// a static page for every lemma; the index remains the lexicon's directory.
+import ThemeInit from '../../../components/ThemeInit.astro';
+import ThemeToggle from '../../../components/ThemeToggle.astro';
+import Pwa from '../../../components/Pwa.astro';
+import LemmaEntry from '../../../components/LemmaEntry.svelte';
+import LyceumBand from '../../../components/LyceumBand.astro';
+import { LYCEUM_SITE_NAME } from '../../../lib/site';
+import '@shared/styles/global.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// PUBLIC_LYCEUM_CHROME=1 puts the sitewide Lyceum band and name on this page
+// too (docs/design-spec.md §4), so the demo origin reads as one site; with the
+// flag off every line below is the page this route has always served. This
+// title alone never went through lib/site.ts, so the flag-off half stays the
+// literal it has always printed.
+const lyceumChrome = import.meta.env.PUBLIC_LYCEUM_CHROME === '1';
+const siteName = lyceumChrome ? LYCEUM_SITE_NAME : 'Classical Philosophy Reader';
+---
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <ThemeInit />
+  <title>Latin Lexicon — {siteName}</title>
+  <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+  <link rel="icon" href={`${base}/favicon.png`} type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} sizes="180x180" />
+  <Pwa />
+</head>
+<body class={lyceumChrome ? 'lyceum-chrome lyc-page' : undefined}>
+  {lyceumChrome ? (
+    <div class="lyc-chrome">
+      <LyceumBand siteName={siteName} searchHref={`${base}/search`}>
+        <a class="tool" href={`${base}/catalog/`}>Catalog</a>
+        <a class="tool" href={`${base}/lemma/lat/`}>Lexica</a>
+        <ThemeToggle />
+        <a class="tool tool-signin" href="https://lyceum.institute">Sign in</a>
+      </LyceumBand>
+    </div>
+  ) : (
+  <header class="simple-header">
+    <div class="header-title">
+      <a class="home-link" href={`${base}/`}>Home</a><span class="title-sep">›</span>
+      <a class="home-link" href={`${base}/lemma/lat/`}>Latin Lexicon</a>
+    </div>
+    <nav class="header-actions" aria-label="Navigation">
+      <a href={`${base}/`} class="search-link">All works</a>
+      <a href={`${base}/lemma/lat/`} class="search-link">Lexicon</a>
+      <a href={`${base}/search`} class="search-link">Search</a>
+      <ThemeToggle />
+    </nav>
+  </header>
+  )}
+  <LemmaEntry client:load lang="lat" />
+</body>
+</html>

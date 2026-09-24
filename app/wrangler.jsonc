@@ -1,0 +1,68 @@
+{
+  // Ruling, 2026-09-15 (John): the site hosts on a Cloudflare Worker with
+  // static assets, not Cloudflare Pages -- superseding the M2 probe's open
+  // question (docs/lyceum-shared-repo-plan.md §11.2). "<kv-id>" is a
+  // placeholder -- the real namespace id is created when this deploys
+  // (John's call, out of scope for this change).
+  //
+  // The installed @astrojs/cloudflare (^14.3, the current line for Astro 7)
+  // no longer emits Cloudflare Pages Advanced Mode (_worker.js +
+  // _routes.json next to static files, deployed with `wrangler pages
+  // deploy`). It emits the Workers-with-static-assets shape instead:
+  // `astro build` produces app/dist/client (static files) + app/dist/server
+  // (the Worker script, `entry.mjs`, plus chunks) + app/dist/server/
+  // wrangler.json, a fully resolved config (this file's fields merged with
+  // the adapter's own defaults -- main, assets.directory, images binding).
+  // Deploy is `wrangler deploy`, not `wrangler pages deploy`; local proof is
+  // `wrangler dev --config dist/server/wrangler.json`, not
+  // `wrangler pages dev`. Confirmed by reading the installed package (no
+  // "_worker.js"/"_routes.json"/"pages_build_output_dir" anywhere in
+  // node_modules/@astrojs/cloudflare or node_modules/@cloudflare/vite-plugin)
+  // and by an actual build. Downstream of this: scripts/build-public.mjs's
+  // check-links/verify-pages-artifact calls and app/scripts/
+  // postbuild-prune-data.mjs's DATA_DIR now point at app/dist/client (this
+  // change), matching what this adapter actually emits.
+  "name": "lyceum-library",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "kv_namespaces": [{ "binding": "LIBRARY_CATALOG", "id": "<kv-id>" }],
+  // No "vars" for PUBLIC_DATA_ROOT or PUBLIC_SITE_ORIGIN: the adapter copies
+  // every var here into the build's environment, overriding the build
+  // command, so a data root here gets baked into the bundles (found
+  // 2026-09-16; pinned by src/__tests__/wrangler-config.test.ts). Set both on
+  // the build command. Live values: https://data.lyceum.institute/releases/
+  // <version> and https://library.lyceum.institute.
+  //
+  // "demo": the staging demo in John's own account (John, 2026-09-16), in
+  // place of the retired Pages project of the same name. Build with
+  // CLOUDFLARE_ENV=demo set; the adapter then writes this environment into
+  // dist/server/wrangler.json, and `wrangler deploy` from app/ deploys it.
+  //
+  // Accounts (2026-09-21): the wrangler login now sees two accounts, John's
+  // and Brian's (Lyceum Institute), and Brian's holds a Worker named
+  // `lyceum-library` -- this file's top-level name. So every environment
+  // pins its own account_id and its own name, and the top level pins no
+  // account: a bare `wrangler deploy` stops to ask which account instead of
+  // landing on Brian's Worker. Pinned by src/__tests__/wrangler-config.test.ts.
+  //
+  // "staging": the test copy of the Library in Brian's account (his go,
+  // 2026-09-21), on its workers.dev address -- lyceum.institute's DNS is at
+  // WordPress.com, so no custom domain. Build with CLOUDFLARE_ENV=staging.
+  // Its catalog store is `lyceum-library-staging-catalog`, never the live
+  // `lyceum-library-catalog` (7f6985e4...).
+  "env": {
+    "demo": {
+      "name": "lyceum-reader-demo",
+      "account_id": "6ff75c6d6c06d1092df2c7efd42077ba",
+      "kv_namespaces": [{ "binding": "LIBRARY_CATALOG", "id": "8bb09e6c9067446e8f9a0365659d4b12" }]
+    },
+    "staging": {
+      "name": "lyceum-library-staging",
+      "account_id": "570b13129baea40d581ac89859a9c8aa",
+      "kv_namespaces": [{ "binding": "LIBRARY_CATALOG", "id": "d3944cf97d744c12a904ab7db1558cea" }],
+      // Read by src/pages/data/[...path].ts (env.CORPUS) -- only matters for
+      // a build made with DATA_FROM_BUCKET=1.
+      "r2_buckets": [{ "binding": "CORPUS", "bucket_name": "lyceum-library-data" }]
+    }
+  }
+}

@@ -1,0 +1,103 @@
+# De Legibus — pipeline manifest (Wave 2 Batch 3a: book-section scheme,
+# mechanically identical to De Officiis/manifests/de-officiis.yaml — see
+# that file's header for the shared PHI book-section shape (lowercase @type
+# div convention, citation.div_types.page override). Latin-only staging
+# (no_english, the De Officiis/De Rerum Natura precedent): text, citation,
+# search, and the lexicon layer only.
+#
+# Edition note: unlike the Teubner "Scripta Quae Manserunt Omnia" fascicles
+# used for De Officiis/De Rerum Natura/Tusculans, PHI's De Legibus text is
+# de Plinval's 1968 Bude edition (Cicero: Traite des Lois) — a post-1930
+# edition, so the FATAL expected_sourcedesc gate below is mandatory (Atzert
+# precedent), same as De Officiis/De Rerum Natura.
+
+work:
+  id: de-legibus
+  title: "De Legibus"
+  author: "cicero"
+  language: "lat"
+  lexicon: true
+  no_english: true
+  phi_author: "0474"
+  phi_work: "044"
+  latin_edition: "de Plinval, G. (ed.), Cicéron: Traité des Lois (Paris: Les Belles Lettres, 1968)"
+  # FATAL sourceDesc gate (post-1930 edition — mandatory per the Atzert
+  # precedent): verified verbatim against the real PHI export
+  # (build/export/Diogenes-Resources/xml/phi/phi0474044.xml). Diogenes'
+  # own sourceDesc text escapes the accented "é" as a literal "e/" — this
+  # substring is copied verbatim from that export, not re-accented.
+  expected_sourcedesc: 'M. Tullius Cicero. De Legibus (Cice/ron: Traite/ des Lois, ed. G. de Plinval, 1968)'
+
+citation:
+  scheme: book-section
+  hideLineNumbers: true
+  lined_source: true
+  lined_indent_max: 4
+  div_types:
+    page: "book"
+    section: "section"
+  # Declared title-drop hashes (adversarial-review Finding 2, replacing the
+  # earlier shape-heuristic title guard) — see manifests/de-officiis.yaml's
+  # matching comment for the full mechanism.
+  title_labels:
+    - { sha256_16: "b6507c63aa13cd95", note: "whole-work title (book n=\"t\")" }
+    - { sha256_16: "29c444f04f0cbe68", note: "book 1 heading (section n=\"t\")" }
+    - { sha256_16: "7e0ff911ac98bd92", note: "book 2 heading (section n=\"t\")" }
+    - { sha256_16: "dfc1bad50c4b07c1", note: "book 3 heading (section n=\"t\")" }
+
+# Digest fingerprint of the observed book.section column spine (181
+# columns, 1.1..3.49: book 1 has 63 sections, book 2 has 69, book 3 has 49)
+# -- stage2 recomputes and compares it. Computed directly against the real
+# PHI export (build/export/.../phi0474044.xml) via stage1_latin's own
+# _parse_book_section, mirroring De Officiis' section_spine workflow.
+section_spine: { count: 181, sha256: "99713813bf529003d87b38d1c9d3c7885db0204a6d4fb410decd2d5a4cb5fc05" }
+
+books:
+  - { n: 1, start: "1.1", end: "1.63" }
+  - { n: 2, start: "2.1", end: "2.69" }
+  - { n: 3, start: "3.1", end: "3.49" }
+
+sources:
+  phi_dir_env: "PHI_DIR"
+  phi_dir_default: "../TLG Files/PHI"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: de-legibus
+  title: De Legibus
+  abbr: Leg.
+  author: cicero
+  language: lat
+  workType: continuous
+  books: 3
+  bookLabels:
+    - I
+    - II
+    - III
+  greekEdition: 'de Plinval, G. (ed.), Cicéron: Traité des Lois (Paris: Les Belles Lettres, 1968)'
+  greekSource:
+    short: de Plinval (1968)
+    full: 'de Plinval, G. (ed.), Cicéron: Traité des Lois (Paris: Les Belles Lettres, 1968)'
+  translations: []
+  citation:
+    scheme: book-section
+    hideLineNumbers: true
+    # Block-per-section source layout (John, 2026-08-28: extend lined display
+    # to the section-numbered texts) — see WorkMeta["citation"].linedGreek.
+    # RULED OFF (John, 2026-08-31): this work carries no gutter apparatus at
+    # all (measured: 0 filled gutter cells), so its print lines aligned
+    # nothing, while forcing one rendered line per print line wrapped most of
+    # them at phone width into stubs ("qui illas for-" / "tunas morte"). Same
+    # ruling as Lives; prose reflows, quoted verse keeps its own lines via
+    # Reader.svelte's `isVerseLine` (see `proseIndent` above -- indent(2) is
+    # an ordinary paragraph here, indent(4)+ is verse).
+    linedGreek: false
+    # This edition sets ordinary paragraph openings at indent(2) and has no
+    # indent(1) at all (measured: levels present are 2,4[,5][,7]), unlike the
+    # Greek exports which start at 1. Without this, the verse test reads every
+    # Cicero paragraph opening -- dialogue turns included -- as quoted verse.
+    proseIndent: 2
+    linedSource: true
+    copyAbbr: Cic. Leg.
+  blurb: A dialogue companion to the Republic, sketched in Plato's own Laws-and-Republic pairing, in which Cicero grounds Roman law in a Stoic natural-law theory and sets out a proposed law-code for the ideal state.

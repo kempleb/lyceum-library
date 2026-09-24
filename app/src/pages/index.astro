@@ -1,0 +1,10 @@
+---
+// The site's home page. PUBLIC_LYCEUM_CHROME=1 serves the Lyceum homepage
+// (docs/design-spec.md §5); with the flag off this route renders exactly the
+// author catalogue it always did, now living in ClassicHome.astro.
+import ClassicHome from '../components/ClassicHome.astro';
+import LyceumHome from '../components/LyceumHome.astro';
+
+const lyceumChrome = import.meta.env.PUBLIC_LYCEUM_CHROME === '1';
+---
+{lyceumChrome ? <LyceumHome /> : <ClassicHome />}

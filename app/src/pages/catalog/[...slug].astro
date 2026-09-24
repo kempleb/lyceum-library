@@ -1,0 +1,199 @@
+---
+// The Catalog: the whole library on one page (docs/design-spec.md §6), one
+// click from the homepage. PUBLIC_LYCEUM_CHROME=1 only — a rest-parameter
+// route whose getStaticPaths returns nothing with the flag off, so the page
+// simply does not exist there (the same opt-in shape lib/citation-routes.ts
+// uses for the citation shims). The single emitted path is /catalog/.
+//
+// Every row is a built work with its own extent and citation range; the facet
+// bar narrows them in place. All prose here is DRAFT until John approves it.
+import CommandPalette from '@shared/components/CommandPalette.svelte';
+import LyceumBand from '../../components/LyceumBand.astro';
+import Pwa from '../../components/Pwa.astro';
+import ThemeInit from '../../components/ThemeInit.astro';
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import { lyceumCatalog, lyceumContent } from '../../lib/lyceum-catalog';
+import { builtWorks } from '../../lib/built-works';
+import { LYCEUM_SITE_NAME } from '../../lib/site';
+import '@shared/styles/global.css';
+
+export function getStaticPaths() {
+  if (import.meta.env.PUBLIC_LYCEUM_CHROME !== '1') return [];
+  return [{ params: { slug: undefined } }];
+}
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const SITE = LYCEUM_SITE_NAME;
+const catalog = lyceumCatalog();
+const facetLabels: { axis: string; label: string }[] = [
+  { axis: 'author', label: 'Author' },
+  { axis: 'collection', label: 'Collection' },
+  { axis: 'period', label: 'Period' },
+  { axis: 'language', label: 'Language' },
+  { axis: 'form', label: 'Form' },
+];
+const description = `Every work in ${SITE}: ${catalog.workCount} works by ${catalog.authorCount} authors, with each work's extent and citation range.`;
+const canonical = Astro.site ? new URL(`${base}/catalog/`, Astro.site).href : undefined;
+---
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <ThemeInit />
+  <title>Catalog — {SITE}</title>
+  <meta name="description" content={description} />
+  {canonical && <link rel="canonical" href={canonical} />}
+  <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+  <link rel="icon" href={`${base}/favicon.png`} type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} sizes="180x180" />
+  <Pwa />
+</head>
+<body class="lyceum-chrome lyc-shell lyc-cat">
+  <CommandPalette works={builtWorks()} client:load />
+  <div class="lyc-chrome">
+    <LyceumBand siteName={SITE} searchHref={`${base}/search`}>
+      <a class="tool" href={`${base}/lemma/grc/`}>Lexica</a>
+      <ThemeToggle />
+      <a class="tool tool-signin" href="https://lyceum.institute">Sign in</a>
+    </LyceumBand>
+  </div>
+
+  <main class="page">
+    <div class="pagehead">
+      <h1>{lyceumContent('library.heading', 'Catalog')}</h1>
+      <!-- DRAFT copy pending John's approval, unless the live partner
+           catalog's presentation.content['library.description'] overrides it. -->
+      <span class="sub">{lyceumContent('library.description', 'the whole library on one page')}</span>
+      <span class="ct" id="cat-count" data-total={catalog.workCount}>{catalog.workCount} works</span>
+    </div>
+
+    <nav class="facets" aria-label="Filter">
+      {facetLabels.map((f) => (
+        <span class="fx">
+          <label for={`fx-${f.axis}`}>{f.label}</label>
+          <select id={`fx-${f.axis}`} name={f.axis}>
+            <option value="">All</option>
+            {catalog.options[f.axis as keyof typeof catalog.options].map((o) => (
+              <option value={o.value}>{o.label}</option>
+            ))}
+          </select>
+        </span>
+      ))}
+      <button type="button" class="clear" id="fx-clear">Clear filters</button>
+    </nav>
+
+    <p class="noresult" id="cat-noresult" hidden>No work matches those filters.</p>
+
+    {catalog.sections.map((s) => (
+      <section class={s.accent ? `ledger ${s.accent}` : 'ledger'} id={s.id} aria-labelledby={`led-${s.id}`}>
+        <header>
+          <h2 id={`led-${s.id}`}>{s.name}</h2>
+          {s.meta && <span class="ct">{s.meta}</span>}
+        </header>
+        {s.note && <p class="note">{s.note}</p>}
+        {s.groups.map((g) => (
+          <>
+            {g.label && <span class="perlbl lbl" data-period={g.authors[0]?.period}>{g.label}</span>}
+            {g.authors.map((a) => a.works.map((w, i) => (
+              <div
+                class="row"
+                data-work={w.id}
+                data-author={w.facets.author}
+                data-collection={w.facets.collection}
+                data-period={w.facets.period}
+                data-language={w.facets.language}
+                data-form={w.facets.form}
+                data-au-name={a.name}
+              >
+                <span class="au">{i === 0 ? a.name : ''}</span>
+                <span class="ws"><a href={w.href} rel={w.external ? 'external' : undefined}>{w.title}</a>{w.external && <span class="ext">{w.external}</span>}</span>
+                <span class="rng">{w.extent || a.range}</span>
+              </div>
+            )))}
+          </>
+        ))}
+      </section>
+    ))}
+
+    <!-- DRAFT copy pending John's approval. -->
+    <p class="trust">Source editions named per work · public-domain translations
+      verified against their printed editions · fragments and testimonia as the
+      evidence gives them. <a href={`${base}/attribution`}>About the texts</a> ·
+      <a href={`${base}/support`}>Support</a></p>
+  </main>
+
+  <script>
+    // The facet bar. Rows carry their own tokens; the shared model decides
+    // whether a row survives (shared/lib/contents.ts's matchesCatalogFacets),
+    // so the page and its test agree on what a filter means.
+    import { countVisibleWorks, matchesCatalogFacets, type CatalogSelection, type CatalogVisibilityRow } from '@shared/lib/contents';
+
+    const bar = document.querySelector<HTMLElement>('.facets');
+    const countEl = document.getElementById('cat-count');
+    const noResult = document.getElementById('cat-noresult');
+    const sections = Array.from(document.querySelectorAll<HTMLElement>('.ledger'));
+    if (bar && countEl) {
+      const selects = Array.from(bar.querySelectorAll<HTMLSelectElement>('select'));
+      const total = Number(countEl.dataset.total ?? 0);
+
+      const apply = () => {
+        const selection: CatalogSelection = {};
+        for (const s of selects) {
+          if (s.value) selection[s.name as keyof CatalogSelection] = s.value;
+        }
+        const filtered = selects.some((s) => s.value);
+        const visibility: CatalogVisibilityRow[] = [];
+
+        for (const section of sections) {
+          const rows = Array.from(section.querySelectorAll<HTMLElement>('.row'));
+          let sectionShown = 0;
+          let previousAuthor = '';
+          for (const row of rows) {
+            const keep = matchesCatalogFacets({
+              author: row.dataset.author ?? '',
+              collection: row.dataset.collection ?? '',
+              period: row.dataset.period ?? '',
+              language: row.dataset.language ?? '',
+              form: row.dataset.form ?? '',
+            }, selection);
+            row.hidden = !keep;
+            visibility.push({ workId: row.dataset.work ?? '', visible: keep });
+            if (!keep) continue;
+            sectionShown += 1;
+            // The author's name stands on the first row still showing.
+            const name = row.dataset.auName ?? '';
+            const cell = row.querySelector('.au');
+            if (cell) cell.textContent = name === previousAuthor ? '' : name;
+            previousAuthor = name;
+          }
+          // A period label only stands where a row under it survives.
+          for (const label of section.querySelectorAll<HTMLElement>('.perlbl')) {
+            let visible = false;
+            for (let el = label.nextElementSibling; el?.classList.contains('row'); el = el.nextElementSibling) {
+              if (!(el as HTMLElement).hidden) { visible = true; break; }
+            }
+            label.hidden = !visible;
+          }
+          // A collection with no works of its own (a wing still in preparation)
+          // keeps its place while nothing is filtered, and steps aside once
+          // something is.
+          section.hidden = rows.length ? sectionShown === 0 : filtered;
+        }
+
+        // Distinct works, not rows: a work with a row in both a parent and a
+        // child collection must count once, so "shown" can never exceed total.
+        const shown = countVisibleWorks(visibility);
+
+        countEl.textContent = filtered ? `${shown} of ${total} works` : `${total} works`;
+        if (noResult) noResult.hidden = shown > 0;
+      };
+
+      for (const s of selects) s.addEventListener('change', apply);
+      document.getElementById('fx-clear')?.addEventListener('click', () => {
+        for (const s of selects) s.value = '';
+        apply();
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+# Anaximander of Miletus Fragments (DK 12 B) — pipeline manifest (dk
+# scheme: one flat div[@type="Fragment"][@n] per citable fragment). See
+# anaximander-testimonia.yaml for the verse-invocation control (plain
+# export correct; zero structural verse) and the A9/B1 cross-reference
+# note.
+#
+# STRUCTURE: 6 divs, B1-B6, NO title div at all (confirmed against the
+# export — unlike Thales' Fragmenta, this work has no `n="tit..."` div;
+# the export's first div is already B1). No gaps, no lettered variants.
+# Matches the task's stated DK range (frr. 1-6) exactly.
+#
+# B1 — THE APEIRON FRAGMENT (task-flagged, verified by direct reading):
+# Simplicius Phys. 24, 13 (the same passage abbreviated in A9), carries
+# TWO separate letter-spaced (role='text') runs within one <p>:
+#   1. A single technical term, mid-sentence in Simplicius' own narrative —
+#      DK marks that Simplicius' report uses Anaximander's own word for a
+#      principle or origin even
+#      though the surrounding sentence is Simplicius paraphrasing, not
+#      quoting a full clause.
+#   2. The long dictum on the boundless source of existing things and their
+#      return according to necessity —
+#      "...of existing things the boundless/infinite [is the
+#      origin] .... and the source of coming-to-be for existing things is
+#      also that into which destruction happens, according to necessity;
+#      for they pay penalty and retribution to one another for their
+#      injustice according to the ordering of time." DK's own internal
+#      ".... " (four dots) marks Diels' own elision of a short stretch of
+#      Simplicius' connecting prose between his narrative frame and the
+#      quotation proper — present in the export exactly as printed in DK6,
+#      not an artifact of this pipeline. Both letter-spaced spans are
+#      tagged role='text'; the surrounding "SIMPLIC. Phys. 24, 13 [vgl. A
+#      9]" and trailing space is role='context'
+#      (Simplicius' own narrative frame). This is DK's own textual
+#      judgment of exactly how much of Simplicius' report to certify as
+#      Anaximander's verbatim words (the philosophically famous — and
+#      textually disputed in the secondary literature — "according to the
+#      ordering of time" clause is INCLUDED in DK's letter-spacing here,
+#      i.e. DK6 prints it as part of the verbatim quotation, not as
+#      Simplicius' own gloss).
+# B2-B5: all letter-spaced (further short verbatim phrases using the same technical
+# vocabulary quoted across several different citing sources, all short
+# single-phrase quotations rather than B1's longer sentence).
+# B6: unmarked — no letter-spaced quotation.
+
+work:
+  id: anaximander-fragments
+  title: "Fragments"
+  author: "anaximander"
+  language: "grc"
+  tlg_author: "0725"
+  tlg_work: "002"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 12 B"
+  # FATAL sourceDesc gate: stage1's _check_sourcedesc asserts this exact
+  # substring is present in the export XML's own <teiHeader><sourceDesc>
+  # text -- verified verbatim against build/export/.../tlg0725002.xml.
+  expected_sourcedesc: 'Anaximander Phil., Fragmenta (0725: 002) "Die Fragmente der Vorsokratiker, vol. 1'
+
+citation:
+  scheme: dk
+  series: B
+  hideLineNumbers: true
+  unmarked_columns:
+    - B6
+  fragment_kinds:
+    B1: verbatim
+    B2: verbatim
+    B3: verbatim
+    B4: verbatim
+    B5: verbatim
+
+# Freeman's fifth-edition numbering matches the corresponding DK6 tokens.
+freeman_concordance: {}
+
+# Digest fingerprint of the observed dk column spine (6 columns, B1-B6, no
+# gaps) — stage2 recomputes and compares it.
+section_spine: { count: 6, sha256: "c272319c19f25b170e8276c046c16a112e5a47401b400bdbf5c23e157cee9a44" }
+
+# Freeman is the primary/default English. Burnet's existing translation is
+# retained as the secondary translation.
+english:
+  primary:
+    id: freeman
+    name: "Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)"
+    model: freeman
+    file: "freeman-ancilla/freeman-anaximander.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Kathleen Freeman's Ancilla to the Pre-Socratic Philosophers (1948) is treated as US public domain per John's 2026-07-23 ruling (CANON.md, Freeman Ancilla copyright ruling); covered by attribution.astro's site-wide translation public-domain notice."
+    group_headers_file: "freeman-ancilla/freeman-anaximander.group_headers.json"
+  secondary:
+    id: burnet
+    name: "John Burnet, Early Greek Philosophy, 3rd ed. (A. & C. Black, 1920)"
+    model: archive
+    file: "burnet-egp/burnet-anaximander.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+
+# Burnet EGP 3rd ed. (1920, Wikisource) — task #48's
+# MICRO-PASS: a single hand-curated, exact-anchor extraction of B1 only (the
+# apeiron dictum), not a general parser over Ch. I ("The Milesian School" —
+# Thales/Anaximander/Anaximenes covered jointly, continuous biographical
+# prose with no DK section tags or numbered-heading listing at all). See
+# sources/burnet-egp/burnet-anaximander.clean.json (1 column) and
+# `build_anaximander_micro` in the extractor.
+#
+# PHILOLOGICAL FLAG (Opus pass): DK6's own marked B1 Greek span includes the
+# preceding origin-and-destruction clause as part of the SAME quotation that
+# ends in the "reparation"
+# sentence; Burnet's own printed quotation marks open only at "as is meet"
+# (the reparation clause alone), per his own footnote disputing Diels'
+# wider boundary ("The Greek practice of blending quotations with the text
+# tells against this."). Extracted here VERBATIM AS BURNET PRINTS THE WHOLE
+# SENTENCE (his own lead-in prose together with his quotation-marked
+# clause) — the quotation-start boundary itself is a live philological
+# call, not resolved by this extraction; flagged for the Opus pass.
+# B2-B6: outside this wave's micro-pass scope — Burnet's Ch. I is
+# continuous narrative prose with no per-fragment structure to extract from
+# mechanically; only B1's quotation was hand-curated. Genuine coverage
+# gaps, not extraction defects (future work).
+alignment_allow_unmatched_secondary:
+    - "1:B2"
+    - "1:B3"
+    - "1:B4"
+    - "1:B5"
+    - "1:B6"
+
+# Freeman's fifth-edition chapter has B1-B5; DK6 adds B6.
+alignment_allow_unmatched:
+    - "1:B6"
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion).
+books:
+  - { n: 1, start: "B1", end: "B6" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: anaximander-fragments
+  slug: fragments
+  title: Fragments
+  abbr: Anaximand. B
+  author: anaximander
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 12 B'
+  greekSource:
+    short: Diels–Kranz (1951–52)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 12 B'
+  translations:
+    - id: freeman
+      name: Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)
+      short: Freeman
+      slot: english
+    - id: burnet
+      name: John Burnet, Early Greek Philosophy, 3rd ed. (A. & C. Black, 1920)
+      short: Burnet
+      slot: secondary
+  defaultTranslation: freeman
+  citation:
+    scheme: dk
+    copyAbbr: DK 12
+    dkChapter: 12
+    series: B
+  related:
+    - id: anaximander-testimonia
+      label: 'The A-testimonia: ancient reports about Anaximander'
+  blurb: 'The six surviving fragments of Anaximander, including — via Simplicius, B1 — Western philosophy’s oldest quoted sentence: things return, by cosmic necessity, into whatever they came from, “paying penalty and retribution to one another for their injustice according to the ordering of time.”'

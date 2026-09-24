@@ -1,0 +1,109 @@
+# Heraclitus Testimonia (DK 22 A) — pipeline manifest (dk scheme: one flat
+# div[@type="Fragment"][@n] per citable testimonium, no nested section div —
+# see pipeline/reader_pipeline/scheme.py's `dk` entry for the verified TEI
+# shape). Greek-only work: the A-testimonia are ancient reports/paraphrases
+# about Heraclitus, not his own words, and no free English translation of
+# them exists — `english` is intentionally absent (Wave 1b design memo §1,
+# §5.1's "Greek-only work mode").
+
+work:
+  id: heraclitus-testimonia
+  title: "Testimonia"
+  author: "heraclitus"
+  language: "grc"
+  tlg_author: "0626"
+  tlg_work: "001"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 22 A"
+  # FATAL sourceDesc gate (Wave 1c Sol nit, backfilled onto this committed
+  # work since verifying it was trivial): stage1's _check_sourcedesc
+  # asserts this exact substring is present in the export XML's own
+  # <teiHeader><sourceDesc> text -- verified verbatim against
+  # build/export/.../tlg0626001.xml.
+  expected_sourcedesc: 'Heraclitus Phil., Testimonia (0626: 001) "Die Fragmente der Vorsokratiker, vol. 1'
+
+citation:
+  scheme: dk
+  series: A
+  # dk_witness.py's owner-verified apparatus split (stage7_emit wiring):
+  # count of this work's columns whose apparatus actually splits into
+  # 2+ witnesses, cross-checked bidirectionally at preflight against the
+  # emitted dist's own `witnesses` keys -- catches an unreviewed new
+  # split and a stale declaration alike.
+  dk_witness_split_columns: 7
+  # Quote-mark polarity fix (owner ruling 2026-08-05, "we fix it and
+  # make damn sure every instance is correct"): the raw TLG export
+  # frequently opens a Greek quotation with U+2019 instead of U+2018 --
+  # stage1_greek._dk_normalize_quote_marks fixes every BALANCED
+  # (even-count) column automatically; this is that fix's own declared
+  # count, cross-checked bidirectionally at preflight against the
+  # emitted dist's actual U+2018/U+2019 total.
+  dk_quote_marks_rewritten: 54
+  hideLineNumbers: true
+  # 19 of 27 testimonia carry no <hi rend="letter-spacing"> at all — a
+  # verified DK6/export characteristic (ancient reports/paraphrases about
+  # Heraclitus routinely have nothing typographically marked as his own
+  # words), not a parser gap. See stage1_greek._parse_fragments' role-
+  # coverage doc comment and the Wave 1b implementation report.
+  unmarked_columns:
+    - A1a
+    - A2
+    - A3
+    - A3b
+    - A5
+    - A6
+    - A7
+    - A8
+    - A9
+    - A11
+    - A12
+    - A13
+    - A14
+    - A14a
+    - A17
+    - A18
+    - A20
+    - A21
+    - A23
+
+# Digest fingerprint of the observed dk column spine (27 columns, A1..A23
+# plus 1a/3a/3b/14a) — stage2 recomputes and compares it (reuses the
+# section_spine mechanism unchanged; dk's has_sections=True triggers the
+# same check book-section/section/stephanus already use).
+section_spine: { count: 27, sha256: "87e1bb9eccc315db9e503be8dee02cc632dd84acae2a3e8ce5a65a5537c66d1a" }
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion).
+books:
+  - { n: 1, start: "A1", end: "A23" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: heraclitus-testimonia
+  slug: testimonia
+  title: Testimonia
+  abbr: Her. A
+  author: heraclitus
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 22 A'
+  greekSource:
+    short: Diels–Kranz (1951–52)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 22 A'
+  translations: []
+  citation:
+    scheme: dk
+    copyAbbr: DK 22
+    dkChapter: 22
+    series: A
+  related:
+    - id: heraclitus-fragments
+      label: 'The B-fragments: the quoted words themselves'
+  blurb: Ancient reports, paraphrases, and biography concerning Heraclitus — the original Greek text; no free English translation exists.

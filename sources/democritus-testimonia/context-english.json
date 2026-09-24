@@ -1,0 +1,45 @@
+{
+ "1:A1": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.34-49",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925"
+   }
+  ]
+ },
+ "1:A33": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.45-49",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Of his works Thrasylus has made an ordered catalogue, arranging them in fours, as he also arranged Plato’s works.",
+     "The ethical works are the following: I. Pythagoras. Of the Disposition of the Wise Man. Of those in Hades. Tritogeneia (so called because three things, on which all mortal life depends, come from her). II. Of Manly Excellence, or Of Virtue. Amalthea’s Horn (the Horn of Plenty). Of Tranquillity. Ethical Commentaries: the work on Wellbeing is not to be found. So much for the ethical works. The physical works are these: III. The Great Diacosmos (which the school of Theophrastus attribute to Leucippus). The Lesser Diacosmos. Description of the World. On the Planets. IV. Of Nature, one book. Of the Nature of Man, or Of Flesh, a second book on Nature. Of Reason. Of the Senses (some editors combine these two under the title Of the Soul). V. Of Flavours. Of Colours.",
+     "Of the Different Shapes (of Atoms). Of Changes of Shape. VI. Confirmations (summaries of the aforesaid works). On Images, or On Foreknowledge of the Future. On Logic, or Criterion of Thought, three books. Problems. So much for the physical works. The following fall under no head: Causes of Celestial Phenomena. Causes of Phenomena in the Air. Causes on the Earth’s Surface. Causes concerned with Fire and Things in Fire. Causes concerned with Sounds. Causes concerned with Seeds, Plants and Fruits. Causes concerned with Animals, three books. Miscellaneous Causes. Concerning the Magnet. These works have not been arranged. The mathematical works are these: VII. On a Difference in an Angle, or On Contact with the Circle or the Sphere. On Geometry. Geometrica. Numbers. VIII. On Irrational Lines and Solids, two books. Extensions (Projections).",
+     "The Great Year, or Astronomy, Calendar. Contention of the Water-clock [and the Heaven]. IX. Description of the Heaven. Geography. Description of the Pole. Description of Rays of Light. These are the mathematical works. The literary and musical works are these: X. On Rhythms and Harmony. On Poetry. On Beauty of Verses. On Euphonious and Cacophonous Letters. XI. Concerning Homer, or On Correct Epic Diction, and On Glosses. Of Song. On Words. A Vocabulary. So much for the works on literature and music. The works on the arts are these: XII. Prognostication. Of Diet, or Diaetetics. Medical Regimen. Causes concerned with Things Seasonable and Unseasonable. XIII. Of Agriculture, or Concerning Land Measurements. Of Painting. Treatise on Tactics, and On Fighting in Armour. So much for these works.",
+     "Some include as separate items in the list the following works taken from his notes: Of the Sacred Writings in Babylon. Of those in Meroë. A Voyage round the Ocean. Of [the Right Use of] History. A Chaldaean Treatise. A Phrygian Treatise. Concerning Fever and those whose Malady makes them Cough. Legal Causes and Effects. Problems wrought by Hand. The other works which some attribute to Democritus are either compilations from his writings or admittedly not genuine. So much for the books that he wrote and their number."
+    ]
+   }
+  ]
+ },
+ "1:A52": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "10.2",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "According to Hermippus, however, he started as a schoolmaster, but on coming across the works of Democritus turned eagerly to philosophy."
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,265 @@
+{
+  "generation_parameters": {
+    "column_separator": " ",
+    "coverage_rule": "covered only when every non-empty reference turn in a column also has a non-empty Jowett turn; empty-reference turns do not count toward coverage but still contribute text to a covered column; columns with no non-empty reference turns are omitted entirely (all_null_omitted)",
+    "ensure_ascii": false,
+    "indent": 2,
+    "input_book_glob": "book-*.json",
+    "output_sort_keys": true,
+    "reference_text_path": "turnFlow.turns[*].e",
+    "trailing_newline": true,
+    "turn_text_path": "turnFlow.turns[*].alt.jowett.e"
+  },
+  "source_repo_path": "/Users/johnboyer/Developer/plato-reader/build/dist",
+  "source_store_path": "/Users/johnboyer/Developer/classical-philosophy-reader/sources/perseus-plato/plato-stephanus.clean.json",
+  "unmapped_works": [
+    "Alcibiades1",
+    "Alcibiades2",
+    "Clitophon",
+    "Critias",
+    "Epinomis",
+    "Hipparchus",
+    "Laws",
+    "Letters",
+    "Lovers",
+    "Menexenus",
+    "Minos",
+    "Parmenides",
+    "Republic",
+    "Statesman",
+    "Theages"
+  ],
+  "work_list": [
+    {
+      "all_null_omitted": 0,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 0,
+      "omitted_columns": 57,
+      "partial_omitted": 57,
+      "slug": "apology",
+      "work": "Apology"
+    },
+    {
+      "all_null_omitted": 0,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 0,
+      "omitted_columns": 91,
+      "partial_omitted": 91,
+      "slug": "charmides",
+      "work": "Charmides"
+    },
+    {
+      "all_null_omitted": 10,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 202,
+      "omitted_columns": 11,
+      "partial_omitted": 1,
+      "slug": "cratylus",
+      "work": "Cratylus"
+    },
+    {
+      "all_null_omitted": 6,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 29,
+      "omitted_columns": 6,
+      "partial_omitted": 0,
+      "slug": "crito",
+      "work": "Crito"
+    },
+    {
+      "all_null_omitted": 107,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 0,
+      "omitted_columns": 143,
+      "partial_omitted": 36,
+      "slug": "euthydemus",
+      "work": "Euthydemus"
+    },
+    {
+      "all_null_omitted": 1,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 63,
+      "omitted_columns": 1,
+      "partial_omitted": 0,
+      "slug": "euthyphro",
+      "work": "Euthyphro"
+    },
+    {
+      "all_null_omitted": 24,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 257,
+      "omitted_columns": 26,
+      "partial_omitted": 2,
+      "slug": "gorgias",
+      "work": "Gorgias"
+    },
+    {
+      "all_null_omitted": 0,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 0,
+      "omitted_columns": 102,
+      "partial_omitted": 102,
+      "slug": "hippias-major",
+      "work": "HippiasMajor"
+    },
+    {
+      "all_null_omitted": 2,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 0,
+      "omitted_columns": 50,
+      "partial_omitted": 48,
+      "slug": "hippias-minor",
+      "work": "HippiasMinor"
+    },
+    {
+      "all_null_omitted": 3,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 43,
+      "omitted_columns": 3,
+      "partial_omitted": 0,
+      "slug": "ion",
+      "work": "Ion"
+    },
+    {
+      "all_null_omitted": 9,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 74,
+      "omitted_columns": 10,
+      "partial_omitted": 1,
+      "slug": "laches",
+      "work": "Laches"
+    },
+    {
+      "all_null_omitted": 83,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 0,
+      "omitted_columns": 86,
+      "partial_omitted": 3,
+      "slug": "lysis",
+      "work": "Lysis"
+    },
+    {
+      "all_null_omitted": 3,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 128,
+      "omitted_columns": 5,
+      "partial_omitted": 2,
+      "slug": "meno",
+      "work": "Meno"
+    },
+    {
+      "all_null_omitted": 58,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 0,
+      "omitted_columns": 69,
+      "partial_omitted": 11,
+      "slug": "phaedo",
+      "work": "Phaedo"
+    },
+    {
+      "all_null_omitted": 21,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 133,
+      "omitted_columns": 23,
+      "partial_omitted": 2,
+      "slug": "phaedrus",
+      "work": "Phaedrus"
+    },
+    {
+      "all_null_omitted": 1,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 262,
+      "omitted_columns": 5,
+      "partial_omitted": 4,
+      "slug": "philebus",
+      "work": "Philebus"
+    },
+    {
+      "all_null_omitted": 113,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 0,
+      "omitted_columns": 131,
+      "partial_omitted": 18,
+      "slug": "protagoras",
+      "work": "Protagoras"
+    },
+    {
+      "all_null_omitted": 2,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 244,
+      "omitted_columns": 7,
+      "partial_omitted": 5,
+      "slug": "sophist",
+      "work": "Sophist"
+    },
+    {
+      "all_null_omitted": 51,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 0,
+      "omitted_columns": 54,
+      "partial_omitted": 3,
+      "slug": "symposium",
+      "work": "Symposium"
+    },
+    {
+      "all_null_omitted": 8,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 284,
+      "omitted_columns": 9,
+      "partial_omitted": 1,
+      "slug": "theaetetus",
+      "work": "Theaetetus"
+    },
+    {
+      "all_null_omitted": 72,
+      "book_files": [
+        "book-01.json"
+      ],
+      "covered_columns": 0,
+      "omitted_columns": 90,
+      "partial_omitted": 18,
+      "slug": "timaeus",
+      "work": "Timaeus"
+    }
+  ]
+}

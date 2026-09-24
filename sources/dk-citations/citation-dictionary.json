@@ -1,0 +1,4553 @@
+{
+  "meta": {
+    "purpose": "Deterministic expansion of DK source-citation heads into Hackett-style English/Latinized citations, and author/work resolution for Greek dash-continuation heads.",
+    "conventions": {
+      "author_names": "Latinized nominative unless commonly anglicized in English scholarship (John's ruling, 2026-07-24): Aristotle, Plutarch, Clement of Alexandria, Stobaeus; Aëtius, Simplicius unchanged.",
+      "work_titles": "Latin, rendered italic where title_italic=true (marked structurally, not with embedded markup). title_italic=false marks placeholder/descriptive DEFAULT titles that are not real work titles.",
+      "locus_templates": {
+        "bekker": "Aristotle & CAG commentators: book-letter + chapter + Bekker number (A 3. 984a 11).",
+        "stephanus": "Plato: Stephanus page + column (183 E, p. 76 C).",
+        "moralia": "Plutarch Moralia: chapter + Stephanus page (4 p. 1108 F).",
+        "vita": "Lives/biographies: chapter number (16).",
+        "book-chapter-section": "Roman book . arabic chapter . arabic section (I 7, 5).",
+        "book-para": "Roman book + arabic paragraph/section (II 6, VII 90).",
+        "book-page-col": "Roman book + page-number + column letter (V 220 B).",
+        "book-page": "Roman book + editor page 'p.' (I p. 61).",
+        "page-line": "editor page, line (+editor name) (164, 22; 65, 11 Friedl.).",
+        "book-page-line": "Roman book + page + line (II 180 Sudh.).",
+        "section": "bare arabic section/fragment number (11, 59).",
+        "book-section": "Roman book + arabic section, no page (VIII 19).",
+        "chapter-page": "chapter + editor page (c. 251 p. 284, 10 Wrob.).",
+        "opaque": "irregular/compound locus; render verbatim as printed."
+      },
+      "flags": {
+        "diels-doxographi": "head may carry '(D. NNN)' = Diels, Doxographi Graeci p. NNN; keep in parentheses, do not silently drop.",
+        "editor-page-bracket": "head may carry '[II 438, 9 St.]' etc. = editor page/line (Staehlin, Wachsmuth...); apparatus, preserve verbatim, do not expand.",
+        "cited-by-lemma": "no numeric locus; cited by headword (s.v.).",
+        "title-is-commentary": "title is a commentary 'in <Aristotelem/Platonem>'; locus is the commentary page, not the base text.",
+        "pseudo": "bracketed/spurious attribution ([ARISTOT.] -> pseudo-Aristotle).",
+        "ambiguous-abbrev": "abbrev shared by >1 author; disambiguate from work or head context.",
+        "edition-keyed / ms-shelfmark / scholia / anonymous / obscure / truncated-token": "see per-entry notes."
+      },
+      "multi_source_heads": "A head naming several witnesses (e.g. 'PLUT. adv. Col. 10 p. 1111 F. AËT. I 30, 1 (D. 326, 10)') is split at each new explicit author token and each source expanded independently, joined by semicolons in render."
+    },
+    "coverage": {
+      "total_parseable_heads": 1974,
+      "mapped_to_dictionary_author": 1331,
+      "dash_continuation_resolved_by_rules": 574,
+      "dash_misparse_tokens_resolved_by_rules": 28,
+      "unmappable_apparatus_artifacts": 41,
+      "named_work_occ": 1304,
+      "generic_or_opaque_work_occ": 27,
+      "pct_heads_covered_incl_dash": 97.9,
+      "pct_heads_covered_dictionary_only": 67.4
+    },
+    "dash_misparse_tokens": [
+      "Charmid.",
+      "Chron.",
+      "Democriti",
+      "Democritus",
+      "Euthyd.",
+      "Hipp",
+      "Hipp.",
+      "Ionium",
+      "Italiae",
+      "Lach.",
+      "Lex.",
+      "Meno",
+      "Nem.",
+      "Paris.",
+      "Phileb.",
+      "Qu.",
+      "Reip.",
+      "Sympos.",
+      "Tagenistae",
+      "Vatic.",
+      "Vesp."
+    ],
+    "unmappable_artifacts": [
+      "Arnim",
+      "[Alternate source (Plato, Sophist, and related witnesses)]",
+      "[PLG II 269 B., ALG I 78 D.]",
+      "[STOB. III 1, 27; s. B 187]",
+      "[Scholion]",
+      "[Stob. II 15, 33]",
+      "[Stob. II 15, 36]",
+      "[Stob. II 31, 71]",
+      "[Stob. II 31, 73]",
+      "[Stob. II 4, 12]",
+      "[Stob. III 1, 45]",
+      "[Stob. III 1, 95]",
+      "[Stob. III 10, 42]",
+      "[Stob. III 12, 13]",
+      "[Stob. III 13, 46]",
+      "[Stob. III 14, 8]",
+      "[Stob. III 29, 67]",
+      "[Stob. III 36, 24]",
+      "[Stob. III 37, 25]",
+      "[Stob. III 38, 46]",
+      "[Stob. III 38. 47]",
+      "[Stob. III 4, 81]",
+      "[Stob. III 4, 82]",
+      "[Stob. III 5, 23]",
+      "[Stob. III 9, 29]",
+      "[Stob. IV 2, 13]",
+      "[Stob. IV 23, 39]",
+      "[Stob. IV 29, 18]",
+      "[Stob. IV 31, 121]",
+      "[Stob. IV 34, 58]",
+      "[Stob. IV 4, 27]",
+      "[Stob. IV 44, 68]",
+      "[Stob. IV 44, 69]",
+      "[Stob. IV 46, 18]",
+      "[Thrasymachos]",
+      "[d. Rhamn., d. caed. Her. 27]",
+      "[fr. 4 P. Lang Bonn 1911 S. 53ff.]",
+      "[s. 82 A 7. 85 A 2]",
+      "[s. 84 A 20]",
+      "[s. II 254, 21. 255, 12. 256, 11]"
+    ],
+    "notes": "Entries keyed by normalized (NFC) author abbreviation. 'variants' lists exact census spellings folded into the key. '—' (dash) is NOT an author entry: it is resolved by the dash-continuation rules in the companion memo."
+  },
+  "authors": {
+    "AET": {
+      "canonical_author": "Aëtius",
+      "variants": [
+        "AËT.",
+        "AËt."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Placita",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Bare AËT. + Roman-book locus = Placita (Diels' reconstruction from ps.-Plut. + Stobaeus). '(D. NNN)' = Diels, Doxographi Graeci page."
+        },
+        "de plac.": {
+          "title": "Placita",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "'de placitis' = Placita."
+        }
+      },
+      "flags": [
+        "diels-doxographi"
+      ]
+    },
+    "DIOG_LAERT": {
+      "canonical_author": "Diogenes Laertius",
+      "variants": [
+        "DIOG.",
+        "Diog.",
+        "DIOGENES LAERTIUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Vitae Philosophorum",
+          "title_italic": true,
+          "locus_template": "book-para",
+          "notes": "Bare DIOG. + Roman-book locus = Vitae Philosophorum (bk in Roman, chapter/section in arabic). Distinct from DIOGENES of Oinoanda (fragments)."
+        }
+      },
+      "flags": []
+    },
+    "SIMPL": {
+      "canonical_author": "Simplicius",
+      "variants": [
+        "SIMPL.",
+        "SIMPLIC."
+      ],
+      "works": {
+        "Phys.": {
+          "title": "in Aristotelis Physica",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Diels CAG page,line; commentary title Latinized 'in Physica'."
+        },
+        "de caelo": {
+          "title": "in Aristotelis De Caelo",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Heiberg CAG page,line."
+        },
+        "de cael.": {
+          "title": "in Aristotelis De Caelo",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "de cael. p.": {
+          "title": "in Aristotelis De Caelo",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "de caelo p.": {
+          "title": "in Aristotelis De Caelo",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "DEFAULT": {
+          "title": "(commentary on Aristotle)",
+          "title_italic": false,
+          "locus_template": "page-line"
+        }
+      },
+      "flags": [
+        "title-is-commentary"
+      ]
+    },
+    "CLEM": {
+      "canonical_author": "Clement of Alexandria",
+      "variants": [
+        "CLEM."
+      ],
+      "works": {
+        "Strom.": {
+          "title": "Stromata",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Book (Roman) + chapter/section; '[II 438, 9 St.]' = Staehlin edition page/line (apparatus, preserved verbatim)."
+        },
+        "Str.": {
+          "title": "Stromata",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        },
+        "Protr.": {
+          "title": "Protrepticus",
+          "title_italic": true,
+          "locus_template": "section"
+        },
+        "Paed.": {
+          "title": "Paedagogus",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        },
+        "Paedag.": {
+          "title": "Paedagogus",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        },
+        "DEFAULT": {
+          "title": "Stromata",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Bare CLEM. AL. in census is Stromata."
+        }
+      },
+      "flags": [
+        "editor-page-bracket"
+      ]
+    },
+    "ATHEN": {
+      "canonical_author": "Athenaeus",
+      "variants": [
+        "ATHEN."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Deipnosophistae",
+          "title_italic": true,
+          "locus_template": "book-page-col",
+          "notes": "Roman book + Casaubon page-number + column letter (e.g. 'V 220 B')."
+        },
+        "epit.": {
+          "title": "Deipnosophistae (Epitome)",
+          "title_italic": true,
+          "locus_template": "book-page-col"
+        }
+      },
+      "flags": []
+    },
+    "STOB": {
+      "canonical_author": "Stobaeus",
+      "variants": [
+        "STOB.",
+        "STOBAEUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Anthologium",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Bare STOB. + Roman book = Anthologium (Eclogae bks I-II + Florilegium bks III-IV in Wachsmuth-Hense). '[vgl. ...]' = editorial cross-ref."
+        },
+        "Ecl.": {
+          "title": "Eclogae (Anthologii libri I-II)",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Wachsmuth page in brackets."
+        },
+        "Flor.": {
+          "title": "Florilegium (Anthologii libri III-IV)",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Hense."
+        }
+      },
+      "flags": []
+    },
+    "SEXT": {
+      "canonical_author": "Sextus Empiricus",
+      "variants": [
+        "SEXT.",
+        "SEXT. EMP.",
+        "SEXTUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Adversus Mathematicos",
+          "title_italic": true,
+          "locus_template": "book-para",
+          "notes": "Bare SEXT. + Roman book = Adversus Mathematicos (books VII-XI = adv. dogmaticos). All census bare heads are book VII (unambiguous: Pyrrh. Hyp. has only 3 books). Pyrrhoneae Hypotyposes cited only with explicit 'Pyrrh. hyp.'."
+        },
+        "adv. math.": {
+          "title": "Adversus Mathematicos",
+          "title_italic": true,
+          "locus_template": "book-para"
+        }
+      },
+      "flags": []
+    },
+    "CIC": {
+      "canonical_author": "Cicero",
+      "variants": [
+        "CIC.",
+        "CICERO"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Cicero)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Work named in head; loci are book+section, render as printed."
+        },
+        "de orat.": {
+          "title": "De Oratore",
+          "title_italic": true,
+          "locus_template": "book-para"
+        },
+        "de fin.": {
+          "title": "De Finibus",
+          "title_italic": true,
+          "locus_template": "book-para"
+        },
+        "Ac.": {
+          "title": "Academica",
+          "title_italic": true,
+          "locus_template": "book-para"
+        },
+        "Acad.": {
+          "title": "Academica",
+          "title_italic": true,
+          "locus_template": "book-para"
+        },
+        "Tusc.": {
+          "title": "Tusculanae Disputationes",
+          "title_italic": true,
+          "locus_template": "book-para"
+        },
+        "de div.": {
+          "title": "De Divinatione",
+          "title_italic": true,
+          "locus_template": "book-para"
+        },
+        "de divin.": {
+          "title": "De Divinatione",
+          "title_italic": true,
+          "locus_template": "book-para"
+        },
+        "de div. i": {
+          "title": "De Divinatione",
+          "title_italic": true,
+          "locus_template": "book-para"
+        },
+        "Brut.": {
+          "title": "Brutus",
+          "title_italic": true,
+          "locus_template": "section"
+        },
+        "Cato": {
+          "title": "Cato Maior de Senectute",
+          "title_italic": true,
+          "locus_template": "section"
+        },
+        "Epist.": {
+          "title": "Epistulae ad Familiares",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "Orat.": {
+          "title": "Orator",
+          "title_italic": true,
+          "locus_template": "section"
+        },
+        "de fato": {
+          "title": "De Fato",
+          "title_italic": true,
+          "locus_template": "book-para"
+        },
+        "de nat. deor.": {
+          "title": "De Natura Deorum",
+          "title_italic": true,
+          "locus_template": "book-para"
+        },
+        "ad Qu.": {
+          "title": "Epistulae ad Quintum Fratrem",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": []
+    },
+    "PROCL": {
+      "canonical_author": "Proclus",
+      "variants": [
+        "PROCL."
+      ],
+      "works": {
+        "in Eucl.": {
+          "title": "in Primum Euclidis Elementorum Librum",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Friedlein page,line."
+        },
+        "in Eucl. p.": {
+          "title": "in Primum Euclidis Elementorum Librum",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "in Tim. I": {
+          "title": "in Platonis Timaeum (vol. I)",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Diehl vol/page,line."
+        },
+        "in Tim. II": {
+          "title": "in Platonis Timaeum (vol. II)",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "in Tim. III": {
+          "title": "in Platonis Timaeum (vol. III)",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "in Parm. I p.": {
+          "title": "in Platonis Parmenidem",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Cousin col./page."
+        },
+        "in Parm. p.": {
+          "title": "in Platonis Parmenidem",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "in Rep. II": {
+          "title": "in Platonis Rem Publicam (vol. II)",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Kroll."
+        },
+        "in remp. II": {
+          "title": "in Platonis Rem Publicam (vol. II)",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "in Alc. I p.": {
+          "title": "in Platonis Alcibiadem I",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "in Crat.": {
+          "title": "in Platonis Cratylum",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Pasquali section/page."
+        },
+        "ad Eucl.": {
+          "title": "in Primum Euclidis Elementorum Librum",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "DEFAULT": {
+          "title": "(commentary of Proclus)",
+          "title_italic": false,
+          "locus_template": "page-line"
+        }
+      },
+      "flags": [
+        "title-is-commentary"
+      ]
+    },
+    "HIPPOL": {
+      "canonical_author": "Hippolytus",
+      "variants": [
+        "HIPPOL.",
+        "HIPPOLYT."
+      ],
+      "works": {
+        "Ref.": {
+          "title": "Refutatio Omnium Haeresium",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Also '(D. NNN, W. NNN)' = Diels DG / Wendland pages."
+        },
+        "Refut.": {
+          "title": "Refutatio Omnium Haeresium",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        },
+        "DEFAULT": {
+          "title": "Refutatio Omnium Haeresium",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Bare HIPPOL. + '(D. ..., W. ...)' = Refutatio."
+        }
+      },
+      "flags": [
+        "diels-doxographi"
+      ]
+    },
+    "HIPP_SHARED": {
+      "canonical_author": "Hippolytus / Hippocrates (shared abbrev.)",
+      "variants": [
+        "HIPP."
+      ],
+      "works": {
+        "Ref.": {
+          "title": "Refutatio Omnium Haeresium",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Author = Hippolytus."
+        },
+        "de nat. hom.": {
+          "title": "De Natura Hominis",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Author = Hippocrates (Hippocratic corpus)."
+        }
+      },
+      "flags": [
+        "ambiguous-abbrev",
+        "author-varies-by-work"
+      ]
+    },
+    "PHILOSTR": {
+      "canonical_author": "Philostratus",
+      "variants": [
+        "PHILOSTR.",
+        "PHILOSTRAT."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Philostratus)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "'V. Apoll.' = Vita Apollonii (book + chapter + Kayser page,line)."
+        },
+        "Ep.": {
+          "title": "Epistulae",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": []
+    },
+    "PORPHYR": {
+      "canonical_author": "Porphyry",
+      "variants": [
+        "PORPHYR.",
+        "PORPH."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Porphyry)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "'V. Pyth.' = Vita Pythagorae (section)."
+        },
+        "de abst.": {
+          "title": "De Abstinentia",
+          "title_italic": true,
+          "locus_template": "book-para"
+        },
+        "de antro nymph.": {
+          "title": "De Antro Nympharum",
+          "title_italic": true,
+          "locus_template": "section"
+        },
+        "Quaest. hom.": {
+          "title": "Quaestiones Homericae",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "zu": {
+          "title": "Quaestiones Homericae",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "'zu <Greek book-letter> <n> [...]' Homeric-Questions citation form (B102 'zu Δ 4 [...]', B103 'zu Ξ 200 [...]'); the Greek capitals are traditional Iliad book numerals (Δ=4, Ξ=14), not editorial Greek prose. The token-aligned matcher can't express 'zu' as a work marker that gets dropped from the locus (it's the only token identifying the work here, and it must stay in the printed locus too), so locus_includes_work keeps the whole matched span -- 'zu ...' -- verbatim as printed (pilot gap fix 2026-07-24, Grok gate defect 1).",
+          "locus_includes_work": true
+        },
+        "in Ptolem. Harm. p.": {
+          "title": "in Ptolemaei Harmonica",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "in Ptol.": {
+          "title": "in Ptolemaei Harmonica",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "de Styge a": {
+          "title": "De Styge",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "'ap. Stob.' = apud Stobaeum; secondary transmission."
+        }
+      },
+      "flags": []
+    },
+    "GALEN": {
+      "canonical_author": "Galen",
+      "variants": [
+        "GALEN.",
+        "GAL."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Galen)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Loci give Kühn volume/page '[XII 248 K.]' and/or CMG/Helmreich; render as printed."
+        },
+        "de elem.": {
+          "title": "De Elementis ex Hippocrate",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "de meth. med.": {
+          "title": "De Methodo Medendi",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "de plac. Hipp. et Plat.": {
+          "title": "De Placitis Hippocratis et Platonis",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "de simpl. med.": {
+          "title": "De Simplicium Medicamentorum Temperamentis",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "de simpl. medic.": {
+          "title": "De Simplicium Medicamentorum Temperamentis",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "de virt. physic.": {
+          "title": "De Naturalibus Facultatibus",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "de dign. puls.": {
+          "title": "De Dignoscendis Pulsibus",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "in Epid. III": {
+          "title": "in Hippocratis Epidemiarum librum III",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "in Epid. VI": {
+          "title": "in Hippocratis Epidemiarum librum VI",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "ad Hippocr.": {
+          "title": "in Hippocratis (Epidemias)",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "in Hipp. de hum.": {
+          "title": "in Hippocratis De Humoribus",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "in Hipp. nat. hom.": {
+          "title": "in Hippocratis De Natura Hominis",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "in Hip": {
+          "title": "in Hippocratis (opus)",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Truncated head 'in Hipp. ...'; work completed from printed line."
+        }
+      },
+      "flags": []
+    },
+    "AEL": {
+      "canonical_author": "Aelian",
+      "variants": [
+        "AEL.",
+        "AELIAN."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Aelian)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "'V. H.' = Varia Historia (book + chapter); 'N. H.'/'H. N.' = De Natura Animalium."
+        },
+        "H. N.": {
+          "title": "De Natura Animalium",
+          "title_italic": true,
+          "locus_template": "book-section"
+        },
+        "N. H.": {
+          "title": "De Natura Animalium",
+          "title_italic": true,
+          "locus_template": "book-section"
+        },
+        "Nat. an": {
+          "title": "De Natura Animalium",
+          "title_italic": true,
+          "locus_template": "book-section"
+        }
+      },
+      "flags": []
+    },
+    "SUID": {
+      "canonical_author": "Suda",
+      "variants": [
+        "SUID.",
+        "SUIDAS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Lexicon (Suda)",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Cited by lemma (s.v.); no numeric locus in bare heads."
+        }
+      },
+      "flags": [
+        "cited-by-lemma"
+      ]
+    },
+    "HARPOCR": {
+      "canonical_author": "Harpocration",
+      "variants": [
+        "HARPOCR.",
+        "HARPOCRAT."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Lexicon in Decem Oratores",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Cited by lemma (s.v.)."
+        }
+      },
+      "flags": [
+        "cited-by-lemma"
+      ]
+    },
+    "HESYCH": {
+      "canonical_author": "Hesychius",
+      "variants": [
+        "HESYCH."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Lexicon",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Cited by lemma (s.v.)."
+        }
+      },
+      "flags": [
+        "cited-by-lemma"
+      ]
+    },
+    "PHOT": {
+      "canonical_author": "Photius",
+      "variants": [
+        "PHOT.",
+        "PHOTIUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Lexicon",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Also Bibliotheca ('Bibl. cod. NNN') where the head names it."
+        }
+      },
+      "flags": [
+        "cited-by-lemma"
+      ]
+    },
+    "HEROD_GRAMM": {
+      "canonical_author": "Herodian (grammarian)",
+      "variants": [
+        "HERODIAN.",
+        "HEROD.",
+        "HERODIAN"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(grammatical work)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Aelius Herodianus, grammarian. Distinct from Herodotus (HERODOT.)."
+        }
+      },
+      "flags": [
+        "ambiguous-abbrev"
+      ]
+    },
+    "ARISTOT": {
+      "canonical_author": "Aristotle",
+      "variants": [
+        "ARISTOT.",
+        "ARIST.",
+        "ARISTOTELES"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(unspecified Aristotelian work)",
+          "title_italic": false,
+          "locus_template": "bekker",
+          "notes": "Bare ARISTOT. + Bekker locus; work named in printed head where present."
+        },
+        "Metaph.": {
+          "title": "Metaphysica",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "Phys.": {
+          "title": "Physica",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "Rhet.": {
+          "title": "Rhetorica",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "de caelo": {
+          "title": "De Caelo",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "de gen. et corr.": {
+          "title": "De Generatione et Corruptione",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "de anima": {
+          "title": "De Anima",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "Meteorol.": {
+          "title": "Meteorologica",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "de gen. anim.": {
+          "title": "De Generatione Animalium",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "Poet.": {
+          "title": "Poetica",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "Meteor.": {
+          "title": "Meteorologica",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "Soph. el.": {
+          "title": "De Sophisticis Elenchis",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "Eth. Nic.": {
+          "title": "Ethica Nicomachea",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "de gen. animal.": {
+          "title": "De Generatione Animalium",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "de gener. anim.": {
+          "title": "De Generatione Animalium",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "de partt. anim.": {
+          "title": "De Partibus Animalium",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "de resp.": {
+          "title": "De Respiratione",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "de sens.": {
+          "title": "De Sensu",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "de sensu": {
+          "title": "De Sensu",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "Pol.": {
+          "title": "Politica",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "Polit.": {
+          "title": "Politica",
+          "title_italic": true,
+          "locus_template": "bekker",
+          "notes": "R3 dash-continuation work-override token (census: '—Polit. A 13. 1260a 27')."
+        },
+        "Top.": {
+          "title": "Topica",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "de gener. et corr.": {
+          "title": "De Generatione et Corruptione",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "de part. anim.": {
+          "title": "De Partibus Animalium",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "de partt. animal.": {
+          "title": "De Partibus Animalium",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "de respir.": {
+          "title": "De Respiratione",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "Metaphys.": {
+          "title": "Metaphysica",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "Eth.": {
+          "title": "Ethica",
+          "title_italic": true,
+          "locus_template": "bekker"
+        }
+      },
+      "flags": []
+    },
+    "PLATO": {
+      "canonical_author": "Plato",
+      "variants": [
+        "PLATO",
+        "PLAT."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(unspecified Platonic dialogue)",
+          "title_italic": false,
+          "locus_template": "stephanus",
+          "notes": "Work named in head; Stephanus page follows."
+        },
+        "Theaet.": {
+          "title": "Theaetetus",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Meno": {
+          "title": "Meno",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Apol.": {
+          "title": "Apologia",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Cratyl.": {
+          "title": "Cratylus",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Crat.": {
+          "title": "Cratylus",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Phaedo": {
+          "title": "Phaedo",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Phaedr.": {
+          "title": "Phaedrus",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "PHAEDR.": {
+          "title": "Phaedrus",
+          "title_italic": true,
+          "locus_template": "stephanus",
+          "notes": "R3 dash-continuation work-override token (census: '—PHAEDR. 261 D')."
+        },
+        "Protag.": {
+          "title": "Protagoras",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Prot.": {
+          "title": "Protagoras",
+          "title_italic": true,
+          "locus_template": "stephanus",
+          "notes": "R3 dash-continuation work-override token (census: '—Prot. 333 D')."
+        },
+        "Soph.": {
+          "title": "Sophista",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Sophist.": {
+          "title": "Sophista",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Gorg.": {
+          "title": "Gorgias",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Euthyd.": {
+          "title": "Euthydemus",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Charm.": {
+          "title": "Charmides",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Leg.": {
+          "title": "Leges",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Parm.": {
+          "title": "Parmenides",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Symp.": {
+          "title": "Symposium",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Tim.": {
+          "title": "Timaeus",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Hip": {
+          "title": "Hippias (Maior/Minor)",
+          "title_italic": true,
+          "locus_template": "stephanus",
+          "notes": "Truncated census artifact; kept for census-key stability. Real printed tokens carry the full keys below."
+        },
+        "Hipp. maior": {
+          "title": "Hippias Maior",
+          "title_italic": true,
+          "locus_template": "stephanus",
+          "notes": "Printed head 'PLATO Hipp. maior 289 A' (Heraclitus B82) — pilot gap fix 2026-07-24."
+        },
+        "Hipp. mai.": {
+          "title": "Hippias Maior",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Hipp. minor": {
+          "title": "Hippias Minor",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Hipp. min.": {
+          "title": "Hippias Minor",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "de rep.": {
+          "title": "Respublica",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        }
+      },
+      "flags": []
+    },
+    "PLUT": {
+      "canonical_author": "Plutarch",
+      "variants": [
+        "PLUT.",
+        "PLUTARCH",
+        "PLUTARCH."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(unspecified work of Plutarch)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Work named in printed head."
+        },
+        "Quaest. conv.": {
+          "title": "Quaestiones Convivales",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "Quaest. conviv.": {
+          "title": "Quaestiones Convivales",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "Quaest. conv..": {
+          "title": "Quaestiones Convivales",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "adv. Colot.": {
+          "title": "Adversus Colotem",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "adv. Col.": {
+          "title": "Adversus Colotem",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "Pericl.": {
+          "title": "Pericles",
+          "title_italic": true,
+          "locus_template": "vita"
+        },
+        "Quaest. nat.": {
+          "title": "Quaestiones Naturales",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de esu carn.": {
+          "title": "De Esu Carnium",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "Cim.": {
+          "title": "Cimon",
+          "title_italic": true,
+          "locus_template": "vita"
+        },
+        "de Pyth. or.": {
+          "title": "De Pythiae Oraculis",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de curios.": {
+          "title": "De Curiositate",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de fac. in orb. lun.": {
+          "title": "De Facie in Orbe Lunae",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de fac. lun.": {
+          "title": "De Facie in Orbe Lunae",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de fort.": {
+          "title": "De Fortuna",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de prim. frig.": {
+          "title": "De Primo Frigido",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "Alcib.": {
+          "title": "Alcibiades",
+          "title_italic": true,
+          "locus_template": "vita"
+        },
+        "Amat.": {
+          "title": "Amatorius",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "Anton.": {
+          "title": "Antonius",
+          "title_italic": true,
+          "locus_template": "vita"
+        },
+        "Camill.": {
+          "title": "Camillus",
+          "title_italic": true,
+          "locus_template": "vita"
+        },
+        "Coriol.": {
+          "title": "Coriolanus",
+          "title_italic": true,
+          "locus_template": "vita"
+        },
+        "Lyc.": {
+          "title": "Lycurgus",
+          "title_italic": true,
+          "locus_template": "vita"
+        },
+        "Lys.": {
+          "title": "Lysander",
+          "title_italic": true,
+          "locus_template": "vita"
+        },
+        "Nic.": {
+          "title": "Nicias",
+          "title_italic": true,
+          "locus_template": "vita"
+        },
+        "Num.": {
+          "title": "Numa",
+          "title_italic": true,
+          "locus_template": "vita"
+        },
+        "Quaest. Platon.": {
+          "title": "Quaestiones Platonicae",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "Quaest. phys.": {
+          "title": "Quaestiones Naturales",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "'Quaest. phys.' = Quaestiones Naturales."
+        },
+        "Sympos.": {
+          "title": "Quaestiones Convivales",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "'Sympos.' = Symposiaca / Quaestiones Convivales."
+        },
+        "c. princip. philos. esse diss.": {
+          "title": "Maxime cum principibus philosopho esse disserendum",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Diels short title 'contra principem philosophum esse disserentem'; census locus (p. 777 c) falls in Stephanus 776A-779C, i.e. this work, not Ad Principem Ineruditum (779D-782F)."
+        },
+        "de amic. mult.": {
+          "title": "De Amicorum Multitudine",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de amic. multit.": {
+          "title": "De Amicorum Multitudine",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de coh. ira": {
+          "title": "De Cohibenda Ira",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de def. or.": {
+          "title": "De Defectu Oraculorum",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de defectu orac.": {
+          "title": "De Defectu Oraculorum",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de exil.": {
+          "title": "De Exilio",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de fac. in orbe lun.": {
+          "title": "De Facie in Orbe Lunae",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de garr.": {
+          "title": "De Garrulitate",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de puer. ed.": {
+          "title": "De Liberis Educandis",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de sanit.": {
+          "title": "De Tuenda Sanitate Praecepta",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de tranq. an.": {
+          "title": "De Tranquillitate Animi",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de tranqu. an.": {
+          "title": "De Tranquillitate Animi",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de virt. mor.": {
+          "title": "De Virtute Morali",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de vit. pud.": {
+          "title": "De Vitioso Pudore",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de E": {
+          "title": "De E apud Delphos",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de superst.": {
+          "title": "De Superstitione",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de adul. et am.": {
+          "title": "De Adulatore et Amico",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de amore prol.": {
+          "title": "De Amore Prolis",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de aud.": {
+          "title": "De Recta Ratione Audiendi",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de audiendo": {
+          "title": "De Recta Ratione Audiendi",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de commun. not.": {
+          "title": "De Communibus Notitiis adversus Stoicos",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de commun. notit.": {
+          "title": "De Communibus Notitiis adversus Stoicos",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de lat. viv.": {
+          "title": "De Latenter Vivendo",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de mul. virt. p.": {
+          "title": "De Mulierum Virtutibus",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de music.": {
+          "title": "De Musica",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de prof. in virt.": {
+          "title": "De Profectibus in Virtute",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de sanit. praec.": {
+          "title": "De Tuenda Sanitate Praecepta",
+          "title_italic": true,
+          "locus_template": "moralia"
+        },
+        "de sollert. anim.": {
+          "title": "De Sollertia Animalium",
+          "title_italic": true,
+          "locus_template": "moralia"
+        }
+      },
+      "flags": [
+        "lives-vs-moralia"
+      ]
+    },
+    "THEOPHR": {
+      "canonical_author": "Theophrastus",
+      "variants": [
+        "THEOPHR.",
+        "THEOPHRAST."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Theophrastus)",
+          "title_italic": false,
+          "locus_template": "opaque"
+        },
+        "de sens.": {
+          "title": "De Sensibus",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "'(D. NNN)' = Diels DG page (Theophr. is a main doxographic source)."
+        },
+        "de sensu": {
+          "title": "De Sensibus",
+          "title_italic": true,
+          "locus_template": "section"
+        },
+        "de caus. pl.": {
+          "title": "De Causis Plantarum",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        },
+        "de caus. plant.": {
+          "title": "De Causis Plantarum",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        },
+        "H. plant.": {
+          "title": "Historia Plantarum",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        },
+        "Metaphys.": {
+          "title": "Metaphysica",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "de igne": {
+          "title": "De Igne",
+          "title_italic": true,
+          "locus_template": "section"
+        }
+      },
+      "flags": [
+        "diels-doxographi"
+      ]
+    },
+    "ALEX": {
+      "canonical_author": "Alexander of Aphrodisias",
+      "variants": [
+        "ALEX."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(commentary of Alexander)",
+          "title_italic": false,
+          "locus_template": "page-line"
+        },
+        "Metaph.": {
+          "title": "in Aristotelis Metaphysica",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "in Metaphys. A": {
+          "title": "in Aristotelis Metaphysica",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "de mixt.": {
+          "title": "De Mixtione",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Bruns Suppl. Arist."
+        },
+        "Quaest. II": {
+          "title": "Quaestiones (lib. II)",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Bruns."
+        }
+      },
+      "flags": [
+        "title-is-commentary"
+      ]
+    },
+    "PHILOP": {
+      "canonical_author": "John Philoponus",
+      "variants": [
+        "PHILOP.",
+        "PHILOPON."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(commentary of Philoponus)",
+          "title_italic": false,
+          "locus_template": "page-line"
+        },
+        "de anima": {
+          "title": "in Aristotelis De Anima",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Hayduck CAG."
+        },
+        "de anima p.": {
+          "title": "in Aristotelis De Anima",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "de gen. et corr.": {
+          "title": "in Aristotelis De Generatione et Corruptione",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Vitelli."
+        }
+      },
+      "flags": [
+        "title-is-commentary"
+      ]
+    },
+    "THEMIST": {
+      "canonical_author": "Themistius",
+      "variants": [
+        "THEMIST."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Themistius)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "'Or.' = Orationes (oration + page)."
+        },
+        "Or.": {
+          "title": "Orationes",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": []
+    },
+    "OLYMPIOD": {
+      "canonical_author": "Olympiodorus",
+      "variants": [
+        "OLYMPIOD.",
+        "OLYMP.",
+        "OLYMPIODOR."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(commentary of Olympiodorus)",
+          "title_italic": false,
+          "locus_template": "page-line"
+        },
+        "in Meteor.": {
+          "title": "in Aristotelis Meteora",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "in Plat. Phileb.": {
+          "title": "in Platonis Philebum",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "de arte sacra lapidis philosophorum c.": {
+          "title": "De Arte Sacra",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": [
+        "title-is-commentary"
+      ]
+    },
+    "AMMON": {
+      "canonical_author": "Ammonius",
+      "variants": [
+        "AMMON."
+      ],
+      "works": {
+        "de interpr.": {
+          "title": "in Aristotelis De Interpretatione",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Busse CAG."
+        },
+        "de interpr. p.": {
+          "title": "in Aristotelis De Interpretatione",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "DEFAULT": {
+          "title": "(commentary of Ammonius)",
+          "title_italic": false,
+          "locus_template": "page-line"
+        }
+      },
+      "flags": [
+        "title-is-commentary"
+      ]
+    },
+    "EUDEM": {
+      "canonical_author": "Eudemus of Rhodes",
+      "variants": [
+        "EUDEM."
+      ],
+      "works": {
+        "Eth.": {
+          "title": "Ethica (Eudemia)",
+          "title_italic": true,
+          "locus_template": "bekker",
+          "notes": "Eudemian Ethics traditionally transmitted in the Aristotelian corpus."
+        },
+        "Phys.": {
+          "title": "Physica (fragmenta)",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Fr. numbers; witness usually Simplicius."
+        }
+      },
+      "flags": []
+    },
+    "DAVID": {
+      "canonical_author": "David (Elias)",
+      "variants": [
+        "DAVID"
+      ],
+      "works": {
+        "Prol.": {
+          "title": "Prolegomena Philosophiae",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Busse CAG."
+        }
+      },
+      "flags": []
+    },
+    "IAMBL": {
+      "canonical_author": "Iamblichus",
+      "variants": [
+        "IAMBL.",
+        "IAMBLICH.",
+        "IAMBLICHUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Iamblichus)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "'V. P.'/'V. Pyth.' = De Vita Pythagorica (section)."
+        },
+        "de myst.": {
+          "title": "De Mysteriis",
+          "title_italic": true,
+          "locus_template": "book-para"
+        },
+        "in Nicom. p.": {
+          "title": "in Nicomachi Arithmeticam",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "in Nic. p.": {
+          "title": "in Nicomachi Arithmeticam",
+          "title_italic": true,
+          "locus_template": "page-line"
+        }
+      },
+      "flags": []
+    },
+    "PLOTIN": {
+      "canonical_author": "Plotinus",
+      "variants": [
+        "PLOTIN."
+      ],
+      "works": {
+        "Enn.": {
+          "title": "Enneades",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Ennead + treatise + chapter."
+        }
+      },
+      "flags": []
+    },
+    "NUMEN": {
+      "canonical_author": "Numenius",
+      "variants": [
+        "NUMEN."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Fragmenta",
+          "title_italic": false,
+          "locus_template": "section",
+          "notes": "Cited by fragment number + editor."
+        }
+      },
+      "flags": []
+    },
+    "PSELL": {
+      "canonical_author": "Michael Psellus",
+      "variants": [
+        "PSELL."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Psellus)",
+          "title_italic": false,
+          "locus_template": "opaque"
+        },
+        "de lap.": {
+          "title": "De Lapidum Virtutibus",
+          "title_italic": true,
+          "locus_template": "section"
+        }
+      },
+      "flags": []
+    },
+    "HIEROCL": {
+      "canonical_author": "Hierocles",
+      "variants": [
+        "HIEROCL."
+      ],
+      "works": {
+        "ad c.": {
+          "title": "in Aureum Carmen (Commentarius)",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "'ad c. aur.' = in Aurea Carmina Pythagorae."
+        }
+      },
+      "flags": []
+    },
+    "HERMIAS": {
+      "canonical_author": "Hermias (Irrisio)",
+      "variants": [
+        "HERM.",
+        "HERMIAS"
+      ],
+      "works": {
+        "Irris.": {
+          "title": "Irrisio Gentilium Philosophorum",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "'(D. NNN)' = Diels DG page."
+        }
+      },
+      "flags": [
+        "diels-doxographi"
+      ]
+    },
+    "SYNCELL": {
+      "canonical_author": "George Syncellus",
+      "variants": [
+        "SYNCELL."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Ecloga Chronographica",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": []
+    },
+    "HISDOSUS": {
+      "canonical_author": "Hisdosus Scholasticus",
+      "variants": [
+        "HISDOSUS",
+        "HISDOSUS Scholasticus"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "in Chalcidii Timaeum (glossa)",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "ad Chalcid. Plat. Tim.": {
+          "title": "in Chalcidii Timaeum (glossa)",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Full printed work-reference span (B67a); author variant extended to 'HISDOSUS Scholasticus' so this frame isn't left dangling at the front of the locus (pilot gap fix 2026-07-24, Grok gate defect 8)."
+        }
+      },
+      "flags": [
+        "obscure"
+      ]
+    },
+    "PSEUDORIB": {
+      "canonical_author": "pseudo-Oribasius",
+      "variants": [
+        "PSEUDORIBASIUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "in Aphorismos Hippocratis",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": [
+        "obscure"
+      ]
+    },
+    "EUSEB": {
+      "canonical_author": "Eusebius",
+      "variants": [
+        "EUSEB.",
+        "EUS."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Eusebius)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "'P. E.' = Praeparatio Evangelica (book+chapter+section); 'Chron.' = Chronica."
+        },
+        "Chron.": {
+          "title": "Chronica",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": []
+    },
+    "EPIPHAN": {
+      "canonical_author": "Epiphanius",
+      "variants": [
+        "EPIPHAN."
+      ],
+      "works": {
+        "adv. haer.": {
+          "title": "Adversus Haereses (Panarion)",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "'(D. NNN)' = Diels DG page."
+        }
+      },
+      "flags": [
+        "diels-doxographi"
+      ]
+    },
+    "THEODORET": {
+      "canonical_author": "Theodoret",
+      "variants": [
+        "THEODORET."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Graecarum Affectionum Curatio",
+          "title_italic": true,
+          "locus_template": "book-section",
+          "notes": "'aus Aëtios (D. NNN)' = drawn from Aëtius, Diels DG page."
+        }
+      },
+      "flags": [
+        "diels-doxographi"
+      ]
+    },
+    "TERTULL": {
+      "canonical_author": "Tertullian",
+      "variants": [
+        "TERTULL.",
+        "TERT."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Tertullian)",
+          "title_italic": false,
+          "locus_template": "opaque"
+        },
+        "Apolog.": {
+          "title": "Apologeticum",
+          "title_italic": true,
+          "locus_template": "section"
+        },
+        "Apologetic.": {
+          "title": "Apologeticum",
+          "title_italic": true,
+          "locus_template": "section"
+        },
+        "de anima": {
+          "title": "De Anima",
+          "title_italic": true,
+          "locus_template": "section"
+        },
+        "de anim.": {
+          "title": "De Anima",
+          "title_italic": true,
+          "locus_template": "section"
+        },
+        "de anima c.": {
+          "title": "De Anima",
+          "title_italic": true,
+          "locus_template": "section"
+        }
+      },
+      "flags": []
+    },
+    "LACTANT": {
+      "canonical_author": "Lactantius",
+      "variants": [
+        "LACTANT."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Divinae Institutiones",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "'Inst. div.' = Divinae Institutiones."
+        }
+      },
+      "flags": []
+    },
+    "AUGUSTIN": {
+      "canonical_author": "Augustine",
+      "variants": [
+        "AUGUSTIN."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "De Civitate Dei",
+          "title_italic": true,
+          "locus_template": "book-para",
+          "notes": "'C. D.' = De Civitate Dei."
+        }
+      },
+      "flags": []
+    },
+    "IRENAEUS": {
+      "canonical_author": "Irenaeus",
+      "variants": [
+        "IRENAEUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Adversus Haereses",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "'(D. NNN)' = Diels DG page."
+        }
+      },
+      "flags": [
+        "diels-doxographi"
+      ]
+    },
+    "ATHANASIUS": {
+      "canonical_author": "Athanasius (rhetor)",
+      "variants": [
+        "ATHANASIUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(Prolegomena to Hermogenes)",
+          "title_italic": false,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": [
+        "obscure"
+      ]
+    },
+    "ORIG": {
+      "canonical_author": "Origen",
+      "variants": [
+        "ORIG."
+      ],
+      "works": {
+        "c. Cels. IV": {
+          "title": "Contra Celsum (lib. IV)",
+          "title_italic": true,
+          "locus_template": "book-para"
+        },
+        "c. Cels. VI": {
+          "title": "Contra Celsum (lib. VI)",
+          "title_italic": true,
+          "locus_template": "book-para"
+        },
+        "c. Cels.": {
+          "title": "Contra Celsum",
+          "title_italic": true,
+          "locus_template": "book-para",
+          "notes": "Bare 'c. Cels.' (no book number, e.g. B5 'ORIG. c. CELS. VII 62') -- matching it (case-insensitively, Grok gate defect 4) keeps it out of the locus."
+        },
+        "DEFAULT": {
+          "title": "Contra Celsum",
+          "title_italic": true,
+          "locus_template": "book-para",
+          "notes": "'c. Cels.' = Contra Celsum."
+        }
+      },
+      "flags": []
+    },
+    "TATIAN": {
+      "canonical_author": "Tatian",
+      "variants": [
+        "TATIAN."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Oratio ad Graecos",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": []
+    },
+    "ATHENAG": {
+      "canonical_author": "Athenagoras",
+      "variants": [
+        "ATHENAG."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Legatio pro Christianis",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": []
+    },
+    "CYRILL": {
+      "canonical_author": "Cyril of Alexandria",
+      "variants": [
+        "CYRILL."
+      ],
+      "works": {
+        "c. Jul. I p.": {
+          "title": "Contra Iulianum (lib. I)",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": []
+    },
+    "PLIN": {
+      "canonical_author": "Pliny the Elder",
+      "variants": [
+        "PLIN.",
+        "PLINIUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Naturalis Historia",
+          "title_italic": true,
+          "locus_template": "book-para",
+          "notes": "'N. H.'/'N. HIST.' = Naturalis Historia (book + section)."
+        },
+        "N. H.": {
+          "title": "Naturalis Historia",
+          "title_italic": true,
+          "locus_template": "book-para"
+        }
+      },
+      "flags": []
+    },
+    "LUCRET": {
+      "canonical_author": "Lucretius",
+      "variants": [
+        "LUCRET.",
+        "LUCR."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "De Rerum Natura",
+          "title_italic": true,
+          "locus_template": "book-section",
+          "notes": "Book + line."
+        }
+      },
+      "flags": []
+    },
+    "SENECA": {
+      "canonical_author": "Seneca",
+      "variants": [
+        "SENEC.",
+        "SENECA",
+        "SEN."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Seneca)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "'Nat. quaest.'/'Nat. qu.' = Naturales Quaestiones; 'Ep./Epist.' = Epistulae Morales."
+        },
+        "Controv.": {
+          "title": "Controversiae",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "This is Seneca the Elder."
+        },
+        "Ep.": {
+          "title": "Epistulae Morales",
+          "title_italic": true,
+          "locus_template": "section"
+        },
+        "Epist.": {
+          "title": "Epistulae Morales",
+          "title_italic": true,
+          "locus_template": "section"
+        }
+      },
+      "flags": [
+        "elder-vs-younger"
+      ]
+    },
+    "CENSOR": {
+      "canonical_author": "Censorinus",
+      "variants": [
+        "CENSOR.",
+        "CENSORIN."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "De Die Natali",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Chapter + section; '(D. NNN)' = Diels DG page."
+        }
+      },
+      "flags": [
+        "diels-doxographi"
+      ]
+    },
+    "COLUM": {
+      "canonical_author": "Columella",
+      "variants": [
+        "COLUM.",
+        "COLUMELLA"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "De Re Rustica",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        }
+      },
+      "flags": []
+    },
+    "VITRUV": {
+      "canonical_author": "Vitruvius",
+      "variants": [
+        "VITRUV.",
+        "VITR."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "De Architectura",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        }
+      },
+      "flags": []
+    },
+    "GELL": {
+      "canonical_author": "Aulus Gellius",
+      "variants": [
+        "GELL.",
+        "GELLIUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Noctes Atticae",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        }
+      },
+      "flags": []
+    },
+    "VAL_MAX": {
+      "canonical_author": "Valerius Maximus",
+      "variants": [
+        "VAL. MAX."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Facta et Dicta Memorabilia",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        }
+      },
+      "flags": []
+    },
+    "MACROB": {
+      "canonical_author": "Macrobius",
+      "variants": [
+        "MACROB."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Macrobius)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "'S. Sc.'/'in S. Scip.' = Commentarii in Somnium Scipionis."
+        },
+        "in S. Scip. I": {
+          "title": "Commentarii in Somnium Scipionis (lib. I)",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        }
+      },
+      "flags": []
+    },
+    "AMMIAN": {
+      "canonical_author": "Ammianus Marcellinus",
+      "variants": [
+        "AMMIAN.",
+        "AMMIAN. MARCELL."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Res Gestae",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        }
+      },
+      "flags": []
+    },
+    "APUL": {
+      "canonical_author": "Apuleius",
+      "variants": [
+        "APUL."
+      ],
+      "works": {
+        "Florida": {
+          "title": "Florida",
+          "title_italic": true,
+          "locus_template": "section"
+        }
+      },
+      "flags": []
+    },
+    "VARRO": {
+      "canonical_author": "Varro",
+      "variants": [
+        "VARRO"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Varro)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "'Sat.' = Saturae Menippeae."
+        }
+      },
+      "flags": [
+        "obscure"
+      ]
+    },
+    "QUINTIL": {
+      "canonical_author": "Quintilian",
+      "variants": [
+        "QUINTIL.",
+        "QUINT."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Institutio Oratoria",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "'Inst.' = Institutio Oratoria."
+        },
+        "Inst.": {
+          "title": "Institutio Oratoria",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        }
+      },
+      "flags": []
+    },
+    "PRISC": {
+      "canonical_author": "Priscian",
+      "variants": [
+        "PRISC."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Institutiones Grammaticae",
+          "title_italic": true,
+          "locus_template": "book-para"
+        }
+      },
+      "flags": []
+    },
+    "CHALCID": {
+      "canonical_author": "Calcidius",
+      "variants": [
+        "CHALCID."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "in Platonis Timaeum",
+          "title_italic": true,
+          "locus_template": "chapter-page"
+        }
+      },
+      "flags": [
+        "title-is-commentary"
+      ]
+    },
+    "ALBERT": {
+      "canonical_author": "Albertus Magnus",
+      "variants": [
+        "ALBERT. Magn.",
+        "ALBERTUS M.",
+        "ALBERTUS MAGNUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Albertus Magnus)",
+          "title_italic": false,
+          "locus_template": "opaque"
+        },
+        "de lapid.": {
+          "title": "De Mineralibus",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Jammy edition ref in brackets."
+        },
+        "de veget.": {
+          "title": "De Vegetabilibus",
+          "title_italic": true,
+          "locus_template": "book-para"
+        },
+        "Ethica": {
+          "title": "Ethica",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        }
+      },
+      "flags": [
+        "medieval"
+      ]
+    },
+    "MALL": {
+      "canonical_author": "Mallius Theodorus",
+      "variants": [
+        "MALL.",
+        "MALLIUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "De Metris",
+          "title_italic": true,
+          "locus_template": "book-page-line",
+          "notes": "Keil Gramm. Lat."
+        }
+      },
+      "flags": [
+        "obscure"
+      ]
+    },
+    "STRABO": {
+      "canonical_author": "Strabo",
+      "variants": [
+        "STRABO",
+        "STRAB."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Geographica",
+          "title_italic": true,
+          "locus_template": "book-page",
+          "notes": "Roman book + Casaubon page ('p.')."
+        }
+      },
+      "flags": []
+    },
+    "DIOD": {
+      "canonical_author": "Diodorus Siculus",
+      "variants": [
+        "DIOD.",
+        "DIODOR."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Bibliotheca Historica",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        }
+      },
+      "flags": []
+    },
+    "HERODOT": {
+      "canonical_author": "Herodotus",
+      "variants": [
+        "HERODOT."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Historiae",
+          "title_italic": true,
+          "locus_template": "book-section",
+          "notes": "Book + chapter. NB distinct from Herodian(us)."
+        }
+      },
+      "flags": []
+    },
+    "POLYB": {
+      "canonical_author": "Polybius",
+      "variants": [
+        "POLYB."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Historiae",
+          "title_italic": true,
+          "locus_template": "book-section"
+        }
+      },
+      "flags": []
+    },
+    "PAUS": {
+      "canonical_author": "Pausanias",
+      "variants": [
+        "PAUS."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Graeciae Descriptio",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        }
+      },
+      "flags": []
+    },
+    "MARM_PAR": {
+      "canonical_author": "Marmor Parium",
+      "variants": [
+        "MARM. PAR."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Marmor Parium",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Epoch number; FGrHist 239."
+        }
+      },
+      "flags": []
+    },
+    "MARCELL": {
+      "canonical_author": "Marcellinus",
+      "variants": [
+        "MARCELL."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Vita Thucydidis",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "'V. Thuc.' = Vita Thucydidis."
+        }
+      },
+      "flags": []
+    },
+    "ISOCR": {
+      "canonical_author": "Isocrates",
+      "variants": [
+        "ISOCR."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(oration of Isocrates)",
+          "title_italic": false,
+          "locus_template": "section"
+        },
+        "Bus.": {
+          "title": "Busiris",
+          "title_italic": true,
+          "locus_template": "section"
+        }
+      },
+      "flags": []
+    },
+    "ANDOC": {
+      "canonical_author": "Andocides",
+      "variants": [
+        "ANDOC."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(oration of Andocides)",
+          "title_italic": false,
+          "locus_template": "book-section"
+        }
+      },
+      "flags": []
+    },
+    "LYCURG": {
+      "canonical_author": "Lycurgus",
+      "variants": [
+        "LYCURG."
+      ],
+      "works": {
+        "Leocr.": {
+          "title": "in Leocratem",
+          "title_italic": true,
+          "locus_template": "section"
+        }
+      },
+      "flags": []
+    },
+    "ARISTOPH": {
+      "canonical_author": "Aristophanes",
+      "variants": [
+        "ARISTOPH."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(comedy of Aristophanes)",
+          "title_italic": false,
+          "locus_template": "section"
+        },
+        "Aves": {
+          "title": "Aves",
+          "title_italic": true,
+          "locus_template": "section"
+        },
+        "Nub.": {
+          "title": "Nubes",
+          "title_italic": true,
+          "locus_template": "section"
+        }
+      },
+      "flags": []
+    },
+    "MENANDER": {
+      "canonical_author": "Menander (rhetor)",
+      "variants": [
+        "MENANDER"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(rhetorical treatise)",
+          "title_italic": false,
+          "locus_template": "book-chapter-section",
+          "notes": "Menander Rhetor, Peri epideiktikon."
+        }
+      },
+      "flags": [
+        "ambiguous-abbrev"
+      ]
+    },
+    "XENOPH": {
+      "canonical_author": "Xenophon",
+      "variants": [
+        "XENOPH.",
+        "XEN."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Xenophon)",
+          "title_italic": false,
+          "locus_template": "opaque"
+        },
+        "Mem.": {
+          "title": "Memorabilia",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        },
+        "Memor.": {
+          "title": "Memorabilia",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        },
+        "Memorab.": {
+          "title": "Memorabilia",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        },
+        "Symp.": {
+          "title": "Symposium",
+          "title_italic": true,
+          "locus_template": "book-section"
+        },
+        "An.": {
+          "title": "Anabasis",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        },
+        "Hell.": {
+          "title": "Hellenica",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        }
+      },
+      "flags": []
+    },
+    "POLL": {
+      "canonical_author": "Julius Pollux",
+      "variants": [
+        "POLL.",
+        "POLLUX"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Onomasticon",
+          "title_italic": true,
+          "locus_template": "book-section"
+        }
+      },
+      "flags": []
+    },
+    "MOERIS": {
+      "canonical_author": "Moeris",
+      "variants": [
+        "MOERIS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Lexicon Atticum",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Bekker page."
+        }
+      },
+      "flags": []
+    },
+    "PHRYNICH": {
+      "canonical_author": "Phrynichus",
+      "variants": [
+        "PHRYNICH."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Praeparatio Sophistica",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": []
+    },
+    "EROTIAN": {
+      "canonical_author": "Erotianus",
+      "variants": [
+        "EROTIAN."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Vocum Hippocraticarum Collectio",
+          "title_italic": true,
+          "locus_template": "page-line"
+        }
+      },
+      "flags": []
+    },
+    "HERMOG": {
+      "canonical_author": "Hermogenes",
+      "variants": [
+        "HERMOG.",
+        "HERMOGENES"
+      ],
+      "works": {
+        "de id.": {
+          "title": "De Ideis",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "de ideis": {
+          "title": "De Ideis",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": []
+    },
+    "SOPAT": {
+      "canonical_author": "Sopater",
+      "variants": [
+        "SOPAT."
+      ],
+      "works": {
+        "Rhet.": {
+          "title": "(Prolegomena in Aristidem / Rhetorica)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Walz Rhet. Gr."
+        }
+      },
+      "flags": [
+        "obscure"
+      ]
+    },
+    "ARISTID": {
+      "canonical_author": "Aelius Aristides",
+      "variants": [
+        "ARISTID."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Ars Rhetorica",
+          "title_italic": true,
+          "locus_template": "book-section"
+        }
+      },
+      "flags": []
+    },
+    "LIBAN": {
+      "canonical_author": "Libanius",
+      "variants": [
+        "LIBAN."
+      ],
+      "works": {
+        "Or.": {
+          "title": "Orationes",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Foerster vol/page."
+        }
+      },
+      "flags": []
+    },
+    "HIMER": {
+      "canonical_author": "Himerius",
+      "variants": [
+        "HIMER."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(oration of Himerius)",
+          "title_italic": false,
+          "locus_template": "opaque"
+        },
+        "Ecl.": {
+          "title": "Eclogae",
+          "title_italic": true,
+          "locus_template": "book-section"
+        }
+      },
+      "flags": []
+    },
+    "MAXIM_TYR": {
+      "canonical_author": "Maximus of Tyre",
+      "variants": [
+        "MAXIM."
+      ],
+      "works": {
+        "TYR.": {
+          "title": "Dissertationes",
+          "title_italic": true,
+          "locus_template": "book-page",
+          "notes": "'MAXIM. TYR.' = Maximus of Tyre, Dissertationes."
+        }
+      },
+      "flags": []
+    },
+    "DIO_CHRYS": {
+      "canonical_author": "Dio Chrysostom",
+      "variants": [
+        "DIO",
+        "DIO CHRYSOST."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Orationes",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Oration + section; von Arnim vol/page in brackets."
+        }
+      },
+      "flags": []
+    },
+    "LUCIAN": {
+      "canonical_author": "Lucian",
+      "variants": [
+        "LUCIAN.",
+        "LUC."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Lucian)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "'V. hist.' = Verae Historiae."
+        },
+        "de lapsu in sal.": {
+          "title": "Pro Lapsu inter Salutandum",
+          "title_italic": true,
+          "locus_template": "section"
+        }
+      },
+      "flags": []
+    },
+    "HERACLIT_ALL": {
+      "canonical_author": "Heraclitus (allegorista)",
+      "variants": [
+        "HERACLIT."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Allegoriae Homericae",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Heraclitus the Homeric allegorist ('Alleg. Hom.'); NOT the philosopher Heraclitus."
+        },
+        "Alleg.": {
+          "title": "Allegoriae Homericae",
+          "title_italic": true,
+          "locus_template": "section"
+        }
+      },
+      "flags": [
+        "not-the-philosopher"
+      ]
+    },
+    "CORNUTUS": {
+      "canonical_author": "Cornutus",
+      "variants": [
+        "CORNUTUS"
+      ],
+      "works": {
+        "Epidrom.": {
+          "title": "Epidrome (Theologiae Graecae Compendium)",
+          "title_italic": true,
+          "locus_template": "section"
+        }
+      },
+      "flags": []
+    },
+    "IULIAN": {
+      "canonical_author": "Julian (imp.)",
+      "variants": [
+        "IULIAN."
+      ],
+      "works": {
+        "Ep.": {
+          "title": "Epistulae",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": []
+    },
+    "ARTEMID": {
+      "canonical_author": "Artemidorus",
+      "variants": [
+        "ARTEMID."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Oneirocritica",
+          "title_italic": true,
+          "locus_template": "book-page-line"
+        }
+      },
+      "flags": []
+    },
+    "ACHILL": {
+      "canonical_author": "Achilles Tatius (astronomus)",
+      "variants": [
+        "ACHILL. Is",
+        "ACHILL. Is.",
+        "ACHILL. IS."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Isagoge in Arati Phaenomena",
+          "title_italic": true,
+          "locus_template": "chapter-page",
+          "notes": "'Is./Isag.' = Isagoge; census token often truncated ('ag. ...'). Maass page,line."
+        }
+      },
+      "flags": [
+        "truncated-token"
+      ]
+    },
+    "THEO_SMYRN": {
+      "canonical_author": "Theon of Smyrna",
+      "variants": [
+        "THEO"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Expositio Rerum Mathematicarum",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "'Theo Smyrn.' = Theon of Smyrna; Hiller page."
+        },
+        "Smyrn.": {
+          "title": "Expositio Rerum Mathematicarum",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "SMYRN.": {
+          "title": "Expositio Rerum Mathematicarum",
+          "title_italic": true,
+          "locus_template": "page-line"
+        }
+      },
+      "flags": []
+    },
+    "NICOM": {
+      "canonical_author": "Nicomachus of Gerasa",
+      "variants": [
+        "NICOM.",
+        "NICOMACHUS"
+      ],
+      "works": {
+        "Arithm.": {
+          "title": "Introductio Arithmetica",
+          "title_italic": true,
+          "locus_template": "book-page-line"
+        },
+        "Porph.": {
+          "title": "(apud Porphyrium/Iamblichum, Vita Pythagorae)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Nicomachus cited through Porphyry's and Iamblichus' Lives of Pythagoras."
+        }
+      },
+      "flags": []
+    },
+    "THEOL_ARITHM": {
+      "canonical_author": "Theologumena Arithmeticae",
+      "variants": [
+        "THEOL. Arithm.",
+        "THEOLOG."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Theologumena Arithmeticae",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "de Falco page. Anonymous compilation."
+        }
+      },
+      "flags": []
+    },
+    "ANATOL": {
+      "canonical_author": "Anatolius",
+      "variants": [
+        "ANATOL."
+      ],
+      "works": {
+        "de decade p.": {
+          "title": "De Decade",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Heiberg."
+        }
+      },
+      "flags": []
+    },
+    "AGATHEM": {
+      "canonical_author": "Agathemerus",
+      "variants": [
+        "AGATHEM.",
+        "AGATHEMER."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Geographiae Informatio",
+          "title_italic": true,
+          "locus_template": "book-section"
+        }
+      },
+      "flags": []
+    },
+    "EUDOX": {
+      "canonical_author": "Eudoxus",
+      "variants": [
+        "EUDOX."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Ars Astronomica",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Papyrus (Blass); fragmentary."
+        }
+      },
+      "flags": [
+        "fragmentary"
+      ]
+    },
+    "HEPHAEST": {
+      "canonical_author": "Hephaestion",
+      "variants": [
+        "HEPHAEST."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Enchiridion de Metris",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "Ench.": {
+          "title": "Enchiridion de Metris",
+          "title_italic": true,
+          "locus_template": "page-line"
+        }
+      },
+      "flags": []
+    },
+    "PTOLEM": {
+      "canonical_author": "Ptolemy",
+      "variants": [
+        "PTOLEM."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Ptolemy)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "'Apparit.' = Phaseis (De Apparitionibus)."
+        }
+      },
+      "flags": []
+    },
+    "DERCYLL": {
+      "canonical_author": "Dercyllides",
+      "variants": [
+        "DERCYLLIDES"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(apud Theonem astr.)",
+          "title_italic": false,
+          "locus_template": "page-line",
+          "notes": "Cited via Theon."
+        }
+      },
+      "flags": [
+        "obscure"
+      ]
+    },
+    "NICAND": {
+      "canonical_author": "Nicander",
+      "variants": [
+        "NICAND."
+      ],
+      "works": {
+        "Alex.": {
+          "title": "Alexipharmaca",
+          "title_italic": true,
+          "locus_template": "section"
+        }
+      },
+      "flags": []
+    },
+    "HIPPOCR": {
+      "canonical_author": "Hippocrates (corpus)",
+      "variants": [
+        "HIPPOCR."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(Hippocratic treatise)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Littré vol/page '[VI 34 L.]'."
+        },
+        "de arte": {
+          "title": "De Arte",
+          "title_italic": true,
+          "locus_template": "section"
+        },
+        "de prisc. med.": {
+          "title": "De Prisca Medicina (De Vetere Medicina)",
+          "title_italic": true,
+          "locus_template": "section"
+        }
+      },
+      "flags": []
+    },
+    "SORAN": {
+      "canonical_author": "Soranus",
+      "variants": [
+        "SORAN.",
+        "SORANUS"
+      ],
+      "works": {
+        "Gynaec.": {
+          "title": "Gynaecia",
+          "title_italic": true,
+          "locus_template": "book-page-line",
+          "notes": "Ilberg."
+        }
+      },
+      "flags": []
+    },
+    "RUFUS": {
+      "canonical_author": "Rufus of Ephesus",
+      "variants": [
+        "RUFUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "De Nominatione Partium Hominis",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Daremberg."
+        }
+      },
+      "flags": []
+    },
+    "APOLLON_CIT": {
+      "canonical_author": "Apollonius of Citium",
+      "variants": [
+        "APOLLON. Cit."
+      ],
+      "works": {
+        "in Hipp. p.": {
+          "title": "in Hippocratis De Articulis",
+          "title_italic": true,
+          "locus_template": "page-line"
+        }
+      },
+      "flags": []
+    },
+    "PALAEPHAT": {
+      "canonical_author": "Palaephatus",
+      "variants": [
+        "PALAEPHAT."
+      ],
+      "works": {
+        "de incredib. p.": {
+          "title": "De Incredibilibus",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Festa."
+        }
+      },
+      "flags": []
+    },
+    "CAELIUS": {
+      "canonical_author": "Caelius Aurelianus",
+      "variants": [
+        "CAELIUS"
+      ],
+      "works": {
+        "AURE": {
+          "title": "(work of Caelius Aurelianus)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Token truncated ('AUREL. Morb. chron.' = Morbi Chronici)."
+        }
+      },
+      "flags": [
+        "truncated-token"
+      ]
+    },
+    "APOLL_DYSC": {
+      "canonical_author": "Apollonius Dyscolus",
+      "variants": [
+        "APOLL. DYSC.",
+        "APOLLON."
+      ],
+      "works": {
+        "de pron. p.": {
+          "title": "De Pronominibus",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Schneider."
+        },
+        "de pronom. p.": {
+          "title": "De Pronominibus",
+          "title_italic": true,
+          "locus_template": "page-line"
+        }
+      },
+      "flags": []
+    },
+    "GNOMOL": {
+      "canonical_author": "Gnomologium",
+      "variants": [
+        "GNOMOL.",
+        "GNOM."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(Gnomologium)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Named by manuscript/collection (Vaticanum, Vindobonense, Parisinum, Monacense); edition ref in brackets."
+        },
+        "VATIC.": {
+          "title": "Gnomologium Vaticanum",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "VINDOB.": {
+          "title": "Gnomologium Vindobonense",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": [
+        "edition-keyed"
+      ]
+    },
+    "ANECD_BEKK": {
+      "canonical_author": "Anecdota (Bekker)",
+      "variants": [
+        "ANECD. BEKK.",
+        "ANECD. Bekk.",
+        "AN. BEKK.",
+        "ANTIATT. BEKK.",
+        "ANTIATT. Bekk."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Anecdota Graeca (ed. Bekker)",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Bekker Anecdota; 'Antiattic.'/'An.' = Antiatticista. Edition-keyed, not a single author."
+        },
+        "Lex.": {
+          "title": "Anecdota Graeca (Lexica)",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "Antiattic.": {
+          "title": "Antiatticista",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "An.": {
+          "title": "Antiatticista",
+          "title_italic": true,
+          "locus_template": "page-line"
+        }
+      },
+      "flags": [
+        "edition-keyed",
+        "not-single-author"
+      ]
+    },
+    "ANECD_PAR": {
+      "canonical_author": "Anecdota Parisina",
+      "variants": [
+        "ANECD. PAR."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Anecdota Graeca Parisiensia",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Cramer."
+        }
+      },
+      "flags": [
+        "edition-keyed"
+      ]
+    },
+    "LESBON": {
+      "canonical_author": "Lesbonax",
+      "variants": [
+        "LESBON."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "De Figuris",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Valckenaer."
+        }
+      },
+      "flags": [
+        "obscure"
+      ]
+    },
+    "ETYM": {
+      "canonical_author": "Etymologicum",
+      "variants": [
+        "ETYM."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(Etymologicum)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Family of lexica cited by name: Genuinum, Magnum, Gudianum, Orionis. Cited by lemma (s.v.)."
+        },
+        "GEN.": {
+          "title": "Etymologicum Genuinum",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "GENUIN.": {
+          "title": "Etymologicum Genuinum",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "ORION.": {
+          "title": "Orionis Etymologicum",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": [
+        "cited-by-lemma",
+        "edition-keyed"
+      ]
+    },
+    "SCHOL_HOM": {
+      "canonical_author": "Scholia in Homerum",
+      "variants": [
+        "SCHOL. HOM.",
+        "SCHOL. HOM. BT",
+        "SCHOL. BLT",
+        "SCHOL. A",
+        "SCHOL. ABT",
+        "AMMON. SCHOL. HOMER."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Scholia in Homerum",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Scholia cited by the passage of Homerum they gloss (+ editor page)."
+        }
+      },
+      "flags": [
+        "scholia"
+      ]
+    },
+    "SCHOL_DIONYS": {
+      "canonical_author": "Scholia in Dionysium Thracem",
+      "variants": [
+        "SCHOL. DIONYS."
+      ],
+      "works": {
+        "THRAC.": {
+          "title": "Scholia in Dionysium Thracem",
+          "title_italic": false,
+          "locus_template": "page-line",
+          "notes": "Hilgard."
+        }
+      },
+      "flags": [
+        "scholia"
+      ]
+    },
+    "SCHOL_APOLL": {
+      "canonical_author": "Scholia in Apollonium Rhodium",
+      "variants": [
+        "SCHOL. APOLL."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Scholia in Apollonium Rhodium",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Scholia cited by the passage of Apollonium Rhodium they gloss (+ editor page)."
+        }
+      },
+      "flags": [
+        "scholia"
+      ]
+    },
+    "SCHOL_ARISTOPH": {
+      "canonical_author": "Scholia in Aristophanem",
+      "variants": [
+        "SCHOL. ARISTOPH.",
+        "SCHOL. ARIST."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Scholia in Aristophanem",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Scholia cited by the passage of Aristophanem they gloss (+ editor page)."
+        }
+      },
+      "flags": [
+        "scholia"
+      ]
+    },
+    "SCHOL_ARAT": {
+      "canonical_author": "Scholia in Aratum",
+      "variants": [
+        "SCHOL. ARAT."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Scholia in Aratum",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Scholia cited by the passage of Aratum they gloss (+ editor page)."
+        }
+      },
+      "flags": [
+        "scholia"
+      ]
+    },
+    "SCHOL_PIND": {
+      "canonical_author": "Scholia in Pindarum",
+      "variants": [
+        "SCHOL. PIND."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Scholia in Pindarum",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Scholia cited by the passage of Pindarum they gloss (+ editor page)."
+        }
+      },
+      "flags": [
+        "scholia"
+      ]
+    },
+    "SCHOL_NIC": {
+      "canonical_author": "Scholia in Nicandrum",
+      "variants": [
+        "SCHOL. NICANDR.",
+        "SCHOL. Nic."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Scholia in Nicandrum",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Scholia cited by the passage of Nicandrum they gloss (+ editor page)."
+        }
+      },
+      "flags": [
+        "scholia"
+      ]
+    },
+    "SCHOL_EUR": {
+      "canonical_author": "Scholia in Euripidem",
+      "variants": [
+        "SCHOL. EUR.",
+        "SCHOL. EURIP."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Scholia in Euripidem",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Scholia cited by the passage of Euripidem they gloss (+ editor page)."
+        }
+      },
+      "flags": [
+        "scholia"
+      ]
+    },
+    "SCHOL_AESCHIN": {
+      "canonical_author": "Scholia in Aeschinem",
+      "variants": [
+        "SCHOL. AESCHIN."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Scholia in Aeschinem",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Scholia cited by the passage of Aeschinem they gloss (+ editor page)."
+        }
+      },
+      "flags": [
+        "scholia"
+      ]
+    },
+    "SCHOL_EPICTET": {
+      "canonical_author": "Scholia in Epictetum",
+      "variants": [
+        "SCHOL. EPICTET."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Scholia in Epictetum",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Scholia cited by the passage of Epictetum they gloss (+ editor page)."
+        }
+      },
+      "flags": [
+        "scholia"
+      ]
+    },
+    "SCHOL_HIPPOCR": {
+      "canonical_author": "Scholia in Hippocratem",
+      "variants": [
+        "SCHOL. HIPPOCR."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Scholia in Hippocratem",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Scholia cited by the passage of Hippocratem they gloss (+ editor page)."
+        }
+      },
+      "flags": [
+        "scholia"
+      ]
+    },
+    "SCHOL_GREGOR": {
+      "canonical_author": "Scholia in Gregorium",
+      "variants": [
+        "SCHOL. IN GREGOR."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Scholia in Gregorium Nazianzenum",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Scholia cited by the passage of Gregorium Nazianzenum they gloss (+ editor page)."
+        }
+      },
+      "flags": [
+        "scholia"
+      ]
+    },
+    "SCHOL_PLAT": {
+      "canonical_author": "Scholia in Platonem",
+      "variants": [
+        "SCHOL. PLATONIS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Scholia in Platonem",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Scholia cited by the passage of Platonem they gloss (+ editor page)."
+        }
+      },
+      "flags": [
+        "scholia"
+      ]
+    },
+    "SCHOL_BARE": {
+      "canonical_author": "Scholia",
+      "variants": [
+        "SCHOL."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Scholia",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Bare 'SCHOL.' + target named in head (in Apoll. Rhod., in Euclid., ad Dionys.)."
+        },
+        "ad DIONYS.": {
+          "title": "Scholia in Dionysium Thracem",
+          "title_italic": true,
+          "locus_template": "page-line"
+        },
+        "in APOLL. RHOD.": {
+          "title": "Scholia in Apollonium Rhodium",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "in Euclid. X": {
+          "title": "Scholia in Euclidem",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": [
+        "scholia"
+      ]
+    },
+    "GREGOR": {
+      "canonical_author": "Gregory of Corinth",
+      "variants": [
+        "GREGOR."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(ad Hermogenem)",
+          "title_italic": false,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": [
+        "obscure"
+      ]
+    },
+    "VITA_EUR": {
+      "canonical_author": "Vita Euripidis",
+      "variants": [
+        "VITA"
+      ],
+      "works": {
+        "EURIPID.": {
+          "title": "Vita Euripidis",
+          "title_italic": false,
+          "locus_template": "page-line",
+          "notes": "'VITA EURIPID.' = anonymous Life of Euripides."
+        }
+      },
+      "flags": [
+        "anonymous"
+      ]
+    },
+    "TZETZ": {
+      "canonical_author": "John Tzetzes",
+      "variants": [
+        "TZETZ.",
+        "TZETZES"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Tzetzes)",
+          "title_italic": false,
+          "locus_template": "opaque"
+        },
+        "Alleg.": {
+          "title": "Allegoriae Iliadis",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "ad Dion.": {
+          "title": "Scholia in Dionysium Periegetam",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "'ad Dion. Perieg.'"
+        },
+        "ad Aristoph.": {
+          "title": "Scholia in Aristophanem",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": []
+    },
+    "PLANUD": {
+      "canonical_author": "Maximus Planudes",
+      "variants": [
+        "PLANUD."
+      ],
+      "works": {
+        "ad Hermog.": {
+          "title": "in Hermogenem",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Walz Rhet. Gr."
+        },
+        "in Hermog. Rhet. V": {
+          "title": "in Hermogenem",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": []
+    },
+    "EUSTATH": {
+      "canonical_author": "Eustathius",
+      "variants": [
+        "EUSTATH."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Commentarii ad Homerum",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "'ad Il./ad Od.'; census tokens truncated ('ad.', 'Zu ')."
+        },
+        "Zu": {
+          "title": "Commentarii ad Homerum",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": [
+        "truncated-token"
+      ]
+    },
+    "PSEUDODIONYS": {
+      "canonical_author": "pseudo-Dionysius (rhetor)",
+      "variants": [
+        "PSEUDODIONYS."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Ars Rhetorica",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": [
+        "pseudo"
+      ]
+    },
+    "CEBREN": {
+      "canonical_author": "(Cebren / Anecd.)",
+      "variants": [
+        "CEBREN."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(Bekker Anecdota)",
+          "title_italic": false,
+          "locus_template": "page-line"
+        }
+      },
+      "flags": [
+        "obscure"
+      ]
+    },
+    "HERMIPPUS": {
+      "canonical_author": "Hermippus (astrol.)",
+      "variants": [
+        "HERMIPPUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "De Astrologia",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Byzantine dialogue; Kroll-Viereck."
+        }
+      },
+      "flags": [
+        "obscure"
+      ]
+    },
+    "CORPUS_PAR": {
+      "canonical_author": "Corpus Parisinum",
+      "variants": [
+        "CORPUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Corpus Parisinum Profanum",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Anonymous gnomological corpus."
+        }
+      },
+      "flags": [
+        "anonymous"
+      ]
+    },
+    "DIONYS_HAL": {
+      "canonical_author": "Dionysius of Halicarnassus",
+      "variants": [
+        "DIONYS.",
+        "DIONYSIUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Dionysius of Halicarnassus)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "NB bare 'DIONYS.' can also be Dionysius of Alexandria (apud Eus.) — disambiguate from head context."
+        },
+        "Lys.": {
+          "title": "De Lysia",
+          "title_italic": true,
+          "locus_template": "section"
+        },
+        "de comp. verb.": {
+          "title": "De Compositione Verborum",
+          "title_italic": true,
+          "locus_template": "section"
+        }
+      },
+      "flags": [
+        "ambiguous-abbrev"
+      ]
+    },
+    "DEMETR": {
+      "canonical_author": "Demetrius",
+      "variants": [
+        "DEMETR."
+      ],
+      "works": {
+        "de poem.": {
+          "title": "De Poematis",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Philodemus' work / Herculanean; Demetrius Laco. Flagged: attribution uncertain."
+        }
+      },
+      "flags": [
+        "uncertain"
+      ]
+    },
+    "PHILO": {
+      "canonical_author": "Philo of Alexandria",
+      "variants": [
+        "PHILO"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Philo)",
+          "title_italic": false,
+          "locus_template": "opaque"
+        },
+        "de prov.": {
+          "title": "De Providentia",
+          "title_italic": true,
+          "locus_template": "book-para"
+        },
+        "de provid.": {
+          "title": "De Providentia",
+          "title_italic": true,
+          "locus_template": "book-para"
+        }
+      },
+      "flags": []
+    },
+    "PHILODEM": {
+      "canonical_author": "Philodemus",
+      "variants": [
+        "PHILODEM.",
+        "PHILOD."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Philodemus)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Herculanean papyri; Voll. Herc. / editor."
+        },
+        "Rhet.": {
+          "title": "Rhetorica",
+          "title_italic": true,
+          "locus_template": "book-page-line",
+          "notes": "Sudhaus vol/page + fr."
+        },
+        "de ira": {
+          "title": "De Ira",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Gomperz."
+        },
+        "de morte": {
+          "title": "De Morte",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Mekler."
+        },
+        "de piet. p.": {
+          "title": "De Pietate",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Gomperz."
+        },
+        "de piet. c.": {
+          "title": "De Pietate",
+          "title_italic": true,
+          "locus_template": "page-line"
+        }
+      },
+      "flags": []
+    },
+    "MARC_ANT": {
+      "canonical_author": "Marcus Aurelius",
+      "variants": [
+        "MARC."
+      ],
+      "works": {
+        "ANTON.": {
+          "title": "Ad Se Ipsum (Meditationes)",
+          "title_italic": true,
+          "locus_template": "book-section",
+          "notes": "'MARC. ANTON.' = Marcus Antoninus."
+        },
+        "Anton.": {
+          "title": "Ad Se Ipsum (Meditationes)",
+          "title_italic": true,
+          "locus_template": "book-section"
+        }
+      },
+      "flags": []
+    },
+    "IOANN_LYD": {
+      "canonical_author": "John Lydus",
+      "variants": [
+        "IOANN. LYD.",
+        "JOH."
+      ],
+      "works": {
+        "de mens.": {
+          "title": "De Mensibus",
+          "title_italic": true,
+          "locus_template": "book-chapter-section"
+        },
+        "DEFAULT": {
+          "title": "De Mensibus",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "'JOH. LYDUS de mens.' = John Lydus, De Mensibus."
+        }
+      },
+      "flags": []
+    },
+    "IOSEPH": {
+      "canonical_author": "Josephus",
+      "variants": [
+        "IOSEPH."
+      ],
+      "works": {
+        "c. Ap. I": {
+          "title": "Contra Apionem (lib. I)",
+          "title_italic": true,
+          "locus_template": "section"
+        },
+        "c. Ap. II": {
+          "title": "Contra Apionem (lib. II)",
+          "title_italic": true,
+          "locus_template": "section"
+        }
+      },
+      "flags": []
+    },
+    "ARIUS": {
+      "canonical_author": "Arius Didymus",
+      "variants": [
+        "ARIUS",
+        "ARIUS DID."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Epitome (Physica)",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "'ARIUS DID. ap. Eus. P. E.'; '(D. NNN)' = Diels DG page."
+        }
+      },
+      "flags": [
+        "diels-doxographi"
+      ]
+    },
+    "ARISTOCRITUS": {
+      "canonical_author": "Aristocritus",
+      "variants": [
+        "ARISTOCRITUS"
+      ],
+      "works": {
+        "Theos.": {
+          "title": "Theosophia",
+          "title_italic": true,
+          "locus_template": "section"
+        },
+        "Theosophia": {
+          "title": "Theosophia",
+          "title_italic": true,
+          "locus_template": "section"
+        }
+      },
+      "flags": [
+        "obscure"
+      ]
+    },
+    "APOLLODOR": {
+      "canonical_author": "Apollodorus",
+      "variants": [
+        "APOLLODOR.",
+        "APOLLODOROS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(Chronica / FGrHist 244)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Apollodorus of Athens, chronographer."
+        }
+      },
+      "flags": []
+    },
+    "DIOGENES_OIN": {
+      "canonical_author": "Diogenes of Oenoanda",
+      "variants": [
+        "DIOGENES"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Fragmenta (Inscriptio)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "'DIOGENES v. Oinoanda' = Diogenes of Oinoanda (Epicurean inscription); NOT Diog. Laertius."
+        },
+        "LAERTIUS": {
+          "title": "Vitae Philosophorum",
+          "title_italic": true,
+          "locus_template": "book-para",
+          "notes": "Census splits 'DIOGENES LAERTIUS' as author='DIOGENES', work='LAERTIUS'; author here is Diogenes Laertius (= DIOG_LAERT), not Oinoanda."
+        }
+      },
+      "flags": [
+        "ambiguous-name"
+      ]
+    },
+    "ALCIDAMAS": {
+      "canonical_author": "Alcidamas",
+      "variants": [
+        "ALCIDAMAS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(apud Aristotelem)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Cited via Arist. Rhet."
+        }
+      },
+      "flags": []
+    },
+    "ARISTOCLES": {
+      "canonical_author": "Aristocles",
+      "variants": [
+        "ARISTOCLES"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(fragmenta)",
+          "title_italic": false,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": [
+        "obscure"
+      ]
+    },
+    "MELAMPUS": {
+      "canonical_author": "Melampus",
+      "variants": [
+        "MELAMPUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(divinatory treatise)",
+          "title_italic": false,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": [
+        "obscure"
+      ]
+    },
+    "MENON": {
+      "canonical_author": "Menon (Anonymus Londinensis)",
+      "variants": [
+        "MENON"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Anonymus Londinensis (Iatrica)",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "The medical doxography (P. Lond. 137) associated with Menon, pupil of Aristotle."
+        }
+      },
+      "flags": []
+    },
+    "SUETONIUS": {
+      "canonical_author": "Suetonius",
+      "variants": [
+        "SUETONIUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(fragmenta)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Miller Mélanges."
+        }
+      },
+      "flags": []
+    },
+    "COD_PARIS": {
+      "canonical_author": "Codex Parisinus",
+      "variants": [
+        "COD. PARIS."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(manuscript source)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "MS shelfmark, not an author."
+        }
+      },
+      "flags": [
+        "ms-shelfmark"
+      ]
+    },
+    "COD_MONAC": {
+      "canonical_author": "Codex Monacensis",
+      "variants": [
+        "COD. MONAC."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(manuscript source)",
+          "title_italic": false,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": [
+        "ms-shelfmark"
+      ]
+    },
+    "PAP": {
+      "canonical_author": "Papyrus",
+      "variants": [
+        "PAP.",
+        "PAPYR.",
+        "OXYRH.",
+        "HIBEH",
+        "VOLL."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(papyrus source)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Papyrus collections: Oxyrhynchus, Hibeh, Herculanean (Voll. Herc.), London, Petropolitanus, magical. Edition/number-keyed."
+        }
+      },
+      "flags": [
+        "edition-keyed",
+        "not-single-author"
+      ]
+    },
+    "CATAL_ASTROL": {
+      "canonical_author": "Catalogus Codicum Astrologorum",
+      "variants": [
+        "CATAL."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Catalogus Codicum Astrologorum Graecorum",
+          "title_italic": false,
+          "locus_template": "opaque"
+        },
+        "CODD. ASTROL. GRAEC.": {
+          "title": "Catalogus Codicum Astrologorum Graecorum",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Full printed continuation of the abbreviation (B139 'CATAL. CODD. ASTROL. GRAEC. IV 32 VII 106'); matching it keeps it out of the locus (pilot gap fix 2026-07-24, Grok gate defect 3)."
+        }
+      },
+      "flags": [
+        "edition-keyed"
+      ]
+    },
+    "EXC": {
+      "canonical_author": "Excerpta",
+      "variants": [
+        "EXC."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(Excerpta)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "'EXC. ASTRON.' = astronomical excerpts; 'EXC. VINDOB.' = Excerpta Vindobonensia."
+        },
+        "VINDOB.": {
+          "title": "Excerpta Vindobonensia",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": [
+        "edition-keyed"
+      ]
+    },
+    "EPIGR": {
+      "canonical_author": "Epigrammata (Anthologia)",
+      "variants": [
+        "EPIGR."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(epigram)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Kaibel Epigrammata Graeca."
+        }
+      },
+      "flags": [
+        "edition-keyed"
+      ]
+    },
+    "MASALA": {
+      "canonical_author": "Messahala (Masha'allah)",
+      "variants": [
+        "MASALA"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(astrological codex)",
+          "title_italic": false,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": [
+        "obscure",
+        "ms-shelfmark"
+      ]
+    },
+    "HYPOTH": {
+      "canonical_author": "Hypothesis",
+      "variants": [
+        "HYPOTH."
+      ],
+      "works": {
+        "SOPH.": {
+          "title": "Hypothesis (Sophoclis)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Argument prefixed to a play."
+        }
+      },
+      "flags": [
+        "anonymous"
+      ]
+    },
+    "PS_ARISTOT": {
+      "canonical_author": "pseudo-Aristotle",
+      "variants": [
+        "[ARISTOT.]",
+        "[ARIST.]",
+        "[Arist.]"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(pseudo-Aristotelian work)",
+          "title_italic": false,
+          "locus_template": "bekker",
+          "notes": "Bracket = spurious/dubious attribution."
+        },
+        "Probl.": {
+          "title": "Problemata",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "de MXG": {
+          "title": "De Melisso Xenophane Gorgia",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "de mundo": {
+          "title": "De Mundo",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "Mirab.": {
+          "title": "De Mirabilibus Auscultationibus",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "de lin. insec.": {
+          "title": "De Lineis Insecabilibus",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "de lin. insecab. p.": {
+          "title": "De Lineis Insecabilibus",
+          "title_italic": true,
+          "locus_template": "bekker"
+        },
+        "hist. anim.": {
+          "title": "Historia Animalium",
+          "title_italic": true,
+          "locus_template": "bekker",
+          "notes": "Bk 9/10 regarded spurious."
+        }
+      },
+      "flags": [
+        "pseudo"
+      ]
+    },
+    "PS_PLUT": {
+      "canonical_author": "pseudo-Plutarch",
+      "variants": [
+        "[PLUT.]",
+        "[PLUTARCH.]",
+        "[Plut.]"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(pseudo-Plutarchean work)",
+          "title_italic": false,
+          "locus_template": "opaque"
+        },
+        "Strom.": {
+          "title": "Stromateis",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "ps.-Plut. Stromateis, a Diels doxographic source; '(D. NNN)' = Diels DG page."
+        },
+        "Vit.": {
+          "title": "Vitae Decem Oratorum",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "'Vit. X orat.' = Vitae Decem Oratorum."
+        }
+      },
+      "flags": [
+        "pseudo",
+        "diels-doxographi"
+      ]
+    },
+    "PS_GALEN": {
+      "canonical_author": "pseudo-Galen",
+      "variants": [
+        "[GALEN.]",
+        "[GALEN]"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Historia Philosopha",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "ps.-Galen Historia Philosopha, a Diels doxographic source; '(D. NNN)' = Diels DG page."
+        },
+        "d. defin. med.": {
+          "title": "Definitiones Medicae",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "'[GALEN]. d. defin. med.' = pseudo-Galen, Definitiones Medicae (Kühn vol/page); distinct from the bare Historia Philosopha DEFAULT."
+        }
+      },
+      "flags": [
+        "pseudo",
+        "diels-doxographi"
+      ]
+    },
+    "PS_PLATO": {
+      "canonical_author": "pseudo-Plato",
+      "variants": [
+        "[PLATO]"
+      ],
+      "works": {
+        "Alcib.": {
+          "title": "Alcibiades (I/II)",
+          "title_italic": true,
+          "locus_template": "stephanus",
+          "notes": "Spurious/disputed."
+        },
+        "Axiochos": {
+          "title": "Axiochus",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        },
+        "Eryxias": {
+          "title": "Eryxias",
+          "title_italic": true,
+          "locus_template": "stephanus"
+        }
+      },
+      "flags": [
+        "pseudo"
+      ]
+    },
+    "PS_LUCIAN": {
+      "canonical_author": "pseudo-Lucian",
+      "variants": [
+        "[LUC.]",
+        "[LUCIAN.]"
+      ],
+      "works": {
+        "Macrob.": {
+          "title": "Macrobii",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "'Macrob.' = Macrobii (Long-livers)."
+        }
+      },
+      "flags": [
+        "pseudo"
+      ]
+    },
+    "PS_GEMIN": {
+      "canonical_author": "pseudo-Geminus",
+      "variants": [
+        "[GEMIN.]"
+      ],
+      "works": {
+        "Isag.": {
+          "title": "Isagoge (Elementa Astronomiae)",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Manitius."
+        }
+      },
+      "flags": [
+        "pseudo"
+      ]
+    },
+    "PS_DEMOSTH": {
+      "canonical_author": "pseudo-Demosthenes",
+      "variants": [
+        "[DEMOSTH.]"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(spurious oration in the Demosthenic corpus)",
+          "title_italic": false,
+          "locus_template": "book-section"
+        }
+      },
+      "flags": [
+        "pseudo"
+      ]
+    },
+    "PS_SYNES": {
+      "canonical_author": "pseudo-Synesius",
+      "variants": [
+        "[SYNES.]"
+      ],
+      "works": {
+        "ad Dioscorum": {
+          "title": "Ad Dioscorum (alchemical)",
+          "title_italic": true,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": [
+        "pseudo"
+      ]
+    },
+    "PS_SUID": {
+      "canonical_author": "Suda",
+      "variants": [
+        "[SUID.]"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Lexicon (Suda)",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Bracketed = editorial supplement."
+        }
+      },
+      "flags": [
+        "cited-by-lemma"
+      ]
+    },
+    "DEMOKRAT": {
+      "canonical_author": "Democrates",
+      "variants": [
+        "DEMOKRAT.",
+        "DEMOKRATES"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Sententiae (Gnomae Democratis)",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "The gnomological 'Golden Sayings' collection under Democrates' name (DK 68 B, the Democrates maxims). Cited by saying number."
+        }
+      },
+      "flags": [
+        "pseudonymous-collection"
+      ]
+    },
+    "ANON_LOND": {
+      "canonical_author": "Anonymus Londinensis",
+      "variants": [
+        "ANON. LONDIN."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Iatrica (Anonymus Londinensis)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Medical doxography, P. Lond. 137; cited by column,line."
+        }
+      },
+      "flags": [
+        "anonymous"
+      ]
+    },
+    "ANON_PLAT_THEAET": {
+      "canonical_author": "Anonymus in Platonis Theaetetum",
+      "variants": [
+        "ANONYM. IN PLAT."
+      ],
+      "works": {
+        "Theaet.": {
+          "title": "Commentarium in Platonis Theaetetum",
+          "title_italic": false,
+          "locus_template": "page-line",
+          "notes": "Berlin papyrus (Anon. commentator on the Theaetetus)."
+        }
+      },
+      "flags": [
+        "anonymous"
+      ]
+    },
+    "ANON_BYZANT": {
+      "canonical_author": "Anonymus Byzantinus",
+      "variants": [
+        "ANONYM. BYZANT."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(Isagoge in Aratum)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "ed. Treu; astronomical."
+        }
+      },
+      "flags": [
+        "anonymous",
+        "obscure"
+      ]
+    },
+    "ANON_ROHDEI": {
+      "canonical_author": "Anonymus Rohdei",
+      "variants": [
+        "ANON. ROHDEI"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(fragment, Rohde Kl. Schr.)",
+          "title_italic": false,
+          "locus_template": "opaque"
+        }
+      },
+      "flags": [
+        "obscure"
+      ]
+    },
+    "SCHOL_BASIL": {
+      "canonical_author": "Scholia in Basilium",
+      "variants": [
+        "SCHOL. BASILII"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Scholia in Basilium",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "ed. Pasquali."
+        }
+      },
+      "flags": [
+        "scholia"
+      ]
+    }
+  }
+}

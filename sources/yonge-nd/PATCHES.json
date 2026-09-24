@@ -1,0 +1,8 @@
+[
+ {
+  "scope": "raw",
+  "old": "\nXVII. Did not Thyestes",
+  "new": "\nXXVII. Did not Thyestes",
+  "note": "Book 3, djvu page 348 (printed page 342, running header 'THE NATURE OF THE GODS. 342'), pagequality level=4 ('Validated' -- a second proofreader confirmed this transcription against the scan). The chapter marker reads 'XVII.' where it must be 'XXVII.': it falls strictly between the same page's own unambiguous 'XXVI.' (a few paragraphs earlier, opening the Niobe/Atreus/Medea verse-quotation chapter) and 'XXVIII.' (the following chapter, 'You answer that the ill use...'). Given the Validated quality flag, almost certainly the 1888 print's own erratum (a dropped 'X'), not a Wikisource transcription slip. Fixed here rather than silently -- the chapter-sequential-numbering gate in extract_yonge_nd_wikisource.py would otherwise fail loud on this exact defect (17 appearing out of order after 26)."
+ }
+]

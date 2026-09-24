@@ -1,0 +1,108 @@
+authors:
+  - id: aristotle
+    name: Aristotle
+    nativeName: Ἀριστοτέλης
+    languages:
+      - grc
+    period: classical
+    schools:
+      - peripatetic
+    floruit: 384–322 BC
+    blurb: ''
+    works:
+      - Cat
+      - Int
+      - Phys
+      - Cael
+      - GC
+      - Mete
+      - DA
+      - Sens
+      - Mem
+      - Somn
+      - Insomn
+      - DivSomn
+      - Long
+      - Juv
+      - HA
+      - PA
+      - MA
+      - IA
+      - GA
+      - Meta
+      - APr
+      - APo
+      - Top
+      - SE
+      - EN
+      - EE
+      - Pol
+      - Oec
+      - VV
+      - DM
+      - Mech
+      - Col
+      - Phgn
+      - MXG
+      - Aud
+      - Lin
+      - Vent
+      - Mirab
+      - Rhet
+      - Poet
+    holdings: partial
+  - id: porphyry
+    name: Porphyry
+    nativeName: Πορφύριος
+    languages:
+      - grc
+    period: late-antique
+    schools:
+      - neoplatonist
+    floruit: c. AD 234–305
+    blurb: ''
+    works:
+      - Isa
+    holdings: partial
+work_order:
+  - Cat
+  - Int
+  - Isa
+  - Phys
+  - Cael
+  - GC
+  - Mete
+  - DA
+  - Sens
+  - Mem
+  - Somn
+  - Insomn
+  - DivSomn
+  - Long
+  - Juv
+  - HA
+  - PA
+  - MA
+  - IA
+  - GA
+  - Meta
+  - APr
+  - APo
+  - Top
+  - SE
+  - EN
+  - EE
+  - Pol
+  - Oec
+  - VV
+  - DM
+  - Mech
+  - Col
+  - Phgn
+  - MXG
+  - Aud
+  - Lin
+  - Vent
+  - Mirab
+  - Rhet
+  - Poet

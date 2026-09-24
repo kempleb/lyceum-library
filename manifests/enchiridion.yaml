@@ -1,0 +1,136 @@
+# Enchiridion — pipeline manifest (flat `section` scheme: Epictetus' Manual
+# is a bookless run of 53 chapters, cited by bare chapter number alone, "53",
+# not book.chapter — see pipeline/reader_pipeline/scheme.py's `section` entry
+# for the verified TEI shape: div[@type="Chapter"] sits at the TOP LEVEL, no
+# Book wrapper, unlike Discourses/Meditations' book-section scheme). English
+# is built by the small stage1_flat_english module (mirrors
+# stage1_book_section_english's 1:1 chapter mapping, minus the book-dotted
+# column).
+
+work:
+  id: enchiridion
+  title: "Enchiridion"
+  author: "epictetus"
+  language: "grc"
+  tlg_author: "0557"
+  tlg_work: "002"
+  greek_edition: "Schenkl, H. (ed.), Epicteti dissertationes ab Arriano digestae (Leipzig: Teubner, 1916, repr. 1965)"
+  # FATAL sourceDesc gate (Wave 1c Sol nit, backfilled onto this committed
+  # work since verifying it was trivial): stage1's _check_sourcedesc
+  # asserts this exact substring is present in the export XML's own
+  # <teiHeader><sourceDesc> text -- verified verbatim against
+  # build/export/.../tlg0557002.xml.
+  expected_sourcedesc: 'Epictetus Phil., Enchiridion (0557: 002) "Epicteti dissertationes ab Arriano digestae'
+  # Rights status of the SERVED Greek text (sources/enchiridion-provenance.md
+  # has the full account). The Schenkl 1916 Teubner EDITION is pre-1931 and
+  # would be US public domain on its own; but the text we serve is exported
+  # from the TLG's licensed database (see docs/tlg-phi-export.md), not
+  # transcribed from the printed book, and no ruling exists in this repo
+  # (checked sources/INVENTORY.md and CANON.md; unlike Meditations' Haines
+  # translation, no work here carries a `source_license` precedent) settling
+  # whether that TLG-derived text inherits the edition's public-domain
+  # status or carries its own status via the TLG license. That is an open
+  # call for the two project owners, not a fact this note can assert, so
+  # this stays unverified rather than guessed.
+  source_license:
+    status: unverified
+    rationale: "Edition (Schenkl, Teubner 1916) is pre-1931 and US public domain by date; the served text is a digital transcription of that edition rather than a new transcription from the printed page, and whether the transcription inherits the edition's public-domain status is an owner decision not yet ruled."
+
+citation:
+  scheme: section
+  hideLineNumbers: true
+  # John's ruling (2026-08-29, docs/lined-rollout-plan.md Ruling 2): the
+  # Greek column renders Schenkl's own print lines, hyphenated line-end
+  # splits included, in place of the re-wrapped/paragraphed prose this
+  # scheme flattens a chapter to by default — same treatment as Discourses
+  # (docs/lined-source-plan.md), extended to the flat `section` scheme's
+  # `_parse_flat_chapter` path. Gates stage1_greek's per-<l> emission
+  # (`_lined_chapter_lines` + `_apply_lined_wraps`). `lined_section_div`
+  # (Enchiridion only among wave-1's six works) tells `_lined_chapter_lines`
+  # to walk the chapter's nested `<div type="section">` sub-divisions and
+  # stamp each line's `sec` from them — Enchiridion's column (the Chapter
+  # div) is NOT the leaf; the five Epicurus works have no such nesting and
+  # omit this key. Supersedes this work's earlier `section_paragraphs: true`
+  # (2026-07-16 ruling): the `sections` standoff channel that flag gated is
+  # retired for Enchiridion in favour of a `sec` field on every emitted line
+  # (Ruling 2.1) — the two are mutually exclusive by construction.
+  lined_source: true
+  lined_section_div: "section"
+  lined_indent_max: 2
+
+english:
+  primary:
+    id: oldfather
+    name: "W. A. Oldfather (Loeb Classical Library, vol. II, 1928)"
+    model: archive
+    file: "oldfather-epictetus/oldfather-enchiridion.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Published 1928 (Loeb Classical Library, vol. II), pre-1931 — US public domain."
+      source_url: "https://archive.org/details/in.ernet.dli.2015.185339"
+  secondary:
+    id: long
+    name: "George Long (1877; Bell & Sons, 1890)"
+    model: archive
+    file: "long-epictetus/long-enchiridion.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Original translation published 1877, this scan a Bell & Sons reprint of 1890 — both far pre-1931, US public domain regardless of printing."
+      source_url: "https://archive.org/details/discoursesofepic033057mbp"
+
+# Chapter-count reconciliation (sources/INVENTORY.md): Oldfather 53/53 exact;
+# Long 53/53 after the deterministic split repair of his printed edition's
+# merged §50/51 (re-keyed to the modern 1-53 numbering the Greek spine and
+# Oldfather both use — see extract_long_epictetus_wikisource.py's
+# _renumber_manual and the INVENTORY.md "Coverage anomaly" note). No known
+# gaps, so no alignment_allow_unmatched entries are needed.
+
+# Digest fingerprint of the observed bare-chapter column spine (53 columns,
+# "1".."53") — stage2 recomputes and compares it.
+section_spine: { count: 53, sha256: "1d1f6a5ee6e5ed7430493c837d149e440b3f2d7cb38db5a987b54307394930e4" }
+
+# Flat scheme: exactly one book, bounded by bare chapter-integer tokens.
+books:
+  - { n: 1, start: "1", end: "53" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: enchiridion
+  title: Enchiridion
+  greekTitle: Ἐγχειρίδιον
+  abbr: Ench.
+  author: epictetus
+  language: grc
+  workType: continuous
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Schenkl, H. (ed.), Epicteti dissertationes ab Arriano digestae (Leipzig: Teubner, 1916, repr. 1965)'
+  greekSource:
+    short: Schenkl (1916)
+    full: 'Schenkl, H. (ed.), Epicteti dissertationes ab Arriano digestae (Leipzig: Teubner, 1916, repr. 1965)'
+  translations:
+    - id: oldfather
+      name: W. A. Oldfather (Loeb Classical Library, vol. II, 1928)
+      short: Oldfather
+      slot: english
+      translator: "W. A. Oldfather"
+    - id: long
+      name: George Long (1877; Bell & Sons, 1890)
+      short: Long
+      slot: secondary
+      translator: "George Long"
+  citation:
+    scheme: section
+    hideLineNumbers: true
+    copyAbbr: Epict. Ench.
+    # Reader-side flag mirroring pipeline citation.lined_source 1:1
+    # (2026-08-29, docs/lined-rollout-plan.md Stage 1/3) — see
+    # WorkMeta['citation'].linedSource in shared/lib/works.ts.
+    linedSource: true
+  blurb: Arrian’s pocket digest of the Discourses — Epictetus’ Stoicism boiled down to a manual for daily practice.

@@ -1,0 +1,94 @@
+---
+// M2 probe (docs/lyceum-shared-repo-plan.md §11.2): the one on-request front
+// page. Nothing links here yet -- check-links would otherwise flag a missing
+// dist file, since this route emits no HTML at build time (prerender=false).
+//
+// The catalog is parsed AT REQUEST TIME: KV LIBRARY_CATALOG's
+// catalog/current.json when the binding is configured and the key is
+// non-empty, else the committed live snapshot -- via
+// shared/lib/lyceum-catalog-source.ts's parseCatalog (reused, not
+// duplicated; same function app/src/lib/lyceum-catalog.ts calls at build
+// time for the prebuilt homepage).
+//
+// This does NOT reuse LyceumHome.astro's full ledger (components/LyceumHome
+// .astro / lib/lyceum-catalog.ts's lyceumCatalog()): that pipeline cross-
+// references the work registry and reads book/manifest JSON off the
+// filesystem at call time (citationRanges, weekPassage), which the
+// production Cloudflare Workers runtime has no access to -- only the static
+// ASSETS binding, fetched over HTTP, would work there, and wiring that up is
+// out of this probe's scope (M3 in the plan: "every work wired in"). This
+// page proves the mechanism the plan needs at M2 -- request-time KV read,
+// merge with the editorial seed, render -- using the site's own chrome band
+// for visual continuity.
+export const prerender = false;
+import { env } from 'cloudflare:workers';
+import { parseCatalog } from '@shared/lib/lyceum-catalog-source';
+import LyceumBand from '../../components/LyceumBand.astro';
+import ThemeInit from '../../components/ThemeInit.astro';
+import { catalogSourceHeader, loadLiveCatalog, seedCatalog, type KVLike, readerCacheOptions } from '../../lib/catalog-runtime';
+import { LYCEUM_SITE_NAME } from '../../lib/site';
+import '@shared/styles/global.css';
+
+const kv = (env as unknown as { LIBRARY_CATALOG?: KVLike }).LIBRARY_CATALOG;
+const { json: liveJson, source, fallback } = await loadLiveCatalog(kv);
+const includeDrafts = import.meta.env.PUBLIC_LYCEUM_DRAFTS === '1';
+const catalog = parseCatalog(liveJson, seedCatalog(), { includeDrafts });
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const SITE = catalog.content['site.title'] ?? LYCEUM_SITE_NAME;
+
+// Astro 7 route caching (John, 2026-09-14): tag this response 'catalog' so
+// api/catalog/publish.ts can purge it by tag after a successful write.
+// routeRules already sets maxAge/swr for this route pattern; this call is
+// the explicit per-request tag the plan's cache.invalidate({tags:['catalog']})
+// targets. In dev mode Astro.cache performs no caching (astro/dist/types/
+// public/context.d.ts) -- harmless to call unconditionally.
+Astro.cache.set(readerCacheOptions(fallback));
+// Every response names its source -- 'kv' for a genuinely stored catalog,
+// 'fixture-fallback' for a degraded read (stored value malformed, or the KV
+// read itself errored), 'fixture' for the ordinary case of nothing
+// published yet -- same header, same values, as catalog.snapshot.json.ts.
+Astro.response.headers.set('x-catalog-source', catalogSourceHeader(source, fallback));
+
+function workTitle(w: { id: string; facts: Record<string, unknown> }): string {
+  return typeof w.facts.title === 'string' ? w.facts.title : w.id;
+}
+function workAuthor(w: { id: string; facts: Record<string, unknown> }): string {
+  return typeof w.facts.author === 'string' ? w.facts.author : '';
+}
+---
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <ThemeInit />
+  <title>{SITE}</title>
+  <meta name="robots" content="noindex" />
+</head>
+<body class="lyceum-chrome lyc-shell">
+  <div class="lyc-chrome">
+    <LyceumBand siteName={SITE} searchHref={`${base}/search`} />
+  </div>
+  <main class="page">
+    <p class="lbl">M2 probe -- catalog source: {source}</p>
+    {catalog.collections.map((c) => (
+      <section class={c.accent ? `ledger ${c.accent}` : 'ledger'}>
+        <header>
+          <h2>{c.name}</h2>
+        </header>
+        {c.description && <p class="note">{c.description}</p>}
+        {c.works.length === 0
+          ? <p class="note">No works in this collection.</p>
+          : <ul>
+              {c.works.map((w) => (
+                <li>
+                  <strong>{workAuthor(w)}</strong>{workAuthor(w) && ', '}{workTitle(w)}
+                  {w.description && <p>{w.description}</p>}
+                </li>
+              ))}
+            </ul>}
+      </section>
+    ))}
+  </main>
+</body>
+</html>

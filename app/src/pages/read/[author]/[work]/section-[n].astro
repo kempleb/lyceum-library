@@ -1,0 +1,37 @@
+---
+// Partner-catalog alias, one per section of every flat section-scheme work:
+// /read/<author>/<work>/section-<n>/ redirects into the reader at
+// /read/<author>/<work>/book-<bookN>?loc=<n> — the same `?loc=` jump
+// mechanism ../../../[author]/[work]/[cite].astro uses (Reader.svelte parses
+// it via shared/lib/citation.ts's parseLocation and scrolls/highlights the
+// `col-<n>` segment), rather than a bare `#col-<n>` hash: `?loc=` also forces
+// bilingual view, and is what scripts/check-links.mjs already knows how to
+// validate against the target page's anchor ids. A static citation-shim
+// page, same technique as [cite].astro — meta refresh + JS replace + a
+// visible fallback link — so it always returns 200 even if a partner links
+// straight to it without following the redirect.
+import Forward from '../../../../components/Forward.astro';
+import { getWorkBySlug, workPath } from '@shared/lib/works';
+import { sectionRoutes } from '../../_section-routes';
+
+export function getStaticPaths() {
+  return sectionRoutes().map((route) => ({
+    params: { author: route.author, work: route.work, n: route.n },
+    props: { bookN: route.bookN },
+  }));
+}
+
+const author = Astro.params.author!;
+const slug = Astro.params.work!;
+const n = Astro.params.n!;
+const { bookN } = Astro.props;
+const work = getWorkBySlug(author, slug);
+if (!work) {
+  throw new Error(`read/[author]/[work]/section-[n]: no work at author '${author}' slug '${slug}'`);
+}
+const target = `${workPath(work.id, bookN)}?loc=${encodeURIComponent(n)}`;
+const title = `${work.title} ${n}`;
+---
+<Forward target={target} title={title}>
+  {work.title}, section {n}. <a href={target}>Continue to the passage</a>.
+</Forward>

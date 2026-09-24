@@ -1,0 +1,41 @@
+{
+  "book": 2,
+  "segments": [
+    {
+      "id": "2:2.1",
+      "column": "2.1",
+      "greek": [
+        { "n": 1, "text": "ἀρετή", "tokens": [{ "t": "ἀρετή", "o": 0, "k": "a)reth/" }] },
+        { "n": 2, "text": "ἀγαθόν", "tokens": [{ "t": "ἀγαθόν", "o": 0, "k": "a)gaqo/n" }] }
+      ],
+      "english": { "text": "Virtue itself is the good.", "notes": [], "markers": [], "bekker": [] }
+    },
+    {
+      "id": "2:2.2",
+      "column": "2.2",
+      "greek": [
+        { "n": 1, "text": "λόγος", "tokens": [{ "t": "λόγος", "o": 0, "k": "lo/gos" }] },
+        { "n": 2, "text": "ψυχή", "tokens": [{ "t": "ψυχή", "o": 0, "k": "yuxh/" }] }
+      ],
+      "english": { "text": "Reason governs the soul.", "notes": [], "markers": [], "bekker": [] }
+    },
+    {
+      "id": "2:2.3",
+      "column": "2.3",
+      "greek": [
+        { "n": 1, "text": "χρόνος", "tokens": [{ "t": "χρόνος", "o": 0, "k": "xro/nos" }] },
+        { "n": 2, "text": "φύσις", "tokens": [{ "t": "φύσις", "o": 0, "k": "fu/sis" }] }
+      ],
+      "english": { "text": "Time reveals nature.", "notes": [], "markers": [], "bekker": [] }
+    },
+    {
+      "id": "2:2.4",
+      "column": "2.4",
+      "greek": [
+        { "n": 1, "text": "ἀλήθεια", "tokens": [{ "t": "ἀλήθεια", "o": 0, "k": "a)lh/qeia" }] },
+        { "n": 2, "text": "κόσμος", "tokens": [{ "t": "κόσμος", "o": 0, "k": "ko/smos" }] }
+      ],
+      "english": { "text": "Truth orders the cosmos.", "notes": [], "markers": [], "bekker": [] }
+    }
+  ]
+}

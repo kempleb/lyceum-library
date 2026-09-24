@@ -1,0 +1,143 @@
+{
+ "1:A1": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "2.6-15",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925"
+   }
+  ]
+ },
+ "1:A5": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.41",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "As regards chronology, he was, as he says himself in the Lesser Diacosmos, a young man when Anaxagoras was old, being forty years his junior. He says that the Lesser Diacosmos was compiled 730 years after the capture of Troy."
+    ]
+   },
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.34-35",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Afterwards he met Leucippus and, according to some, Anaxagoras, being forty years younger than the latter. But Favorinus in his Miscellaneous History tells us that Democritus, speaking of Anaxagoras, declared that his views on the sun and the moon were not original but of great antiquity, and that he had simply stolen them.",
+     "Democritus also pulled to pieces the views of Anaxagoras on cosmogony and on mind, having a spite against him, because Anaxagoras did not take to him. If this be so, how could he have been his pupil, as some suggest?"
+    ]
+   }
+  ]
+ },
+ "1:A15": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Phaedrus",
+    "locus": "269e-270a",
+    "status": "translated",
+    "translation_credit": "Fowler, 1914"
+   }
+  ]
+ },
+ "1:A25": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "2.46",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "according to Aristotle in his third book On Poetry",
+     "Anaxagoras by Sosibius"
+    ]
+   }
+  ]
+ },
+ "1:A35": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Apology",
+    "locus": "26d-26e",
+    "status": "translated",
+    "translation_credit": "Fowler, 1914",
+    "emphasis": [
+     "since he says that the sun is a stone and the moon earth. Do you think you are accusing Anaxagoras, my dear Meletus, and do you so despise these gentlemen and think they are so unversed in letters as not to know, that the books of Anaxagoras the Clazomenian are full of such utterances? And forsooth the youth learn these doctrines from me, which they can buy sometimes",
+     "(if the price is high) for a drachma in the orchestra and laugh at Socrates, if he pretends they are his own,"
+    ]
+   }
+  ]
+ },
+ "1:A37": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "1.16",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Others wrote no more than one treatise each, as Melissus, Parmenides, Anaxagoras."
+    ]
+   }
+  ]
+ },
+ "1:A47": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Phaedo",
+    "locus": "97b-98c",
+    "status": "translated",
+    "translation_credit": "Fowler, 1914",
+    "emphasis": [
+     "Then one day I heard a man reading from a book, as he said, by Anaxagoras,",
+     "that it is the mind that arranges and causes all things. I was pleased with this theory of cause, and it seemed to me to be somehow right that the mind should be the cause of all things, and I thought, If this is so, the mind in arranging things arranges everything and establishes each thing as it is best for it to be.",
+     "As I considered these things I was delighted to think that I had found in Anaxagoras a teacher of the cause of things quite to my mind, and I thought he would tell me whether the earth is flat or round, and when",
+     "he had told me that, would go on to explain the cause and the necessity of it, and would tell me the nature of the best and why it is best for the earth to be as it is; and if he said the earth was in the center, he would proceed to show that it is best for it to be in the center; and I had made up my mind that",
+     "if he made those things clear to me, I would no longer yearn for any other kind of cause. Phaedo. And I had determined that I would find out in the same way about the sun and the moon and the other stars, their relative speed, their revolutions, and their other changes, and why the active or passive condition of each of them is for the best. For I never imagined that, when he said they were ordered by intelligence, he would introduce any other cause for these things than that it it is best for them to be as they are.",
+     "So I thought when he assigned the cause of each thing and of all things in common he would go on and explain what is best for each and what is good for all in common. I prized my hopes very highly, and I seized the books very eagerly and read them as fast as I could, that I might know as fast as I could about the best and the worst. My glorious hope, my friend, was quickly snatched away from me. As I went on with my reading I saw that the man made no use of intelligence,",
+     "and did not assign any real causes for the ordering of things, but mentioned as causes air and ether and water and many other absurdities."
+    ]
+   }
+  ]
+ },
+ "1:A55": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Cratylus",
+    "locus": "413c",
+    "status": "translated",
+    "translation_credit": "Fowler, 1926",
+    "emphasis": [
+     "and that justice is what Anaxagoras says it is, mind; for mind, he says, is ruled only by itself, is mixed with nothing, orders all things, and passes through them."
+    ]
+   }
+  ]
+ },
+ "1:A76": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Cratylus",
+    "locus": "409a-409b",
+    "status": "translated",
+    "translation_credit": "Fowler, 1926",
+    "emphasis": [
+     "the recent doctrine of Anaxagoras,",
+     "that the moon receives its light from the sun.",
+     "Now the light is always new and old about the moon, if the Anaxagoreans are right; for they say the sun, in its continuous course about the moon, always sheds new light upon it, and the light of the previous month persists."
+    ]
+   }
+  ]
+ }
+}

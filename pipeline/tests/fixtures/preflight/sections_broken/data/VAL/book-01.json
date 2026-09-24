@@ -1,0 +1,54 @@
+{
+  "book": 1,
+  "segments": [
+    {
+      "id": "1:1094a",
+      "column": "1094a",
+      "chapterStarts": [
+        {
+          "chapter": "1",
+          "beforeLine": 1,
+          "wordIndex": 0,
+          "engOffset": 0,
+          "bekker": "1094a1–2"
+        }
+      ],
+      "greek": [
+        {
+          "n": 1,
+          "text": "ἀγαθός",
+          "tokens": [
+            { "t": "ἀγαθός", "o": 0, "k": "a)gaqo/s" }
+          ]
+        },
+        {
+          "n": 2,
+          "text": "ἀγαθός λόγος",
+          "tokens": [
+            { "t": "ἀγαθός", "o": 0, "k": "a)gaqo/s" },
+            { "t": "λόγος", "o": 7, "k": "lo/gos" }
+          ],
+          "sections": [
+            { "n": 1, "o": 0 },
+            { "n": 2, "o": 3 }
+          ]
+        }
+      ],
+      "english": {
+        "text": "Good. Fine speech.",
+        "notes": [],
+        "markers": [
+          { "kind": "section", "n": "1", "offset": 0 }
+        ],
+        "bekker": [
+          { "n": 1, "offset": 0, "real": true },
+          { "n": 2, "offset": 6, "real": true }
+        ],
+        "paras": [
+          { "n": 2, "o": 5 },
+          { "n": 1, "o": 2 }
+        ]
+      }
+    }
+  ]
+}

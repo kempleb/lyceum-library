@@ -1,0 +1,176 @@
+# Zeno of Elea Testimonia (DK 29 A) — pipeline manifest (dk scheme: one flat
+# div[@type="Fragment"][@n] per citable testimonium, plain <p> prose, no <l>
+# lines). Greek-only work: the A-testimonia are ancient reports/paraphrases
+# about Zeno, not his own words, and no free English translation of them
+# exists — `english` is intentionally absent (Wave 1b design memo §1, §5.1's
+# "Greek-only work mode").
+#
+# DISAMBIGUATION (Wave 1b Zeno/Melissus/Anaxagoras batch): TLG carries THREE
+# "Zeno Phil." homonyms. Verified via each export's own <sourceDesc> before
+# committing to 0595: 0595's Testimonia/Fragmenta both cite "Die Fragmente
+# der Vorsokratiker, vol. 1, 6th edn., Ed. Diels/Kranz" — the Eleatic, DK 29.
+# 0635 ("Testimonia et fragmenta", 2942 lines) cites "Stoicorum veterum
+# fragmenta, vol. 1, Ed. von Arnim" — Zeno of Citium, the Stoic founder; NOT
+# a DK author at all. 2294 ("Fragmenta", 67 lines) cites "Stoicorum veterum
+# fragmenta, vol. 3, Ed. von Arnim" — a further Stoic Zeno (Tarsus), also
+# not DK. Independent content check: 0595's Testimonia contains the word
+# Ἀχιλλεύς ("Achilles") in a div discussing the Achilles-and-tortoise
+# paradox (Aristotle Physics Z9) — the paradoxes are uniquely Zeno the
+# Eleatic's, confirming 0595 against both the bibliography header and the
+# doctrine. Export div count also matches the DK range exactly: Testimonia
+# 30 divs (test. 1-30, no gaps/compounds/letters), Fragmenta divs "tit"+1-4
+# (frr. 1-4) — both exactly as expected.
+#
+# VERSE CHECK: both 0595 works were exported plain (no `-y`); a control `-y`
+# export of the same author was also run and diffed for the record — it
+# mis-verse-broke every line (304/46 spurious <l> elements), discarded, same
+# outcome as Xenophanes' testimonia. Zero structurally-marked verse in this
+# work. One embedded ancient VERSE quotation was found in plain content
+# (div A1 = Diog. Laert. IX 25, quoting Timon of Phlius' Silloi fr. 45 D.,
+# mocking "Zenon" and "Melissos" in three hexameter-ish lines) — it carries
+# no <hi rend="letter-spacing"> (it is not Zeno's own text, just biographical
+# color inside a testimonium) and needs no verse-citation mechanism; it
+# renders as ordinary Greek context prose like the rest of A1.
+
+work:
+  id: zeno-testimonia
+  title: "Testimonia"
+  author: "zeno"
+  language: "grc"
+  tlg_author: "0595"
+  tlg_work: "001"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 29 A"
+  # FATAL sourceDesc gate (Wave 1c Sol nit): stage1's _check_sourcedesc
+  # asserts this exact substring is present in the export XML's own
+  # <teiHeader><sourceDesc> text -- verified verbatim against
+  # build/export/.../tlg0595001.xml. The "0595" TLG author number pins
+  # this to Zeno of Elea specifically -- the Stoic Zeno of Citium is a
+  # DIFFERENT TLG author (0635), and a stale TLG_DIR export of that author
+  # in place of this one is exactly the wrong-author re-export this gate
+  # exists to catch.
+  expected_sourcedesc: 'Zeno Phil., Testimonia (0595: 001) "Die Fragmente der Vorsokratiker, vol. 1'
+
+citation:
+  scheme: dk
+  series: A
+  # dk_witness.py's owner-verified apparatus split (stage7_emit wiring):
+  # count of this work's columns whose apparatus actually splits into
+  # 2+ witnesses, cross-checked bidirectionally at preflight against the
+  # emitted dist's own `witnesses` keys -- catches an unreviewed new
+  # split and a stale declaration alike.
+  dk_witness_split_columns: 7
+  # Quote-mark polarity fix (owner ruling 2026-08-05, "we fix it and
+  # make damn sure every instance is correct"): the raw TLG export
+  # frequently opens a Greek quotation with U+2019 instead of U+2018 --
+  # stage1_greek._dk_normalize_quote_marks fixes every BALANCED
+  # (even-count) column automatically; this is that fix's own declared
+  # count, cross-checked bidirectionally at preflight against the
+  # emitted dist's actual U+2018/U+2019 total.
+  dk_quote_marks_rewritten: 28
+  # FAIL-CLOSED: this work's raw export carries an ODD
+  # U+2018/U+2019 count in these column(s) -- cannot be paired,
+  # left completely untouched by the fix above (see
+  # stage1_greek._dk_normalize_quote_marks' module doc).
+  dk_unbalanced_quote_columns:
+    - A18
+  hideLineNumbers: true
+  # 26 of 30 testimonia carry no <hi rend="letter-spacing"> at all (verified
+  # per-div against the export). The four marked columns (A26-A29) are
+  # Aristotle's own paraphrase of Zeno's four motion paradoxes (Phys. Z9,
+  # 239b) — DK highlights single technical words within Aristotle's report
+  # (δεύτερος/Ἀχιλλεύς/προέχειν in A26 = Achilles and the tortoise; τρίτος/
+  # ὀιστός in A27 = the arrow; τέταρτος in A28 = the stadium; κέγχρου/
+  # μέδιμνος in A29 = the millet-seed sorites), not full verbatim quotations
+  # of Zeno's own lost text (none survives for the paradoxes — Aristotle's
+  # report IS the source). Same "ancient doxography about the philosopher,
+  # not his own words" pattern as Heraclitus/Parmenides/Xenophanes A-series.
+  # U+2192 RIGHTWARDS ARROW / U+2190 LEFTWARDS ARROW are glued directly onto
+  # "ΒΒΒΒ"/"ΓΓΓΓ" with no separating space in A28's embedded
+  # `<seg type="Diagram">` (Alexander of Aphrodisias' figure for the
+  # Stadium paradox, via Simplicius: two rows of moving blocks marked with
+  # direction arrows, plus a stationary row and a legend) -- genuine DK6
+  # print content (not an OCR/encoding artifact like Empedocles' U+1017C
+  # case). PREVIOUSLY listed here under `export_artifact_chars` and
+  # stripped outright (this repo had no diagram-rendering mechanism, and
+  # stage3_tokenize.py's Beta Code transliteration didn't handle the bare
+  # arrow either). REVERSED by John's dashboard ruling (2026-07-24): "if
+  # there were arrows, put them in" -- the flattened rows plus the verbal
+  # legend without the arrows lost the diagram's actual content (which row
+  # moves which way). Fixed instead at the corpus-wide `_SIGLA` level
+  # (stage3_tokenize.py), the same precedent as the paragraphos/dotted-
+  # obelos/floor-bracket marks: the arrows now survive in the emitted
+  # Greek verbatim ("ΒΒΒΒ→ Ε ... ←ΓΓΓΓ"), stripped only from the
+  # lexicon lookup key, not from the surface text. No per-work
+  # `export_artifact_chars` declaration needed any more for this work.
+  # A full diagram-rendering mechanism (rows laid out as a figure, not
+  # flattened prose) remains future work, flagged for John, not built here
+  # (Kitchen Sink guard) -- this fix only restores the arrows' plain-text
+  # content.
+  unmarked_columns:
+    - A1
+    - A2
+    - A3
+    - A4
+    - A5
+    - A6
+    - A7
+    - A8
+    - A9
+    - A10
+    - A11
+    - A12
+    - A13
+    - A14
+    - A15
+    - A16
+    - A17
+    - A18
+    - A19
+    - A20
+    - A21
+    - A22
+    - A23
+    - A24
+    - A25
+    - A30
+
+# Digest fingerprint of the observed dk column spine (30 columns, A1-A30, no
+# gaps/compounds/lettered variants) — stage2 recomputes and compares it.
+section_spine: { count: 30, sha256: "07d39a808a16c6ecb0066066b3dd7d0e61f0970097413958141dd52702a9441a" }
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion).
+books:
+  - { n: 1, start: "A1", end: "A30" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: zeno-testimonia
+  slug: testimonia
+  title: Testimonia
+  abbr: Zen. A
+  author: zeno
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 29 A'
+  greekSource:
+    short: Diels–Kranz (1951–52)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 29 A'
+  translations: []
+  citation:
+    scheme: dk
+    copyAbbr: DK 29
+    dkChapter: 29
+    series: A
+  related:
+    - id: zeno-fragments
+      label: 'The B-fragments: the surviving words themselves'
+  blurb: Ancient reports, paraphrases, and biography concerning Zeno of Elea — including Aristotle’s own accounts of the paradoxes of motion — the original Greek text.

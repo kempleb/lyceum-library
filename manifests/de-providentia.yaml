@@ -1,0 +1,111 @@
+# De Providentia — pipeline manifest (Wave 2 Seneca essays, docs/wave2-
+# seneca-design.md §E: per-essay reader work on the book-section scheme,
+# PHI chapter mapped to the page axis and PHI section to the column). This
+# essay = Dialogi (PHI 1017/012) book 1 (Reynolds' physical liber, verified
+# against the untracked export at build/phi-test/out-seneca/Diogenes-
+# Resources/xml/phi/phi1017012.xml — 12 <div type="book">, each nesting
+# <div type="chapter"> (n="t" heading + numbered chapters) > <div
+# type="section">). `citation.source_book` (the design note's new
+# mechanism, stage1_latin.py's `_resolve_source_book`/`_parse_book_section`)
+# scopes the walk to book 1 alone — book 1 is clean: no non-digit sections,
+# no cross-section print-line hyphen wraps (verified 0, unlike De Officiis'
+# 7) — so this manifest carries neither `merge_sections` (the De Ira I
+# doublet fix, §E.4, out of scope here) nor a nonzero
+# `cross_section_rejoins`.
+#
+# Latin-only staging (no_english, the De Officiis/De Rerum Natura
+# precedent): text, citation, search, and the lexicon layer only — Basore's
+# English (LCL 214, 1928) is a separate John gate (design note §F/§J.1).
+
+work:
+  id: de-providentia
+  title: "De Providentia"
+  author: "seneca"
+  language: "lat"
+  lexicon: true
+  no_english: true
+  phi_author: "1017"
+  phi_work: "012"
+  latin_edition: "Reynolds, L. D. (ed.), L. Annaei Senecae Dialogorum Libri Duodecim (Oxford: Clarendon Press, 1977)"
+  # FATAL sourceDesc gate (De Officiis precedent): verified verbatim against
+  # the real PHI export (build/phi-test/out-seneca/Diogenes-Resources/xml/
+  # phi/phi1017012.xml) — this is the whole-file Dialogi sourceDesc (shared
+  # by every essay drawn from this file), not a per-book one.
+  expected_sourcedesc: 'L. Annaeus Seneca iunior. Dialogi (L. Annaei Senecae Dialogorum Libri Duodecim, ed. L. D. Reynolds, 1977). (1017: 012)'
+
+citation:
+  scheme: book-section
+  hideLineNumbers: true
+  # NEW mechanism (design note §E.3): scope the walk to Dialogi book 1
+  # alone. div_types.page is "chapter" (not book-section's usual PHI
+  # "book" override, e.g. De Officiis) — the essay's own page axis is the
+  # PHI chapter level; source_book is the literal outer PHI <div
+  # type="book"> token this walk is confined to.
+  source_book: "1"
+  div_types:
+    page: "chapter"
+    section: "section"
+  # Verified against the real export: 0 print-line hyphen wraps in book 1
+  # (De Providentia has 6 chapters, 68 sections total) — declared as a
+  # re-export drift tripwire like every other Latin book-section work.
+  cross_section_rejoins: 0
+  # Declared title-drop hash (§C of the flat mechanism, reused unchanged):
+  # book 1's own per-book chapter n="t" heading — the ONLY title div this
+  # essay's scoped walk ever visits (the whole-work Dialogi title, if one
+  # exists, lives outside book 1's subtree and is never reached).
+  title_labels:
+    - { sha256_16: "8b6f44dc50a1fdae", note: "book 1 (De Providentia) chapter heading (chapter n=\"t\")" }
+
+# Digest fingerprint of the observed chapter.section column spine (68
+# columns, 1.1..6.9: chapter 1 has 6 sections, chapter 2 has 12, chapter 3
+# has 14, chapter 4 has 16, chapter 5 has 11, chapter 6 has 9) -- stage2
+# recomputes and compares it. Computed directly against the real PHI
+# export via stage1_latin's own _parse_book_section (source_book="1").
+section_spine: { count: 68, sha256: "18eb5633da80d199edcee4cf64499c002673cd6471cbc50d1f3eee0ad827cf09" }
+
+books:
+  - { n: 1, start: "1.1", end: "1.6" }
+  - { n: 2, start: "2.1", end: "2.12" }
+  - { n: 3, start: "3.1", end: "3.14" }
+  - { n: 4, start: "4.1", end: "4.16" }
+  - { n: 5, start: "5.1", end: "5.11" }
+  - { n: 6, start: "6.1", end: "6.9" }
+
+sources:
+  phi_dir_env: "PHI_DIR"
+  phi_dir_default: "../TLG Files/PHI"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: de-providentia
+  title: De Providentia
+  abbr: Prov.
+  author: seneca
+  language: lat
+  workType: continuous
+  # John's ruling, 2026-09-12: a single dialogue stored as 6 PHI chapters,
+  # not real books -- the reader chrome and the /read/.../chapter-N URL both
+  # come from this field (shared/lib/works.ts's divisionId).
+  divisionNoun: chapter
+  books: 6
+  bookLabels:
+    - '1'
+    - '2'
+    - '3'
+    - '4'
+    - '5'
+    - '6'
+  greekEdition: 'Reynolds, L. D. (ed.), L. Annaei Senecae Dialogorum Libri Duodecim (Oxford: Clarendon Press, 1977)'
+  greekSource:
+    short: Reynolds (1977)
+    full: 'Reynolds, L. D. (ed.), L. Annaei Senecae Dialogorum Libri Duodecim (Oxford: Clarendon Press, 1977)'
+  translations: []
+  citation:
+    scheme: book-section
+    hideLineNumbers: true
+    # Block-per-section source layout (John, 2026-08-28: extend lined display
+    # to the section-numbered texts) — see WorkMeta["citation"].linedGreek.
+    linedGreek: true
+    copyAbbr: Sen. Prov.
+  blurb: 'A short dialogue answering Lucilius'' question of why bad things happen to good men under a providential god — Seneca''s answer: hardship is training, not punishment, and adversity is how fortune tests those it means to make strong.'

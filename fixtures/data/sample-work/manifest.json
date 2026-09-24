@@ -1,0 +1,51 @@
+{
+  "schema_version": "manifest.v1",
+  "id": "sample-work",
+  "author": "sample-author",
+  "title": "Sample Work",
+  "language": "grc",
+  "route": "/sample-author/sample-work",
+  "citation": {
+    "scheme": "book-section",
+    "books": [
+      { "n": 1, "start": "1.1", "end": "1.4" },
+      { "n": 2, "start": "2.1", "end": "2.4" }
+    ]
+  },
+  "editions": [
+    {
+      "language": "grc",
+      "edition": "Fixture",
+      "source": { "kind": "tlg", "author": "9999", "work": "999" },
+      "license": {
+        "status": "unverified",
+        "rationale": "Synthetic fixture edition; no real source rights claim is made."
+      }
+    }
+  ],
+  "translations": [],
+  "apparatus": {
+    "footnotes": false,
+    "sidenotes": false,
+    "paratext": false,
+    "figures": false,
+    "sections": true,
+    "philosophers": false
+  },
+  "corpus_version": "fixture",
+  "work": {
+    "id": "sample-work",
+    "title": "Sample Work",
+    "author": "Sample Author",
+    "tlg_author": "9999",
+    "tlg_work": "999",
+    "greek_edition": "Fixture",
+    "english_translation": "Fixture"
+  },
+  "books": [
+    { "book": 1, "segments": 4, "first_column": "1.1", "last_column": "1.4" },
+    { "book": 2, "segments": 4, "first_column": "2.1", "last_column": "2.4" }
+  ],
+  "analyses": { "token_keys": 8, "parses_dropped": 0 },
+  "lsj": { "entries": 8 }
+}

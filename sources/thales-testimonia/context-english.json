@@ -1,0 +1,27 @@
+{
+ "1:A1": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "1.22-40",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925"
+   }
+  ]
+ },
+ "1:A9": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Theaetetus",
+    "locus": "174a",
+    "status": "translated",
+    "translation_credit": "Fowler, 1921",
+    "emphasis": [
+     "Why, take the case of Thales, Theodorus. While he was studying the stars and looking upwards, he fell into a pit, and a neat, witty Thracian servant girl jeered at him, they say, because he was so eager to know the things in the sky that he could not see what was there before him at his very feet."
+    ]
+   }
+  ]
+ }
+}

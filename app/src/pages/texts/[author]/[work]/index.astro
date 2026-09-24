@@ -1,0 +1,41 @@
+---
+// Every work's landing page, served at /texts/<author>/<work>/ (e.g.
+// /texts/marcus-aurelius/Meditations/). The reader for a work lives at
+// /read/<author>/<work>/<division-id> (bookless works only ever have
+// division book-1). See src/components/Landing.astro.
+import Landing from '../../../../components/Landing.astro';
+import { getWorkBySlug, workSlug } from '@shared/lib/works';
+import { getAuthor } from '@shared/lib/authors';
+import { builtWorks } from '../../../../lib/built-works';
+import '@shared/styles/global.css';
+
+// One {author, work} pair per *built* work, joining against the owning author
+// (see shared/lib/authors.ts). `work` in the URL is the work's SLUG (workSlug —
+// defaults to `id`, differs once a work declares one, e.g. DK's
+// 'heraclitus-fragments' publishing at 'fragments'), not necessarily its id.
+// The registry may list works whose data isn't built in this checkout; only
+// works with public/data/<id>/manifest.json emit a landing page (see
+// built-works.ts). A work with no resolvable author is a build-time bug, not
+// a page silently missing its author segment.
+export function getStaticPaths() {
+  return builtWorks().map((w) => {
+    const author = getAuthor(w.author);
+    if (!author) {
+      throw new Error(`texts/[author]/[work]/index: work '${w.id}' has unresolvable author '${w.author}'`);
+    }
+    return { params: { author: author.id, work: workSlug(w) } };
+  });
+}
+
+const authorParam = Astro.params.author!;
+const slugParam = Astro.params.work!;
+// Resolve the URL's (author, slug) pair back to the work — also the guard
+// against a stale/mismatched pair (e.g. a hand-edited link): a slug that
+// exists but isn't owned by this author resolves to nothing.
+const work = getWorkBySlug(authorParam, slugParam);
+if (!work) {
+  throw new Error(`texts/[author]/[work]/index: no work at author '${authorParam}' slug '${slugParam}'`);
+}
+const workId = work.id;
+---
+<Landing workId={workId} />

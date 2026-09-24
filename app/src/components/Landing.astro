@@ -1,0 +1,636 @@
+---
+// A work's landing page, served at /texts/<author>/<work>/. An overview
+// that describes the work, credits the Greek source + translations, lists the
+// table of contents (linking into the reader), surfaces the "start reading"
+// editions, and points to in-print modern translations/commentaries we can't
+// host. The reader itself lives at /read/<author>/<work>/book-<n> for every
+// work.
+import { readFileSync } from 'node:fs';
+import ThemeInit from './ThemeInit.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import Pwa from './Pwa.astro';
+import Breadcrumb from './Breadcrumb.svelte';
+import CommandPalette from '@shared/components/CommandPalette.svelte';
+import {
+  AUTHENTICITY_LABEL, getWork, bookLabel, isBookless, workPath, visibleTranslations,
+  furtherReading, inPrintHref, workLanding, resourcesFor, freemanApparatusCredit,
+} from '@shared/lib/works';
+import { getAuthor } from '@shared/lib/authors';
+import { schemeFor, unitNounFor, pageEntriesFor } from '@shared/lib/citation';
+import { citeDescriptorFor, verseLineBookLineCount, verseLineTotalLines } from '../lib/citation-copy';
+import { assignSpeakerSlots, collectDisplayOrder } from '@shared/lib/speaker-colors';
+import { SUPPORT_URL } from '../lib/support';
+import LyceumBand from './LyceumBand.astro';
+import { siteNameFor } from '../lib/site';
+import { workCollections, workPreset } from '../lib/lyceum-catalog';
+import { sanitizeHtml } from '../lib/html';
+import { jsonLdSafe } from '../lib/jsonld';
+import { builtAuthors, builtWorks, builtWorksOf } from '../lib/built-works';
+import '@shared/styles/global.css';
+
+interface Props { workId: string; }
+const { workId } = Astro.props as Props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// PUBLIC_LYCEUM_CHROME=1 puts the sitewide Lyceum band and name on this page
+// too (docs/design-spec.md §4), so the demo origin reads as one site; with the
+// flag off every line below is the page this route has always served.
+const lyceumChrome = import.meta.env.PUBLIC_LYCEUM_CHROME === '1';
+const siteName = siteNameFor(lyceumChrome);
+// The Lyceum catalog's own collections for this work (e.g. "Aristotle",
+// "Presocratics") -- a catalog concept, so only resolved for the Lyceum-
+// chrome build, matching workPreset's own gating below.
+const collections = lyceumChrome ? workCollections(workId) : [];
+const work = getWork(workId)!;
+// `work.author` is an author-registry SLUG (see shared/lib/works.ts's doc
+// comment on the field), not a display name — resolve the real name for
+// every place this page shows it as prose.
+const authorName = getAuthor(work.author)?.name ?? work.author;
+// Breadcrumb's AUTHOR/WORK dropdown option lists (HOME > AUTHOR > WORK).
+const authorOptions = builtAuthors().map((a) => ({ id: a.id, name: a.name }));
+const workOptions = builtWorksOf(work.author).map((w) => ({ id: w.id, title: w.title }));
+const bookless = isBookless(work);
+// Section-scheme works (Plato/stephanus, Marcus/book-section) have no
+// chapters.json — stage7 emits sections.json (a per-page/per-section outline)
+// instead (see manifests/Euthyphro.yaml). Mirrors ReaderShell.astro's
+// `hasSectionOutline`/`pagesOf` handling (shared/lib/citation.ts's
+// CitationScheme.hasSections).
+const citeScheme = schemeFor(workId);
+const hasSectionOutline = citeScheme.hasSections;
+// "…and exact {citeWord} citation." below — see citation-copy.ts's doc
+// comment (REVIEW-CHECKLIST item 34: was a stephanus/busse/section-only map
+// here that silently fell back to 'Bekker' for every other scheme).
+const citeWord = citeDescriptorFor(workId);
+const isLetterScheme = citeScheme.id === 'letter';
+// The outline unit noun for a section-scheme work — sourced from
+// unitNounFor so a dk/letter work reports its real unit ("fragment"/
+// "testimonium"/"letter") instead of the old chapter/page-only map, which
+// mislabeled every dk work "N pages" (REVIEW-CHECKLIST item 34).
+const sectionUnit = unitNounFor(workId);
+const isVerseLineScheme = citeScheme.id === 'verse-line';
+// verse-line (Lucretius' De Rerum Natura) has neither chapters.json entries
+// (continuous verse has no chapter axis) nor sections.json (hasSections:
+// false) — so its real per-book/total line count comes from the pipeline's
+// own manifest.json (`books[].segments`) instead. Bug this fixes (commit
+// 1798729): the credit sentence below fell through to
+// `outline.reduce(chapters.length)`, always 0 for verse-line, printing
+// "6 books, 0 chapters." Read once here; degrades to an empty list (and the
+// count is then dropped, not shown as 0 — see verseLineTotalLines) if the
+// manifest isn't there yet.
+let manifestBooks: { book: number; segments: number }[] = [];
+if (isVerseLineScheme) {
+  try {
+    const manifest = JSON.parse(readFileSync(`public/data/${workId}/manifest.json`, 'utf-8'));
+    manifestBooks = manifest.books ?? [];
+  } catch { /* no manifest yet */ }
+}
+
+interface ChapterRef { chapter: string; column: string; line: string; bekker: string; }
+interface SectionRef { column: string; page: number; letter?: string; id: string; }
+let allChapters: Record<string, ChapterRef[]> = {};
+let allSections: Record<string, SectionRef[]> = {};
+if (hasSectionOutline) {
+  try {
+    allSections = JSON.parse(readFileSync(`public/data/${workId}/sections.json`, 'utf-8'));
+  } catch { /* no sections yet */ }
+} else {
+  allChapters = JSON.parse(readFileSync(`public/data/${workId}/chapters.json`, 'utf-8'));
+}
+// Dramatis personae — the speakers in this dialogue, read from each book's
+// turnFlow. Coloured with the reader's own palette (shared/lib/speaker-colors,
+// keyed by the printed display like the reader) so a speaker's hue matches
+// between this cast list and the text. Collected in first-appearance order,
+// across every book; shown only when the work has two or more named speakers.
+interface CastMember { name: string; abbr: string; slot: number; }
+let cast: CastMember[] = [];
+{
+  // Top-level turn owners in first-appearance order — the cast we display.
+  const owners: { s: string; d: string }[] = [];
+  const ownerSeen = new Set<string>();
+  // Each book's turn flow, kept so the colour roster is built with the SAME
+  // collectDisplayOrder(whole work) call ReaderShell.astro uses — guaranteeing a
+  // speaker's cast colour matches its colour in every book of the reader.
+  type Flow = Parameters<typeof collectDisplayOrder>[0] extends Iterable<infer F> ? F : never;
+  const flows: Flow[] = [];
+  let total = 0, subTurns = 0, para = false;
+  for (let b = 1; b <= work.books; b++) {
+    let bd: { turnFlow?: { kind?: string; turns?: Array<{ s: string | null; d: string | null;
+      et?: Array<{ d: string | null }> | null;
+      sub?: Array<{ d: string | null }> | null }> } };
+    try {
+      bd = JSON.parse(readFileSync(`public/data/${workId}/book-${String(b).padStart(2, '0')}.json`, 'utf-8'));
+    } catch { continue; }
+    flows.push(bd.turnFlow as Flow);
+    if (bd.turnFlow?.kind === 'para') para = true;
+    for (const t of bd.turnFlow?.turns ?? []) {
+      total++;
+      if (t.sub && t.sub.length) subTurns++;
+      if (t.s && t.d && !ownerSeen.has(t.s)) { ownerSeen.add(t.s); owners.push({ s: t.s, d: t.d }); }
+    }
+  }
+  // Only DIRECT dialogues get a cast: the top-level turns must be the actual
+  // speakers. Framed narrations (Symposium, Phaedo) and paragraph-narrated works
+  // (Republic) recount their dialogue in folded `sub`/embedded prose, so their
+  // top-level turns are only the frame — suppress rather than show a misleading
+  // cast. (Surfacing the inner speakers of narrated works is deferred editorial
+  // work.) Threshold: a majority-`sub` or `kind:"para"` work is a narration.
+  const subShare = total ? subTurns / total : 0;
+  if (owners.length >= 2 && subShare <= 0.5 && !para) {
+    const slots = assignSpeakerSlots(collectDisplayOrder(flows));
+    cast = owners.map((o) => ({ name: o.s, abbr: o.d, slot: slots.get(o.d) ?? 0 }));
+  }
+}
+
+// The book's "pages" — see citation.ts's `pageEntriesFor` doc comment: for a
+// book-section/letter work, `page` is constant across the whole book, so a
+// naive dedup collapses every section to one row (finding 3, Sol review).
+const pagesOf = (b: number): { page: number; column: string }[] =>
+  pageEntriesFor(citeScheme.id, allSections[String(b)] ?? []);
+interface BookOutline {
+  book: number; label: string; chapters: ChapterRef[]; pages: { page: number; column: string }[];
+  verseLines: number | null;
+}
+const outline: BookOutline[] = Array.from({ length: work.books }, (_, i) => {
+  const b = i + 1;
+  return {
+    book: b, label: bookLabel(work, b),
+    chapters: allChapters[String(b)] ?? [],
+    pages: hasSectionOutline ? pagesOf(b) : [],
+    verseLines: isVerseLineScheme ? verseLineBookLineCount(manifestBooks, b) : null,
+  };
+});
+// verse-line's total comes from the manifest sum (see manifestBooks above);
+// null when the manifest is unavailable so the credit sentence below drops
+// the count instead of showing 0.
+const verseLineTotal = isVerseLineScheme ? verseLineTotalLines(manifestBooks) : null;
+const totalChapters = isVerseLineScheme
+  ? (verseLineTotal ?? 0)
+  : hasSectionOutline
+  ? outline.reduce((n, b) => n + b.pages.length, 0)
+  : outline.reduce((n, b) => n + b.chapters.length, 0);
+// "N chapters · <Bekker start>–<Bekker end>" (or "N sections · <section
+// span>" for a section-scheme work) for a book's row on the landing. A
+// letter-scheme work drops the count — pagesOf's per-book dedup always
+// collapses a letter to a single constant-page entry (see its doc comment
+// above), so "1 letter" would carry no information (bug iii,
+// REVIEW-CHECKLIST item 34) — the reader already sees "Letter N" as the row
+// label.
+const bookSpan = (b: BookOutline) => {
+  if (isLetterScheme) return '';
+  if (isVerseLineScheme) {
+    // No chapters.json/sections.json count exists for verse-line (see
+    // manifestBooks above) — drop the row's count entirely when the
+    // manifest doesn't have this book yet, rather than print "0 lines".
+    if (b.verseLines == null) return '';
+    const n = b.verseLines;
+    return `${n} ${n === 1 ? sectionUnit.singular : sectionUnit.plural}`;
+  }
+  if (hasSectionOutline) {
+    const n = b.pages.length;
+    const first = b.pages[0]?.column ?? '';
+    const last = b.pages.at(-1)?.column ?? '';
+    const range = first && last ? ` · ${first}–${last}` : '';
+    return `${n} ${n === 1 ? sectionUnit.singular : sectionUnit.plural}${range}`;
+  }
+  const n = b.chapters.length;
+  const first = b.chapters[0]?.bekker.split('–')[0] ?? '';
+  const last = b.chapters.at(-1)?.bekker.split('–').at(-1) ?? '';
+  const range = first && last ? ` · ${first}–${last}` : '';
+  return `${n} chapter${n === 1 ? '' : 's'}${range}`;
+};
+
+const editions = visibleTranslations(work);
+const primary = editions.find((t) => t.id === work.defaultTranslation)
+  ?? editions.find((t) => t.slot === 'english') ?? editions[0];
+const translatorNames = editions.map((t) => t.name.split(' (')[0]);
+// Fix round (Sol re-verify): `work.alsoCredits` (a per-passage translator
+// override — see Work.alsoCredits' doc comment in shared/lib/works.ts,
+// today only Gorgias' Parnassos Press speeches) already gets folded into
+// the VISIBLE "translated by" paragraph below (lp-desc), but
+// metaDescription and the JSON-LD translator list were built from
+// `translatorNames` alone, so the page's own metadata undercounted its
+// translators against what a reader sees. Pull the names out of the
+// alsoCredits sentence the same way it already reads to a reader
+// ("...are translated by J. R. Gatt and G. A. Gazis") for metadata use
+// only — the visible paragraph keeps quoting the whole sentence verbatim.
+const alsoCreditNames = work.alsoCredits
+  ? (work.alsoCredits.match(/translated by (.+)$/i)?.[1] ?? '')
+      .split(/,| and /)
+      .map((n) => n.trim())
+      .filter(Boolean)
+  : [];
+const metaTranslatorNames = [...translatorNames, ...alsoCreditNames];
+const commentaries = (work.commentaries ?? [])
+  .map((id) => getWork(id))
+  .filter((w): w is NonNullable<typeof w> => Boolean(w));
+const resources = resourcesFor(workId);
+const reading = furtherReading(workId);
+const readingTrans = reading.filter((r) => r.kind === 'translation');
+const readingComm = reading.filter((r) => r.kind === 'commentary');
+const readingColl = reading.filter((r) => r.kind === 'collection');
+
+const readHref = (q = '') => `${base}${workPath(workId, 1)}${q}`;
+
+// ── SEO ─────────────────────────────────────────────────────────────────────
+// Language wording + BCP-47 tag for the page metadata, keyed off work.language
+// rather than hardcoded to Greek — this work may be a Latin (PHI) text.
+const sourceLangWord = work.language === 'lat' ? 'Latin' : 'Greek';
+const sourceLangTag = work.language === 'lat' ? 'la' : 'grc';
+const pageTitle = `${work.title} — ${authorName}, in ${sourceLangWord} & English`
+  + (lyceumChrome ? ` — ${siteName}` : '');
+const metaDescription =
+  `${work.title} by ${authorName}: the original ${sourceLangWord} (${work.greekSource.short})` +
+  ` with English translation` +
+  (metaTranslatorNames.length ? ` (${metaTranslatorNames.join(', ')})` : '') +
+  `, table of contents, morphology, and ${citeWord} citation. ${work.blurb}`;
+const canonical = Astro.site
+  ? new URL(`${base}${workLanding(workId)}`, Astro.site).href
+  : undefined;
+const ogImage = Astro.site
+  ? new URL(`${base}/og-default.png`, Astro.site).href : undefined;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Book',
+  name: work.title,
+  ...(work.greekTitle ? { alternateName: work.greekTitle } : {}),
+  author: { '@type': 'Person', name: authorName },
+  ...(metaTranslatorNames.length
+    ? { translator: metaTranslatorNames.map((name) => ({ '@type': 'Person', name })) }
+    : {}),
+  inLanguage: [sourceLangTag, 'en'],
+  ...(canonical ? { url: canonical } : {}),
+  numberOfPages: totalChapters,
+  isPartOf: { '@type': 'CreativeWorkSeries', name: `The Works of ${authorName}` },
+  description: work.blurb,
+};
+// Breadcrumb (Home › Work) for a SERP breadcrumb rich result. Absolute URLs
+// required, so emitted only when Astro.site is set.
+const breadcrumbLd = Astro.site
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: siteName,
+          item: new URL(`${base}/`, Astro.site).href },
+        { '@type': 'ListItem', position: 2, name: work.title,
+          item: new URL(`${base}${workLanding(workId)}`, Astro.site).href },
+      ],
+    }
+  : null;
+---
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <ThemeInit />
+  <title>{pageTitle}</title>
+  <meta name="description" content={metaDescription} />
+  {canonical && <link rel="canonical" href={canonical} />}
+  <meta property="og:type" content="book" />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={metaDescription} />
+  {canonical && <meta property="og:url" content={canonical} />}
+  <meta property="og:site_name" content={siteName} />
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={metaDescription} />
+  {ogImage && <meta name="twitter:image" content={ogImage} />}
+  <script type="application/ld+json" set:html={jsonLdSafe(jsonLd)} />
+  {breadcrumbLd && <script type="application/ld+json" set:html={jsonLdSafe(breadcrumbLd)} />}
+  <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+  <link rel="icon" href={`${base}/favicon.png`} type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} sizes="180x180" />
+  <style>
+    .lp-body { max-width: 760px; margin: 0 auto; padding: 2rem 1rem 5rem; font-family: var(--font-english); color: var(--text); }
+    .lp-eyebrow { font-family: var(--font-ui); font-size: 0.8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--text-mid); margin: 0 0 0.3rem; }
+    .lp-title { font-family: var(--font-english); font-size: 2rem; font-weight: 600; margin: 0 0 0.2rem; line-height: 1.15; }
+    .lp-greek { font-family: var(--font-greek); font-size: 1.15rem; color: var(--text-mid); margin: 0 0 1rem; }
+    .lp-period { font-family: var(--font-ui); font-size: 0.82rem; color: var(--text-light); margin: -0.4rem 0 0.9rem; }
+    .lp-lede { font-size: 1.1rem; line-height: 1.6; margin: 0 0 0.8rem; }
+    .lp-desc { font-size: 0.98rem; line-height: 1.7; color: var(--text-mid); margin: 0 0 1.5rem; }
+    .lp-freeman-credit { font-size: 0.8rem; line-height: 1.5; color: var(--apparatus-text); margin: -0.8rem 0 1.5rem; }
+    .lp-cta-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0 0 2.5rem; }
+    .lp-btn[hidden] { display: none; }
+    .lp-btn { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-ui); font-size: 0.9rem; font-weight: 600; padding: 0.6rem 1.1rem; border-radius: 6px; text-decoration: none; border: 1px solid var(--border); color: var(--text); transition: transform .08s ease; }
+    .lp-btn:active { transform: scale(0.97); }
+    .lp-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    h2.lp-h { font-family: var(--font-ui); font-size: 0.95rem; font-weight: 700; letter-spacing: .03em; color: var(--accent); margin: 2.2rem 0 0.7rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+    /* Dramatis personae — each speaker in the hue the reader gives their name.
+       data-spk resolves to one of the shared --spk-* palette vars (global.css). */
+    .cast-list { list-style: none; margin: 0.2rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.55rem 1.1rem; }
+    .cast-item { display: inline-flex; align-items: baseline; gap: 0.5rem; font-size: 1rem; }
+    .cast-swatch { width: 0.62rem; height: 0.62rem; border-radius: 50%; flex-shrink: 0; align-self: center; background: var(--c, var(--text-mid)); }
+    .cast-name { font-weight: 600; color: var(--c, var(--text)); }
+    .cast-abbr { font-family: var(--font-ui); font-size: 0.78rem; color: var(--text-light); letter-spacing: 0.02em; }
+    .cast-item[data-spk="0"] { --c: var(--spk-0); }
+    .cast-item[data-spk="1"] { --c: var(--spk-1); }
+    .cast-item[data-spk="2"] { --c: var(--spk-2); }
+    .cast-item[data-spk="3"] { --c: var(--spk-3); }
+    .cast-item[data-spk="4"] { --c: var(--spk-4); }
+    .cast-item[data-spk="5"] { --c: var(--spk-5); }
+    .cast-item[data-spk="6"] { --c: var(--spk-6); }
+    .cast-item[data-spk="7"] { --c: var(--spk-7); }
+
+    .ed-list, .book-list, .read-list { list-style: none; padding: 0; margin: 0; }
+    .ed-list li { margin: 0 0 0.5rem; }
+    .ed-list a { display: flex; justify-content: space-between; gap: 0.8rem; align-items: baseline; text-decoration: none; color: var(--text); padding: 0.55rem 0.7rem; border: 1px solid var(--border); border-radius: 6px; }
+    .ed-list a:hover { border-color: var(--accent); }
+    .ed-name { font-family: var(--font-ui); font-weight: 600; font-size: 0.92rem; }
+    .ed-kind { font-size: 0.82rem; color: var(--text-mid); text-align: right; }
+    /* Commentary card: same full width / border as an edition row, but a richer
+       column layout (title, blurb, call-to-action). */
+    .comm-card { flex-direction: column; align-items: flex-start; gap: 0.45rem; padding: 0.9rem 1rem; }
+    .comm-title { font-family: var(--font-ui); font-weight: 700; font-size: 1rem; color: var(--text); }
+    .comm-greek { font-weight: 500; color: var(--text-mid); }
+    .comm-blurb { font-size: 0.86rem; line-height: 1.5; color: var(--text-mid); }
+    .comm-cta { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.2rem; font-family: var(--font-ui); font-weight: 600; font-size: 0.86rem; color: #fff; background: var(--accent); border: 1px solid var(--accent); border-radius: 6px; padding: 0.45rem 0.9rem; transition: transform .08s ease; }
+    .comm-card:hover .comm-cta { transform: translateX(2px); }
+    .book-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: 0.5rem; }
+    .book-list a { display: flex; justify-content: space-between; gap: 0.6rem; align-items: baseline; text-decoration: none; color: var(--text); padding: 0.55rem 0.7rem; border: 1px solid var(--border); border-radius: 6px; }
+    .book-list a:hover { border-color: var(--accent); }
+    .bl-label { font-family: var(--font-ui); font-weight: 600; font-size: 0.92rem; }
+    .bl-meta { font-size: 0.78rem; color: var(--text-mid); font-variant-numeric: tabular-nums; text-align: right; }
+    .credits { font-size: 0.9rem; line-height: 1.7; color: var(--text-mid); }
+    .credits a { color: var(--accent); }
+    .read-list li { margin: 0 0 0.7rem; font-size: 0.9rem; line-height: 1.55; color: var(--text-mid); }
+    .read-list .rk { font-family: var(--font-ui); font-size: 0.68rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--text-mid); background: var(--border); border-radius: 3px; padding: 0.08em 0.45em; margin-right: 0.45em; vertical-align: 0.08em; }
+    .read-list a.buy { color: var(--accent); white-space: nowrap; }
+    .read-list a.res-link { font-family: var(--font-ui); font-size: 0.98rem; font-weight: 700; color: var(--accent); }
+    .lp-note { font-size: 0.82rem; color: var(--text-mid); margin-top: 0.8rem; }
+    .lp-support { margin-top: 2.75rem; }
+  </style>
+  <Pwa />
+</head>
+<body class={lyceumChrome ? 'lyceum-chrome lyc-page' : undefined} data-preset={lyceumChrome ? workPreset(workId) : undefined}>
+  <CommandPalette work={workId} works={builtWorks()} client:load />
+  {lyceumChrome ? (
+    <div class="lyc-chrome">
+      <LyceumBand siteName={siteName} searchHref={`${base}/search`}>
+        <a class="tool" href={`${base}/catalog/`}>Catalog</a>
+        <a class="tool" href={`${base}/lemma/${work.language}/`}>Lexica</a>
+        <ThemeToggle />
+        <a class="tool tool-signin" href="https://lyceum.institute">Sign in</a>
+      </LyceumBand>
+    </div>
+  ) : (
+  <header class="simple-header">
+    <Breadcrumb authorId={work.author} authors={authorOptions} workId={workId} works={workOptions} client:load />
+    <nav class="header-actions" aria-label="Navigation">
+      <a href={`${base}/`} class="search-link">All works</a>
+      <a href={`${base}/lemma/${work.language}/`} class="search-link">Lexicon</a>
+      <a href={`${base}/search`} class="search-link">Search</a>
+      <ThemeToggle />
+    </nav>
+  </header>
+  )}
+
+  <main class="lp-body">
+    <p class="lp-eyebrow">{authorName} · {work.abbr}</p>
+    <h1 class="lp-title">{work.title}</h1>
+    {work.authenticity && work.authenticity !== 'genuine' && (
+      <p class="lp-status">
+        <span class="status-tag">{AUTHENTICITY_LABEL[work.authenticity]}</span>
+        <span class="lp-status-note">Authorship traditionally doubted — transmitted with {authorName}’s works but widely judged not to be by {authorName}.</span>
+      </p>
+    )}
+    {work.greekTitle && <p class="lp-greek" lang="grc">{work.greekTitle}</p>}
+    {work.period && (
+      <p class="lp-period">Traditionally dated to Plato’s {work.period} period.</p>
+    )}
+    <p class="lp-lede">{work.blurb}</p>
+    {collections.length > 0 && (
+      <p class="credits" data-collections>
+        {collections.map((c, i) => (
+          <>
+            {i > 0 && <span> · </span>}
+            <span data-collection-id={c.id}>{c.name}</span>
+          </>
+        ))}
+      </p>
+    )}
+    <p class="lp-desc">
+      This edition presents the original {sourceLangWord} ({work.greekSource.short}) side by
+      side with {translatorNames.length > 1 ? 'English translations' : 'an English translation'}
+      {translatorNames.length
+        ? ` (${translatorNames.join(', ')}${work.alsoCredits ? `; ${work.alsoCredits}` : ''})`
+        : ''} —
+      with click-to-parse morphology, dictionary entries, and exact
+      {' ' + citeWord} citation.
+      {(() => {
+        // verse-line (Lucretius): drop the count entirely rather than show
+        // "0 lines" when the manifest doesn't have it yet (see
+        // verseLineTotal above) — same honest-omission treatment
+        // isLetterScheme/bookless already get elsewhere on this page.
+        if (isVerseLineScheme && verseLineTotal == null) return ` ${work.books} books.`;
+        const noun = hasSectionOutline || isVerseLineScheme
+          ? sectionUnit
+          : { singular: 'chapter', plural: 'chapters' };
+        const word = totalChapters === 1 ? noun.singular : noun.plural;
+        if (isLetterScheme) return ` ${work.books} ${word}.`;
+        return bookless
+          ? ` ${totalChapters} ${word}.`
+          : ` ${work.books} books, ${totalChapters} ${word}.`;
+      })()}
+    </p>
+    {freemanApparatusCredit(work) && (
+      <p class="lp-freeman-credit">{freemanApparatusCredit(work)}</p>
+    )}
+
+    <div class="lp-cta-row">
+      {lyceumChrome ? (
+      <a class="lp-btn primary" href={readHref()}>
+        Begin reading →
+      </a>
+      ) : (
+      <a class="lp-btn primary" href={primary ? readHref(`?trans=${primary.id}`) : readHref()}>
+        Start reading →
+      </a>
+      )}
+      <a class="lp-btn resume-btn" id="lp-resume" href="#" hidden
+         data-work={workId} data-books={work.books}>Resume</a>
+      <a class="lp-btn" href={readHref('?view=greek')}>{sourceLangWord} only</a>
+      {editions.length > 1 && <a class="lp-btn" href={readHref('?trans=compare')}>Compare translations</a>}
+    </div>
+
+    {work.related && work.related.length > 0 && (
+      <p class="lp-related">
+        See also: {work.related.map((r, i) => {
+          const rw = getWork(r.id);
+          return rw ? (
+            <>
+              {i > 0 && <span> · </span>}
+              <a href={`${base}${workLanding(r.id)}`}>{r.label}</a>
+            </>
+          ) : null;
+        })}
+      </p>
+    )}
+
+    {cast.length > 1 && (
+      <section class="lp-cast" aria-label="Speakers in this dialogue">
+        <h2 class="lp-h">Speakers</h2>
+        <ul class="cast-list">
+          {cast.map((m) => (
+            <li class="cast-item" data-spk={m.slot}>
+              <span class="cast-swatch" aria-hidden="true"></span>
+              <span class="cast-name">{m.name}</span>
+              {m.abbr !== m.name && <span class="cast-abbr">{m.abbr}</span>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <h2 class="lp-h">Read this work</h2>
+    <ul class="ed-list">
+      {editions.map((t) => (
+        <li>
+          <a href={readHref(`?trans=${t.id}`)}>
+            <span class="ed-name">{t.short}</span>
+            <span class="ed-kind">{sourceLangWord} &amp; English · {t.name}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    {!bookless && (
+      <>
+        <h2 class="lp-h">{isLetterScheme ? 'Letters' : 'Books'}</h2>
+        <ul class="book-list">
+          {outline.map((b) => (
+            <li>
+              <a href={`${base}${workPath(workId, b.book)}`}>
+                <span class="bl-label">{isLetterScheme ? 'Letter' : 'Book'} {b.label}</span>
+                {bookSpan(b) && <span class="bl-meta">{bookSpan(b)}</span>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+
+    {commentaries.length > 0 && (
+      <>
+        <h2 class="lp-h">Commentary</h2>
+        <ul class="ed-list">
+          {commentaries.map((c) => (
+            <li>
+              <a class="comm-card" href={`${base}${workLanding(c.id)}`}>
+                <span class="comm-title">{c.author} — {c.title}{c.greekTitle && <span class="comm-greek"> · {c.greekTitle}</span>}</span>
+                <span class="comm-blurb">{c.blurb}</span>
+                <span class="comm-cta">Read the {c.title} →</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+
+    <h2 class="lp-h">{sourceLangWord} text &amp; translations</h2>
+    <p class="credits">
+      <strong>{sourceLangWord}:</strong> {work.greekSource.full}<br />
+      <strong>{translatorNames.length > 1 ? 'Translations' : 'Translation'}:</strong>
+      {' '}{editions.map((t) => t.name).join('; ')}.<br />
+      Full source and licence details are on the
+      <a href={`${base}/attribution`}>Texts &amp; Licences</a> page.
+    </p>
+
+    {reading.length > 0 && (
+      <>
+        <h2 class="lp-h">In print</h2>
+        {(readingTrans.length > 0 || readingComm.length > 0) && (
+          <>
+            <p class="credits" style="margin-bottom:0.8rem;">
+              Modern, copyright-protected translations and commentaries we can’t
+              host here, for readers who want to go further:
+            </p>
+            <ul class="read-list">
+              {readingTrans.map((r) => (
+                <li>
+                  <span class="rk">Translation</span><span set:html={sanitizeHtml(r.cite)} />{' '}
+                  <a class="buy" href={inPrintHref(r)} target="_blank" rel="noopener nofollow">Find in print →</a>
+                </li>
+              ))}
+              {readingComm.map((r) => (
+                <li>
+                  <span class="rk">Commentary</span><span set:html={sanitizeHtml(r.cite)} />{' '}
+                  <a class="buy" href={inPrintHref(r)} target="_blank" rel="noopener nofollow">Find in print →</a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+        {readingColl.length > 0 && (
+          <>
+            <p class="credits" style="margin:1rem 0 0.8rem;">
+              Prefer a paper copy? These in-print editions carry the translation
+              read here (or a revision of it):
+            </p>
+            <ul class="read-list">
+              {readingColl.map((r) => (
+                <li>
+                  <span class="rk">In print</span><span set:html={sanitizeHtml(r.cite)} />{' '}
+                  <a class="buy" href={inPrintHref(r)} target="_blank" rel="noopener nofollow">Find in print →</a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+        <p class="lp-note">“Find in print” opens a Google Books search for the edition.</p>
+      </>
+    )}
+
+    {resources.length > 0 && (
+      <>
+        <h2 class="lp-h">Resources</h2>
+        <ul class="read-list">
+          {resources.map((r) => (
+            <li>
+              <a class="res-link" href={r.url} target="_blank" rel="noopener">{r.label}</a>
+              {' — '}{r.blurb}
+              {r.exercises && <> See {r.exercises}, relevant to this work.</>}
+              {' '}Developed by{' '}
+              <a class="buy" href={r.authorUrl} target="_blank" rel="noopener">{r.authorName}</a>.
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+
+    <section class="support-card lp-support">
+      <div class="eyebrow">Support <span class="gk">χάρις</span></div>
+      <h2>Support {siteName}</h2>
+      <p>The reader is free and open. A contribution helps defray development costs and keeps it that way.</p>
+      <a class="btn-donate" href={SUPPORT_URL} target="_blank" rel="noopener">Make a gift</a>
+    </section>
+  </main>
+<script>
+  // "Resume" CTA: appears when the reader has a saved position for this work
+  // (localStorage — see shared/lib/resume.ts), linking to the remembered
+  // book + Bekker citation.
+  import { resumeFor } from '@shared/lib/resume';
+  import { workPath } from '@shared/lib/works';
+  import { tocGroupNoun } from '../lib/citation-copy';
+
+  const btn = document.getElementById('lp-resume') as HTMLAnchorElement | null;
+  if (btn) {
+    const pos = resumeFor(btn.dataset.work!);
+    if (pos) {
+      const books = Number(btn.dataset.books) || 1;
+      const book = Math.min(Math.max(1, pos.book), books);
+      const base = (import.meta.env.BASE_URL as string).replace(/\/$/, '');
+      btn.href = `${base}${workPath(btn.dataset.work!, book)}${pos.cite ? `#${pos.cite}` : ''}`;
+      // "Resume Book N" hardcoded "Book" for every scheme (finding 2, Sol
+      // review) — Seneca's Epistle 47 showed "Resume Book 47".
+      const bookNoun = tocGroupNoun(btn.dataset.work!);
+      btn.textContent = pos.cite ? `Resume at ${pos.cite}` : (books > 1 ? `Resume ${bookNoun} ${book}` : 'Resume');
+      btn.hidden = false;
+    }
+  }
+</script>
+</body>
+</html>

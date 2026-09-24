@@ -1,0 +1,64 @@
+---
+// Shared forwarding-page shell: meta refresh (no-JS fallback — it cannot
+// carry the visitor's query string or hash, which is accepted) + a JS
+// location.replace that does carry `location.search` and `location.hash`
+// through onto `target` + a visible fallback link, so the page always
+// returns 200 even if a partner links straight to it without following the
+// redirect. Used by every static citation-shim / address-pivot forwarder
+// (see [author]/[work]/book/[n].astro, [author]/[work]/index.astro,
+// [author]/[work]/[cite].astro, read/[author]/[work]/section-[n].astro).
+//
+// Carry-through rule (see buildDest below): if `target` already has a `#`,
+// the target's own hash wins and the visitor's hash is dropped (a fixed
+// jump target beats an incidental one the visitor arrived with — also
+// avoids concatenating two hashes into "...#fixed#frag"); if `target` has a
+// `?` but no `#`, only `location.hash` is appended (the `?loc=` jump stays
+// authoritative); if `target` has neither, the visitor's full
+// `location.search + location.hash` is appended.
+interface Props {
+  target: string;
+  title: string;
+}
+const { target, title } = Astro.props as Props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <link rel="canonical" href={target} />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <script is:inline define:vars={{ target }}>
+      // Pure so the four cases are easy to read and test in isolation:
+      //   1. target has its own `#` (and no `?`) -- that hash wins, the
+      //      visitor's hash is dropped.
+      //   2. target has both `?` and `#` -- same rule as case 1: the
+      //      target's hash wins (this is the bug fixed here -- the old code
+      //      appended the visitor's hash too, producing "...#fixed#frag").
+      //   3. target has `?` but no `#` -- only the visitor's hash is
+      //      appended; the query (e.g. `?loc=`) stays authoritative.
+      //   4. target has neither -- the visitor's full search + hash is
+      //      carried through untouched.
+      function buildDest(target, search, hash) {
+        const hasHash = target.includes('#');
+        const hasQuery = target.includes('?');
+        if (hasHash) {
+          // Cases 1 and 2.
+          return target;
+        }
+        if (hasQuery) {
+          // Case 3.
+          return target + hash;
+        }
+        // Case 4.
+        return target + search + hash;
+      }
+      location.replace(buildDest(target, location.search, location.hash));
+    </script>
+  </head>
+  <body>
+    <!-- DRAFT copy pending John's approval. -->
+    <p><slot /></p>
+  </body>
+</html>

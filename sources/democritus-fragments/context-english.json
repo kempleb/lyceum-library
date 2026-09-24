@@ -1,0 +1,55 @@
+{
+ "1:B5": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.41",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "As regards chronology, he was, as he says himself in the Lesser Diacosmos, a young man when Anaxagoras was old, being forty years his junior. He says that the Lesser Diacosmos was compiled 730 years after the capture of Troy."
+    ]
+   },
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.34-35",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "But Favorinus in his Miscellaneous History tells us that Democritus, speaking of Anaxagoras, declared that his views on the sun and the moon were not original but of great antiquity, and that he had simply stolen them.",
+     "Democritus also pulled to pieces the views of Anaxagoras on cosmogony and on mind, having a spite against him, because Anaxagoras did not take to him."
+    ]
+   }
+  ]
+ },
+ "1:B116": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.36",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "I came to Athens and no one knew me.’”"
+    ]
+   }
+  ]
+ },
+ "1:B117": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.72",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Democritus because he rejects qualities, saying, “Opinion says hot or cold, but the reality is atoms and empty space,” and again, “Of a truth we know nothing, for truth is in a well.”"
+    ]
+   }
+  ]
+ }
+}

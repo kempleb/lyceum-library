@@ -1,0 +1,122 @@
+# Paradoxa Stoicorum — pipeline manifest (Wave 2 Batch 3 round 2: the new
+# flat, bookless `section` scheme — Pipeline Change B, stage1_latin.py's
+# `_parse_flat_section`, Epictetus' Enchiridion precedent for the scheme
+# itself, manifests/enchiridion.yaml). PHI's export nests
+# <div type="section"> inside <div type="paradox" n="t|pr|1..6"> wrappers
+# (verified against phi0474047.xml) — the paradox axis is dropped entirely
+# per the design note (docs/wave2-batch3c-design.md §B): section numbering
+# is continuous 1-52 across all six paradoxes + the proem, and the paradox
+# @n is never read into a column at all. Latin-only staging (no_english):
+# text, citation, search, and the lexicon layer only.
+#
+# Two title-drop shapes both exercised here (see stage1_latin.py's
+# `_parse_flat_section` module-doc block for the mechanism), both gated on
+# the declared `citation.title_labels` hash multiset below (adversarial-
+# review Finding 2 — a declared expectation, not a character-class guard):
+#   * the whole-work title wrapper (<div type="paradox" n="t"> nesting a
+#     numbered section that would otherwise collide with the REAL section of
+#     the same number inside the sibling proem wrapper,
+#     <div type="paradox" n="pr">) — exactly the design note's §B.0
+#     "title-wrapper drop" worked example;
+#   * DEVIATION FROM THE DESIGN NOTE (flagged, not improvised): each of the
+#     six real paradoxes (n="1".."6") ALSO carries its OWN per-paradox
+#     heading div (a bare section n="t", sibling of that paradox's real
+#     numbered sections) whose text is a short Latin label followed by a
+#     Greek quotation of that paradox's own thesis — mixed-script content a
+#     Latin-only shape guard would have to special-case, but the
+#     hash-declared mechanism does not care about script at all. The design
+#     note's §B.0 does not mention these six headings at all.
+#
+# Depth scoping (adversarial-review Finding 3): `citation.flat_wrapper`
+# below declares the wrapper div type ("paradox") and its allowed @n token
+# set — citation labels, not corpus text (the same non-verbatim status as
+# `citation.exclude_sections`' "fr"/"fr1" tokens elsewhere in this batch) —
+# so stage1_latin.py's depth-scoped walker accepts a section div only as a
+# direct child of <body> or of one of these declared wrapper positions;
+# anything else is fatal.
+#
+# copyAbbr: this manifest follows the design note's own explicit choice
+# ('Parad.', section B: "Standard citation is the flat continuous section")
+# rather than the orchestrator brief's shorthand ship-list text
+# ("Cic. Parad.") — flagged as a deviation, not a silent improvisation.
+
+work:
+  id: paradoxa-stoicorum
+  title: "Paradoxa Stoicorum"
+  author: "cicero"
+  language: "lat"
+  lexicon: true
+  no_english: true
+  phi_author: "0474"
+  phi_work: "047"
+  latin_edition: "Mueller, C. F. W. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Part 4, Vol. 3 (Leipzig: Teubner, 1890)"
+  # FATAL sourceDesc gate (De Officiis/De Rerum Natura precedent): verified
+  # verbatim against the real PHI export
+  # (build/export/Diogenes-Resources/xml/phi/phi0474047.xml).
+  expected_sourcedesc: 'M. Tullius Cicero. Paradoxa Stoicorum (M. Tulli Ciceronis Scripta Quae Manserunt Omnia. Part 4, Vol. 3, ed. C. F. W. Mueller, 1890)'
+
+citation:
+  scheme: section
+  hideLineNumbers: true
+  div_types:
+    page: "section"
+  # No cross-section print-line hyphen wraps observed in this export
+  # (verified against the real export). Declared as a re-export drift
+  # tripwire (a future re-export producing a nonzero count fails loudly).
+  cross_section_rejoins: 0
+  # Depth-scoping declaration (Finding 3): the wrapper div type this export
+  # nests numbered section divs inside, and its allowed own @n token set —
+  # citation labels ("the title wrapper", "the proem", the six paradox
+  # numbers), not corpus prose.
+  flat_wrapper:
+    div_type: "paradox"
+    n_tokens: ["t", "pr", "1", "2", "3", "4", "5", "6"]
+  # Declared title-drop hashes (Finding 2) — see manifests/de-officiis.yaml's
+  # matching comment for the full mechanism. One entry for the whole-work
+  # title wrapper's inner section, plus one per paradox's own heading div.
+  title_labels:
+    - { sha256_16: "444c2b62c2972067", note: "whole-work title (paradox n=\"t\" wrapper's inner section)" }
+    - { sha256_16: "514b1469e49e631f", note: "paradox 1 heading (section n=\"t\")" }
+    - { sha256_16: "f85d45d382ddf244", note: "paradox 2 heading (section n=\"t\")" }
+    - { sha256_16: "70d7722cd804d3e0", note: "paradox 3 heading (section n=\"t\")" }
+    - { sha256_16: "3af82139f9c8edd8", note: "paradox 4 heading (section n=\"t\")" }
+    - { sha256_16: "47170ac6d2237d8b", note: "paradox 5 heading (section n=\"t\")" }
+    - { sha256_16: "418d2199ee84f5c5", note: "paradox 6 heading (section n=\"t\")" }
+
+# Digest fingerprint of the observed bare-section column spine (52 columns,
+# "1".."52", continuous across the proem + six paradoxes) — stage2
+# recomputes and compares it. Computed directly against the real PHI export
+# (build/export/.../phi0474047.xml) via stage1_latin's own
+# _parse_flat_section.
+section_spine: { count: 52, sha256: "ea26e77a228c4cb88955c52b457e36135a190a95adc0202b3b4615ce86e72d03" }
+
+# Flat scheme: exactly one book, bounded by bare section-integer tokens.
+books:
+  - { n: 1, start: "1", end: "52" }
+
+sources:
+  phi_dir_env: "PHI_DIR"
+  phi_dir_default: "../TLG Files/PHI"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: paradoxa-stoicorum
+  title: Paradoxa Stoicorum
+  abbr: Parad.
+  author: cicero
+  language: lat
+  workType: continuous
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Mueller, C. F. W. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Part 4, Vol. 3 (Leipzig: Teubner, 1890)'
+  greekSource:
+    short: Mueller (1890)
+    full: 'Mueller, C. F. W. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Part 4, Vol. 3 (Leipzig: Teubner, 1890)'
+  translations: []
+  citation:
+    scheme: section
+    hideLineNumbers: true
+    copyAbbr: Parad.
+  blurb: Six short Stoic paradoxes — that only the honorable is good, that virtue suffices for happiness, that all wrongs are equal, that every fool is mad, that only the wise are free, and that only the wise are rich — argued in Cicero's own rhetorical voice.

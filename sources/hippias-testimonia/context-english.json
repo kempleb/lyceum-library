@@ -1,0 +1,87 @@
+{
+ "1:A4": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Apology",
+    "locus": "19e",
+    "status": "translated",
+    "translation_credit": "Fowler, 1914",
+    "emphasis": [
+     "Although this also seems to me to be a fine thing, if one might be able to teach people, as Gorgias of Leontini and Prodicus of Ceos and Hippias of Elis are."
+    ]
+   }
+  ]
+ },
+ "1:A6": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Hippias Major",
+    "locus": "281a",
+    "status": "translated",
+    "translation_credit": "Fowler, 1926"
+   }
+  ]
+ },
+ "1:A8": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Hippias Minor",
+    "locus": "363c-364a",
+    "status": "translated",
+    "translation_credit": "Fowler, 1926",
+    "emphasis": [
+     "Why, Eudicus, it would be strange conduct on my part, if I, who always go up to Olympia to the festival of the Greeks from my home at Elis, and entering the sacred precinct, offer to speak on anything that anyone chooses of those subjects",
+     "which I prepared for exhibition, and to answer any questions that anyone asks—should now avoid being questioned by Socrates.",
+     "for since I began to contend at the Olympic games, I never yet met anyone better than myself in anything."
+    ]
+   }
+  ]
+ },
+ "1:A9": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Hippias Major",
+    "locus": "286a-286b",
+    "status": "translated",
+    "translation_credit": "Fowler, 1926",
+    "emphasis": [
+     "And by Zeus, Socrates, I have just lately gained reputation there by telling about noble or beautiful pursuits, recounting what those of a young man should be. For I have a very beautiful discourse composed about them, well arranged in its words and also in other respects. And the plan of the discourse, and its beginning, is something like this: After the fall of Troy, the story goes that Neoptolemus asked Nestor",
+     "what the noble and beautiful pursuits were, by following which a young man would become most famous; so after that we have Nestor speaking and suggesting to him very many lawful and most beautiful pursuits. That discourse, then, I delivered there and intend to deliver here the day after tomorrow in Pheidostratus’s schoolroom, with many other things worth hearing; for Eudicus, the son of Apemantus, asked me to do so."
+    ]
+   }
+  ]
+ },
+ "1:A11": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Hippias Major",
+    "locus": "285b-286a",
+    "status": "translated",
+    "translation_credit": "Fowler, 1926",
+    "emphasis": [
+     "But then, for Heaven’s sake, Hippias, what sort of discourses are those for which they applaud you and which they enjoy hearing?",
+     "Or are they evidently those which you understand most admirably, those about the stars and the phenomena of the heavens? Hipp. Not in the least; they won’t even endure those. Soc. But they enjoy hearing about geometry? Hipp. Not at all, since one might say that many of them do not even know how to count. Soc. Then they are far from enduring a lecture by you on the processes of thought. Hipp. Far from it indeed, by Zeus. Soc. Well, then, those matters which you of all men know best how to discuss,",
+     "concerning the value of letters and syllables and rhythms and harmonies? Hipp. Harmonies indeed, my good fellow, and letters! Soc. But then what are the things about which they like to listen to you and which they applaud? Tell me yourself, for I cannot discover them. Hipp. They are very fond of hearing about the genealogies of heroes and men, Socrates, and the foundations of cities in ancient times and, in short, about antiquity in general, so that for their sake I have been obliged to learn all that sort of thing by heart",
+     "and practise it thoroughly. Soc. By Zeus, Hippias, it is lucky for you that the Lacedaemonians do not enjoy hearing one recite the list of our archons from Solon’s time; if they did, you would have trouble in learning it by heart. Hipp. How so, Socrates? After hearing them once, I can remember fifty names. Soc. True, but I did not understand that you possess the science of memory; and so I understand that the Lacedaemonians naturally enjoy you as one who knows many things, and they make use of you",
+     "as children make use of old women, to tell stories agreeably."
+    ]
+   }
+  ]
+ },
+ "1:A12": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Hippias Minor",
+    "locus": "368b-368d",
+    "status": "translated",
+    "translation_credit": "Fowler, 1926"
+   }
+  ]
+ }
+}

@@ -1,0 +1,148 @@
+# Protagoras of Abdera Testimonia (DK 80 A) — pipeline manifest (dk scheme:
+# one flat div[@type="Fragment"][@n] per citable testimonium, plain <p>
+# prose, no <l> lines). Greek-only work: ancient reports/paraphrases about
+# Protagoras, not his own words; no free English translation exists (Burnet
+# never covers the Sophists — his EGP is the Presocratic physicists only).
+#
+# FIRST DK VOL. 2 SOPHIST WORK (task-directed): DK vol. 2 (1952), chapter 80.
+# Confirmed directly against the export's own <sourceDesc> (not assumed):
+# 'Protagoras Soph., Testimonia (1635: 001) "Die Fragmente der Vorsokratiker,
+# vol. 2, 6th edn.", ...'.
+#
+# NON-DK WORK EXCLUDED (task-directed): TLG1635 carries a THIRD work, 003
+# Fragmentum (Mejer 1972) — no Diels-Kranz number, excluded, never
+# export-referenced by any manifest.
+#
+# VERSE CHECK: exported plain (no `-y`); confirmed 0 <l> elements anywhere in
+# the export. Straight doxographic/biographical prose throughout (DIOG.
+# Laert. IX 50ff., PLATO dialogues, ARISTOT., SEXT., PLUT., etc.), including
+# embedded Latin (CIC., APUL., TERTULL. citations, and a marked Latin
+# quotation of Cicero's Protagoras translation in A23) — none of it verse.
+#
+# STRUCTURE: 31 divs, n="1".."30" (30, consecutive, no gaps) plus one
+# lettered variant "21a" (an independently-existing div, not a merge). No
+# title divs, no div_map/div_concat/compound_n_map cases (no comma-numbered
+# or multi-part @n values anywhere in this work).
+#
+# LETTER-SPACING FINDING: 16 of 31 columns carry at least one
+# <hi rend="letter-spacing"> span (verbatim quotations embedded in the
+# doxography — the two famous fragments B1 "man is the measure" and B4 "concerning
+# the gods" both surface here quoted inline, cross-referenced by DK's own
+# bracketed "[B 1]"/"[B 4]" apparatus). 15 columns are pure doxography/
+# biography with no letter-spacing at all — declared `unmarked_columns`
+# below, content-verified per column (not assumed): A2, A4, A6, A8, A9, A11,
+# A15, A16, A17, A18, A20, A22, A28, A29, A30.
+#
+# LATIN: A23 carries a marked Latin role='text' span (Cicero's own Latin
+# rendering of Protagoras' agnostic opening, quoted alongside the Greek
+# original elsewhere in the same column) — mixed Greek+Latin role='text'
+# content, so NOT a `latin_fragments` case (that gate only fires when a
+# column's ENTIRE role='text' content is Latin; A23 also carries genuine
+# Greek role='text' tokens, part of the same agnostic-opening sentence).
+# No column in this work has zero-Greek-token role='text' content.
+#
+# DAMAGE-DOT MECHANISM (evidence-based, same precedent as Democritus A99a --
+# a genuinely damaged papyrus quoted inline in prose apparatus, not a
+# transcription artifact of this pipeline): A30 quotes a badly lacunose
+# Oxyrhynchus papyrus Homer scholion (Grenfell-Hunt Oxyrh. Pap. II p. 68,
+# col. XII) whose editors marked illegible runs with literal ASCII periods
+# glued directly between surviving lowercase Greek letters, no separating
+# space, which stage3's tokenizer cannot transliterate. Declared in
+# `citation.dk_damaged_columns` below, applying the lowercase-Greek-scoped
+# `_DK_DAMAGE_PERIOD_LOWER_RE` cleanup (stage1_greek.py), same mechanism
+# already proven on Democritus A99a. A30-specific ς correction (Opus ruling
+# 2026-08-29): the between-tails lacuna "ης.......ς" is NOT intra-word
+# damage (ς is word-final), so its dots are KEPT and a space opens the
+# trailing boundary ("ης....... ς") -- see
+# `_DK_DAMAGE_PERIOD_AFTER_FINAL_SIGMA_RE` in stage1_greek.py.
+
+work:
+  id: protagoras-testimonia
+  title: "Testimonia"
+  author: "protagoras"
+  language: "grc"
+  tlg_author: "1635"
+  tlg_work: "001"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1952), 80 A"
+  # FATAL sourceDesc gate: stage1's _check_sourcedesc asserts this exact
+  # substring is present in the export XML's own <teiHeader><sourceDesc>
+  # text -- verified verbatim against build/export/.../tlg1635001.xml.
+  expected_sourcedesc: 'Protagoras Soph., Testimonia (1635: 001) "Die Fragmente der Vorsokratiker, vol. 2'
+
+citation:
+  scheme: dk
+  series: A
+  # dk_witness.py's owner-verified apparatus split (stage7_emit wiring):
+  # count of this work's columns whose apparatus actually splits into
+  # 2+ witnesses, cross-checked bidirectionally at preflight against the
+  # emitted dist's own `witnesses` keys -- catches an unreviewed new
+  # split and a stale declaration alike.
+  dk_witness_split_columns: 6
+  # Quote-mark polarity fix (owner ruling 2026-08-05, "we fix it and
+  # make damn sure every instance is correct"): the raw TLG export
+  # frequently opens a Greek quotation with U+2019 instead of U+2018 --
+  # stage1_greek._dk_normalize_quote_marks fixes every BALANCED
+  # (even-count) column automatically; this is that fix's own declared
+  # count, cross-checked bidirectionally at preflight against the
+  # emitted dist's actual U+2018/U+2019 total.
+  dk_quote_marks_rewritten: 32
+  hideLineNumbers: true
+  unmarked_columns:
+    - A2
+    - A4
+    - A6
+    - A8
+    - A9
+    - A11
+    - A15
+    - A16
+    - A17
+    - A18
+    - A20
+    - A22
+    - A28
+    - A29
+    - A30
+  dk_damaged_columns:
+    - A30
+
+# Digest fingerprint of the observed dk column spine (31 columns, A1-A30 plus
+# A21a, no gaps) — stage2 recomputes and compares it.
+section_spine: { count: 31, sha256: "b12862a0a2bd8dcec6d09e42bf2dc28131a8fcf861a65cb5773071e896bdddd3" }
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion).
+books:
+  - { n: 1, start: "A1", end: "A30" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: protagoras-testimonia
+  slug: testimonia
+  title: Testimonia
+  abbr: Protag. A
+  author: protagoras
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1952), 80 A'
+  greekSource:
+    short: Diels–Kranz (1952)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1952), 80 A'
+  translations: []
+  citation:
+    scheme: dk
+    copyAbbr: DK 80
+    dkChapter: 80
+    series: A
+  related:
+    - id: protagoras-fragments
+      label: 'The B-fragments: the surviving words themselves'
+  blurb: Ancient reports, anecdote, and biography concerning Protagoras of Abdera — his life among the sophists and Pericles’ circle, his trial and the burning of his books at Athens, and Plato’s extended portrait in the dialogue that bears his name — the original Greek text.

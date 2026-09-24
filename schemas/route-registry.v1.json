@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lyceum-reader.org/schemas/route-registry.v1.json",
+  "title": "Lyceum route registry v1",
+  "description": "The cross-corpus authority for route ownership. Work manifests may claim routes, but this registry alone decides ownership. Every route value must be unique across the routes array; JSON Schema cannot enforce that rule for object properties, so the contract validator enforces it.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "routes"],
+  "properties": {
+    "schema_version": { "const": "route-registry.v1" },
+    "routes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["route", "corpus", "work"],
+        "properties": {
+          "route": { "type": "string", "pattern": "^/[^/]+/[^/]+$" },
+          "corpus": { "type": "string", "minLength": 1 },
+          "work": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

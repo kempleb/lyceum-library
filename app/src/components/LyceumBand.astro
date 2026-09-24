@@ -1,0 +1,37 @@
+---
+// The sitewide chrome band (docs/design-spec.md §3 the lockup, §4 the chrome
+// contract) — the same markup and classes on every shell page, so the reader,
+// the homepage and the Catalog read as one site. Styled by the
+// `body.lyceum-chrome .band` block in shared/styles/global.css.
+//
+// Extracted from ReaderShell.astro, which still renders it with its own three
+// reader controls (Text size / Theme / Print) in the slot; the shell pages
+// pass their own fast paths instead. PUBLIC_LYCEUM_CHROME=1 only — every
+// caller is already behind that flag.
+interface Props {
+  /** The site name in the lockup: 'The Lyceum Reader'. */
+  siteName: string;
+  searchHref: string;
+}
+const { siteName, searchHref } = Astro.props as Props;
+---
+<div class="band">
+  <span class="lock">
+    <a class="lname" href="/">{siteName}</a>
+    <a class="inst" href="https://lyceum.institute">Lyceum Institute <span aria-hidden="true">↗</span></a>
+  </span>
+  <span class="bandgap"></span>
+  <nav class="tools" aria-label="Site">
+    <a class="tool tool-search" href={searchHref}>Search <kbd aria-hidden="true">⌘K</kbd></a>
+    <slot />
+  </nav>
+</div>
+<script is:inline>
+  // The ⌘K hint is macOS by default; the command palette binds Ctrl+K
+  // elsewhere, so correct the visible label there.
+  (function () {
+    if (/Mac|iPhone|iPad|iPod/.test(navigator.platform || navigator.userAgent)) return;
+    var kbd = document.querySelector('.band .tool-search kbd');
+    if (kbd) kbd.textContent = 'Ctrl K';
+  })();
+</script>

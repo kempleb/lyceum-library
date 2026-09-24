@@ -1,0 +1,92 @@
+---
+import Search from '@shared/components/Search.svelte';
+import { builtWorks } from '../lib/built-works';
+import ThemeInit from '../components/ThemeInit.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import Pwa from '../components/Pwa.astro';
+import { jsonLdSafe } from '../lib/jsonld';
+import LyceumBand from '../components/LyceumBand.astro';
+import { siteNameFor } from '../lib/site';
+import '@shared/styles/global.css';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// PUBLIC_LYCEUM_CHROME=1 puts the sitewide Lyceum band and name on this page
+// too (docs/design-spec.md §4), so the demo origin reads as one site; with the
+// flag off every line below is the page this route has always served.
+const lyceumChrome = import.meta.env.PUBLIC_LYCEUM_CHROME === '1';
+const siteName = siteNameFor(lyceumChrome);
+
+const pageTitle = `Search the Corpus in Greek, Latin, and English — ${siteName}`;
+const searchDescription =
+  'Search the ancient philosophers across the original Greek or Latin and' +
+  ' English translation — by word or phrase, in Greek script or Beta Code,' +
+  ' with results cited by work.';
+const canonical = Astro.site ? new URL(`${base}/search/`, Astro.site).href : undefined;
+const ogImage = Astro.site ? new URL(`${base}/og-default.png`, Astro.site).href : undefined;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: pageTitle,
+  description: searchDescription,
+  ...(canonical ? { url: canonical } : {}),
+  isPartOf: { '@type': 'WebSite', name: siteName },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: canonical ? `${canonical}?q={search_term_string}` : undefined,
+    'query-input': 'required name=search_term_string',
+  },
+};
+---
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <ThemeInit />
+  <title>{pageTitle}</title>
+  <meta name="description" content={searchDescription} />
+  {canonical && <link rel="canonical" href={canonical} />}
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={searchDescription} />
+  <meta property="og:site_name" content={siteName} />
+  {canonical && <meta property="og:url" content={canonical} />}
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={searchDescription} />
+  {ogImage && <meta name="twitter:image" content={ogImage} />}
+  <script type="application/ld+json" set:html={jsonLdSafe(jsonLd)} />
+  <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+  <link rel="icon" href={`${base}/favicon.png`} type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} sizes="180x180" />
+  <Pwa />
+</head>
+<body class={lyceumChrome ? 'lyceum-chrome lyc-page' : undefined}>
+  {lyceumChrome ? (
+    <div class="lyc-chrome">
+      <LyceumBand siteName={siteName} searchHref={`${base}/search`}>
+        <a class="tool" href={`${base}/catalog/`}>Catalog</a>
+        <a class="tool" href={`${base}/lemma/grc/`}>Lexica</a>
+        <ThemeToggle />
+        <a class="tool tool-signin" href="https://lyceum.institute">Sign in</a>
+      </LyceumBand>
+    </div>
+  ) : (
+  <header class="simple-header">
+    <div class="header-title">
+      <a class="home-link" href={`${base}/`}>Home</a>
+      <span class="title-sep">›</span>
+      <span class="header-static">Search</span>
+    </div>
+    <nav class="header-actions" aria-label="Navigation">
+      <a href={`${base}/`} class="search-link">All works</a>
+      <a href={`${base}/lemma/grc/`} class="search-link">Lexicon</a>
+      <ThemeToggle />
+    </nav>
+  </header>
+  )}
+  <Search works={builtWorks()} client:load />
+</body>
+</html>

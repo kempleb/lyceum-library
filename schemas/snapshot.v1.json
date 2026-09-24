@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lyceum-reader.org/schemas/snapshot.v1.json",
+  "title": "Lyceum library taxonomy v1",
+  "description": "The site's own period/school taxonomy and 'start here' picks (fixtures/taxonomy.json) — the site's launch-order wings and reading paths moved to fixtures/reading-paths.json and are no longer part of this contract.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "taxonomy"],
+  "properties": {
+    "schema_version": { "const": "taxonomy.v1" },
+    "taxonomy": { "$ref": "#/$defs/taxonomy" },
+    "start_here": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "taxonomy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["author_period_order", "period_label", "school_label"],
+      "properties": {
+        "author_period_order": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "period_label": {
+          "type": "object",
+          "additionalProperties": { "type": "string", "minLength": 1 }
+        },
+        "school_label": {
+          "type": "object",
+          "additionalProperties": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

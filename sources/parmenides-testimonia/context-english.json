@@ -1,0 +1,118 @@
+{
+ "1:A1": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.21-23",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925"
+   }
+  ]
+ },
+ "1:A3": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "2.3",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Anaximenes, the son of Eurystratus, a native of Miletus, was a pupil of Anaximander. According to some, he was also a pupil of Parmenides."
+    ]
+   }
+  ]
+ },
+ "1:A5": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Theaetetus",
+    "locus": "183e",
+    "status": "translated",
+    "translation_credit": "Fowler, 1921",
+    "emphasis": [
+     "Parmenides seems to me to be, in Homer’s words, one to be venerated and also awful. For I met him when I was very young and he was very old, and he appeared to me to possess an absolutely noble depth of mind."
+    ]
+   },
+   {
+    "source_author": "Plato",
+    "source_work": "Sophist",
+    "locus": "217c",
+    "status": "translated",
+    "translation_credit": "Fowler, 1921",
+    "emphasis": [
+     "the method of questions? I was present once when Parmenides employed the latter method and carried on a splendid discussion. I was a young man then, and he was very old."
+    ]
+   },
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.25",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Zeno was a citizen of Elea. Apollodorus in his Chronology says that he was the son of Teleutagoras by birth, but of Parmenides by adoption, while Parmenides was the son of Pyres.",
+     "Zeno, then, was all through a pupil of Parmenides and his bosom friend."
+    ]
+   }
+  ]
+ },
+ "1:A9": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.55",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Theophrastus affirms that he was an admirer of Parmenides and imitated him in his verses, for Parmenides too had published his treatise On Nature in verse."
+    ]
+   }
+  ]
+ },
+ "1:A13": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "1.16",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Others wrote no more than one treatise each, as Melissus, Parmenides, Anaxagoras."
+    ]
+   }
+  ]
+ },
+ "1:A26": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Theaetetus",
+    "locus": "181a",
+    "status": "translated",
+    "translation_credit": "Fowler, 1921",
+    "emphasis": [
+     "but if we find that the partisans of the whole seem to have truer doctrines, we will take refuge with them from those who would move what is motionless."
+    ]
+   }
+  ]
+ },
+ "1:A44": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.48",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Further, we are told that he was the first to call the heaven the universe and the earth spherical, though Theophrastus says it was Parmenides, and Zeno that it was Hesiod."
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,470 @@
+# Xenophanes Fragments (DK 21 B) — pipeline manifest (dk scheme, VERSE
+# variant: `citation.lines: true`). Export shape verified against a
+# TWO-INVOCATION export (docs/tlg-phi-export.md's per-invocation gotcha):
+# tlg0267006.xml (this work) came from the `-y` (verse) invocation --
+# elegiac/hexameter `<l n>` lines DIRECTLY under each fragment div, the
+# count restarting at 1 per fragment. tlg0267005.xml (Testimonia,
+# manifests/xenophanes-testimonia.yaml) came from the PLAIN invocation
+# instead -- see that manifest's own comment. Both invocations exported
+# author 0267 (all six of its works); only 005/006 are DK6 -- see the
+# testimonia manifest's comment for the excluded four (West, Diehl, an
+# Anthologia Graeca epigram, and a Jacoby FGrH testimonium).
+#
+# STRUCTURE: 47 divs -- THREE title divs (n="tit,1-9", "tit,10-21a",
+# "tit,23-41" -- Xenophanes' Fragmenta has multiple title-range markers,
+# unlike Heraclitus' single "tit,1-126"; all three match `_DK_TITLE_N_RE`
+# unchanged) plus 44 ordinary citable columns: B1-B42 (frr. 1-42) with a
+# gap at B43/B44 (Diels prints no fr. 43 or 44 in this series -- declared
+# `expected_gaps`), the lettered B21a, and B45 (DK's own numbering: frr.
+# 1-42 then 45, matching the groundwork's "frr. 1-42, 45" bibliography
+# note).
+#
+# VERSE ROLE DETERMINATION (Wave 1b Xenophanes finding, extending the
+# Parmenides precedent): as with Parmenides, <hi rend="letter-spacing">
+# does NOT reliably bracket a fragment's real verse -- here it marks only
+# SHORT editorial spans: elliptical incipit/desinit previews (B7, exactly
+# the Parmenides pattern), work-title mentions ("Περὶ φύσεως", "Σίλλοις",
+# "Παρωιδίαις" -- B17, B22, B30, B39), and single-word lexicographic
+# headwords a grammarian glosses (B39 "κέρασον", B40 "βρόταχον", B41
+# "σιρός", B21a "Ἔρυκος"). The genuinely citable verse in almost every
+# fragment carries NO typographic mark at all. Every column below is a
+# philologically-reviewed declaration of which raw <l n> values are the
+# fragment's own real, DK-citable verse lines (renumbered 1..k at emission)
+# -- verified against the standard DK/Burnet texts (openings and line
+# counts cross-checked against Burnet's EGP 3rd ed. print for every column
+# he covers).
+#
+# A NEW judgment call beyond the Parmenides precedent (CANON-log-worthy):
+# seven columns (B4, B19, B21, B21a, B39, B40, B41) carry letter-spacing
+# whose marked span is embedded in a source's OWN narrative sentence with
+# no separable citable verse of Xenophanes' own alongside it (a rival
+# candidate's name in B4's coinage doxography; Diogenes' own biographical
+# claim in B19; a scholiast's "hence X calls him ___" clause in B21; bare
+# lexicographic headword-glosses with no further quotation in B21a/39/40/
+# 41). Because a `verse_text_lines` override applies at WHOLE-LINE
+# granularity (documented limitation, stage1_greek._dk_walk_verse_div),
+# including that line would attribute the surrounding narrative sentence to
+# Xenophanes, not just the marked word. Disposition: declared
+# `citation.unmarked_columns` via an EXPLICIT EMPTY `verse_text_lines`
+# entry (`col: []`, paired `verse_text_line_counts[col]: 0`) -- a positive
+# declaration that SUPPRESSES the mechanical per-line letter-spacing
+# detection (which would otherwise wrongly promote the whole containing
+# line to role='text'), not merely an absence of one. B13 (Gellius' Latin
+# testimony about Homer/Hesiod's relative age, which mentions Xenophanes
+# only in passing with no quotation whatsoever) carries NO letter-spacing
+# at all -- the mechanical default alone already produces zero text blocks
+# for it, so its OWN explicit `[]` (below) suppresses nothing that needed
+# suppressing -- but it IS declared below anyway, for explicitness and
+# symmetry with the other seven, making EIGHT total `verse_text_lines: []`
+# entries in this file (Sol review nit S5: an earlier version of this
+# comment undercounted, omitting B13 from the list even though its `[]`
+# entry was already present -- fixed here, not by removing the entry).
+# Two columns (B20, B45) keep a minor amount of accepted
+# framing prose alongside a genuine multi-word quoted phrase/verse,
+# following the Parmenides B21 "accepted minor imprecision" precedent
+# (B20: a short trailing editorial gloss "(sc. ... Ἐπιμενίδην)"; B45: a
+# five-word "Ξενοφάνης ... φησιν·" attribution tag immediately before the
+# quote begins) -- reviewed case by case, not a blanket rule.
+citation:
+  scheme: dk
+  series: B
+  # dk_witness.py's owner-verified apparatus split (stage7_emit wiring):
+  # count of this work's columns whose apparatus actually splits into
+  # 2+ witnesses, cross-checked bidirectionally at preflight against the
+  # emitted dist's own `witnesses` keys -- catches an unreviewed new
+  # split and a stale declaration alike.
+  dk_witness_split_columns: 1
+  # Quote-mark polarity fix (owner ruling 2026-08-05, "we fix it and
+  # make damn sure every instance is correct"): the raw TLG export
+  # frequently opens a Greek quotation with U+2019 instead of U+2018 --
+  # stage1_greek._dk_normalize_quote_marks fixes every BALANCED
+  # (even-count) column automatically; this is that fix's own declared
+  # count, cross-checked bidirectionally at preflight against the
+  # emitted dist's actual U+2018/U+2019 total.
+  dk_quote_marks_rewritten: 12
+  lines: true
+  verse_text_lines:
+    B1: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
+    B2: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+    B3: [5, 6, 7, 8, 9, 10]
+    B4: []
+    B5: [2, 3]
+    B6: [2, 3, 4, 5]
+    B7: [4, 5, 6, 7, 8]
+    B8: [3, 4, 5, 6]
+    B9: [2]
+    B10: [2]
+    B11: [2, 3, 4]
+    B12: [3, 4]
+    B13: []
+    B14: [2, 3]
+    B15: [2, 3, 4, 5, 6]
+    B16: [2, 3]
+    B17: [4]
+    B18: [2, 3]
+    B19: []
+    B20: [2]
+    B21: []
+    B21a: []
+    B22: [3, 4, 5, 6, 7]
+    B23: [3, 4]
+    B24: [2]
+    B25: [2]
+    B26: [2, 3]
+    B27: [2]
+    B28: [2, 3]
+    B29: [2]
+    B30: [3, 4, 5, 6, 7, 8]
+    B31: [2]
+    B32: [2, 3]
+    B33: [2]
+    B34: [2, 3, 4, 5]
+    B35: [2]
+    B36: [2]
+    B37: [2]
+    B38: [2, 3]
+    B39: []
+    B40: []
+    B41: []
+    B42: [3]
+    B45: [4, 5]
+  # Independently-declared redundant count of each column's resulting
+  # role='text' lines above (Sol review blocker 1, Parmenides precedent) --
+  # cross-checked against len(verse_text_lines[col]) by stage1_greek.
+  verse_text_line_counts:
+    B1: 24
+    B2: 22
+    B3: 6
+    B4: 0
+    B5: 2
+    B6: 4
+    B7: 5
+    B8: 4
+    B9: 1
+    B10: 1
+    B11: 3
+    B12: 2
+    B13: 0
+    B14: 2
+    B15: 5
+    B16: 2
+    B17: 1
+    B18: 2
+    B19: 0
+    B20: 1
+    B21: 0
+    B21a: 0
+    B22: 5
+    B23: 2
+    B24: 1
+    B25: 1
+    B26: 2
+    B27: 1
+    B28: 2
+    B29: 1
+    B30: 6
+    B31: 1
+    B32: 2
+    B33: 1
+    B34: 4
+    B35: 1
+    B36: 1
+    B37: 1
+    B38: 2
+    B39: 0
+    B40: 0
+    B41: 0
+    B42: 1
+    B45: 2
+  # Zero role='text' declarations above (an explicit `[]`, or a genuine
+  # absence of any letter-spacing at all) -- see the module comment for the
+  # per-column reasoning. Two-way-exact with the observed export (stage1
+  # fails loudly if a listed column DOES carry a role='text' block, or if a
+  # column not listed here turns out to have zero text blocks).
+  unmarked_columns:
+    - B4
+    - B13
+    - B19
+    - B21
+    - B21a
+    - B39
+    - B40
+    - B41
+  # frr. 43, 44: Diels' own numbering has no B43/B44 in this series (the
+  # export jumps 42 -> 45 directly) -- declared so a re-export that
+  # RESTORES a div DK doesn't print is caught, not silently accepted
+  # (mirrors Heraclitus B84/B109, Xenophanes A10).
+  expected_gaps:
+    - B43
+    - B44
+  # Freeman Ancilla wave phase 1b (docs/freeman-wave-design.md §1(b)):
+  # every kind is declared here and cross-checked against both the
+  # extractor output and the live Greek role profile.
+  #
+  # The extractor classifies each wholly-italic parenthetical as conflict,
+  # even where the Greek role profile agrees with a note reading. B4,
+  # B13, B19, and B40 are editorial reports/glosses with no role='text'
+  # line -- originally resolved as notes under the approved Protagoras B7
+  # precedent, but retroactively flipped to `omit` under John's
+  # 2026-07-23 ruling ("don't ship things for which we have no greek"):
+  # testimonium-only columns with no Xenophanean Greek for Freeman's
+  # report to face ship no Freeman English at all. B20, B21, B21a, B39,
+  # and B41 preserve a reported phrase or lexical item inside the
+  # source's sentence; the approved Protagoras B6a precedent resolves
+  # them as embedded survivals. No new ruling is introduced here.
+  kind_overrides:
+    B4:
+      kind: omit
+      reason: >
+        testimonium-only column, no role='text' line in the Greek --
+        retroactively flipped from `note` to `omit` under John's
+        2026-07-23 ruling (don't ship things for which we have no greek)
+    B13:
+      kind: omit
+      reason: >
+        testimonium-only column, no role='text' line in the Greek --
+        retroactively flipped from `note` to `omit` under John's
+        2026-07-23 ruling (don't ship things for which we have no greek)
+    B19:
+      kind: omit
+      reason: >
+        testimonium-only column, no role='text' line in the Greek --
+        retroactively flipped from `note` to `omit` under John's
+        2026-07-23 ruling (don't ship things for which we have no greek)
+    B20:
+      kind: embedded
+      note: >
+        Protagoras B6a precedent: the reported age phrase survives inside
+        the source's sentence
+    B21:
+      kind: embedded
+      note: >
+        Protagoras B6a precedent: Xenophanes' reported epithet survives
+        inside the scholiast's sentence
+    B21a:
+      kind: embedded
+      note: >
+        Protagoras B6a precedent: the reported lexical item survives
+        inside the scholiast's sentence
+    B39:
+      kind: embedded
+      note: >
+        Protagoras B6a precedent: the reported lexical item survives
+        inside Pollux's sentence
+    B40:
+      kind: omit
+      reason: >
+        testimonium-only column, no role='text' line in the Greek --
+        retroactively flipped from `note` to `omit` under John's
+        2026-07-23 ruling (don't ship things for which we have no greek)
+    B41:
+      kind: embedded
+      note: >
+        Protagoras B6a precedent: the reported lexical item survives
+        inside Tzetzes' sentence
+  fragment_kinds:
+    B1: verbatim
+    B2: verbatim
+    B3: verbatim
+    B4: omit
+    B5: verbatim
+    B6: verbatim
+    B7: verbatim
+    B8: verbatim
+    B9: verbatim
+    B10: verbatim
+    B11: verbatim
+    B12: verbatim
+    B13: omit
+    B14: verbatim
+    B15: verbatim
+    B16: verbatim
+    B17: verbatim
+    B18: verbatim
+    B19: omit
+    B20: embedded
+    B21: embedded
+    B21a: embedded
+    B22: verbatim
+    B23: verbatim
+    B24: verbatim
+    B25: verbatim
+    B26: verbatim
+    B27: verbatim
+    B28: verbatim
+    B29: verbatim
+    B30: verbatim
+    B31: verbatim
+    B32: verbatim
+    B33: verbatim
+    B34: verbatim
+    B35: verbatim
+    B36: verbatim
+    B37: verbatim
+    B38: verbatim
+    B39: embedded
+    B40: omit
+    B41: embedded
+
+# Freeman's fifth-edition numbering matches every corresponding DK6 token
+# exactly in this chapter. The explicit empty declaration records that the
+# concordance gate was checked and no remap is required.
+freeman_concordance: {}
+
+# Freeman's two genre labels, declared and hash-gated as structural
+# paratext. Both are standard reader-facing scholarly labels.
+group_headers:
+  - before_column: B1
+    level: 2
+    text: "Elegiacs"
+    sha256_16: "0092e0769a85c890"
+  - before_column: B10
+    level: 2
+    text: "Hexameters"
+    sha256_16: "4dd089ff1b40dbbc"
+
+# Digest fingerprint of the observed dk column spine (44 columns: B1-B42
+# plus the lettered B21a, plus B45) -- stage2 recomputes and compares it.
+section_spine: { count: 44, sha256: "43e0540058da69f68ba2ed73b69f3757ed2a60a947e9413dd67d3f268246a0bb" }
+
+# Freeman Ancilla wave phase 1b: Freeman is the primary/default English;
+# Burnet is retained as the secondary translation overlay.
+english:
+  primary:
+    id: freeman
+    name: "Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)"
+    model: freeman
+    file: "freeman-ancilla/freeman-xenophanes.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Kathleen Freeman's Ancilla to the Pre-Socratic Philosophers (1948) is treated as US public domain per John's 2026-07-23 ruling (CANON.md, Freeman Ancilla copyright ruling); covered by attribution.astro's site-wide translation public-domain notice."
+    group_headers_file: "freeman-ancilla/freeman-xenophanes.group_headers.json"
+  # John's ruling 2026-07-29: B20 is Freeman's own wholly parenthetical
+  # précis of a reporting source, with no translated context-english span
+  # covering the same material -- labeled a summary rather than suppressed
+  # (stage1_freeman_english.py gate 5; see EnglishChunk.summary).
+  summary_labels: [B20]
+  secondary:
+    id: burnet
+    name: "John Burnet, Early Greek Philosophy, 3rd ed. (A. & C. Black, 1920)"
+    model: archive
+    file: "burnet-egp/burnet-xenophanes.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+
+# Burnet EGP 3rd ed. (1920, Wikisource) -- extracted
+# by pipeline/tools/extract_burnet_wikisource.py's `build_xenophanes`
+# (Ch. II "Science and Religion", second half, SS55-62; NOT its own
+# chapter -- Burnet covers Xenophanes as the second topic of the chapter
+# also covering Pythagoras). Numbering: heading-driven like Parmenides
+# (Burnet's own preface "I give the fragments according to the text and
+# arrangement of Diels", no per-fragment DK tags); 29 of 31 headings
+# identify directly with the DK6 number, two do not (a second, independent
+# confirmation of the Parmenides-pilot defect class: Burnet's numeral
+# predates DK6) -- content-verified declared remap `_XENOPHANES_NUMERAL_
+# REMAP` (his (4)->B5, (5)->B6). Heading "(8)" is a cross-reference
+# ("See p. 114.") to a separately-tagged real translation quoted earlier in
+# the biographical narrative (Wikisource's own `XenoFragB` tag) -- excluded
+# from the heading scan and re-attached to B8 directly. See the extractor's
+# module doc for full evidence.
+
+# 12 spine columns Burnet's translation does not cover (verified against
+# burnet-xenophanes.clean.json's own 32-key set: B1-B3,B5-B12,B14-B16,B18,
+# B22,B23-B38) -- his 3rd ed. (1920) follows a pre-DK6 arrangement that
+# simply has no numbered entry at all for these (his listing's last heading
+# is (38); nothing corresponds to DK6's B39-42/45, added or renumbered
+# later). Genuine edition gaps, matching the exact set that also carries no
+# role='text' block at all (citation.unmarked_columns) EXCEPT B17, B20,
+# B42, B45, which ARE real citable verse (declared verse_text_lines) that
+# Burnet's edition simply never reached -- ships Greek-only, like
+# Parmenides' B15a/B20-25. B22 is NO LONGER in this list (Grok review
+# defect G2): Burnet DOES translate it -- "This is the sort of thing we
+# should say by the fireside in the winter-time..." (content-verified
+# against the Greek, πὰρ πυρὶ χρὴ τοιαῦτα λέγειν χειμῶνος ἐν ὥρηι...),
+# embedded in the biographical narrative like B8's own quotation, never
+# wrapped in a Wikisource `<section>` tag of its own -- re-attached via the
+# same content-verified discipline as B8 (see
+# tools/extract_burnet_wikisource.py's `_xeno_reattach_tagged_fragment` /
+# WIKISOURCE-PATCHES.json).
+alignment_allow_unmatched_secondary:
+  - "1:B4"
+  - "1:B13"
+  - "1:B17"
+  - "1:B19"
+  - "1:B20"
+  - "1:B21"
+  - "1:B21a"
+  - "1:B39"
+  - "1:B40"
+  - "1:B41"
+  - "1:B42"
+  - "1:B45"
+
+# Freeman's fifth-edition chapter ends at B41; DK6 adds B42 and B45.
+# These are genuine primary-edition gaps, not silently dropped columns.
+alignment_allow_unmatched:
+  - "1:B42"
+  - "1:B45"
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion).
+books:
+  - { n: 1, start: "B1", end: "B45" }
+
+work:
+  id: xenophanes-fragments
+  title: "Fragments"
+  author: "xenophanes"
+  language: "grc"
+  tlg_author: "0267"
+  tlg_work: "006"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 21 B"
+  # FATAL sourceDesc gate (Wave 1c Sol nit, backfilled onto this committed
+  # work since verifying it was trivial): stage1's _check_sourcedesc
+  # asserts this exact substring is present in the export XML's own
+  # <teiHeader><sourceDesc> text -- verified verbatim against
+  # build/export/.../tlg0267006.xml.
+  expected_sourcedesc: 'Xenophanes Poet. Phil., Fragmenta (0267: 006) "Die Fragmente der Vorsokratiker, vol. 1'
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: xenophanes-fragments
+  slug: fragments
+  title: Fragments
+  abbr: Xen. B
+  author: xenophanes
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 21 B'
+  greekSource:
+    short: Diels–Kranz (1951–52)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 21 B'
+  translations:
+    - id: freeman
+      name: Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)
+      short: Freeman
+      slot: english
+    - id: burnet
+      name: John Burnet, Early Greek Philosophy, 3rd ed. (A. & C. Black, 1920)
+      short: Burnet
+      slot: secondary
+  defaultTranslation: freeman
+  citation:
+    scheme: dk
+    copyAbbr: DK 21
+    dkChapter: 21
+    series: B
+    lines: true
+  related:
+    - id: xenophanes-testimonia
+      label: 'The A-testimonia: ancient reports about Xenophanes'
+  blurb: The surviving elegiac and hexameter verses of Xenophanes of Colophon — satires on the anthropomorphic gods of Homer and Hesiod and fragments of a single, motionless god unlike mortals in form or thought.

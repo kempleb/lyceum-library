@@ -1,0 +1,1384 @@
+{
+  "records": [
+    {
+      "book": 1,
+      "chapter": 1,
+      "start_section": 1,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "f854aa47ed07034a",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "I was not ignorant, Brutus, when I was endeavouring to add to Latin literature the same things which"
+    },
+    {
+      "book": 1,
+      "chapter": 2,
+      "start_section": 4,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "05b6c68e3e9dc4e5",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "It is more difficult to satisfy those men who allege that they despise Latin writings. But, first of"
+    },
+    {
+      "book": 1,
+      "chapter": 3,
+      "start_section": 7,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "86573d8f31447d9c",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Although if I were to translate Plato or Aristotle in as bold a manner as our poets have"
+    },
+    {
+      "book": 1,
+      "chapter": 4,
+      "start_section": 10,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "32b35f1b66c8f375",
+      "anchor_lat_note": "12w, mid-clause",
+      "anchor_en": "And I myself (as I do not think that I can be accused of having, in my forensic"
+    },
+    {
+      "book": 1,
+      "chapter": 5,
+      "start_section": 13,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "982fee8252935201",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "To begin, however, with that which is easiest, we will first of all take the doctrine of Epicurus,"
+    },
+    {
+      "book": 1,
+      "chapter": 6,
+      "start_section": 17,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "e07cfee381563948",
+      "anchor_lat_note": "10w, ends-'.'",
+      "anchor_en": "What is it, then, said he, which you do not approve of in them, for I am very"
+    },
+    {
+      "book": 1,
+      "chapter": 7,
+      "start_section": 22,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "8a573b8b07af0d5b",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "And as for the second part of philosophy, which belongs to investigating and discussing, and which is called"
+    },
+    {
+      "book": 1,
+      "chapter": 8,
+      "start_section": 26,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "8cece6377710b949",
+      "anchor_lat_note": "15w, mid-clause",
+      "anchor_en": "And when I had said this, more for the purpose of exciting him than of speaking myself, Triarius,"
+    },
+    {
+      "book": 1,
+      "chapter": 9,
+      "start_section": 29,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "4e9def049d0fd960",
+      "anchor_lat_note": "15w, mid-clause",
+      "anchor_en": "First of all then, said he, I will proceed in the manner which is sanctioned by the founder"
+    },
+    {
+      "book": 1,
+      "chapter": 10,
+      "start_section": 32,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "feb13892d767f381",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But that you may come to an accurate perception of the source whence all this error originated of"
+    },
+    {
+      "book": 1,
+      "chapter": 11,
+      "start_section": 37,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "2d6d3a8d2287c553",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But, however, for the present we have said enough about the illustrious and glorious actions of celebrated men;"
+    },
+    {
+      "book": 1,
+      "chapter": 12,
+      "start_section": 40,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "73b54f425d192075",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But that pleasure is the boundary of all good things may be easily seen from this consideration. Let"
+    },
+    {
+      "book": 1,
+      "chapter": 13,
+      "start_section": 42,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "bfe4b00a13a144dd",
+      "anchor_lat_note": "17w, mid-clause",
+      "anchor_en": "And those who place this in virtue alone, and, being caught by the splendour of a name, do"
+    },
+    {
+      "book": 1,
+      "chapter": 14,
+      "start_section": 46,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "917a44ef182d23d0",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But if we see that the whole life of man is thrown into disorder by error and ignorance;"
+    },
+    {
+      "book": 1,
+      "chapter": 15,
+      "start_section": 49,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "7e92cbfd6508c62a",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "The same principle will be found to hold good with respect to courage. For the discharge of labours"
+    },
+    {
+      "book": 1,
+      "chapter": 16,
+      "start_section": 50,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "1ed05441bad81153",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Justice remains to be mentioned, that I may not omit any virtue whatever; but nearly the same things"
+    },
+    {
+      "book": 1,
+      "chapter": 17,
+      "start_section": 55,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "9b21bd47bc4ff85f",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "And I will now explain in a few words the things which are inseparably connected with this sure"
+    },
+    {
+      "book": 1,
+      "chapter": 18,
+      "start_section": 57,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "38c4f561b190bb30",
+      "anchor_lat_note": "11w, mid-clause",
+      "anchor_en": "Oh what a splendid, and manifest, and simple, and plain way of living well! For as certainly nothing"
+    },
+    {
+      "book": 1,
+      "chapter": 19,
+      "start_section": 62,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "533a53163de19a3f",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "However, these assertions may be to a certain extent made not only without our objecting to them, but"
+    },
+    {
+      "book": 1,
+      "chapter": 20,
+      "start_section": 65,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "6edcf0be4140aec5",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "There remains a topic necessary above all others to this discussion, that of friendship, namely: which you, if"
+    },
+    {
+      "book": 1,
+      "chapter": 21,
+      "start_section": 71,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "db8eedde0439649b",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Wherefore, if the things which I have been saying are clearer and plainer than the sun itself; if"
+    },
+    {
+      "book": 2,
+      "chapter": 1,
+      "start_section": 1,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "732fe2fd5796b1c8",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "On this, when both of them fixed their eyes on me, and showed that they were ready to"
+    },
+    {
+      "book": 2,
+      "chapter": 2,
+      "start_section": 4,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "ef3c2a2a14ba4e62",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But every discourse which is concerned in the investigation of any matter, and which proceeds on any system"
+    },
+    {
+      "book": 2,
+      "chapter": 3,
+      "start_section": 6,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "3805bc4b0cd0538c",
+      "anchor_lat_note": "16w, mid-clause",
+      "anchor_en": "Then he laughed, and said,—This is a capital idea, indeed, that he who says that pleasure is the"
+    },
+    {
+      "book": 2,
+      "chapter": 4,
+      "start_section": 11,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "4a9596c3ec10dd2f",
+      "anchor_lat_note": "10w, ends-'?'",
+      "anchor_en": "Is it possible, said he, for anything to be more delightful than freedom from pain? Well, said I,"
+    },
+    {
+      "book": 2,
+      "chapter": 5,
+      "start_section": 15,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "5cc7354b60dd7b5e",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Do I not, then, seem to you sufficiently to understand the meaning of words, or must I at"
+    },
+    {
+      "book": 2,
+      "chapter": 6,
+      "start_section": 17,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "6b559cb9b727b33f",
+      "anchor_lat_note": "16w, mid-clause",
+      "anchor_en": "Then, said he, a truce, if you please, to all your questions; and, indeed, I said at the"
+    },
+    {
+      "book": 2,
+      "chapter": 7,
+      "start_section": 20,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "f113a3f28716fc47",
+      "anchor_lat_note": "10w, ends-'.'",
+      "anchor_en": "They are also two distinct things, that you may not think that the difference consists only in words"
+    },
+    {
+      "book": 2,
+      "chapter": 8,
+      "start_section": 23,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "8f388af4862a6e70",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "What then is the use of saying, I should have nothing to reproach them with if they only"
+    },
+    {
+      "book": 2,
+      "chapter": 9,
+      "start_section": 26,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "5b34b4795e4ef125",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "We must then discard pleasure, not only in order to follow what is right, but even to be"
+    },
+    {
+      "book": 2,
+      "chapter": 10,
+      "start_section": 29,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "693d026f5dbc1f0f",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But this he does not see, that it is a great proof that at the very moment when"
+    },
+    {
+      "book": 2,
+      "chapter": 11,
+      "start_section": 33,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "7e97a57d75f1ac90",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But as for beasts, I do not consider that they can pronounce any judgment at all. For although"
+    },
+    {
+      "book": 2,
+      "chapter": 12,
+      "start_section": 35,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "2f77e6dbd38bce2e",
+      "anchor_lat_note": "17w, mid-clause",
+      "anchor_en": "But when Epicurus had given pleasure the highest rank, if he meant the same pleasure that Aristippus did"
+    },
+    {
+      "book": 2,
+      "chapter": 13,
+      "start_section": 39,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "c6cd95fa053038fb",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "I now, following the authority of this man, will do the same as he has done; for, as"
+    },
+    {
+      "book": 2,
+      "chapter": 14,
+      "start_section": 43,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "5c82c0e0478f3f12",
+      "anchor_lat_note": "12w, mid-clause",
+      "anchor_en": "Your school, then, is now the only one remaining to be combated; for the contest with the Academicians"
+    },
+    {
+      "book": 2,
+      "chapter": 15,
+      "start_section": 48,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "4a9a47f40b1b0508",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Here, now, O Torquatus, you have a picture of what is honourable completely filled in and finished; and"
+    },
+    {
+      "book": 2,
+      "chapter": 16,
+      "start_section": 51,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "2f870a0dc1f075ca",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Therefore, Torquatus, when you said that Epicurus asserted loudly that a man could not live pleasantly if he"
+    },
+    {
+      "book": 2,
+      "chapter": 17,
+      "start_section": 54,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "010b6caa0971607e",
+      "anchor_lat_note": "11w, mid-clause",
+      "anchor_en": "We are not, therefore, inquiring about a man who is merely wicked, but about one who mingles cunning"
+    },
+    {
+      "book": 2,
+      "chapter": 18,
+      "start_section": 57,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "697e8aeb13ec4ab4",
+      "anchor_lat_note": "17w, mid-clause",
+      "anchor_en": "But picture to yourself a man not only cunning, so as to be prepared to act dishonestly in"
+    },
+    {
+      "book": 2,
+      "chapter": 19,
+      "start_section": 60,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "ffa7859795ff734a",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Now apply the same arguments to modesty, or temperance, which is a moderation of the appetites, in subordination"
+    },
+    {
+      "book": 2,
+      "chapter": 20,
+      "start_section": 63,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "eeb4669e4c05bba0",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "There was a man of Lanuvium, called Lucius Thorius Balbus, whom you cannot remember; he lived in such"
+    },
+    {
+      "book": 2,
+      "chapter": 21,
+      "start_section": 67,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "dfe86d3a3754b293",
+      "anchor_lat_note": "10w, ends-'.'",
+      "anchor_en": "Now you, O Torquatus, must either blame all these actions, or else you must abandon the defence of"
+    },
+    {
+      "book": 2,
+      "chapter": 22,
+      "start_section": 70,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "5f2aed7c8f5deeb7",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But Epicurus (for this is your great point) denies that any man who does not live honourably can"
+    },
+    {
+      "book": 2,
+      "chapter": 23,
+      "start_section": 75,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "6995c67d1c6ee7c0",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "However, be it so. The name of pleasure certainly has no dignity in it, and perhaps we do"
+    },
+    {
+      "book": 2,
+      "chapter": 24,
+      "start_section": 77,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "9ec2e3b50bd6dbf0",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Take care lest you find yourselves obliged to use our language, though adhering to your own opinions. But"
+    },
+    {
+      "book": 2,
+      "chapter": 25,
+      "start_section": 80,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "7d4fb7adde28b816",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "You, indeed, O Torquatus, would do all these things. For I do not think that there is anything"
+    },
+    {
+      "book": 2,
+      "chapter": 26,
+      "start_section": 82,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "1ed3d2c6110d2d3f",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "However, all this is nothing to the purpose. Let us just consider those things which have been said"
+    },
+    {
+      "book": 2,
+      "chapter": 27,
+      "start_section": 85,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "db26a8b8a4e42c7f",
+      "anchor_lat_note": "18w, mid-clause",
+      "anchor_en": "But we are getting too prolix in the most self-evident matters; for, as it has been concluded and"
+    },
+    {
+      "book": 2,
+      "chapter": 28,
+      "start_section": 90,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "e3831f05baf10241",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But you will say, Come, these things are trifles. Nature by herself enriches the wise man; and, indeed,"
+    },
+    {
+      "book": 2,
+      "chapter": 29,
+      "start_section": 94,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "8778abc6a354b9f1",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But when you say that great pains last but a short time, and that if they last long"
+    },
+    {
+      "book": 2,
+      "chapter": 30,
+      "start_section": 96,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "698247678a9c1144",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Listen, that I may not make too wide a digression, to the words of Epicurus when dying; and"
+    },
+    {
+      "book": 2,
+      "chapter": 31,
+      "start_section": 99,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "45ab10ca89bf62c7",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "You may twist yourself about in every direction as you please, Torquatus, but you will not find in"
+    },
+    {
+      "book": 2,
+      "chapter": 32,
+      "start_section": 104,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "495c896fc09aa4b1",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "However, to return to our subject, (for while we were talking of pain we digressed to that letter"
+    },
+    {
+      "book": 2,
+      "chapter": 33,
+      "start_section": 107,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "b4e3cefa92974e14",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But how can that proposition possibly be maintained which you urge, namely, that all the pleasures and pains"
+    },
+    {
+      "book": 2,
+      "chapter": 34,
+      "start_section": 111,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "ed6abf0ba45cc5af",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But we, if indeed all things depend on pleasure, are greatly surpassed by beasts, for which the earth,"
+    },
+    {
+      "book": 2,
+      "chapter": 35,
+      "start_section": 116,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "d3c9e400201ae9e7",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Read, O Torquatus, the panegyrics, not of those men who have been praised by Homer, not the encomiums"
+    },
+    {
+      "book": 3,
+      "chapter": 1,
+      "start_section": 1,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "4fc843e258f06a1a",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "I think, Brutus, that Pleasure, if she were to speak for herself, and had not such pertinacious advocates,"
+    },
+    {
+      "book": 3,
+      "chapter": 2,
+      "start_section": 4,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "579470cf4a1bafb4",
+      "anchor_lat_note": "14w, mid-clause",
+      "anchor_en": "And, without dwelling on the case of these liberal and gentlemanly professions, even artisans would not be capable"
+    },
+    {
+      "book": 3,
+      "chapter": 3,
+      "start_section": 10,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "a5d81e8e733550b0",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Then Cato said: But now, what books in the world are they that you are looking for here,"
+    },
+    {
+      "book": 3,
+      "chapter": 4,
+      "start_section": 12,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "e0335761f3f0971e",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "All that you have been saying, Cato, I replied, you might say if you agreed with Pyrrho or"
+    },
+    {
+      "book": 3,
+      "chapter": 5,
+      "start_section": 16,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "e3c43b49520ca15e",
+      "anchor_lat_note": "10w, mid-clause (re-anchored: stale hash, 2026-07-24 -- start_section 16 re-verified correct, only the anchor phrase was stale)",
+      "anchor_en": "Those philosophers, said he, whose system I approve of, consider that as soon as an animal is born,"
+    },
+    {
+      "book": 3,
+      "chapter": 6,
+      "start_section": 20,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "dc0dc6245fde0f75",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Let us then proceed, said he, since we have digressed from these first principles of nature, which everything"
+    },
+    {
+      "book": 3,
+      "chapter": 7,
+      "start_section": 23,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "bbbbd8aa4c5c2eb9",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But as all duties proceed from the first principles of nature, it follows inevitably that wisdom itself must"
+    },
+    {
+      "book": 3,
+      "chapter": 8,
+      "start_section": 27,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "bd7aa61b8d98bfbb",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Let us see now how admirably these rules follow from those principles which I have already laid down."
+    },
+    {
+      "book": 3,
+      "chapter": 9,
+      "start_section": 30,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "918f3e606a855c07",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Not that I am ignorant that the opinions of philosophers have been various, of those I mean who"
+    },
+    {
+      "book": 3,
+      "chapter": 10,
+      "start_section": 33,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "a63019772e2e6ce7",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But it may be as well to give an explanation and definition of the word good, which, has"
+    },
+    {
+      "book": 3,
+      "chapter": 11,
+      "start_section": 36,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "24677ac7640776fa",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But that everything which is honourable is to be sought for its own sake, is an opinion common"
+    },
+    {
+      "book": 3,
+      "chapter": 12,
+      "start_section": 40,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "5b966fe5c35389d2",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Certainly; Cato, said I, you are employing very admirable language, and such as expresses clearly what you mean;"
+    },
+    {
+      "book": 3,
+      "chapter": 13,
+      "start_section": 41,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "6b95ed141033726d",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Then he proceeded:—After these things, therefore, are thus laid down, there follows a great contest, which has been"
+    },
+    {
+      "book": 3,
+      "chapter": 14,
+      "start_section": 45,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "b74c53824d8e7ba5",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "For as the light of a candle is obscured and put out by the light of the sun;"
+    },
+    {
+      "book": 3,
+      "chapter": 15,
+      "start_section": 48,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "c77039ea55eb7a16",
+      "anchor_lat_note": "12w, mid-clause",
+      "anchor_en": "I am aware that all this seems very strange. But as unquestionably the previous propositions are true and"
+    },
+    {
+      "book": 3,
+      "chapter": 16,
+      "start_section": 52,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "05dc6bee12d79b82",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "For as, says he, no one in a king's palace says that the king is, as it were,"
+    },
+    {
+      "book": 3,
+      "chapter": 17,
+      "start_section": 56,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "45e4fb0792b77bfd",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Now these things which we have spoken of as preferred, are preferred some for their own sake, some"
+    },
+    {
+      "book": 3,
+      "chapter": 18,
+      "start_section": 59,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "ff57df5c4d1d8486",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "And this also is evident, that in these natural things the wise man is not altogether inactive. He"
+    },
+    {
+      "book": 3,
+      "chapter": 19,
+      "start_section": 62,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "71c52d5e2bfe57a3",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But they think it is very important with reference to this subject, that it should be understood that"
+    },
+    {
+      "book": 3,
+      "chapter": 20,
+      "start_section": 65,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "36f46bcbd862340d",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "It is in this disposition of mind that wills, and the recommendations of dying persons, have originated. And"
+    },
+    {
+      "book": 3,
+      "chapter": 21,
+      "start_section": 69,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "3ae7679838070c0d",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But in order that the society, and union, and affection between man and man may be completely preserved,"
+    },
+    {
+      "book": 3,
+      "chapter": 22,
+      "start_section": 73,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "0b8799df53ccec1c",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "The same honour is also attributed to natural philosophy, and not without reason, because the man who wishes"
+    },
+    {
+      "book": 4,
+      "chapter": 1,
+      "start_section": 1,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "dc0aea6cd518133e",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "And, when he had made an end of saying these things, I replied, Truly, O Cato, you have"
+    },
+    {
+      "book": 4,
+      "chapter": 2,
+      "start_section": 3,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "d42eb8a1fbb63ee2",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "I think, then, said I, O Cato, that those ancient pupils of Plato, Speusippus, Aristotle and Xenocrates, and"
+    },
+    {
+      "book": 4,
+      "chapter": 3,
+      "start_section": 5,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "7f4fa49fae829107",
+      "anchor_lat_note": "11w, mid-clause",
+      "anchor_en": "How many books have these men written on the republic! how many on laws! How many precepts in"
+    },
+    {
+      "book": 4,
+      "chapter": 4,
+      "start_section": 8,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "64c90eb02ae21fa6",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "The next thing is the principle of arguing, and the knowledge of nature. For we will examine the"
+    },
+    {
+      "book": 4,
+      "chapter": 5,
+      "start_section": 11,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "d220e7cf4f56dabc",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Similar things may be said about the explanation of natural philosophy, which both the Peripatetics and Stoics apply"
+    },
+    {
+      "book": 4,
+      "chapter": 6,
+      "start_section": 14,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "56536e56aeaffe08",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But enough of this. Let us now, I beg, consider the chief good, which contains all philosophy, and"
+    },
+    {
+      "book": 4,
+      "chapter": 7,
+      "start_section": 16,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "7c4e672a3d73c816",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "All nature desires to be a preserver of itself, in order that it may be both safe itself,"
+    },
+    {
+      "book": 4,
+      "chapter": 8,
+      "start_section": 19,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "70d6c9a81c43b68c",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "You here, O Cato, have a sketch of the philosophers of whom I am speaking; and, now that"
+    },
+    {
+      "book": 4,
+      "chapter": 9,
+      "start_section": 21,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "4900669c8a22664c",
+      "anchor_lat_note": "10w, ends-'.'",
+      "anchor_en": "Oh, what a splendid force is there in such genius, and what an excellent reason is this for"
+    },
+    {
+      "book": 4,
+      "chapter": 10,
+      "start_section": 24,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "c930d491dfc34168",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But, however, to come, O Cato, more closely to what you have been saying, let us treat this"
+    },
+    {
+      "book": 4,
+      "chapter": 11,
+      "start_section": 26,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "0d4e8e34f2a78ad3",
+      "anchor_lat_note": "17w, mid-clause",
+      "anchor_en": "Come, now let them teach us, or rather do so yourself, (for who is better able?) in what"
+    },
+    {
+      "book": 4,
+      "chapter": 12,
+      "start_section": 27,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "65d0da0dd26d82f1",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But in one case the chief good might rightly be placed in virtue alone, if there were any"
+    },
+    {
+      "book": 4,
+      "chapter": 13,
+      "start_section": 32,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "f216cfea674553cd",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But if, as we ought to agree, there is a certain natural desire which longs for those things"
+    },
+    {
+      "book": 4,
+      "chapter": 14,
+      "start_section": 36,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "00c697de7678c6db",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Why do we hesitate, then, to inquire as to his whole nature, what has been done? For as"
+    },
+    {
+      "book": 4,
+      "chapter": 15,
+      "start_section": 40,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "51e6f633113a916c",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But now you say that virtue cannot properly be established, if those things which are external to virtue"
+    },
+    {
+      "book": 4,
+      "chapter": 16,
+      "start_section": 43,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "546da093e6ea2153",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Therefore, all those men appear to me to have made a blunder who have pronounced the chief good"
+    },
+    {
+      "book": 4,
+      "chapter": 17,
+      "start_section": 46,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "76cbbefcdb44e87e",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But I am very far from approving this conduct of yours, that when you have proved, as you"
+    },
+    {
+      "book": 4,
+      "chapter": 18,
+      "start_section": 48,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "9e56d2c852897d6f",
+      "anchor_lat_note": "17w, mid-clause",
+      "anchor_en": "Now I come to those brief statements of yours which you call conclusions; and first of all to"
+    },
+    {
+      "book": 4,
+      "chapter": 19,
+      "start_section": 52,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "87ed81129b4b51db",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "In truth, in all these conclusions, I should think this worthy both of philosophy and of ourselves,—and that,"
+    },
+    {
+      "book": 4,
+      "chapter": 20,
+      "start_section": 56,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "24170abb50417a67",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Afterwards that little Phœnician of yours (for you know that the people of Citium, your clients, came from"
+    },
+    {
+      "book": 4,
+      "chapter": 21,
+      "start_section": 58,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "30b78b8f599f82c1",
+      "anchor_lat_note": "11w, mid-clause",
+      "anchor_en": "They say that the desire of the mind is excited when anything appears to it to be according"
+    },
+    {
+      "book": 4,
+      "chapter": 22,
+      "start_section": 60,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "5db13ebb691d5e6f",
+      "anchor_lat_note": "12w, mid-clause",
+      "anchor_en": "If we are to discuss the reality of the case, then there cannot possibly, Cato, be any disagreement"
+    },
+    {
+      "book": 4,
+      "chapter": 23,
+      "start_section": 62,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "8b86d1381d19d3d6",
+      "anchor_lat_note": "14w, mid-clause",
+      "anchor_en": "But if you were to answer truly, Cato, you would be forced to say this—That you do not"
+    },
+    {
+      "book": 4,
+      "chapter": 24,
+      "start_section": 65,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "9d20f4e1ad155adb",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "These cases are not alike, Cato. For in these instances, though you may have made a good deal"
+    },
+    {
+      "book": 4,
+      "chapter": 25,
+      "start_section": 68,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "850add254321c2d7",
+      "anchor_lat_note": "12w, mid-clause",
+      "anchor_en": "What, then, is the cause of these difficulties? A vain-glorious parade in defining the chief good. For when"
+    },
+    {
+      "book": 4,
+      "chapter": 26,
+      "start_section": 72,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "765f198364320091",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "However, let us hear a little more. Those things, says he, which you have mentioned, to be well,"
+    },
+    {
+      "book": 4,
+      "chapter": 27,
+      "start_section": 73,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "c7a79ce903e38b9b",
+      "anchor_lat_note": "18w, mid-clause",
+      "anchor_en": "Piso, then—a most excellent man, and, as you well know, a great friend of yours—used to argue in"
+    },
+    {
+      "book": 4,
+      "chapter": 28,
+      "start_section": 77,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "439fa2dac7140ce9",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "However, they press on, and relax nothing. Since, say they, every offence is one of imbecility and inconsistency,"
+    },
+    {
+      "book": 5,
+      "chapter": 1,
+      "start_section": 1,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "9a935cd79a233690",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "One day when I had been hearing Antiochus lecture, as I was in the habit of doing, O"
+    },
+    {
+      "book": 5,
+      "chapter": 2,
+      "start_section": 4,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "d654850d330e0240",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "On this I chimed in:—Our friend Pomponius, said I, appears to be joking, and perhaps he has a"
+    },
+    {
+      "book": 5,
+      "chapter": 3,
+      "start_section": 7,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "20717cbb7cda9822",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Piso replied—Although, while our friend here (meaning me) is present, this matter will perhaps not be quite so"
+    },
+    {
+      "book": 5,
+      "chapter": 4,
+      "start_section": 9,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "3a5cc090d6ac452e",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "What great elegance there is in the Peripatetic system I have explained a little time ago, as briefly"
+    },
+    {
+      "book": 5,
+      "chapter": 5,
+      "start_section": 12,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "a2dc2c65a564f43f",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But respecting the chief good, because there are two kinds of books,—one addressed to the people, which they"
+    },
+    {
+      "book": 5,
+      "chapter": 6,
+      "start_section": 15,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "6875af0daa4a6f9d",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "My young friend Lucius, therefore, acts prudently when he wishes chiefly to be instructed about the chief good;"
+    },
+    {
+      "book": 5,
+      "chapter": 7,
+      "start_section": 18,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "d43c36f457c62da9",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Some people consider the first desire to be a desire of pleasure, and the first thing which men"
+    },
+    {
+      "book": 5,
+      "chapter": 8,
+      "start_section": 21,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "3c96122bd3563f9c",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "These, then, are six plain opinions about the chief good and the chief evil,—two having no advocate, but"
+    },
+    {
+      "book": 5,
+      "chapter": 9,
+      "start_section": 24,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "97584a14450c91fb",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Therefore, after the fashion of the ancients, which the Stoics also adopt, let us make this beginning:—Every animal"
+    },
+    {
+      "book": 5,
+      "chapter": 10,
+      "start_section": 27,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "87d8a9e07262bbd2",
+      "anchor_lat_note": "17w, mid-clause",
+      "anchor_en": "Since then, said he, we have explained the limit of those things which are to be desired, we"
+    },
+    {
+      "book": 5,
+      "chapter": 11,
+      "start_section": 30,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "3a031309a969ae22",
+      "anchor_lat_note": "14w, mid-clause",
+      "anchor_en": "And this also would be a very absurd thing if any one were to say it, namely, that"
+    },
+    {
+      "book": 5,
+      "chapter": 12,
+      "start_section": 34,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "9b00de5f5728170e",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "The next thing which we must examine is, what is the nature of man, since it is sufficiently"
+    },
+    {
+      "book": 5,
+      "chapter": 13,
+      "start_section": 36,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "4de6084c8baa88ca",
+      "anchor_lat_note": "15w, mid-clause",
+      "anchor_en": "But there are many virtues of the mind, and of that part of the mind which is the"
+    },
+    {
+      "book": 5,
+      "chapter": 14,
+      "start_section": 38,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "3bb5f11a9473615e",
+      "anchor_lat_note": "16w, mid-clause",
+      "anchor_en": "But there are some beasts in which there is something resembling virtue, such as lions, dogs, and horses;"
+    },
+    {
+      "book": 5,
+      "chapter": 15,
+      "start_section": 41,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "9463c72436875e84",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "As, therefore, the form of nature is such as I have described it, if, as I said at"
+    },
+    {
+      "book": 5,
+      "chapter": 16,
+      "start_section": 44,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "b925ea02164f8a19",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "We must therefore enter into the nature of things, and see thoroughly what it demands; for otherwise we"
+    },
+    {
+      "book": 5,
+      "chapter": 17,
+      "start_section": 46,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "fd1f7b5b70d48105",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "And hitherto, indeed, reason has advanced with us in such a way as to be wholly derived from"
+    },
+    {
+      "book": 5,
+      "chapter": 18,
+      "start_section": 48,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "839e1404956cb803",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Let us consider the parts of the mind, the appearance of which is more noble; for in proportion"
+    },
+    {
+      "book": 5,
+      "chapter": 19,
+      "start_section": 50,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "657dac9e04a7f70e",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "What ardour for study do you not suppose there must have been in Archimedes, who was so occupied"
+    },
+    {
+      "book": 5,
+      "chapter": 20,
+      "start_section": 55,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "c31a6aff64dcbfd7",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But there are tokens supplied by nature, still clearer, or, I may say, entirely evident and indubitable,—more especially,"
+    },
+    {
+      "book": 5,
+      "chapter": 21,
+      "start_section": 58,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "ff8b7674032941c2",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "This, then, is evident, that we were born for action. But there are several kinds of action, so"
+    },
+    {
+      "book": 5,
+      "chapter": 22,
+      "start_section": 61,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "9ec8f04e4000fc78",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But at present we need only explain that these things which I call honourable, (besides the fact of"
+    },
+    {
+      "book": 5,
+      "chapter": 23,
+      "start_section": 64,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "95c2bd546b7cee9d",
+      "anchor_lat_note": "10w, mid-clause (re-anchored: stale hash, 2026-07-24 -- start_section 64 re-verified correct, only the anchor phrase was stale)",
+      "anchor_en": "And having briefly explained these matters, (for I have not sought to adduce the number of examples which"
+    },
+    {
+      "book": 5,
+      "chapter": 24,
+      "start_section": 69,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "47bc67f435756c91",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "How then, you will say, can it be true that everything is referred to the chief good, if"
+    },
+    {
+      "book": 5,
+      "chapter": 25,
+      "start_section": 73,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "2478d053ab631573",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "The knowledge of things has been often extolled in a wonderful manner by Aristotle and Theophrastus for its"
+    },
+    {
+      "book": 5,
+      "chapter": 26,
+      "start_section": 76,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "e0a0a77867fcf48d",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Then Lucius said,—Indeed, I quite agree with what you have said, and I think my brother does too."
+    },
+    {
+      "book": 5,
+      "chapter": 27,
+      "start_section": 79,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "b4da9787e33bdf72",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "I will answer, said I, that I am not inquiring at present what virtue can effect, but what"
+    },
+    {
+      "book": 5,
+      "chapter": 28,
+      "start_section": 83,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "bb8f1d4b598034fa",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Why do you ask me that? said I; ask the Stoics. What answer, then, said he, do you"
+    },
+    {
+      "book": 5,
+      "chapter": 29,
+      "start_section": 86,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "4fc68941fa413cc7",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Listen then, said he, O Lucius; for, as Theophrastus says, I must direct my discourse to you,—the whole"
+    },
+    {
+      "book": 5,
+      "chapter": 30,
+      "start_section": 90,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "197b0f17579b063c",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "But I come now to the charge of inconsistency, that you may not repeat that I am making"
+    },
+    {
+      "book": 5,
+      "chapter": 31,
+      "start_section": 93,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "6c39c7644c54091c",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "Do you not grant even this to the Peripatetics, that they may say that the life of all"
+    },
+    {
+      "book": 5,
+      "chapter": 32,
+      "start_section": 95,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "a77fc6a028a44d0b",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "This, then, is our doctrine, which appears to you to be inconsistent, since, by reason of a certain"
+    }
+  ]
+}

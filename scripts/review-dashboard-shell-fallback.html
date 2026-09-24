@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review dashboard</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --border: #ccc;
+    --muted: #666;
+    --accent: #2a5db0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 1rem;
+    line-height: 1.45;
+  }
+  header {
+    position: sticky;
+    top: 0;
+    background: Canvas;
+    padding: 0.5rem 0 0.75rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1rem;
+  }
+  h1 { font-size: 1.3rem; margin: 0 0 0.35rem; }
+  h2 {
+    font-size: 1.05rem;
+    margin: 1.75rem 0 0.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.25rem;
+  }
+  #progress { font-size: 0.95rem; color: var(--muted); margin-bottom: 0.5rem; }
+  #send-to-claude {
+    font-size: 0.95rem;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--accent);
+    border-radius: 0.3rem;
+    background: transparent;
+    color: var(--accent);
+    cursor: pointer;
+  }
+  #send-to-claude:active { background: var(--accent); color: Canvas; }
+  .item {
+    display: flex;
+    gap: 0.6rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    align-items: flex-start;
+  }
+  .item input[type="checkbox"] {
+    margin-top: 0.3rem;
+    width: 1.15rem;
+    height: 1.15rem;
+    flex: none;
+  }
+  .item-body { flex: 1; min-width: 0; }
+  .item-num { color: var(--muted); margin-right: 0.35rem; }
+  .item-title { font-weight: bold; }
+  .item-text p { margin: 0.4rem 0; }
+  .item-text code { font-family: ui-monospace, Menlo, monospace; font-size: 0.9em; }
+  .item-note {
+    display: block;
+    width: 100%;
+    margin-top: 0.4rem;
+    font: inherit;
+    font-size: 0.9rem;
+    padding: 0.3rem;
+    border: 1px solid var(--border);
+    border-radius: 0.25rem;
+    resize: vertical;
+    min-height: 2.2rem;
+  }
+  .item.done .item-title { color: var(--muted); }
+  footer { margin: 2rem 0 1rem; color: var(--muted); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Review dashboard</h1>
+  <div id="progress"></div>
+  <button id="send-to-claude" type="button">Send to Claude</button>
+</header>
+<main id="sections"></main>
+<footer>Check the box if it looks right; if not, leave a note. Ticks and notes are saved on this device only until you send them.</footer>
+<script id="itemsData" type="application/json">__ITEMS_DATA__</script>
+<script>
+var STORAGE_KEY = 'apr-review-v1';
+
+function htmlEscape(text) {
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function loadState() {
+  try {
+    var raw = window.localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch (err) {
+    return {};
+  }
+}
+
+function saveState(state) {
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function stateFor(state, item) {
+  var entry = state[item.id];
+  if (entry) return entry;
+  return { checked: !!item.done, note: '' };
+}
+
+/**
+ * Pure function, no DOM: given the itemsData embedded at build time and the
+ * saved per-id state (checked/note), produces the review-export.json payload
+ * exactly as scripts/ingest-review-export.mjs's loadExport() expects it --
+ * {exported, items: [{id, title, section, kind, cat, state, note}], tickets}.
+ * state per item is 'ok' when checked, 'issue' when unchecked with a note,
+ * null when unchecked with no note -- the tri-state loadExport validates.
+ */
+function buildExportPayload(itemsData, state) {
+  var items = itemsData.map(function (item) {
+    var s = stateFor(state, item);
+    var note = (s.note || '').trim();
+    var exportState = s.checked ? 'ok' : (note.length > 0 ? 'issue' : null);
+    return {
+      id: item.id,
+      title: item.title,
+      section: item.sectionLabel,
+      kind: item.kind,
+      cat: item.cat,
+      state: exportState,
+      note: note,
+    };
+  });
+  return {
+    exported: new Date().toISOString(),
+    items: items,
+    tickets: [],
+  };
+}
+
+function renderItem(item, state) {
+  var s = stateFor(state, item);
+  var numPrefix = item.num != null ? '<span class="item-num">' + item.num + '.</span>' : '';
+  var checkedAttr = s.checked ? ' checked' : '';
+  var doneClass = s.checked ? ' done' : '';
+  return (
+    '<div class="item' + doneClass + '" data-id="' + htmlEscape(item.id) + '">'
+    + '<input type="checkbox" class="item-check"' + checkedAttr + '>'
+    + '<div class="item-body">'
+    + '<div class="item-title">' + numPrefix + htmlEscape(item.title) + '</div>'
+    + '<div class="item-text">' + item.body + '</div>'
+    + '<textarea class="item-note" placeholder="Note (only needed if something looks wrong)">' + htmlEscape(s.note || '') + '</textarea>'
+    + '</div>'
+    + '</div>'
+  );
+}
+
+function renderSections(itemsData, state) {
+  var order = ['active', 'completed', 'retired'];
+  var html = '';
+  order.forEach(function (section) {
+    var items = itemsData.filter(function (item) { return item.section === section; });
+    if (items.length === 0) return;
+    var label = items[0].sectionLabel;
+    html += '<section><h2>' + htmlEscape(label) + '</h2>';
+    items.forEach(function (item) { html += renderItem(item, state); });
+    html += '</section>';
+  });
+  return html;
+}
+
+function renderProgress(itemsData, state) {
+  var active = itemsData.filter(function (item) { return item.section === 'active'; });
+  var checked = active.filter(function (item) { return stateFor(state, item).checked; });
+  return checked.length + ' / ' + active.length + ' active items checked';
+}
+
+function downloadJson(filename, data) {
+  var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+function initDashboard() {
+  var itemsData = JSON.parse(document.getElementById('itemsData').textContent);
+  var state = loadState();
+  var sectionsEl = document.getElementById('sections');
+  var progressEl = document.getElementById('progress');
+
+  function render() {
+    sectionsEl.innerHTML = renderSections(itemsData, state);
+    progressEl.textContent = renderProgress(itemsData, state);
+  }
+
+  sectionsEl.addEventListener('change', function (event) {
+    var itemEl = event.target.closest('.item');
+    if (!itemEl) return;
+    var id = itemEl.getAttribute('data-id');
+    var entry = state[id] || { checked: false, note: '' };
+    if (event.target.classList.contains('item-check')) {
+      entry.checked = event.target.checked;
+    } else if (event.target.classList.contains('item-note')) {
+      entry.note = event.target.value;
+    }
+    state[id] = entry;
+    saveState(state);
+    render();
+  });
+
+  sectionsEl.addEventListener('input', function (event) {
+    if (!event.target.classList.contains('item-note')) return;
+    var itemEl = event.target.closest('.item');
+    if (!itemEl) return;
+    var id = itemEl.getAttribute('data-id');
+    var entry = state[id] || { checked: false, note: '' };
+    entry.note = event.target.value;
+    state[id] = entry;
+    saveState(state);
+  });
+
+  document.getElementById('send-to-claude').addEventListener('click', function () {
+    saveState(state);
+    downloadJson('review-export.json', buildExportPayload(itemsData, state));
+  });
+
+  render();
+}
+
+initDashboard();
+</script>
+</body>
+</html>

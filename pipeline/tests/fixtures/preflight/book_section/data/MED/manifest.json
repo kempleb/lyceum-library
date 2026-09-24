@@ -1,0 +1,16 @@
+{
+  "work": {
+    "id": "MED",
+    "title": "Meditations (fixture)",
+    "author": "marcus",
+    "tlg_author": "0562",
+    "tlg_work": "001",
+    "greek_edition": "Fixture Greek"
+  },
+  "books": [
+    { "book": 1, "segments": 2, "first_column": "1.1", "last_column": "1.2" },
+    { "book": 2, "segments": 1, "first_column": "2.1", "last_column": "2.1" }
+  ],
+  "analyses": { "token_keys": 2, "parses_dropped": 0 },
+  "lsj": { "entries": 2 }
+}

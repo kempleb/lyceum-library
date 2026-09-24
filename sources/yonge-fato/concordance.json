@@ -1,0 +1,185 @@
+{
+  "_comment": "Chapter->section concordance for Cicero, De Fato (Yonge's chapter-keyed English translation -> the PHI flat Latin spine, sections 1-48). See sources/yonge-fato/README.md for the full methodology. Every start_section here is content-anchored (a literal matching phrase was located in both the English chapter's opening and a specific Latin section) -- none are interpolated. PHI Latin is licensed corpus text and is never committed: 'anchor_lat_sha256_16' is NOT the literal Latin phrase, it is the first 16 hex characters of the whitespace-normalized phrase's sha256 digest (dk_lang.decision_key's convention); 'anchor_lat_note' is a short, non-verbatim structural label (word count / ending punctuation / embedded-Greek-term flag), never a quote. 'anchor_en' is the sanctioned, verbatim public-domain English (Yonge, 1853/1878) this pipeline exists to ship. 'exact': true for all 20 records means the value is a directly witnessed textual anchor, not a linear interpolation/extrapolation. 'section_position' records whether the anchor falls at the start, middle, or end of its Latin section (Yonge's chapter breaks don't always coincide with Cicero's own section breaks).",
+  "records": [
+    {
+      "chapter": 1,
+      "start_section": 1,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "511e2cad50c26f79",
+      "anchor_lat_note": "8w, incl.-Greek-term, mid-clause",
+      "anchor_en": "THAT branch of philosophy which, because it relates to manners, the Greeks usually term ethics"
+    },
+    {
+      "chapter": 2,
+      "start_section": 3,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "fa7fb458d0b7b749",
+      "anchor_lat_note": "13w, mid-clause",
+      "anchor_en": "Since you have not, as I hope, abandoned your oratorical studies"
+    },
+    {
+      "chapter": 3,
+      "start_section": 5,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "a70714829a1ea426",
+      "anchor_lat_note": "7w, mid-clause",
+      "anchor_en": "in some of which, as in the case of Antipater the poet"
+    },
+    {
+      "chapter": 4,
+      "start_section": 7,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "4e71549bf86d5e22",
+      "anchor_lat_note": "13w, mid-clause",
+      "anchor_en": "let us, however, as we fairly may, dismiss Posidonius, without any offence to him, and turn our attention to the sophisms of Chrysippus"
+    },
+    {
+      "chapter": 5,
+      "start_section": 9,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "e40f71e4b1f655c7",
+      "anchor_lat_note": "13w, mid-clause",
+      "anchor_en": "he shows that he does not understand the true question, nor its principal difficulties"
+    },
+    {
+      "chapter": 6,
+      "start_section": 11,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "859fdf37f9341363",
+      "anchor_lat_note": "9w, ends-'?'",
+      "anchor_en": "If you insist on the reality of divination, I once more ask, from what perceptions of art does it proceed?"
+    },
+    {
+      "chapter": 7,
+      "start_section": 13,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "799470589a67eed7",
+      "anchor_lat_note": "14w, mid-clause",
+      "anchor_en": "this consequence, however, is by no means agreeable to you, O Chrysippus, and this very point is your main dispute with Diodorus"
+    },
+    {
+      "chapter": 8,
+      "start_section": 15,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "6970dfbb7288e0ba",
+      "anchor_lat_note": "9w, mid-clause",
+      "anchor_en": "On this topic Chrysippus exerts all his ingenuity. He pretends that the Chaldeans are deceived"
+    },
+    {
+      "chapter": 9,
+      "start_section": 17,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "0d82867eb35b4db8",
+      "anchor_lat_note": "10w, incl.-Greek-term, mid-clause",
+      "anchor_en": "let us return to the question concerning possibility, so warmly contested by Diodorus"
+    },
+    {
+      "chapter": 10,
+      "start_section": 20,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "0c00b7b7e7a66f8b",
+      "anchor_lat_note": "5w, ends-'.'",
+      "anchor_en": "This is all that we need say concerning possibility. Let us pass on to other matters."
+    },
+    {
+      "chapter": 11,
+      "start_section": 23,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "270917744d9b60bc",
+      "anchor_lat_note": "13w, mid-clause",
+      "anchor_en": "Carneades argued more acutely when he taught that the Epicureans might defend their cause without this imaginary declination of atoms"
+    },
+    {
+      "chapter": 12,
+      "start_section": 26,
+      "exact": true,
+      "section_position": "end",
+      "anchor_lat_sha256_16": "d64e799ad2661c6d",
+      "anchor_lat_note": "16w, mid-clause",
+      "anchor_en": "The dispute then is at an end, since you must needs grant either that all things happen by fate, or that some effects may exist without external causes"
+    },
+    {
+      "chapter": 13,
+      "start_section": 29,
+      "exact": true,
+      "section_position": "mid",
+      "anchor_lat_sha256_16": "bd5f9d0774d0a61f",
+      "anchor_lat_note": "9w, mid-clause",
+      "anchor_en": "Very properly, therefore, is this argument called inactive"
+    },
+    {
+      "chapter": 14,
+      "start_section": 31,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "486cf4eaa4767d0d",
+      "anchor_lat_note": "13w, mid-clause",
+      "anchor_en": "Carneades, however, absolutely rejects this method of reasoning, and thinks that these conclusions are adopted too hastily"
+    },
+    {
+      "chapter": 15,
+      "start_section": 33,
+      "exact": true,
+      "section_position": "end",
+      "anchor_lat_sha256_16": "e2f9df6491f057d9",
+      "anchor_lat_note": "19w, mid-clause",
+      "anchor_en": "Wherefore if the Stoics, who maintain that everything happens by fate, are obliged in consistence with their principle to admit the truth of oracles of this kind"
+    },
+    {
+      "chapter": 16,
+      "start_section": 36,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "514cc8ab35f6d432",
+      "anchor_lat_note": "23w, mid-clause",
+      "anchor_en": "there is a difference, say they, between a cause without which an effect cannot happen, and a cause which necessarily produces an effect"
+    },
+    {
+      "chapter": 17,
+      "start_section": 39,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "57bf162d6dfdb910",
+      "anchor_lat_note": "10w, mid-clause",
+      "anchor_en": "It appears, indeed, to me, since the ancient philosophers are divided into two parties on the doctrine of fate"
+    },
+    {
+      "chapter": 18,
+      "start_section": 41,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "5c71714e4df73be2",
+      "anchor_lat_note": "16w, mid-clause",
+      "anchor_en": "Chrysippus, rejecting necessity, yet believing that nothing can happen without antecedent causes, distinguishes causes into two kinds"
+    },
+    {
+      "chapter": 19,
+      "start_section": 43,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "ccfb6a9cebe5d0d6",
+      "anchor_lat_note": "11w, mid-clause",
+      "anchor_en": "a man who pushes a cylinder gives it a principle of motion, but not immediately that of"
+    },
+    {
+      "chapter": 20,
+      "start_section": 46,
+      "exact": true,
+      "section_position": "start",
+      "anchor_lat_sha256_16": "a35676a0f20da3a8",
+      "anchor_lat_note": "16w, mid-clause",
+      "anchor_en": "It is according to these principles that we should examine the question concerning fate, and not rush with Epicurus to a fortuitous concourse of atoms"
+    }
+  ]
+}

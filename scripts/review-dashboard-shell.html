@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ancient Philosophy Reader — Review Dashboard</title>
+<style>
+  :root {
+    --page-bg: #eceee7; --panel: #f5f6f2; --ink: #171a1c; --mid: #545b5c;
+    --light: #616d6e; --accent: #1f6f7a; --accent-lt: #4fa3ab;
+    --border: #d4d8d3; --card: #ffffff; --ok-bg: #e4efe2; --ok-ink: #38622e;
+    --flag-bg: #fdeeee; --flag-ink: #a33131; --done-bg: #cdeef0;
+    --on-accent: #f5f9f8;
+    --serif: "EB Garamond", Georgia, "Times New Roman", serif;
+    --ui: system-ui, -apple-system, sans-serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page-bg: #14181a; --panel: #1b2124; --ink: #e6e4dc; --mid: #a3aba9;
+      --light: #8a9391; --accent: #4fa3ab; --accent-lt: #6fc0c7;
+      --border: #313a3d; --card: #20272a; --ok-bg: #23331f; --ok-ink: #a5c99a;
+      --flag-bg: #3a2020; --flag-ink: #e09a9a; --done-bg: #17444a;
+      --on-accent: #0f1a1c; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --page-bg: #14181a; --panel: #1b2124; --ink: #e6e4dc; --mid: #a3aba9;
+    --light: #8a9391; --accent: #4fa3ab; --accent-lt: #6fc0c7;
+    --border: #313a3d; --card: #20272a; --ok-bg: #23331f; --ok-ink: #a5c99a;
+    --flag-bg: #3a2020; --flag-ink: #e09a9a; --done-bg: #17444a;
+    --on-accent: #0f1a1c; color-scheme: dark;
+  }
+  :root[data-theme="light"] {
+    --page-bg: #eceee7; --panel: #f5f6f2; --ink: #171a1c; --mid: #545b5c;
+    --light: #616d6e; --accent: #1f6f7a; --accent-lt: #4fa3ab;
+    --border: #d4d8d3; --card: #ffffff; --ok-bg: #e4efe2; --ok-ink: #38622e;
+    --flag-bg: #fdeeee; --flag-ink: #a33131; --done-bg: #cdeef0;
+    --on-accent: #f5f9f8; color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page-bg); color: var(--ink);
+    font-family: var(--ui); font-size: 14.5px; line-height: 1.5; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 1.6rem 1rem 5rem; }
+
+  header h1 { font-family: var(--serif); font-weight: 500; font-size: 1.65rem; margin: 0; }
+  header .sub { color: var(--mid); font-size: .85rem; margin-top: .2rem; }
+
+  .progress { display: flex; gap: 1.6rem; margin: 1rem 0 .4rem; flex-wrap: wrap; }
+  .stat .n { font-family: var(--serif); font-size: 1.5rem; font-variant-numeric: tabular-nums; }
+  .stat .l { font-size: .68rem; letter-spacing: .07em; text-transform: uppercase; color: var(--light); }
+  .meter { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; margin: .3rem 0 1rem; }
+  .meter > div { height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+  @media (prefers-reduced-motion: reduce) { .meter > div { transition: none; } }
+
+  .toolbar { position: sticky; top: 0; z-index: 6; background: var(--page-bg);
+    padding: .55rem 0; border-bottom: 1px solid var(--border);
+    display: flex; gap: .45rem; flex-wrap: wrap; align-items: center; }
+  .toolbar button.tab { font: inherit; font-size: .8rem; cursor: pointer;
+    border: 1px solid var(--border); background: var(--panel); color: var(--ink);
+    border-radius: 999px; padding: .22rem .7rem; }
+  .toolbar button.tab[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+  .toolbar input { font: inherit; font-size: .8rem; flex: 1 1 130px;
+    border: 1px solid var(--border); border-radius: 999px; padding: .24rem .7rem;
+    background: var(--card); color: var(--ink); min-width: 110px; }
+  .toolbar .send { font: inherit; font-size: .8rem; cursor: pointer; border: 1px solid var(--accent);
+    background: var(--accent); color: var(--on-accent); border-radius: 999px; padding: .22rem .8rem; }
+  .toolbar .send:disabled { opacity: .5; cursor: default; }
+
+  section.grp { margin-top: 1.3rem; }
+  section.grp > h2 { font-family: var(--serif); font-weight: 500; font-size: 1.08rem;
+    margin: 0 0 .5rem; display: flex; align-items: baseline; gap: .5rem; }
+  section.grp > h2 .cnt { font-family: var(--ui); font-size: .72rem; color: var(--light);
+    font-variant-numeric: tabular-nums; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px;
+    padding: .6rem .75rem; margin-bottom: .5rem; }
+  .card.state-ok { border-left: 3px solid var(--ok-ink); }
+  .card.state-issue { border-left: 3px solid var(--flag-ink); }
+  .card.state-done { opacity: .72; border-left: 3px solid var(--accent); }
+  .cardtop { display: flex; gap: .55rem; align-items: flex-start; }
+  .ctl { display: flex; gap: .3rem; flex: none; padding-top: .1rem; }
+  .ctl button { font: inherit; font-size: .78rem; cursor: pointer; border: 1px solid var(--border);
+    background: var(--panel); color: var(--mid); border-radius: 5px; padding: .14rem .5rem; }
+  .ctl button.on-ok { background: var(--ok-bg); color: var(--ok-ink); border-color: var(--ok-ink); }
+  .ctl button.on-issue { background: var(--flag-bg); color: var(--flag-ink); border-color: var(--flag-ink); }
+  .ttl { font-weight: 600; font-size: .92rem; }
+  .ttl .kind { font-size: .64rem; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid var(--accent-lt); border-radius: 3px;
+    padding: .05rem .3rem; margin-left: .4rem; vertical-align: 1px; }
+  .ttl .donebadge { font-size: .64rem; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--accent); margin-left: .4rem; }
+  .ttl .queuedbadge { font-size: .64rem; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--on-accent); background: var(--accent-lt); border: 1px solid var(--accent-lt);
+    border-radius: 3px; padding: .05rem .3rem; margin-left: .4rem; vertical-align: 1px; }
+  .body { color: var(--mid); font-size: .84rem; margin-top: .25rem; display: none; }
+  .body code { background: var(--panel); border-radius: 3px; padding: 0 .25em; font-size: .92em; }
+  .card.open .body { display: block; }
+  .more { font: inherit; font-size: .74rem; color: var(--accent); background: none;
+    border: none; cursor: pointer; padding: 0; margin-top: .15rem; }
+  .note { margin-top: .45rem; display: none; }
+  .card.state-issue .note, .card.noting .note { display: block; }
+  .note textarea { width: 100%; font: inherit; font-size: .84rem; min-height: 3.2em;
+    border: 1px solid var(--border); border-radius: 5px; padding: .4rem .5rem;
+    background: var(--panel); color: var(--ink); resize: vertical; }
+  .note .nlabel { font-size: .68rem; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--light); display: block; margin-bottom: .15rem; }
+
+  button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .foot { margin-top: 2rem; color: var(--light); font-size: .78rem; max-width: 64ch; }
+  .toast { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%);
+    background: var(--ink); color: var(--page-bg); border-radius: 6px;
+    padding: .45rem .9rem; font-size: .82rem; opacity: 0; pointer-events: none; transition: opacity .25s; }
+  .toast.show { opacity: 1; }
+
+  .orderbanner { font-size: .82rem; color: var(--mid); background: var(--panel);
+    border: 1px solid var(--border); border-radius: 6px; padding: .6rem .85rem;
+    margin: 1.1rem 0 0; line-height: 1.5; }
+
+  .numbadge { flex: none; width: 2rem; padding-top: .1rem; text-align: right;
+    font-family: var(--serif); font-weight: 600; font-size: 1rem; line-height: 1;
+    color: var(--accent); font-variant-numeric: tabular-nums; }
+
+  details.grp.completed { opacity: .7; }
+  details.grp.completed > summary { cursor: pointer; }
+  details.grp.completed > summary::marker { color: var(--light); }
+</style>
+
+</head>
+<body>
+
+<div class="wrap">
+  
+    <h1>Review Dashboard</h1>
+    <div class="sub">Ancient Philosophy Reader — spot-checks &amp; rulings. Ticks and notes stay in this browser until you send them to Claude.</div>
+    <div class="sub">Last updated: 2026-07-24, commit <code>1798729</code> — the unit-label vocabulary ruling (item 34) lands sitewide, plus four label bugs it exposed and three more caught along the way (items 35–37); ⚑ awaiting a rebuild to be visible on preview.</div>
+  
+
+  <div class="progress">
+    <div class="stat"><div class="n" id="stTodo">74</div><div class="l">To review</div></div>
+    <div class="stat"><div class="n" id="stOk">0</div><div class="l">Checked OK</div></div>
+    <div class="stat"><div class="n" id="stIssue">0</div><div class="l">Flagged</div></div>
+    <div class="stat"><div class="n" id="stDec">28</div><div class="l">Rulings open</div></div>
+  </div>
+  <div class="meter"><div id="meterFill" style="width: 29%;"></div></div>
+
+  <div class="toolbar catbar" role="toolbar" aria-label="Categories">
+    <button class="tab cattab" data-c="all" aria-pressed="true">Everything</button>
+    <button class="tab cattab" data-c="authors" aria-pressed="false">Author checks</button>
+    <button class="tab cattab" data-c="features" aria-pressed="false">Features &amp; mechanics</button>
+    <button class="tab cattab" data-c="site" aria-pressed="false">Site-wide &amp; design</button>
+    <button class="tab cattab" data-c="ticket" aria-pressed="false">Your tickets</button>
+    <button class="send" id="newTicketBtn">+ New ticket</button>
+  </div>
+  <div class="toolbar" role="toolbar" aria-label="Filters">
+    <button class="tab" data-f="todo" aria-pressed="true">To review</button>
+    <button class="tab" data-f="decision" aria-pressed="false">Rulings</button>
+    <button class="tab" data-f="issue" aria-pressed="false">Flagged</button>
+    <button class="tab" data-f="queued" aria-pressed="false">Queued</button>
+    <button class="tab" data-f="done" aria-pressed="false">Reviewed</button>
+    <button class="tab" data-f="all" aria-pressed="false">All</button>
+    <input id="q" type="search" placeholder="Search…" aria-label="Search items">
+    <button class="send" id="sendBtn">Send to Claude ↓</button>
+  </div>
+
+  <div class="card ticketform" id="ticketForm" hidden="">
+    <div class="ttl">New ticket</div>
+    <div class="note" style="display:block">
+      <span class="nlabel">Title</span>
+      <input id="tkTitle" type="text" style="width:100%;font:inherit;font-size:.9rem;border:1px solid var(--border);border-radius:5px;padding:.35rem .5rem;background:var(--panel);color:var(--ink)">
+      <span class="nlabel" style="margin-top:.5rem">What's wrong / what do you want?</span>
+      <textarea id="tkBody"></textarea>
+      <span class="nlabel" style="margin-top:.5rem">Category</span>
+      <select id="tkCat" style="font:inherit;font-size:.85rem;border:1px solid var(--border);border-radius:5px;padding:.25rem .4rem;background:var(--panel);color:var(--ink)">
+        <option value="authors">Author / work content</option>
+        <option value="features">Feature / mechanics</option>
+        <option value="site" selected="">Site-wide / design</option>
+      </select>
+      <div style="margin-top:.6rem;display:flex;gap:.5rem">
+        <button class="send" id="tkSave">File ticket</button>
+        <button class="tab" id="tkCancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="orderbanner">Ordered by what to do first. 1–11 are decisions blocking further work. 12–30 are scholarly-fidelity checks, where an error would misstate the evidence. 31–57 are content spot-checks on newly shipped text. 58–76 are presentation and polish — the further down you get, the less it costs to stop.</div>
+
+  <div id="groups"></div>
+
+
+  <p class="foot">“Send to Claude” downloads a small JSON of your ticks, flags, and
+  ruling notes — drop it into the chat and Claude marks the source checklist,
+  fixes what you flagged, and republishes this page. Items Claude has already
+  marked done appear muted with a ✓&nbsp;badge.</p>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script id="itemsData" type="application/json">__ITEMS_DATA__</script>
+<script>
+(function () {
+  var items = JSON.parse(document.getElementById('itemsData').textContent);
+  var LS = 'apr-review-v1';
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(LS) || '{}'); } catch (e) {}
+  function saveState() { try { localStorage.setItem(LS, JSON.stringify(state)); } catch (e) {} }
+  var filter = 'todo', query = '', cat = 'all';
+  var tickets = Array.isArray(state._tickets) ? state._tickets : [];
+  function saveTickets() { state._tickets = tickets; saveState(); }
+  var CAT_NAMES = { authors: 'Author checks', features: 'Features & mechanics',
+    site: 'Site-wide & design', ticket: 'Your tickets' };
+
+  function st(it) {
+    if (it.done) return 'done';
+    var s = state[it.id];
+    return (s && s.s) || 'todo';
+  }
+  function note(it) { return (state[it.id] && state[it.id].note) || ''; }
+
+  function visible(it) {
+    if (cat !== 'all' && (it.cat || 'authors') !== cat) return false;
+    if (query) {
+      var hay = (it.title + ' ' + it.body + ' ' + it.section).toLowerCase();
+      if (hay.indexOf(query) === -1) return false;
+    }
+    var s = st(it);
+    if (filter === 'all') return true;
+    if (filter === 'todo') return s === 'todo';
+    if (filter === 'decision') return it.kind === 'decision' && s !== 'done';
+    if (filter === 'issue') return s === 'issue';
+    if (filter === 'queued') return !!it.queued && !it.done;
+    if (filter === 'done') return s === 'ok' || s === 'done';
+    return true;
+  }
+
+  var groupsEl = document.getElementById('groups');
+
+  function ticketCard(tk, idx) {
+    var el = document.createElement('div');
+    el.className = 'card state-issue';
+    var top = document.createElement('div'); top.className = 'cardtop';
+    var main = document.createElement('div');
+    var ttl = document.createElement('div'); ttl.className = 'ttl';
+    ttl.textContent = tk.title;
+    var k = document.createElement('span'); k.className = 'kind';
+    k.textContent = 'your ticket · ' + (CAT_NAMES[tk.cat] || tk.cat);
+    ttl.appendChild(k);
+    main.appendChild(ttl);
+    var body = document.createElement('div'); body.className = 'body';
+    body.style.display = 'block'; body.textContent = tk.body;
+    main.appendChild(body);
+    var del = document.createElement('button'); del.className = 'more';
+    del.textContent = 'delete ticket';
+    del.addEventListener('click', function () {
+      tickets.splice(idx, 1); saveTickets(); render();
+    });
+    main.appendChild(del);
+    top.appendChild(main); el.appendChild(top);
+    return el;
+  }
+
+  function render() {
+    groupsEl.textContent = '';
+    if ((cat === 'all' || cat === 'ticket') && tickets.length) {
+      var tsec = document.createElement('section'); tsec.className = 'grp';
+      var th = document.createElement('h2'); th.textContent = 'Your tickets ';
+      var tc = document.createElement('span'); tc.className = 'cnt';
+      tc.textContent = tickets.length + ' open';
+      th.appendChild(tc); tsec.appendChild(th);
+      tickets.forEach(function (tk, i) {
+        if (query && (tk.title + ' ' + tk.body).toLowerCase().indexOf(query) === -1) return;
+        tsec.appendChild(ticketCard(tk, i));
+      });
+      groupsEl.appendChild(tsec);
+    }
+    if (cat === 'ticket') { stats(); return; }
+    var bySec = [], secIdx = {};
+    items.forEach(function (it) {
+      if (!visible(it)) return;
+      if (!(it.section in secIdx)) {
+        secIdx[it.section] = bySec.length;
+        bySec.push({ name: it.section, items: [] });
+      }
+      bySec[secIdx[it.section]].items.push(it);
+    });
+    bySec.forEach(function (g) {
+      var isCompleted = g.name === 'Completed';
+      var sec = document.createElement(isCompleted ? 'details' : 'section');
+      sec.className = 'grp' + (isCompleted ? ' completed' : '');
+      var h = document.createElement(isCompleted ? 'summary' : 'h2');
+      h.textContent = g.name + ' ';
+      var c = document.createElement('span'); c.className = 'cnt';
+      c.textContent = g.items.length + ' item' + (g.items.length === 1 ? '' : 's');
+      h.appendChild(c); sec.appendChild(h);
+      g.items.forEach(function (it) { sec.appendChild(card(it)); });
+      groupsEl.appendChild(sec);
+    });
+    stats();
+  }
+
+  function card(it) {
+    var s = st(it);
+    var el = document.createElement('div');
+    el.className = 'card state-' + s;
+    var top = document.createElement('div'); top.className = 'cardtop';
+
+    if (it.num) {
+      var nb = document.createElement('div'); nb.className = 'numbadge';
+      nb.textContent = it.num;
+      top.appendChild(nb);
+    }
+
+    var ctl = document.createElement('div'); ctl.className = 'ctl';
+    if (!it.done) {
+      var ok = document.createElement('button');
+      ok.textContent = '✓'; ok.setAttribute('aria-label', 'Mark looks right');
+      ok.className = s === 'ok' ? 'on-ok' : '';
+      ok.addEventListener('click', function () {
+        state[it.id] = state[it.id] || {};
+        state[it.id].s = (state[it.id].s === 'ok') ? null : 'ok';
+        saveState(); render();
+      });
+      var fl = document.createElement('button');
+      fl.textContent = '⚑'; fl.setAttribute('aria-label', 'Flag an issue');
+      fl.className = s === 'issue' ? 'on-issue' : '';
+      fl.addEventListener('click', function () {
+        state[it.id] = state[it.id] || {};
+        state[it.id].s = (state[it.id].s === 'issue') ? null : 'issue';
+        saveState(); render();
+      });
+      ctl.appendChild(ok); ctl.appendChild(fl);
+    }
+    top.appendChild(ctl);
+
+    var main = document.createElement('div');
+    var ttl = document.createElement('div'); ttl.className = 'ttl';
+    ttl.textContent = it.title;
+    if (it.kind === 'decision' && !it.done) {
+      var k = document.createElement('span'); k.className = 'kind'; k.textContent = 'your ruling';
+      ttl.appendChild(k);
+    }
+    if (it.queued && !it.done) {
+      var q = document.createElement('span'); q.className = 'queuedbadge'; q.textContent = 'QUEUED';
+      ttl.appendChild(q);
+    }
+    if (it.done) {
+      var d = document.createElement('span'); d.className = 'donebadge'; d.textContent = '✓ done';
+      ttl.appendChild(d);
+    }
+    main.appendChild(ttl);
+
+    var body = document.createElement('div'); body.className = 'body';
+    body.innerHTML = it.body;
+    main.appendChild(body);
+    var more = document.createElement('button'); more.className = 'more';
+    more.textContent = 'details';
+    more.addEventListener('click', function () {
+      el.classList.toggle('open');
+      more.textContent = el.classList.contains('open') ? 'hide details' : 'details';
+    });
+    main.appendChild(more);
+
+    if (!it.done) {
+      var nt = document.createElement('div'); nt.className = 'note';
+      var nl = document.createElement('span'); nl.className = 'nlabel';
+      nl.textContent = it.kind === 'decision' ? 'Your ruling / notes' : 'What looks wrong?';
+      var ta = document.createElement('textarea');
+      ta.value = note(it);
+      ta.addEventListener('input', function () {
+        state[it.id] = state[it.id] || {};
+        state[it.id].note = ta.value; saveState(); stats();
+      });
+      nt.appendChild(nl); nt.appendChild(ta);
+      main.appendChild(nt);
+      if (it.kind === 'decision') {
+        var nb = document.createElement('button'); nb.className = 'more';
+        nb.textContent = 'add ruling';
+        nb.style.marginLeft = '.8rem';
+        nb.addEventListener('click', function () { el.classList.toggle('noting'); ta.focus(); });
+        main.appendChild(nb);
+      }
+    }
+    top.appendChild(main);
+    el.appendChild(top);
+    return el;
+  }
+
+  function stats() {
+    var todo = 0, ok = 0, issue = 0, dec = 0, done = 0;
+    items.forEach(function (it) {
+      var s = st(it);
+      if (s === 'todo') todo++;
+      if (s === 'ok') ok++;
+      if (s === 'issue') issue++;
+      if (s === 'done') done++;
+      if (it.kind === 'decision' && s === 'todo' && !(state[it.id] && state[it.id].note)) dec++;
+    });
+    document.getElementById('stTodo').textContent = todo;
+    document.getElementById('stOk').textContent = ok;
+    document.getElementById('stIssue').textContent = issue;
+    document.getElementById('stDec').textContent = dec;
+    var pct = items.length ? Math.round(100 * (ok + issue + done) / items.length) : 0;
+    document.getElementById('meterFill').style.width = pct + '%';
+  }
+
+  document.querySelectorAll('.toolbar .tab:not(.cattab)').forEach(function (b) {
+    if (!b.dataset.f) return;
+    b.addEventListener('click', function () {
+      filter = b.dataset.f;
+      document.querySelectorAll('.toolbar .tab:not(.cattab)').forEach(function (x) {
+        if (x.dataset.f) x.setAttribute('aria-pressed', String(x === b));
+      });
+      render();
+    });
+  });
+  document.querySelectorAll('.cattab').forEach(function (b) {
+    b.addEventListener('click', function () {
+      cat = b.dataset.c;
+      document.querySelectorAll('.cattab').forEach(function (x) {
+        x.setAttribute('aria-pressed', String(x === b));
+      });
+      render();
+    });
+  });
+
+  var tf = document.getElementById('ticketForm');
+  document.getElementById('newTicketBtn').addEventListener('click', function () {
+    tf.hidden = !tf.hidden;
+    if (!tf.hidden) document.getElementById('tkTitle').focus();
+  });
+  document.getElementById('tkCancel').addEventListener('click', function () { tf.hidden = true; });
+  document.getElementById('tkSave').addEventListener('click', function () {
+    var t = document.getElementById('tkTitle').value.trim();
+    if (!t) { toast('Ticket needs a title.'); return; }
+    tickets.push({ id: 'ticket-' + Date.now().toString(36),
+      title: t, body: document.getElementById('tkBody').value.trim(),
+      cat: document.getElementById('tkCat').value });
+    saveTickets();
+    document.getElementById('tkTitle').value = '';
+    document.getElementById('tkBody').value = '';
+    tf.hidden = true; toast('Ticket filed — it rides the next “Send to Claude”.');
+    render();
+  });
+  document.getElementById('q').addEventListener('input', function (e) {
+    query = e.target.value.trim().toLowerCase(); render();
+  });
+
+  var toastEl = document.getElementById('toast');
+  function toast(msg) {
+    toastEl.textContent = msg; toastEl.classList.add('show');
+    setTimeout(function () { toastEl.classList.remove('show'); }, 3200);
+  }
+
+  document.getElementById('sendBtn').addEventListener('click', function () {
+    var out = { exported: new Date().toISOString(), items: [], tickets: tickets };
+    items.forEach(function (it) {
+      var s = state[it.id];
+      if (!s || (!s.s && !s.note)) return;
+      out.items.push({ id: it.id, title: it.title, section: it.section,
+        kind: it.kind, cat: it.cat, state: s.s || null, note: s.note || '' });
+    });
+    if (!out.items.length && !tickets.length) { toast('Nothing ticked, noted, or filed yet.'); return; }
+    var payload = JSON.stringify(out, null, 1);
+    if (window.claude && window.claude.downloads) {
+      window.claude.downloads.save({ filename: 'review-export.json', data: payload })
+        .then(function () { toast('Saved — drop review-export.json into the chat.'); })
+        .catch(function (e) {
+          if (e && e.code === 'declined') { toast('Save cancelled.'); return; }
+          fallbackCopy(payload);
+        });
+    } else {
+      fallbackCopy(payload);
+    }
+  });
+  function fallbackCopy(payload) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(payload)
+        .then(function () { toast('Copied to clipboard — paste it into the chat.'); })
+        .catch(function () { toast('Could not save or copy — select-all in console instead.'); });
+    } else { toast('Could not save or copy.'); }
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

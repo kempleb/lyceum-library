@@ -1,0 +1,161 @@
+# Meditations — pipeline manifest (book-section scheme: Marcus Aurelius is
+# cited by book.chapter, "4.23", not by Bekker page or Stephanus section).
+# See pipeline/reader_pipeline/scheme.py's book-section entry for the
+# verified TEI div structure (div[@type="Book"] > div[@type="chapter"], with
+# a nested div[@type="section"] flattened into the chapter — never a
+# separate citable column).
+
+work:
+  id: meditations
+  title: "Meditations"
+  author: "marcus-aurelius"
+  language: "grc"
+  tlg_author: "0562"
+  tlg_work: "001"
+  greek_edition: "Farquharson, A. S. L. (ed.), The Meditations of the Emperor Marcus Aurelius, vol. 1 (Oxford: Clarendon Press, 1944, repr. 1968)"
+  # FATAL sourceDesc gate (Wave 1c Sol nit, backfilled onto this committed
+  # work since verifying it was trivial): stage1's _check_sourcedesc
+  # asserts this exact substring is present in the export XML's own
+  # <teiHeader><sourceDesc> text -- verified verbatim against
+  # build/export/.../tlg0562001.xml.
+  expected_sourcedesc: 'Marcus Aurelius Antoninus Imperator Phil., Τὰ εἰς ἑαυτόν (0562: 001) "The meditations of the emperor Marcus Aurelius, vol. 1'
+
+citation:
+  scheme: book-section
+  hideLineNumbers: true
+
+english:
+  primary:
+    id: haines
+    name: "C. R. Haines (Loeb Classical Library, 1916)"
+    model: archive
+    file: "haines-meditations/haines.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Published 1916, pre-1931 — safely US public domain"
+      source_url: "https://en.wikisource.org/wiki/Marcus_Aurelius_(Haines_1916)"
+  secondary:
+    id: long
+    name: "George Long (1862)"
+    model: archive
+    file: "long-meditations/long.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+
+# Known, documented gaps in English coverage (see sources/INVENTORY.md and the
+# extract_haines_wikisource.py/extract_long.py module docstrings for how each
+# arose):
+#   - 5.37: BOTH Haines and Long's source editions merge this into 5.36 (no
+#     separate marker in either PD translation) — a genuine translator/edition
+#     numbering divergence from the Farquharson Greek text, not an extraction
+#     bug (cross-validated: both independent translations agree, and Haines'
+#     Wikisource transcription confirms the same numbering as the old OCR).
+#   - 12.15 (Haines only): genuinely absent from Haines' own edition/numbering
+#     (confirmed independently by both the OCR scan and the Wikisource
+#     proofread transcription — not an extraction artifact). Long (secondary)
+#     covers it, so every chapter has a public-domain translation from at
+#     least one source.
+#   - 11.31, 11.34 (Haines) were misdiagnosed as gaps under the old OCR
+#     extraction (the 1916 scan's chapter marker was corrupted beyond that
+#     pipeline's deterministic recovery); re-sourcing Haines from Wikisource's
+#     human-proofread transcription (see sources/INVENTORY.md) recovered both
+#     — no longer a gap.
+# Every other one of the 488 chapters (verified against the TLG export: 12
+# books, 1:17 2:17 3:16 4:51 5:37 6:59 7:75 8:61 9:42 10:38 11:39 12:36) has
+# both translations.
+
+# Digest fingerprint of the observed book.chapter column spine (488 columns,
+# 1.1..12.36) — stage2 recomputes and compares it.
+section_spine: { count: 488, sha256: "af56112b49474f9c9df48ceff25de4e9450803983d6698d4bddeda05e5000d40" }
+
+# Length-ratio gate (stage2 check 4): opt in to a HARD fail on any chapter whose
+# Haines/Greek character ratio lands beyond `max_robust_z` robust SDs (median +
+# MAD of the log-ratio) from the healthy centre — the check that catches a
+# truncated chapter (too short) or a footnote/apparatus-contaminated one (too
+# long). The healthy Haines distribution spans robust z ~[-3.9, +3.7]; 5.0 sits
+# well clear of it yet fails the kind of damage the 2.14/4.15/9.13/10.17 bugs
+# produced (|z| ~ 9-20). `exempt` is 12.11 alone: Haines renders its already
+# terse Greek maxim especially tightly (ratio 0.71, z ~ -5.8), cross-checked by
+# eye and against Long — a genuine short chapter, not extraction damage.
+length_ratio_gate:
+  max_robust_z: 5.0
+  exempt: ["12.11"]
+
+# The Haines (primary) segments with no recoverable English text (see
+# sources/INVENTORY.md and manifests/meditations.yaml's comment above) —
+# declared so stage2's alignment check doesn't flag a known, documented gap
+# as an unexpected regression.
+alignment_allow_unmatched:
+  - "5:5.37"
+  - "12:12.15"
+
+# The Long (secondary) segments with no English text — the symmetric
+# allowance stage1's source-key reconciliation checks for the secondary slot
+# (stage2's alignment check only covers the primary, so this declaration is
+# what keeps a genuine secondary gap from being mistaken for silent
+# translation loss). Long's 1862 source edition merges 5.37 into 5.36 (the
+# same documented edition divergence as Haines above); he DOES cover 12.15.
+alignment_allow_unmatched_secondary:
+  - "5:5.37"
+
+books:
+  - { n: 1, start: "1.1", end: "1.17" }
+  - { n: 2, start: "2.1", end: "2.17" }
+  - { n: 3, start: "3.1", end: "3.16" }
+  - { n: 4, start: "4.1", end: "4.51" }
+  - { n: 5, start: "5.1", end: "5.37" }
+  - { n: 6, start: "6.1", end: "6.59" }
+  - { n: 7, start: "7.1", end: "7.75" }
+  - { n: 8, start: "8.1", end: "8.61" }
+  - { n: 9, start: "9.1", end: "9.42" }
+  - { n: 10, start: "10.1", end: "10.38" }
+  - { n: 11, start: "11.1", end: "11.39" }
+  - { n: 12, start: "12.1", end: "12.36" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: meditations
+  title: Meditations
+  greekTitle: Τὰ εἰς ἑαυτόν
+  abbr: Med.
+  author: marcus-aurelius
+  language: grc
+  workType: continuous
+  books: 12
+  bookLabels:
+    - I
+    - II
+    - III
+    - IV
+    - V
+    - VI
+    - VII
+    - VIII
+    - IX
+    - X
+    - XI
+    - XII
+  greekEdition: 'Farquharson, A. S. L. (ed.), The Meditations of the Emperor Marcus Aurelius, vol. 1 (Oxford: Clarendon Press, 1944, repr. 1968)'
+  greekSource:
+    short: Farquharson (1944)
+    full: 'Farquharson, A. S. L. (ed.), The Meditations of the Emperor Marcus Aurelius, vol. 1 (Oxford: Clarendon Press, 1944, repr. 1968)'
+  translations:
+    - id: haines
+      name: C. R. Haines (Loeb Classical Library, 1916)
+      short: Haines
+      slot: english
+    - id: long
+      name: George Long (1862)
+      short: Long
+      slot: secondary
+  citation:
+    scheme: book-section
+    hideLineNumbers: true
+    copyAbbr: M.Ant.
+  blurb: A Roman emperor’s private notebook of Stoic self-address, written in Greek on campaign.

@@ -1,0 +1,416 @@
+---
+// An author's landing page, served at the bare /<author> slug — name, native
+// name, floruit, blurb, the author's works (in registry order), and a note on
+// how each work is cited. See src/pages/authors.astro for the A–Z index of
+// every author, and src/components/Landing.astro for the per-WORK landing
+// page this mirrors the idiom of.
+import { existsSync, readFileSync } from 'node:fs';
+import ThemeInit from '../../components/ThemeInit.astro';
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import Pwa from '../../components/Pwa.astro';
+import Breadcrumb from '../../components/Breadcrumb.svelte';
+import DkExplainer from '../../components/DkExplainer.astro';
+import CommandPalette from '@shared/components/CommandPalette.svelte';
+import { AUTHORS, PERIOD_LABEL, getAuthor } from '@shared/lib/authors';
+import {
+  bookLabel,
+  getWork,
+  isBookless,
+  workGroupsFor,
+  workLanding,
+  type AuthorWorkGroup,
+  type Work,
+} from '@shared/lib/works';
+import { formatCite, scheme, type SchemeId } from '@shared/lib/citation';
+import { SUPPORT_URL } from '../../lib/support';
+import LyceumBand from '../../components/LyceumBand.astro';
+import { siteNameFor } from '../../lib/site';
+import { jsonLdSafe } from '../../lib/jsonld';
+import { isBuilt, builtAuthors, builtWorks } from '../../lib/built-works';
+import '@shared/styles/global.css';
+
+// Author pages only for authors with ≥1 built work. The registry may list
+// works whose data isn't built in this checkout (see built-works.ts).
+export function getStaticPaths() {
+  return AUTHORS
+    .filter((a) => a.works.some((id) => isBuilt(id)))
+    .map((a) => ({ params: { author: a.id } }));
+}
+
+const authorId = Astro.params.author!;
+const author = getAuthor(authorId)!;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// PUBLIC_LYCEUM_CHROME=1 puts the sitewide Lyceum band and name on this page
+// too (docs/design-spec.md §4), so the demo origin reads as one site; with the
+// flag off every line below is the page this route has always served.
+const lyceumChrome = import.meta.env.PUBLIC_LYCEUM_CHROME === '1';
+const siteName = siteNameFor(lyceumChrome);
+
+// Built works only, in the author's own curated order (author.works), not
+// WORKS registry order — the same convention SHELVES/WORK_GROUPS use elsewhere.
+const works: Work[] = author.works
+  .map((id) => getWork(id))
+  .filter((w): w is Work => Boolean(w) && isBuilt(w.id));
+// Breadcrumb's AUTHOR dropdown option list — every built author, site-wide.
+const authorOptions = builtAuthors().map((a) => ({ id: a.id, name: a.name }));
+
+// ── Fix 1: grouped Works section (Lyceum P3 vendored CATEGORIES) ───────────
+// Non-empty only for authors with a vendored taxonomy (aristotle today — see
+// shared/lib/works.ts's workGroupsFor doc comment). Groups reference the full
+// registry; a group/subcategory is filtered down to this page's `works`
+// (built + existing) the same way the flat list already is, and dropped
+// entirely if that leaves it empty (a partial checkout with none of a
+// division's works built yet shows no heading for it, never an empty one).
+const builtWorkIds = new Set(works.map((w) => w.id));
+function worksIn(ids: string[] | undefined): Work[] {
+  return (ids ?? [])
+    .map((id) => getWork(id))
+    .filter((w): w is Work => Boolean(w) && builtWorkIds.has(w.id));
+}
+const workGroups: AuthorWorkGroup[] = workGroupsFor(author.id);
+// Flattened to one render unit per (numbered division, optional subcategory
+// heading): a division's own direct works render as a headingless part, each
+// subcategory as its own heading+list. Empty parts (nothing built yet) are
+// dropped, and a division left with no parts at all is dropped entirely.
+interface WorkGroupPart {
+  heading: string | null;
+  items: Work[];
+}
+interface WorkGroupSection {
+  numeral: string;
+  title: string;
+  appendix?: boolean;
+  parts: WorkGroupPart[];
+}
+const workGroupSections: WorkGroupSection[] = workGroups
+  .map((g) => {
+    const direct = worksIn(g.works);
+    const subs: WorkGroupPart[] = (g.subcategories ?? []).map((s) => ({
+      heading: `${s.ref} ${s.label}`,
+      items: worksIn(s.works),
+    }));
+    const parts = (direct.length > 0 ? [{ heading: null, items: direct }, ...subs] : subs)
+      .filter((p) => p.items.length > 0);
+    return { numeral: g.numeral, title: g.title, appendix: g.appendix, parts };
+  })
+  .filter((g) => g.parts.length > 0);
+
+// ── Fix 2: citation-convention classes (book-aware Bekker wording) ─────────
+// John, 2026-08-28: not one line per work — one sentence per (citation
+// scheme × bookless-vs-multi-book) class, with a single real example drawn
+// from that class's own built data. Classes are keyed in the order their
+// first member appears in `works` (the author's curated order), so the
+// example shown for a class is whichever of its member works comes first —
+// an arbitrary but deterministic pick (see the task's returned report for
+// which work that is per class, per author).
+interface ConventionClass {
+  key: string;
+  schemeId: SchemeId | string;
+  bookless: boolean;
+  members: Work[];
+}
+const conventionClasses: ConventionClass[] = [];
+{
+  const byKey = new Map<string, ConventionClass>();
+  for (const w of works) {
+    const schemeId = w.citation?.scheme ?? 'bekker';
+    const bookless = isBookless(w);
+    const key = `${schemeId}:${bookless}`;
+    let cls = byKey.get(key);
+    if (!cls) {
+      cls = { key, schemeId, bookless, members: [] };
+      byKey.set(key, cls);
+      conventionClasses.push(cls);
+    }
+    cls.members.push(w);
+  }
+}
+
+// Reads a built work's JSON output the way built-works.ts/isBuilt does
+// (cwd-relative public/data/…). Returns null — never throws — for any work
+// with no such file or malformed content, so a registered-but-not-actually-
+// built work (or a build with unexpectedly thin pipeline output) falls
+// through to the scheme-placeholder example below rather than crashing the
+// page (brief item 3).
+function readWorkJson(workId: string, file: string): any | null {
+  const path = `public/data/${workId}/${file}`;
+  if (!existsSync(path)) return null;
+  try {
+    return JSON.parse(readFileSync(path, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+// A real, in-range "book N, chapter C, Bekker page" example for a bekker work
+// — chapters.json's book-1 (single-book works) or book-1-of-N (multi-book)
+// first entry, which is always the work's real opening citation. Never
+// fabricated: a missing/empty chapters.json yields null rather than a guess.
+function bekkerExample(w: Work, bookless: boolean): string | null {
+  const chapters = readWorkJson(w.id, 'chapters.json');
+  const book1 = chapters?.['1'];
+  if (!Array.isArray(book1) || book1.length === 0) return null;
+  const first = book1[0];
+  if (!first?.column || !first?.chapter) return null;
+  const line = first.line != null ? Number(first.line) : null;
+  const cite = formatCite(w.id, first.column, line);
+  const abbr = w.citation?.copyAbbr ?? w.abbr;
+  return bookless ? `${abbr} ${first.chapter}, ${cite}` : `${abbr} ${bookLabel(w, 1)}.${first.chapter}, ${cite}`;
+}
+
+// A real first-citable-unit example for any other scheme — manifest.json's
+// citation.books[0].start (the pipeline's own record of the work's real
+// opening column; see docs/p3-plan.md/this task's brief). No chapter/line:
+// most non-bekker schemes here have no chapters.json data at all (dk,
+// book-section, section, letter, verse-line all emit an empty chapters.json
+// — their column already carries whatever book/section structure they have),
+// and busse (Isa) is deliberately kept to a bare page per the brief's own
+// wording choice ("cited by Busse page").
+function genericExample(w: Work): string | null {
+  const manifest = readWorkJson(w.id, 'manifest.json');
+  const start = manifest?.citation?.books?.[0]?.start;
+  if (!start) return null;
+  const abbr = w.citation?.copyAbbr ?? w.abbr;
+  return `${abbr} ${formatCite(w.id, start, null)}`;
+}
+
+// Lead sentence for a class — DRAFT copy (John, human-authorship rule: agent-
+// drafted site copy is draft until his sign-off). Only bekker gets book-aware
+// wording (John, 2026-08-28: "shouldn't we have book and chapter included?");
+// busse keeps the brief's own bespoke "Busse page" phrasing; every other
+// scheme uses its citation.ts `label` VERBATIM (not lowercased — the
+// lowercasing was the bug: "Diels–Kranz citation"/"Stephanus page" are proper
+// nouns, and label.toLowerCase() mangled them into "diels–kranz citation" /
+// "stephanus page").
+function leadFor(schemeId: string, bookless: boolean): string {
+  if (schemeId === 'bekker') {
+    return bookless
+      ? 'Works in a single book are cited by work, chapter, and Bekker page'
+      : 'Works in several books are cited by work, book, chapter, and Bekker page';
+  }
+  if (schemeId === 'busse') return 'Works are cited by Busse page';
+  return `Works are cited by ${scheme(schemeId).label}`;
+}
+
+interface ConventionLine {
+  lead: string;
+  example: string;
+}
+const conventionLines: ConventionLine[] = conventionClasses.map((cls) => {
+  let example: string | null = null;
+  for (const w of cls.members) {
+    example = cls.schemeId === 'bekker' ? bekkerExample(w, cls.bookless) : genericExample(w);
+    if (example) break;
+  }
+  if (!example) {
+    // No member of this class has usable built data — fall back to the
+    // scheme's own jump-box placeholder rather than omitting the example
+    // (brief item 3's other documented option; chosen here so every line
+    // still reads as a complete sentence).
+    const s = scheme(cls.schemeId);
+    const rep = cls.members[0];
+    const abbr = rep.citation?.copyAbbr ?? rep.abbr;
+    example = `${abbr} ${s.jumpPlaceholder.replace(/^e\.g\.\s*/, '')}`;
+  }
+  return { lead: leadFor(String(cls.schemeId), cls.bookless), example };
+});
+// DK explainer (design note §3.6): shown only for an author holding at
+// least one dk-scheme (fragments/testimonia) work — every dk work of one
+// author shares the same chapter numeral and noSeries grammar, so the
+// first one found is enough.
+const dkWork = works.find((w) => w.citation?.scheme === 'dk' && w.citation.dkChapter != null);
+const dkChapterNum: number | null = dkWork?.citation?.dkChapter ?? null;
+const dkNoSeries = dkWork?.citation?.noSeries === true;
+const languageLabel = author.languages.includes('lat') && author.languages.includes('grc')
+  ? 'Greek & Latin'
+  : author.languages.includes('lat') ? 'Latin' : 'Greek';
+
+// ── SEO ─────────────────────────────────────────────────────────────────────
+const pageTitle = `${author.name} — Works in ${languageLabel} & English`
+  + (lyceumChrome ? ` — ${siteName}` : '');
+const metaDescription =
+  `${author.name} (${author.floruit}): ${author.blurb} ${works.length} work${works.length === 1 ? '' : 's'}` +
+  ` with the original ${languageLabel} and English translation where available.`;
+const canonical = Astro.site ? new URL(`${base}/${authorId}/`, Astro.site).href : undefined;
+const ogImage = Astro.site ? new URL(`${base}/og-default.png`, Astro.site).href : undefined;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: author.name,
+  ...(author.nativeName ? { alternateName: author.nativeName } : {}),
+  ...(canonical ? { url: canonical } : {}),
+  description: author.blurb,
+};
+const breadcrumbLd = Astro.site
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: siteName,
+          item: new URL(`${base}/`, Astro.site).href },
+        { '@type': 'ListItem', position: 2, name: author.name, item: canonical },
+      ],
+    }
+  : null;
+---
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <ThemeInit />
+  <title>{pageTitle}</title>
+  <meta name="description" content={metaDescription} />
+  {canonical && <link rel="canonical" href={canonical} />}
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={metaDescription} />
+  {canonical && <meta property="og:url" content={canonical} />}
+  <meta property="og:site_name" content={siteName} />
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={metaDescription} />
+  {ogImage && <meta name="twitter:image" content={ogImage} />}
+  <script type="application/ld+json" set:html={jsonLdSafe(jsonLd)} />
+  {breadcrumbLd && <script type="application/ld+json" set:html={jsonLdSafe(breadcrumbLd)} />}
+  <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+  <link rel="icon" href={`${base}/favicon.png`} type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} sizes="180x180" />
+  <style>
+    .au-body { max-width: 760px; margin: 0 auto; padding: 2rem 1rem 5rem; font-family: var(--font-english); color: var(--text); }
+    .au-eyebrow { font-family: var(--font-ui); font-size: 0.8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--text-mid); margin: 0 0 0.3rem; }
+    .au-title { font-family: var(--font-english); font-size: 2rem; font-weight: 600; margin: 0 0 0.2rem; line-height: 1.15; }
+    .au-native { font-family: var(--font-greek); font-size: 1.15rem; color: var(--text-mid); margin: 0 0 1rem; }
+    .au-lede { font-size: 1.1rem; line-height: 1.6; margin: 0 0 1.5rem; }
+    h2.au-h { font-family: var(--font-ui); font-size: 0.95rem; font-weight: 700; letter-spacing: .03em; color: var(--accent); margin: 2.2rem 0 0.7rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+    .ed-list, .read-list { list-style: none; padding: 0; margin: 0; }
+    .ed-list li { margin: 0 0 0.5rem; }
+    .ed-list a { display: flex; flex-direction: column; gap: 0.3rem; text-decoration: none; color: var(--text); padding: 0.55rem 0.7rem; border: 1px solid var(--border); border-radius: 6px; }
+    .ed-list a:hover { border-color: var(--accent); }
+    .ed-row { display: flex; justify-content: space-between; gap: 0.8rem; align-items: baseline; }
+    .ed-name { font-family: var(--font-ui); font-weight: 600; font-size: 0.92rem; display: flex; align-items: baseline; gap: 0.5rem; }
+    .ed-name .work-gk { font-family: var(--font-greek); font-weight: 400; color: var(--text-mid); }
+    .ed-kind { font-size: 0.78rem; color: var(--text-mid); text-transform: uppercase; letter-spacing: .04em; display: flex; align-items: center; gap: 0.5rem; }
+    .ed-blurb { font-family: var(--font-english); font-size: 0.82rem; color: var(--text-light); line-height: 1.4; text-wrap: pretty; }
+    .read-list li { margin: 0 0 0.6rem; font-size: 0.9rem; line-height: 1.55; color: var(--text-mid); }
+    .read-list code { font-family: var(--font-ui); background: var(--border); border-radius: 3px; padding: 0.05em 0.4em; color: var(--text); }
+    .work-group + .work-group { margin-top: 1.8rem; }
+    .work-group-h { font-family: var(--font-ui); font-size: 0.85rem; font-weight: 700; color: var(--text-mid); margin: 0 0 0.6rem; }
+    .work-group-num { color: var(--accent); }
+    .work-subgroup-h { font-family: var(--font-ui); font-size: 0.78rem; font-weight: 600; color: var(--text-light); text-transform: uppercase; letter-spacing: .03em; margin: 1.1rem 0 0.5rem; }
+    .work-group-appendix { margin-top: 2.4rem; padding-top: 1.7rem; border-top: 1px solid var(--border); }
+    .work-group-appendix .work-group-h { font-style: italic; }
+    .au-support { margin-top: 2.75rem; }
+  </style>
+  <Pwa />
+</head>
+<body class={lyceumChrome ? 'lyceum-chrome lyc-page' : undefined}>
+  <CommandPalette works={builtWorks()} client:load />
+  {lyceumChrome ? (
+    <div class="lyc-chrome">
+      <LyceumBand siteName={siteName} searchHref={`${base}/search`}>
+        <a class="tool" href={`${base}/catalog/`}>Catalog</a>
+        <a class="tool" href={`${base}/lemma/grc/`}>Lexica</a>
+        <ThemeToggle />
+        <a class="tool tool-signin" href="https://lyceum.institute">Sign in</a>
+      </LyceumBand>
+    </div>
+  ) : (
+  <header class="simple-header">
+    <Breadcrumb authorId={author.id} authors={authorOptions} client:load />
+    <nav class="header-actions" aria-label="Navigation">
+      <a href={`${base}/authors`} class="search-link">All authors</a>
+      <a href={`${base}/lemma/grc/`} class="search-link">Lexicon</a>
+      <a href={`${base}/search`} class="search-link">Search</a>
+      <ThemeToggle />
+    </nav>
+  </header>
+  )}
+
+  <main class="au-body">
+    <p class="au-eyebrow">{PERIOD_LABEL[author.period]} · {author.floruit}</p>
+    <h1 class="au-title">{author.name}</h1>
+    {author.nativeName && <p class="au-native" lang={author.languages[0]}>{author.nativeName}</p>}
+    <p class="au-lede">{author.blurb}</p>
+
+    {dkChapterNum != null && (
+      <DkExplainer authorName={author.name} dkChapter={dkChapterNum} noSeries={dkNoSeries} />
+    )}
+
+    <h2 class="au-h">Works</h2>
+    {workGroupSections.length > 0 ? (
+      workGroupSections.map((g) => (
+        <section class={g.appendix ? 'work-group work-group-appendix' : 'work-group'}>
+          <h3 class="work-group-h">{g.numeral && <span class="work-group-num">{g.numeral}.</span>} {g.title}</h3>
+          {g.parts.map((p) => (
+            <>
+              {p.heading && <h4 class="work-subgroup-h">{p.heading}</h4>}
+              <ul class="ed-list">
+                {p.items.map((w) => (
+                  <li>
+                    <a href={`${base}${workLanding(w.id)}`}>
+                      <span class="ed-row">
+                        <span class="ed-name">
+                          {w.title}
+                          {w.greekTitle && <span class="work-gk">{w.greekTitle}</span>}
+                        </span>
+                        <span class="ed-kind">
+                          {w.language === 'lat' && <span class="lang-badge">Latin</span>}
+                          {w.workType}
+                        </span>
+                      </span>
+                      {w.blurb && <span class="ed-blurb">{w.blurb}</span>}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ))}
+        </section>
+      ))
+    ) : (
+      <ul class="ed-list">
+        {works.map((w) => (
+          <li>
+            <a href={`${base}${workLanding(w.id)}`}>
+              <span class="ed-row">
+                <span class="ed-name">
+                  {w.title}
+                  {w.greekTitle && <span class="work-gk">{w.greekTitle}</span>}
+                </span>
+                <span class="ed-kind">
+                  {w.language === 'lat' && <span class="lang-badge">Latin</span>}
+                  {w.workType}
+                </span>
+              </span>
+              {w.blurb && <span class="ed-blurb">{w.blurb}</span>}
+            </a>
+          </li>
+        ))}
+        {works.length === 0 && <li>No works yet.</li>}
+      </ul>
+    )}
+
+    {works.length > 0 && (
+      <>
+        <h2 class="au-h">Citation conventions</h2>
+        <ul class="read-list">
+          {conventionLines.map((line) => (
+            <li>{line.lead} — e.g. <code>{line.example}</code>.</li>
+          ))}
+        </ul>
+      </>
+    )}
+
+    <section class="support-card au-support">
+      <div class="eyebrow">Support <span class="gk">χάρις</span></div>
+      <h2>Support {siteName}</h2>
+      <p>The reader is free and open. A contribution helps defray development costs and keeps it that way.</p>
+      <a class="btn-donate" href={SUPPORT_URL} target="_blank" rel="noopener">Make a gift</a>
+    </section>
+  </main>
+</body>
+</html>

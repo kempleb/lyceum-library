@@ -1,0 +1,420 @@
+# Gorgias of Leontini Fragments (DK 82 B) — pipeline manifest (dk scheme:
+# one flat div[@type="Fragment"][@n] per citable fragment, plain <p> prose,
+# no <l> lines). Freeman Ancilla phase 3 (docs/phase3-sourcing-queue.md):
+# Freeman is the sole English translation; Burnet never covers the
+# Sophists.
+#
+# Confirmed directly against the export's own <sourceDesc>: 'Gorgias Rhet.,
+# Soph., Fragmenta (0593: 003) "Die Fragmente der Vorsokratiker, vol. 2, 6th
+# edn.", ...'. TLG0593, not TLG2255 (Gorgias the historian) — see
+# gorgias-testimonia.yaml's header note.
+#
+# TITLE DIVS (4, stripped by `_DK_TITLE_N_RE`, never columns): "tit,1-5"
+# (the "On Not-Being" treatise's own title, covering B1-B5), "tit,5a-6"
+# (the Funeral Oration's title), "tit,7-8a" (the Olympic Oration's title),
+# "tit,12-14" (a rhetorical-handbook heading). Each content-verified a pure
+# section-title header (a `<label type="head">` line only, no fragment text
+# of its own) — the plain title-div shape.
+#
+# TITLE-ONLY COLUMN (a REAL DK numbering quirk, content-verified, NOT
+# stripped): B9 carries nothing but the bare title of the lost Pythian
+# Oration — no citation apparatus, no quoted content, no letter-spacing.
+# A genuine, individually-cited DK column (same shape as Protagoras B8a-h
+# — see protagoras-fragments.yaml) — declared `unmarked_columns`, not
+# title-stripped.
+#
+# ★ B11/B11a role-typography finding (task-flagged risk, content-verified
+# directly, NOT assumed): the two long continuous speeches, Encomium of
+# Helen (B11, ~8.3 KB raw) and Apology of Palamedes (B11a, ~15.6 KB raw —
+# the single largest fragment in this wave, well under the Heraclitus-
+# Fragmenta-scale ~52 KB whole-work precedent for one page), carry **ZERO**
+# `<hi rend="letter-spacing">` markup anywhere in the export -- confirmed by
+# both a full role-block walk and a raw-XML grep for the literal string
+# "letter-spacing" inside each div (zero hits). Unlike shorter fragments,
+# where DK's typography contrasts the philosopher's verbatim words against
+# an ancient source's surrounding narrative, B11/B11a ARE, in their
+# entirety, nothing but Gorgias' own words -- there is no quoting narrative
+# to contrast against, so the export simply does not bother marking them.
+# This is the same "source typography does not always distinguish the
+# citable words" finding already documented for several Heraclitus/Sophist
+# columns (memo gate 4's own rationale) -- declared `unmarked_columns`,
+# content-verified, not a parser gap. → CANON-log-worthy (a Gorgias-specific
+# instance of the established unmarked-column finding). Both are declared
+# `citation.whole_column_verbatim` below (2026-07-28): the evidence that they
+# ARE Gorgias entire is asserted there in writing, since DK's contrastive
+# typography cannot supply it.
+#
+# VERSE CHECK: exported plain (no `-y`); confirmed 0 <l> elements anywhere in
+# the export.
+#
+# STRUCTURE: 38 raw divs = 4 title divs (stripped) + 34 citable columns:
+# B1-B27 (27, but see B28 gap below), B5a, B5b, B8a, B11a, B29-B31 (3).
+# ONE GENUINE GAP: B28 is absent from the export entirely (no div n="28" of
+# any kind, not even a title/empty stub) — the numeric sequence jumps
+# 27→29. Declared `expected_gaps` below (same posture as Heraclitus
+# B84/B109: a hole in the numeric sequence that must be declared or the
+# build fails) — DK's own reason for the gap is not independently verified
+# here (unlike Heraclitus' documented Diels deletions), but the export
+# evidence (div genuinely absent, not merely unmarked or empty) is
+# unambiguous. → CANON-log-worthy.
+#
+# LETTER-SPACING FINDING: 22 of 34 columns carry at least one
+# <hi rend="letter-spacing"> span (including the two title-only-adjacent
+# oration fragments B6/B10/B12 etc., ordinary marked quotations). 12 are
+# fully unmarked — declared below: B1, B8a, B9 (title-only), B11 (Helen),
+# B11a (Palamedes), B14, B18, B19, B25, B29, B30, B31.
+#
+# LATIN: none found — every marked role='text' span in this work is Greek
+# (no `latin_fragments` case, unlike Protagoras B6/Gorgias-testimonia A32).
+
+work:
+  id: gorgias-fragments
+  title: "Fragments"
+  author: "gorgias"
+  language: "grc"
+  tlg_author: "0593"
+  tlg_work: "003"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1952), 82 B"
+  # FATAL sourceDesc gate: stage1's _check_sourcedesc asserts this exact
+  # substring is present in the export XML's own <teiHeader><sourceDesc>
+  # text -- verified verbatim against build/export/.../tlg0593003.xml.
+  expected_sourcedesc: 'Gorgias Rhet., Soph., Fragmenta (0593: 003) "Die Fragmente der Vorsokratiker, vol. 2'
+
+citation:
+  scheme: dk
+  series: B
+  # Quote-mark polarity fix (owner ruling 2026-08-05, "we fix it and
+  # make damn sure every instance is correct"): the raw TLG export
+  # frequently opens a Greek quotation with U+2019 instead of U+2018 --
+  # stage1_greek._dk_normalize_quote_marks fixes every BALANCED
+  # (even-count) column automatically; this is that fix's own declared
+  # count, cross-checked bidirectionally at preflight against the
+  # emitted dist's actual U+2018/U+2019 total.
+  dk_quote_marks_rewritten: 14
+  hideLineNumbers: true
+  unmarked_columns:
+    - B1
+    - B8a
+    - B9
+    - B11
+    - B11a
+    - B14
+    - B18
+    - B19
+    - B25
+    - B29
+    - B30
+    - B31
+  expected_gaps:
+    - B28
+  # Freeman Ancilla phase 3 conflicts (docs/phase3-sourcing-queue.md).
+  # B9 is a declared unmarked title-only column (same shape as Protagoras
+  # B8a-h / Hippias B5): ships `title`. B13 keeps a role='text' survival
+  # (the kairos term) despite wholly-parenthetical presentation, resolved
+  # `embedded` under the Protagoras B6a precedent. Every remaining
+  # conflicted column (B1, B8a, B14, B18, B19, B25, B29, B30,
+  # B31) is `omit` under John's 2026-07-23 ruling. Freeman's own B28 entry
+  # (the Graeco-Syrian Maxims saying) is an English-only orphan matching
+  # the declared `expected_gaps` hole in the DK spine -- dropped from the
+  # clean JSON entirely, not fabricated onto a column.
+  #
+  # B11/B11a are `verbatim` as of 2026-07-28, on BOTH sides. The Greek
+  # side is attested by `whole_column_verbatim` below. The English side is
+  # NOT Freeman -- her own entries for these two columns label themselves
+  # summaries ("11. ('Encomium on Helen': summary)"), and shipping a
+  # summary as the translation is the one thing the parked ruling forbade.
+  # John ruled 2026-07-28 (CANON.md) that both speeches carry the
+  # Parnassos Press translations instead (ed. Ewegen & Zoller, 2022,
+  # CC BY-NC-ND 4.0), as the DEFAULT English for their columns: see
+  # `english.column_sources` below, which REPLACES Freeman's text for
+  # these two columns outright and carries the per-passage translator and
+  # licence credit the licence's attribution term requires.
+  #
+  # The Greek attestation, per column, with its evidence written out. This
+  # is what preflight's §1(b) kind/role gate consults: a `verbatim` column
+  # with no role='text' line passes ONLY for a column named here.
+  whole_column_verbatim:
+    B11:
+      justification: >
+        Encomium of Helen. DK prints this div as continuous Gorgias from
+        first word to last -- there is no quoting narrative in it, so the
+        <hi rend="letter-spacing"> contrast DK uses to separate a
+        philosopher's own words from his quoter's report has nothing to
+        contrast against and does not appear. Content-verified directly,
+        not assumed: a full role-block walk of the div plus a raw-XML grep
+        for the literal string "letter-spacing" inside it (zero hits).
+        The whole column is Gorgias speaking.
+    B11a:
+      justification: >
+        Defence of Palamedes. Same finding as B11, verified the same two
+        ways (full role-block walk plus raw-XML grep for "letter-spacing"
+        inside the div, zero hits): DK prints the div as one continuous
+        speech in Gorgias' own voice, with no quoting narrative anywhere,
+        so no contrastive markup can exist. The whole column is Gorgias
+        speaking.
+  kind_overrides:
+    B1:
+      kind: omit
+      reason: >
+        unmarked column (no letter-spacing at all); Isocrates' report of
+        the doctrine, no Gorgias Greek survives
+    B8a:
+      kind: omit
+      reason: >
+        unmarked column; Freeman's own narration about the lost Olympian
+        Oration, no Gorgias Greek survives
+    B9:
+      kind: title
+      note: >
+        declared unmarked_columns title-only column (bare title of the
+        lost Pythian Oration, no letter-spacing) -- same shape as
+        Protagoras B8a-h / Hippias B5
+    B11:
+      kind: verbatim
+      note: >
+        Encomium of Helen: the whole column is Gorgias speaking (attested
+        in citation.whole_column_verbatim above). Freeman's own B11 is a
+        summary, not a translation, so her text does NOT ship here --
+        english.column_sources replaces it with the Parnassos Press
+        translation (John's 2026-07-28 ruling).
+    B11a:
+      kind: verbatim
+      note: >
+        Defence of Palamedes: same as B11 -- attested whole-column
+        verbatim above, Freeman's own B11a is a summary, and
+        english.column_sources ships the Parnassos Press translation in
+        place of it.
+    B13:
+      kind: embedded
+      note: >
+        column carries a role='text' line (the kairos term) even though
+        wholly parenthetical in Freeman; Protagoras B6a precedent
+    B14:
+      kind: omit
+      reason: >
+        unmarked column, testimonium-only report about Gorgias' teaching
+        method, no Greek survives
+    B18:
+      kind: omit
+      reason: >
+        unmarked column, testimonium-only report, no Greek survives
+    B19:
+      kind: omit
+      reason: >
+        unmarked column, Plato Meno testimonium report, no Gorgias Greek
+        survives
+    B25:
+      kind: omit
+      reason: >
+        unmarked column, doxographic report, no Gorgias Greek survives
+    B29:
+      kind: omit
+      reason: >
+        unmarked column; roman-prose maxim with no letter-spacing, no
+        Gorgias Greek survives to support it
+    B30:
+      kind: omit
+      reason: >
+        unmarked column; roman-prose maxim with no letter-spacing, no
+        Gorgias Greek survives to support it
+    B31:
+      kind: omit
+      reason: >
+        unmarked column; roman-prose maxim with no letter-spacing, no
+        Gorgias Greek survives to support it
+  fragment_kinds:
+    B1: omit
+    B2: embedded
+    B3: embedded
+    B4: embedded
+    B5: verbatim
+    B5a: verbatim
+    B5b: verbatim
+    B6: verbatim
+    B7: verbatim
+    B8: verbatim
+    B8a: omit
+    B9: title
+    B10: verbatim
+    B11: verbatim
+    B11a: verbatim
+    B12: verbatim
+    B13: embedded
+    B14: omit
+    B15: verbatim
+    B16: verbatim
+    B17: verbatim
+    B18: omit
+    B19: omit
+    B20: verbatim
+    B21: verbatim
+    B22: verbatim
+    B23: verbatim
+    B24: verbatim
+    B25: omit
+    B26: verbatim
+    B27: verbatim
+    B29: omit
+    B30: omit
+    B31: omit
+
+# Freeman's fifth-edition numbering matches the corresponding DK6 tokens
+# exactly; no remap needed.
+freeman_concordance: {}
+
+# Freeman's three structural labels, declared and hash-gated as paratext.
+# The "Doubtful" label (originally printed immediately before her own
+# English-only B28 orphan) is reattached to B29, the next real spine
+# column, since the label genuinely introduces the B29-B31 "doubtful"
+# maxims that follow, not B28's dropped content specifically.
+group_headers:
+  - before_column: B7
+    level: 2
+    text: "(From the 'Olympian Oration')"
+    sha256_16: "fd1eba6ae6cbeaf9"
+  - before_column: B15
+    level: 2
+    text: "From unspecified writings"
+    sha256_16: "b26dd3deda0f43c9"
+  - before_column: B29
+    level: 2
+    text: "Doubtful"
+    sha256_16: "05c26131184a526d"
+
+# Digest fingerprint of the observed dk column spine (34 columns, no
+# letter/comma irregularities beyond 5a/5b/8a/11a, one declared gap B28) —
+# stage2 recomputes and compares it.
+section_spine: { count: 34, sha256: "0d3ba30902364ab29eac67315a6ac4105685d999a29d0782487c7b9abd56350d" }
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion).
+books:
+  - { n: 1, start: "B1", end: "B31" }
+
+english:
+  primary:
+    id: freeman
+    name: "Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)"
+    model: freeman
+    file: "freeman-ancilla/freeman-gorgias.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Kathleen Freeman's Ancilla to the Pre-Socratic Philosophers (1948) is treated as US public domain per John's 2026-07-23 ruling (CANON.md, Freeman Ancilla copyright ruling); covered by attribution.astro's site-wide translation public-domain notice."
+    group_headers_file: "freeman-ancilla/freeman-gorgias.group_headers.json"
+  # Per-column English from a different translation than the primary, with
+  # its own credit (John's ruling 2026-07-28; sources/parnassos-gorgias/
+  # README.md carries the licence ruling and the required attribution
+  # string). Freeman's Ancilla entries for B11/B11a are her own summaries,
+  # so the two complete speeches ship the Parnassos Press translations
+  # instead, as the DEFAULT English for those columns -- a reader who
+  # touches nothing sees them. Each file is one speech, one record per
+  # printed section; the numbering is byte-identical to the DK section
+  # markers embedded in the Greek ((1)-(21) for Helen, (1)-(37) for
+  # Palamedes), so the sections join with their own "(N)" inline and the
+  # two columns read section for section.
+  column_sources:
+    - column: B11
+      file: "parnassos-gorgias/gatt-helen.clean.json"
+      # The standard English title for the speech (item 85 review,
+      # 2026-07-28): the Greek carries its own title inline as the first
+      # line of the div ("ΓΟΡΓΙΟΥ ΕΛΕΝΗΣ ΕΓΚΩΜΙΟΝ") -- English gets the
+      # equivalent heading here, prepended ahead of "(1)" so it renders in
+      # the same leading, unmarked-paragraph position the DK inline-marker
+      # split already gives the Greek title (see stage1_freeman_english.py's
+      # _load_column_sources and Reader.svelte's contextSectionMarkerNumbers).
+      heading: "Encomium of Helen"
+      credit:
+        translator: "Jurgen R. Gatt"
+        source: "Gorgias/Gorgias: The Sicilian Orator and the Platonic Dialogue, ed. S. Montgomery Ewegen and Coleen P. Zoller (Parnassos Press — Fonte Aretusa)"
+        year: 2022
+        licence:
+          status: cc
+          name: "CC BY-NC-ND 4.0"
+          url: "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+    - column: B11a
+      file: "parnassos-gorgias/gazis-palamedes.clean.json"
+      # See B11's `heading` comment above -- same treatment, this speech's
+      # own standard English title.
+      heading: "Defence of Palamedes"
+      credit:
+        translator: "George Alexander Gazis, revised by R. J. Barnes, Stamatia Dova, Jurgen Gatt, Phillip Mitsis and Heather Reid"
+        source: "Gorgias/Gorgias: The Sicilian Orator and the Platonic Dialogue, ed. S. Montgomery Ewegen and Coleen P. Zoller (Parnassos Press — Fonte Aretusa)"
+        year: 2022
+        licence:
+          status: cc
+          name: "CC BY-NC-ND 4.0"
+          url: "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+  # REVIEW-CHECKLIST item 84 (John, 2026-07-28): "This would also allow us
+  # to have the [Freeman] summaries of B11 & B11a -- labeled as such -- and
+  # the Gatt translations." Freeman's own entries for B11/B11a are her
+  # SUMMARIES (the reason column_sources above displaces them as the
+  # DEFAULT), but the summary itself is worth reaching, clearly labelled --
+  # never mistaken for a translation. Offered back as a sparse per-passage
+  # ALTERNATE translation (shared/lib/works.ts registers it on the
+  # 'overlay' slot, short label "Freeman (summary)"), pulled straight from
+  # the ALREADY-LOADED freeman-gorgias.clean.json record for each named
+  # column -- the exact text column_sources replaces, never a re-derived
+  # or re-typed one. `id` here is the translations[] id that registers it.
+  summary_overlay:
+    id: freeman-summary
+    columns: [B11, B11a]
+    license:
+      status: public-domain-us
+      rationale: "Kathleen Freeman's Ancilla to the Pre-Socratic Philosophers (1948) is treated as US public domain per John's 2026-07-23 ruling (CANON.md, Freeman Ancilla copyright ruling); covered by attribution.astro's site-wide translation public-domain notice."
+  # John's ruling 2026-07-29 (live review of B4): a Freeman entry that is
+  # WHOLLY her own parenthetical précis of a source she is reporting (never
+  # a translation of the DK fragment's own words) is suppressed outright
+  # when this column ALSO carries a translated context-english source-
+  # passage span covering the same material (the reader already gets real
+  # English for it, from the source), or labeled a summary when no such
+  # coverage exists. B4 is Freeman's précis of Plato's Meno 76a-e, which
+  # DOES carry a translated span (context-english.json, Lamb 1924) --
+  # suppressed. B2/B9/B13 are précis with no such coverage -- labeled.
+  # Both conditions are re-verified at build time (stage1_freeman_english.py
+  # gate 5); see EnglishChunk.summary (shared/lib/data.ts) for the labeled
+  # case's rendering.
+  summary_suppressed: [B4]
+  summary_labels: [B2, B9, B13]
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: gorgias-fragments
+  slug: fragments
+  title: Fragments
+  abbr: Gorg. B
+  author: gorgias
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1952), 82 B'
+  greekSource:
+    short: Diels–Kranz (1952)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1952), 82 B'
+  translations:
+    - id: freeman
+      name: Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)
+      short: Freeman
+      slot: english
+    - id: freeman-summary
+      name: Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948) — summary
+      short: Freeman (summary)
+      slot: overlay
+      kind: summary
+  defaultTranslation: freeman
+  citation:
+    scheme: dk
+    copyAbbr: DK 82
+    dkChapter: 82
+    series: B
+  alsoCredits: the Encomium of Helen and Defence of Palamedes are translated by J. R. Gatt and G. A. Gazis
+  related:
+    - id: gorgias-testimonia
+      label: 'The A-testimonia: ancient reports about Gorgias'
+  blurb: 'Gorgias’ own words in full: the paradox-driven treatise On Not-Being, the two virtuoso display-speeches defending Helen and Palamedes, the Funeral Oration and Olympic Oration fragments, and the epigrammatic turns of phrase later critics loved to quote.'

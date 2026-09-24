@@ -1,0 +1,505 @@
+# Heraclitus Fragments (DK 22 B) — pipeline manifest (dk scheme: one flat
+# div[@type="Fragment"][@n] per citable fragment, no nested section div —
+# see pipeline/reader_pipeline/scheme.py's `dk` entry for the verified TEI
+# shape). `english` (below) wires in Burnet's EGP 3rd ed. translation via
+# pipeline/tools/extract_burnet_wikisource.py + stage1_flat_english (see the
+# `english` block's own comment for the key-set reconciliation and the
+# B5/B31 concat-merge finding).
+
+work:
+  id: heraclitus-fragments
+  title: "Fragments"
+  author: "heraclitus"
+  language: "grc"
+  tlg_author: "0626"
+  tlg_work: "002"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 22 B"
+  # FATAL sourceDesc gate (Wave 1c Sol nit, backfilled onto this committed
+  # work since verifying it was trivial): stage1's _check_sourcedesc
+  # asserts this exact substring is present in the export XML's own
+  # <teiHeader><sourceDesc> text -- verified verbatim against
+  # build/export/.../tlg0626002.xml.
+  expected_sourcedesc: 'Heraclitus Phil., Fragmenta (0626: 002) "Die Fragmente der Vorsokratiker, vol. 1'
+
+citation:
+  scheme: dk
+  series: B
+  # dk_witness.py's owner-verified apparatus split (stage7_emit wiring):
+  # count of this work's columns whose apparatus actually splits into
+  # 2+ witnesses, cross-checked bidirectionally at preflight against the
+  # emitted dist's own `witnesses` keys -- catches an unreviewed new
+  # split and a stale declaration alike.
+  dk_witness_split_columns: 5
+  # Quote-mark polarity fix (owner ruling 2026-08-05, "we fix it and
+  # make damn sure every instance is correct"): the raw TLG export
+  # frequently opens a Greek quotation with U+2019 instead of U+2018 --
+  # stage1_greek._dk_normalize_quote_marks fixes every BALANCED
+  # (even-count) column automatically; this is that fix's own declared
+  # count, cross-checked bidirectionally at preflight against the
+  # emitted dist's actual U+2018/U+2019 total.
+  dk_quote_marks_rewritten: 12
+  hideLineNumbers: true
+  # Opt in to DK source-citation expansion (docs/citation-expansion-wiring-
+  # design.md): stage1_citation_expansion re-extracts each column's apparatus
+  # head(s) and resolves the explicit ones against sources/dk-citations/
+  # citation-dictionary.json, emitting an `expandedCitation` list per segment.
+  # PILOT work (phase 1: heads-only, direct lookups, no dash walk-back). A
+  # work without this flag is byte-identical to before the mechanism existed.
+  expand_citations: true
+  # 17 of 145 fragments carry no <hi rend="letter-spacing"> at all — a
+  # verified DK6/export characteristic, CANON-log-worthy (see the Wave 1b
+  # implementation report): even genuine, famous fragments (B53 "war is
+  # father of all") sometimes have nothing typographically marked, either
+  # because a "— —" continuation entry's citation is implied from an
+  # earlier div and the whole remainder IS the quotation with nothing to
+  # contrast against, or because the attested word is absorbed into a
+  # source's own paraphrase with no macroscopically quotable span. See
+  # stage1_greek._parse_fragments' role-coverage doc comment.
+  unmarked_columns:
+    - B33
+    - B52
+    - B53
+    - B54
+    - B55
+    - B60
+    - B61
+    - B68
+    - B69
+    - B72
+    - B76
+    - B82
+    - B83
+    - B126b
+    - B136
+    - B138
+    - B139
+  # Diels' own declared deletions: B84 (replaced by B84a/B84b) and B109 (a
+  # duplicate of B108, deleted by Diels; TLG follows) — CANON-log-worthy
+  # (Wave 1b design memo §2.4). A re-export that restores either column
+  # fails the build immediately (stage1_greek._parse_fragments) rather than
+  # silently accepting the drift.
+  expected_gaps:
+    - B84
+    - B109
+  # B4 (Albertus Magnus' medieval Latin paraphrase) is Heraclitus' only
+  # ENTIRELY Latin fragment. B37 (Columella), B67a (Hisdosus Scholasticus),
+  # and B130 (a Latin Gnomologium) are mixed divs whose citation apparatus
+  # is also Latin, but whose specific role='text' (letter-spaced) span is
+  # itself Latin too, not Greek — zero Greek tokens in role='text' content
+  # by construction for all four, not an extraction failure. All ship
+  # readable but unclickable until Wave 2 (Latin morphology/Lewis & Short)
+  # — CANON-log-worthy (Wave 1b design memo §4.4).
+  latin_fragments:
+    - B4
+    - B37
+    - B67a
+    - B130
+
+  # Freeman Ancilla: every markup/Greek disagreement is declared here.
+  kind_overrides:
+    B4:
+      kind: omit
+      reason: >
+        Latin-only fragment; no Greek text for Freeman’s English to face
+    B33:
+      kind: embedded
+      note: >
+        B6a precedent: the Heraclitean sentence survives in the unmarked continuation of the Greek source
+    B37:
+      kind: omit
+      reason: >
+        Latin-only fragment from Columella; no Greek text for Freeman’s English to face
+    B38:
+      kind: embedded
+      note: >
+        B6a precedent: the reported Greek phrase survives inside Diogenes’ sentence
+    B52:
+      kind: embedded
+      note: >
+        B6a precedent: the Heraclitean maxim survives in the unmarked continuation of the Greek source
+    B53:
+      kind: embedded
+      note: >
+        B6a precedent: the Heraclitean maxim survives in the unmarked continuation of the Greek source
+    B54:
+      kind: embedded
+      note: >
+        B6a precedent: the Heraclitean maxim survives in the unmarked continuation of the Greek source
+    B55:
+      kind: embedded
+      note: >
+        B6a precedent: the Heraclitean maxim survives in the unmarked continuation of the Greek source
+    B60:
+      kind: embedded
+      note: >
+        B6a precedent: the Heraclitean maxim survives in the unmarked continuation of the Greek source
+    B61:
+      kind: embedded
+      note: >
+        B6a precedent: the Heraclitean maxim survives in the unmarked continuation of the Greek source
+    B68:
+      kind: embedded
+      note: >
+        B6a precedent: the reported Heraclitean word survives inside Iamblichus’ sentence
+    B69:
+      kind: embedded
+      note: >
+        B6a precedent: the reported Heraclitean statement survives inside Iamblichus’ sentence
+    B72:
+      kind: embedded
+      note: >
+        B6a precedent: the Heraclitean statement survives in the unmarked continuation of the Greek source
+    B76:
+      kind: embedded
+      note: >
+        B6a precedent: the Heraclitean statement survives inside the later authors’ Greek
+    B82:
+      kind: embedded
+      note: >
+        B6a precedent: the attributed comparison survives inside Plato’s Greek
+    B83:
+      kind: embedded
+      note: >
+        B6a precedent: the attributed comparison survives inside Plato’s Greek
+    B126b:
+      kind: embedded
+      note: >
+        B6a precedent: the quoted Heraclitean sentence survives inside the anonymous commentary
+    B130:
+      kind: omit
+      reason: >
+        Latin-only fragment; no Greek text for Freeman’s English to face
+    B136:
+      kind: embedded
+      note: >
+        B6a precedent: the attributed Heraclitean sentence survives inside the scholiast’s Greek
+    B138:
+      kind: omit
+      reason: >
+        Freeman gives only an editorial description of the surviving late epigram, not a translation; the column is unmarked and carries no Heraclitean text-role
+    B139:
+      kind: omit
+      reason: >
+        Freeman gives only an editorial description of the surviving astrological text, not a translation; the column is unmarked and carries no Heraclitean text-role
+  fragment_kinds:
+    B1: verbatim
+    B2: verbatim
+    B3: verbatim
+    B4: omit
+    B5: verbatim
+    B6: verbatim
+    B7: verbatim
+    B8: verbatim
+    B9: verbatim
+    B10: verbatim
+    B11: verbatim
+    B12: verbatim
+    B13: verbatim
+    B14: verbatim
+    B15: verbatim
+    B16: verbatim
+    B17: verbatim
+    B18: verbatim
+    B19: verbatim
+    B20: verbatim
+    B21: verbatim
+    B22: verbatim
+    B23: verbatim
+    B24: verbatim
+    B25: verbatim
+    B26: verbatim
+    B27: verbatim
+    B28: verbatim
+    B29: verbatim
+    B30: verbatim
+    B31: verbatim
+    B32: verbatim
+    B33: embedded
+    B34: verbatim
+    B35: verbatim
+    B36: verbatim
+    B37: omit
+    B38: embedded
+    B39: verbatim
+    B40: verbatim
+    B41: verbatim
+    B42: verbatim
+    B43: verbatim
+    B44: verbatim
+    B45: verbatim
+    B46: verbatim
+    B47: verbatim
+    B48: verbatim
+    B49: verbatim
+    B49a: verbatim
+    B50: verbatim
+    B51: verbatim
+    B52: embedded
+    B53: embedded
+    B54: embedded
+    B55: embedded
+    B56: verbatim
+    B57: verbatim
+    B58: verbatim
+    B59: verbatim
+    B60: embedded
+    B61: embedded
+    B62: verbatim
+    B63: verbatim
+    B64: verbatim
+    B65: verbatim
+    B66: verbatim
+    B67: verbatim
+    B68: embedded
+    B69: embedded
+    B70: verbatim
+    B71: verbatim
+    B72: embedded
+    B73: verbatim
+    B74: verbatim
+    B75: verbatim
+    B76: embedded
+    B77: verbatim
+    B78: verbatim
+    B79: verbatim
+    B80: verbatim
+    B81: verbatim
+    B82: embedded
+    B83: embedded
+    B84a: verbatim
+    B84b: verbatim
+    B85: verbatim
+    B86: verbatim
+    B87: verbatim
+    B88: verbatim
+    B89: verbatim
+    B90: verbatim
+    B91: verbatim
+    B92: verbatim
+    B93: verbatim
+    B94: verbatim
+    B95: verbatim
+    B96: verbatim
+    B97: verbatim
+    B98: verbatim
+    B99: verbatim
+    B100: verbatim
+    B101: verbatim
+    B101a: verbatim
+    B102: verbatim
+    B103: verbatim
+    B104: verbatim
+    B105: verbatim
+    B106: verbatim
+    B107: verbatim
+    B108: verbatim
+    B110: verbatim
+    B111: verbatim
+    B112: verbatim
+    B113: verbatim
+    B114: verbatim
+    B115: verbatim
+    B116: verbatim
+    B117: verbatim
+    B118: verbatim
+    B119: verbatim
+    B120: verbatim
+    B121: verbatim
+    B122: verbatim
+    B123: verbatim
+    B124: verbatim
+    B125: verbatim
+    B125a: verbatim
+    B126: verbatim
+    B126a: verbatim
+    B126b: embedded
+    B127: verbatim
+    B128: verbatim
+    B129: verbatim
+    B130: omit
+    B131: verbatim
+    B132: verbatim
+    B133: verbatim
+    B134: verbatim
+    B135: verbatim
+    B136: embedded
+    B137: verbatim
+    B138: omit
+    B139: omit
+
+# Digest fingerprint of the observed dk column spine (145 columns: B1..B139
+# minus the declared B84/B109 gaps, plus the lettered fragments B49a, B67a,
+# B84a, B84b, B101a, B125a, B126a, B126b) — stage2 recomputes and compares it.
+section_spine: { count: 145, sha256: "fb6338e41ea95553bcd94ef059e79a2d9b7bfad1656a6c87620583fa0ecba662" }
+
+freeman_concordance: {}
+
+group_headers:
+  - before_column: B126a
+    level: 2
+    text: "Doubtful and spurious fragments"
+    sha256_16: "46a2b96657d366bd"
+
+# Burnet EGP 3rd ed. (1920, Wikisource) English, retained as the secondary
+# translation — extracted by
+# pipeline/tools/extract_burnet_wikisource.py, keyed directly by dk column
+# token (Burnet's numbers ARE Diels numbers for Heraclitus). Reused via
+# stage1_flat_english (the flat `section` scheme's builder): a dk work's
+# column token equals the source's own key, exactly like a flat scheme's
+# bare chapter number — no dedicated dk english builder needed.
+#
+# CRITICAL CROSS-CHECK (Wave 1b Heraclitus integration, 2026-07-16): the raw
+# Wikisource tagging carries FOUR tags — DK5A/DK5B/DK31A/DK31B — with no
+# corresponding B5a/B5b/B31a/B31b in this work's spine (they are NOT in the
+# lettered-fragment catalogue above). Verified against the Greek spine:
+# B5's sole role='text' block is the word-for-word concatenation of Burnet's
+# DK5A+DK5B translations (Origen's two-part purification quotation); B31's
+# TWO role='text' blocks (separated by Clement's own paraphrase, itself
+# role='context') match DK31A and DK31B respectively, in that order
+# (Clement's two-part fire/sea/earth transformation quotation). Diels' 6th
+# edition (this work's TLG source) merged what an earlier edition — the one
+# Wikisource's tagging and Burnet's own 3rd ed. follow — numbered as split
+# sub-fragments. Resolution: extract_burnet_wikisource.py's
+# `_CONCAT_MERGE_COLUMNS` concatenates each pair under the single DK6
+# column (B5, B31) at extraction time, so burnet-heraclitus.clean.json ships
+# 113 keys (115 tagged fragments minus the 4 split halves, plus the 2
+# merged columns) with no B5a/B5b/B31a/B31b keys at all. CANON-log-worthy.
+english:
+  primary:
+    id: freeman
+    name: "Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)"
+    model: freeman
+    file: "freeman-ancilla/freeman-heraclitus.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Kathleen Freeman's Ancilla to the Pre-Socratic Philosophers (1948) is treated as US public domain per John's 2026-07-23 ruling (CANON.md, Freeman Ancilla copyright ruling); covered by attribution.astro's site-wide translation public-domain notice."
+    group_headers_file: "freeman-ancilla/freeman-heraclitus.group_headers.json"
+  # John's ruling 2026-07-29: B38/B82 are Freeman's own wholly parenthetical
+  # précis, each ALSO covered by a translated context-english source-passage
+  # span for the same column -- suppressed outright rather than labeled
+  # (stage1_freeman_english.py gate 5; the Greek renders alone beside the
+  # source passage). B69/B83 are précis with no such coverage -- labeled a
+  # summary instead (see EnglishChunk.summary).
+  summary_suppressed: [B38, B82]
+  summary_labels: [B69, B83]
+  secondary:
+    id: burnet
+    name: "John Burnet, Early Greek Philosophy, 3rd ed. (A. & C. Black, 1920)"
+    model: archive
+    file: "burnet-egp/burnet-heraclitus.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+
+# 32 spine columns Burnet's translation does not cover — read at the TOP
+# level (validate_english_source's `alignment_allow_unmatched` key is read
+# off the manifest root, not nested under `english:`), keyed by segment id
+# ("<book>:<column>", dk being bookless book=1). Verified against his
+# printed text (sources/burnet-egp/raw/earlygreekphilosOOOOburn_djvu.txt)
+# and the Wikisource tagging, not merely absent from the clean.json key
+# set. Three groups, all genuine edition gaps, none an extraction defect:
+#   - B67a, B130: this work's own declared `latin_fragments` (above) —
+#     Burnet translates only the Greek-sourced fragments.
+#   - B68, B69, B82, B126b, B136, B138, B139: this work's own declared
+#     `unmarked_columns` (above) — no role='text' span exists to translate.
+#   - The remaining 23 (mostly B105 and up): single-word/short-phrase
+#     fragments preserved by late Byzantine lexicographers, outside the
+#     scope of Bywater's 1877 selection that Burnet's 3rd ed. (1920)
+#     translates from — confirmed absent from Burnet's own printed text,
+#     not merely untagged on Wikisource (spot-checked directly against
+#     the raw OCR: no rendering of B3/B46/B56/B70/B71/B74/B81/B105/B112/
+#     B115/B116/B122/B124/B125a/B126a/B127/B128/B131/B132/B133/B134/B135
+#     /B137 exists anywhere in Ch. III). B56 is a special case: Burnet's
+#     own cross-reference note "(56) Same as 45" (Bywater's OWN ordinal
+#     56, pointing at his OWN ordinal 45) is a numbering coincidence, not
+#     a translation of DK/B56 — DK's B56 ("children deceiving Homer about
+#     lice") is a different fragment with no Burnet rendering anywhere in
+#     the chapter (verified: no DK56 Wikisource tag exists, and no
+#     rendering of the lice/Homer content appears in the raw text).
+#     CANON-log-worthy: the design memo's own cross-ref example does not
+#     survive as a real DK column in this delivery — see the Wave 1b
+#     integration report.
+alignment_allow_unmatched_secondary:
+    - "1:B3"
+    - "1:B46"
+    - "1:B56"
+    - "1:B67a"
+    - "1:B68"
+    - "1:B69"
+    - "1:B70"
+    - "1:B71"
+    - "1:B74"
+    - "1:B81"
+    - "1:B82"
+    - "1:B105"
+    - "1:B112"
+    - "1:B115"
+    - "1:B116"
+    - "1:B122"
+    - "1:B124"
+    - "1:B125a"
+    - "1:B126a"
+    - "1:B126b"
+    - "1:B127"
+    - "1:B128"
+    - "1:B130"
+    - "1:B131"
+    - "1:B132"
+    - "1:B133"
+    - "1:B134"
+    - "1:B135"
+    - "1:B136"
+    - "1:B137"
+    - "1:B138"
+    - "1:B139"
+
+# Freeman’s fifth edition has no B67a.
+alignment_allow_unmatched:
+  - "1:B67a"
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion).
+books:
+  - { n: 1, start: "B1", end: "B139" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: heraclitus-fragments
+  slug: fragments
+  title: Fragments
+  greekTitle: Περὶ φύσεως
+  abbr: Her. B
+  author: heraclitus
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 22 B'
+  greekSource:
+    short: Diels–Kranz (1951–52)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 22 B'
+  translations:
+    - id: freeman
+      name: Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)
+      short: Freeman
+      slot: english
+    - id: burnet
+      name: John Burnet, Early Greek Philosophy, 3rd ed. (A. & C. Black, 1920)
+      short: Burnet
+      slot: secondary
+  defaultTranslation: freeman
+  citation:
+    scheme: dk
+    copyAbbr: DK 22
+    dkChapter: 22
+    series: B
+  related:
+    - id: heraclitus-testimonia
+      label: 'The A-testimonia: ancient reports about Heraclitus'
+  blurb: The surviving quoted words of Heraclitus of Ephesus, preserved as fragments embedded in later ancient authors.

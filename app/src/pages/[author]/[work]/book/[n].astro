@@ -1,0 +1,35 @@
+---
+// Forwarder: the reader for a work now lives at
+// /read/<author>/<work>/<division> (book-<n> for most works, see
+// ../../../read/[author]/[work]/[division].astro). This address,
+// /<author>/<work>/book/<n>, is kept as a forwarding page for old links.
+import Forward from '../../../../components/Forward.astro';
+import { getWorkBySlug, workSlug, workPath } from '@shared/lib/works';
+import { getAuthor } from '@shared/lib/authors';
+import { builtWorks } from '../../../../lib/built-works';
+
+export function getStaticPaths() {
+  return builtWorks().flatMap((w) => {
+    const author = getAuthor(w.author);
+    if (!author) {
+      throw new Error(`[author]/[work]/book/[n]: work '${w.id}' has unresolvable author '${w.author}'`);
+    }
+    return Array.from({ length: w.books }, (_, i) => ({
+      params: { author: author.id, work: workSlug(w), n: String(i + 1) },
+    }));
+  });
+}
+
+const authorParam = Astro.params.author!;
+const slugParam = Astro.params.work!;
+const n = Number(Astro.params.n);
+const work = getWorkBySlug(authorParam, slugParam);
+if (!work) {
+  throw new Error(`[author]/[work]/book/[n]: no work at author '${authorParam}' slug '${slugParam}'`);
+}
+const target = workPath(work.id, n);
+const title = `${work.title}, book ${n}`;
+---
+<Forward target={target} title={title}>
+  {title}. <a href={target}>Continue to the reader</a>.
+</Forward>

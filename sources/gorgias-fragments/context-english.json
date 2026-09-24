@@ -1,0 +1,35 @@
+{
+ "1:B4": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Meno",
+    "locus": "76a-76e",
+    "status": "translated",
+    "translation_credit": "Lamb, 1924",
+    "emphasis": [
+     "Men. And what do you say of color, Socrates? Soc. How overbearing of you, Meno, to press an old man with demands for answers, when you will not trouble yourself",
+     "to recollect and tell me what account Gorgias gives of virtue!",
+     "Then would you like me to answer you in the manner of Gorgias, which you would find easiest to follow? Men. I should like that, of course. Soc. Do not both of you say there are certain effluences of existent things, as Empedocles held? Men. Certainly. Soc. And passages into which and through which the effluences pass? Men. To be sure. Soc. And some of the effluences fit into various passages,",
+     "while some are too small or too large? Men. That is so. Soc. And further, there is what you call sight? Men. Yes. Soc. So now conceive my meaning, as Pindar says: color is an effluence of figures, commensurate with sight and sensible. Men. Your answer, Socrates, seems to me excellently put. Soc. Yes, for I expect you find its terms familiar; and at the same time I fancy you observe that it enables you to tell what sound and smell are, and numerous other",
+     "things of the kind. Men. Certainly. Soc. It is an answer in the high poetic style, Meno, and so more agreeable to you than that about figure."
+    ]
+   }
+  ]
+ },
+ "1:B19": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Meno",
+    "locus": "71e-72a",
+    "status": "translated",
+    "translation_credit": "Lamb, 1924",
+    "emphasis": [
+     "First of all, if you take the virtue of a man, it is easily stated that a man’s virtue is this—that he be competent to manage the affairs of his city, and to manage them so as to benefit his friends and harm his enemies, and to take care to avoid suffering harm himself. Or take a woman’s virtue: there is no difficulty in describing it as the duty of ordering the house well, looking after the property indoors, and obeying her husband. And the child has another virtue—one for the female, and one for the male; and there is another for elderly men—one, if you like, for freemen,",
+     "and yet another for slaves. Men. And there are very many other virtues besides, so that one cannot be at a loss to explain what virtue is; for it is according to each activity and age that every one of us, in whatever we do, has his virtue; and the same, I take it, Socrates, will hold also of vice."
+    ]
+   }
+  ]
+ }
+}

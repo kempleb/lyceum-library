@@ -1,0 +1,1060 @@
+# Democritus Fragments (DK 68 B) — pipeline manifest (dk scheme: one flat
+# div[@type="Fragment"][@n] per citable fragment, no nested section div).
+# The LARGEST dk corpus in the collection: 420 raw export divs -> 386
+# citable columns after title-strip (7 divs) and TWO div_concat merges
+# (below). Includes the ethical gnomai (the Democrates/"Gnomai" collection,
+# roughly B35-B115 under the stripped `tit,35-115` heading) -- hundreds of
+# short one-line sayings, the great majority wholly letter-spaced (a
+# one-liner whose ENTIRE content is marked needs no verse declaration: this
+# is a prose work, so role derives directly from the `rend="letter-spacing"`
+# markup, confirmed by direct per-div reading of every div's raw markup,
+# not a statistical guess) -- and the B298-B309 dubious/spurious tail
+# (titles of lost/pseudonymous works, the Bolos-Democritean "Cheirokmeta"
+# magical-medical dubia, and a handful of gnomologion entries).
+#
+# TITLE DIVS (7, stripped, matching `_DK_TITLE_N_RE`): "tit,0a-4a",
+# "tit,4b-11a", "tit,11b-11k", "tit,11l-15b", "tit,15c-26a", "tit,26b-28c",
+# "tit,35-115" -- DK's own thematic section headers within the B-collection
+# (Diels grouped the fragments into named subsections: Cosmology/
+# epistemology-adjacent groups B1-B34, then the long Ethics/Gnomai run
+# B35-B115). No content beyond a Greek section-title label in any of the
+# seven (content-verified).
+#
+# NEW citation.div_concat cases (not anticipated by the design memo or the
+# Xenophanes A28 precedent -- CANON-log-worthy, flagged for review rather
+# than improvised into new citation grammar):
+#
+#   B14 -- EIGHT export divs (n="14,1".."14,8"), NO plain "14" div at all.
+#   Content-verified: eight DIFFERENT ancient sources (Vitruvius, Eudoxus'
+#   astronomical canon, Geminus, Pliny, a Scholiast on Apollonius Rhodius,
+#   Lydus quoting the Clodian Calendar, Ptolemy's Phaseis, Lydus' De
+#   Mensibus) each preserving isolated data-points -- star risings, weather
+#   signs, calendar dates -- from Democritus' lost astronomical work (his
+#   "Parapegma"). Unlike Xenophanes A28 (five parts of ONE continuous
+#   Ps.-Aristotle passage), these eight parts are NOT textually continuous;
+#   they are thematically unified fragments of a single lost work that DK
+#   prints under ONE heading "14" with internal (1)-(8) apparatus numbering
+#   -- not, so far as this reading could confirm, independently-cited DK
+#   sub-numbers. Filed as one column B14 via div_concat.
+#
+#   B300 -- a plain "300" div (DK's own section-title/heading line, "Bolos'
+#   Cheirokmeta and Physika Dynamera") PLUS twenty export divs comma-numbered
+#   "300,1".."300,20" (with three further-lettered "300,4a"/"300,7a"/
+#   "300,13a") -- the Bolos-Democritean pseudepigraphic dubia (magical/
+#   medical "Cheirokmeta"), each an independent ancient witness (Suda,
+#   Vitruvius, Columella, Pliny, Seneca, Galen, papyri, etc.) to a
+#   DIFFERENT specific claim. Genuinely more heterogeneous than B14, and
+#   the comma-numbering shape ("300,N") mirrors DK's own printed page
+#   notation closely enough that a case CAN be made these deserve
+#   independently-citable tokens ("68 B300,14" is attested in some
+#   secondary literature for the Seneca arch/vault anecdote at 300,14) --
+#   an open citation-grammar question (would need a new comma-joined
+#   column-suffix grammar, analogous to the existing dot-joined verse-line
+#   form) that this wave does NOT resolve unilaterally. Filed as one
+#   column B300 via div_concat (title div "300" as the leading part) as the
+#   conservative, non-improvised disposition that ships the content
+#   complete and readable; flagged for an Opus/John citation-grammar
+#   decision on whether to split it into independently addressable
+#   "B300,N" tokens later. Neither disposition loses any content either way.
+#
+# B14a/B14b/B14c and B298/B298a/B298b/B299a-B299h: ORDINARY columns (each
+# its own div, normal digit+letter grammar) -- short one-line titles of
+# further lost works (e.g. "ΟΥΡΑΝΟΓΡΑΦΙΗ", "ΓΕΩΓΡΑΦΙΗ") with no further
+# content; declared `unmarked_columns` below like any other title-only
+# fragment, no special merge needed.
+
+work:
+  id: democritus-fragments
+  title: "Fragments"
+  author: "democritus"
+  language: "grc"
+  tlg_author: "1304"
+  tlg_work: "002"
+  greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1951–52), 68 B"
+  # FATAL sourceDesc gate -- verified verbatim against
+  # build/export/.../tlg1304002.xml (DK vol. 2, atomists).
+  expected_sourcedesc: 'Democritus Phil., Fragmenta (1304: 002) "Die Fragmente der Vorsokratiker, vol. 2'
+
+citation:
+  scheme: dk
+  series: B
+  # dk_witness.py's owner-verified apparatus split (stage7_emit wiring):
+  # count of this work's columns whose apparatus actually splits into
+  # 2+ witnesses, cross-checked bidirectionally at preflight against the
+  # emitted dist's own `witnesses` keys -- catches an unreviewed new
+  # split and a stale declaration alike.
+  dk_witness_split_columns: 17
+  # Quote-mark polarity fix (owner ruling 2026-08-05, "we fix it and
+  # make damn sure every instance is correct"): the raw TLG export
+  # frequently opens a Greek quotation with U+2019 instead of U+2018 --
+  # stage1_greek._dk_normalize_quote_marks fixes every BALANCED
+  # (even-count) column automatically; this is that fix's own declared
+  # count, cross-checked bidirectionally at preflight against the
+  # emitted dist's actual U+2018/U+2019 total.
+  dk_quote_marks_rewritten: 92
+  # FAIL-CLOSED: this work's raw export carries an ODD
+  # U+2018/U+2019 count in these column(s) -- cannot be paired,
+  # left completely untouched by the fix above (see
+  # stage1_greek._dk_normalize_quote_marks' module doc).
+  dk_unbalanced_quote_columns:
+    - B11
+    - B148
+    - B21
+    - B5
+  hideLineNumbers: true
+  div_concat:
+    B14:
+      - "14,1"
+      - "14,2"
+      - "14,3"
+      - "14,4"
+      - "14,5"
+      - "14,6"
+      - "14,7"
+      - "14,8"
+    B300:
+      - "300"
+      - "300,1"
+      - "300,2"
+      - "300,3"
+      - "300,4"
+      - "300,4a"
+      - "300,5"
+      - "300,6"
+      - "300,7"
+      - "300,7a"
+      - "300,10"
+      - "300,11"
+      - "300,12"
+      - "300,13"
+      - "300,13a"
+      - "300,14"
+      - "300,16"
+      - "300,17"
+      - "300,18"
+      - "300,19"
+      - "300,20"
+  # 86 of 386 columns carry no <hi rend="letter-spacing"> at all -- every
+  # div individually inspected via direct rend-attribute reading (the prose
+  # dk parser derives role purely from the literal markup; no statistical
+  # heuristic in this determination). B14 and B300 themselves are NOT
+  # listed here: each has marked parts among its concatenated pieces (B14:
+  # 14,3/14,5/14,6/14,7/14,8; B300: 300,1/300,2/300,3/300,4/300,7/300,7a/
+  # 300,10/300,17/300,18/300,19/300,20), so the merged column carries real
+  # role='text' content. True partition of the 386-column spine: 86
+  # unmarked (here) + 1 Latin-only (`latin_fragments` below, B28 -- a
+  # marked role='text' span, just zero Greek tokens in it) + 299 marked
+  # (ordinary Greek role='text' content) = 386.
+  unmarked_columns:
+    - B0a
+    - B0b
+    - B1b
+    - B2a
+    - B2b
+    - B2c
+    - B4a
+    - B4b
+    - B4c
+    - B5a
+    - B5b
+    - B5c
+    - B5d
+    - B5e
+    - B5f
+    - B5g
+    - B5h
+    - B5i
+    - B8a
+    - B8b
+    - B10a
+    - B11a
+    - B11b
+    - B11c
+    - B11d
+    - B11e
+    - B11f
+    - B11g
+    - B11h
+    - B11i
+    - B11k
+    - B11l
+    - B11m
+    - B11n
+    - B11o
+    - B11p
+    - B11q
+    - B11r
+    - B12
+    - B14a
+    - B14b
+    - B14c
+    - B15
+    - B15a
+    - B15b
+    - B15c
+    - B16
+    - B16a
+    - B17
+    - B18a
+    - B18b
+    - B19
+    - B20a
+    - B23
+    - B25
+    - B26a
+    - B26b
+    - B26c
+    - B26d
+    - B26e
+    - B26f
+    - B27
+    - B27a
+    - B28a
+    - B28b
+    - B28c
+    - B29
+    - B163
+    - B298
+    - B298a
+    - B298b
+    - B299a
+    - B299b
+    - B299c
+    - B299d
+    - B299e
+    - B299f
+    - B299g
+    - B299h
+    - B302
+    - B302a
+    - B304
+    - B306
+    - B307
+    - B308
+    - B309
+  # B28: Columella XI 3, 2, on Democritus' "Georgicon" -- the sole marked
+  # span is a Latin sentence (no Greek witness for this testimony at all).
+  # Zero Greek tokens in role='text' content by construction, not an
+  # extraction failure (design memo §4.4).
+  latin_fragments:
+    - B28
+  # Freeman Ancilla wave phase 2: precedent-covered conflicts are
+  # resolved here. The sixteen unprecedented disagreements (see
+  # sources/freeman-ancilla/README.md for the per-column markup/reading
+  # detail) are resolved below per John's 2026-07-23 ruling ("where she
+  # has no greek, we leave out... don't ship known mistranslations don't
+  # ship things for which we have no greek"): B44 -> verbatim (DK's own
+  # double-numbering of the identical maxim under B44/B225 -- her B225
+  # English rides onto B44 via `text_from`, see docs/freeman-wave-design.md
+  # post-draft rulings); B298a -> embedded (the Greek maxim survives
+  # verbatim inside the Demetrius papyrus quotation); the remaining
+  # fourteen -> omit (no Democritean Greek for her English to face, a
+  # known mistranslation, or a bare cross-reference/deferred dossier --
+  # see each entry's `reason` below).
+  kind_overrides:
+    B15:
+      kind: omit
+      reason: >
+        testimonium-only column (Agathêmerus reporting Democritus'
+        geographical work) -- no Democritean Greek role='text' line for
+        her English to translate; John's ruling 2026-07-23
+    B19:
+      kind: omit
+      reason: >
+        testimonium-only column (Eustathius reporting two letter-names
+        Democritus used) -- no Democritean Greek role='text' line for
+        her English to translate; John's ruling 2026-07-23
+    B23:
+      kind: omit
+      reason: >
+        testimonium-only column (a Homer scholiast reporting Democritus'
+        interpretation of an Iliad line) -- no Democritean Greek
+        role='text' line for her English to translate; John's ruling
+        2026-07-23
+    B25:
+      kind: omit
+      reason: >
+        testimonium-only column (Eustathius reporting Democritus' view on
+        the sun) -- no Democritean Greek role='text' line for her English
+        to translate; John's ruling 2026-07-23
+    B27:
+      kind: omit
+      reason: >
+        testimonium-only column, source is Columella's LATIN (no Greek at
+        all) -- John's ruling 2026-07-23: don't ship things for which we
+        have no greek
+    B27a:
+      kind: omit
+      reason: >
+        testimonium-only column, source is Columella's LATIN (no Greek at
+        all) -- John's ruling 2026-07-23: don't ship things for which we
+        have no greek
+    B36:
+      kind: omit
+      reason: >
+        Freeman's own text is "= 187." -- a cross-reference, not a
+        translation; the Greek incipit stub stands alone. John's ruling
+        2026-07-23
+    B44:
+      kind: verbatim
+      note: >
+        DK's own double-numbering of B225's identical maxim (ἀληθόμυθον
+        χρὴ εἶναι, οὐ πολύλογον) under a second column token -- Freeman's
+        own printed text at B44 is just the cross-reference "= 225.", so
+        her B225 English is ported onto B44 via text_from rather than
+        re-typed; her B225 entry itself is untouched. John's ruling
+        2026-07-23
+      text_from: B225
+    B298:
+      kind: omit
+      reason: >
+        testimonium-only column (Suidas glossing a single word
+        Democritus used) -- no Democritean Greek role='text' line for her
+        English to translate; John's ruling 2026-07-23
+    B298a:
+      kind: embedded
+      note: >
+        the Greek maxim survives verbatim inside the Demetrius papyrus
+        quotation (the embedded shape: a role='text' witness inside a
+        testimonium's own narration), so her English translates Greek
+        actually printed in this column; John's ruling 2026-07-23
+        confirms the embedded/verbatim-survival reading over a plain
+        `note`
+    B300:
+      kind: omit
+      reason: >
+        dossier deferred pending finer-grained English attachment to the
+        merged tetralogy-title column's own role='text' witnesses; John's
+        ruling 2026-07-23
+    B302a:
+      kind: omit
+      reason: >
+        source survives only in Seneca's LATIN -- no Greek. John's ruling
+        2026-07-23: don't ship things for which we have no greek
+    B304:
+      kind: omit
+      reason: >
+        known mistranslation: Freeman's "I alone know that I know
+        nothing" renders ἓν μόνον οἶδα ("one thing alone I know"), not a
+        Socratic "know nothing" formula -- John's ruling 2026-07-23: don't
+        ship known mistranslations
+    B306:
+      kind: omit
+      reason: >
+        testimonium-only column (an editorial notice of a fourteen-title
+        list in the Arabian writer Masala) -- no Democritean Greek
+        role='text' line for her English to translate; John's ruling
+        2026-07-23
+    B307:
+      kind: omit
+      reason: >
+        testimonium-only column (a Pseudoribasius forgery notice) -- no
+        Democritean Greek role='text' line for her English to translate;
+        John's ruling 2026-07-23
+    B309:
+      kind: omit
+      reason: >
+        testimonium-only column (Albertus Magnus attributing a saying to
+        Democritus) -- no Democritean Greek role='text' line for her
+        English to translate; John's ruling 2026-07-23
+    B0a:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B0b:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B0c:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B1:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B1b:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B2:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B2a:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B2b:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B2c:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B4a:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B4b:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B4c:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B8a:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B8b:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B10a:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B11a:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B11l:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B11r:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B12:
+      kind: note
+      note: >
+        Protagoras B7 precedent: Freeman gives an editorial report or reference, not surviving words
+    B13:
+      kind: note
+      note: >
+        Protagoras B7 precedent: Freeman gives an editorial report or reference, not surviving words
+    B15c:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B16:
+      kind: note
+      note: >
+        Protagoras B7 precedent: Freeman gives an editorial report or reference, not surviving words
+    B16a:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B17:
+      kind: note
+      note: >
+        Protagoras B7 precedent: Freeman gives an editorial report or reference, not surviving words
+    B18a:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B18b:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B20a:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B26a:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B29:
+      kind: embedded
+      note: >
+        Protagoras B6a precedent: a reported lexical item survives inside the source’s sentence
+    B29a:
+      kind: embedded
+      note: >
+        Protagoras B6a precedent: a reported lexical item survives inside the source’s sentence
+    B122a:
+      kind: embedded
+      note: >
+        Protagoras B6a precedent: the preserved gyne-from-gone lexical derivation survives inside the source's sentence, the same embedded/reported-lexical-survival shape used for B29/B29a/B299h
+    B163:
+      kind: note
+      note: >
+        Protagoras B7 precedent: Freeman gives an editorial report or reference, not surviving words
+    B298b:
+      kind: title
+      note: >
+        Protagoras B5 precedent: Freeman explicitly presents a transmitted title
+    B299h:
+      kind: embedded
+      note: >
+        Protagoras B6a precedent: a reported lexical item survives inside the source’s sentence
+    B302:
+      kind: note
+      note: >
+        Protagoras B7 precedent: Freeman gives an editorial report or reference, not surviving words
+    B308:
+      kind: note
+      note: >
+        Protagoras B7 precedent: Freeman gives an editorial report or reference, not surviving words
+  fragment_kinds:
+    B0a: title
+    B0b: title
+    B0c: title
+    B1: title
+    B1a: verbatim
+    B1b: title
+    B2: title
+    B2a: title
+    B2b: title
+    B2c: title
+    B3: verbatim
+    B4: verbatim
+    B4a: title
+    B4b: title
+    B4c: title
+    B5: verbatim
+    B5a: title
+    B5b: title
+    B5c: title
+    B5d: title
+    B5e: title
+    B5f: title
+    B5g: title
+    B5h: title
+    B5i: title
+    B6: verbatim
+    B7: verbatim
+    B8: verbatim
+    B8a: title
+    B8b: title
+    B9: verbatim
+    B10: verbatim
+    B10a: title
+    B10b: verbatim
+    B11: verbatim
+    B11a: title
+    B11b: title
+    B11c: title
+    B11d: title
+    B11e: title
+    B11f: title
+    B11g: title
+    B11h: title
+    B11i: title
+    B11k: title
+    B11l: title
+    B11m: title
+    B11n: title
+    B11o: title
+    B11p: title
+    B11q: title
+    B11r: title
+    B12: note
+    B13: note
+    B14: embedded
+    B14a: title
+    B14b: title
+    B14c: title
+    B15: omit
+    B15a: title
+    B15b: title
+    B15c: title
+    B16: note
+    B16a: title
+    B17: note
+    B18: verbatim
+    B18a: title
+    B18b: title
+    B19: omit
+    B20: embedded
+    B20a: title
+    B21: verbatim
+    B22: verbatim
+    B23: omit
+    B24: embedded
+    B25: omit
+    B26: embedded
+    B26a: title
+    B26b: title
+    B26c: title
+    B26d: title
+    B26e: title
+    B26f: title
+    B27: omit
+    B27a: omit
+    B28: embedded
+    B28a: title
+    B28b: title
+    B28c: title
+    B29: embedded
+    B29a: embedded
+    B30: verbatim
+    B31: verbatim
+    B32: verbatim
+    B33: verbatim
+    B34: verbatim
+    B35: verbatim
+    B36: omit
+    B37: verbatim
+    B38: verbatim
+    B39: verbatim
+    B40: verbatim
+    B41: verbatim
+    B42: verbatim
+    B43: verbatim
+    B44: verbatim
+    B45: verbatim
+    B46: verbatim
+    B47: verbatim
+    B48: verbatim
+    B49: verbatim
+    B50: verbatim
+    B51: verbatim
+    B52: verbatim
+    B53: verbatim
+    B53a: verbatim
+    B54: verbatim
+    B55: verbatim
+    B56: verbatim
+    B57: verbatim
+    B58: verbatim
+    B59: verbatim
+    B60: verbatim
+    B61: verbatim
+    B62: verbatim
+    B63: verbatim
+    B64: verbatim
+    B65: verbatim
+    B66: verbatim
+    B67: verbatim
+    B68: verbatim
+    B69: verbatim
+    B70: verbatim
+    B71: verbatim
+    B72: verbatim
+    B73: verbatim
+    B74: verbatim
+    B75: verbatim
+    B76: verbatim
+    B77: verbatim
+    B78: verbatim
+    B79: verbatim
+    B80: verbatim
+    B81: verbatim
+    B82: verbatim
+    B83: verbatim
+    B84: verbatim
+    B85: verbatim
+    B86: verbatim
+    B87: verbatim
+    B88: verbatim
+    B89: verbatim
+    B90: verbatim
+    B91: verbatim
+    B92: verbatim
+    B93: verbatim
+    B94: verbatim
+    B95: verbatim
+    B96: verbatim
+    B97: verbatim
+    B98: verbatim
+    B99: verbatim
+    B100: verbatim
+    B101: verbatim
+    B102: verbatim
+    B103: verbatim
+    B104: verbatim
+    B105: verbatim
+    B106: verbatim
+    B107: verbatim
+    B107a: verbatim
+    B108: verbatim
+    B109: verbatim
+    B110: verbatim
+    B111: verbatim
+    B112: verbatim
+    B113: verbatim
+    B114: verbatim
+    B115: verbatim
+    B116: verbatim
+    B117: verbatim
+    B118: verbatim
+    B119: verbatim
+    B120: verbatim
+    B121: verbatim
+    B122: verbatim
+    B122a: embedded
+    B123: verbatim
+    B124: verbatim
+    B125: verbatim
+    B126: verbatim
+    B127: verbatim
+    B128: verbatim
+    B129: verbatim
+    B129a: verbatim
+    B130: verbatim
+    B131: verbatim
+    B132: verbatim
+    B133: verbatim
+    B134: verbatim
+    B135: verbatim
+    B136: verbatim
+    B137: verbatim
+    B138: verbatim
+    B139: verbatim
+    B139a: verbatim
+    B140: verbatim
+    B141: verbatim
+    B142: verbatim
+    B143: verbatim
+    B144: verbatim
+    B144a: verbatim
+    B145: verbatim
+    B146: verbatim
+    B147: verbatim
+    B148: verbatim
+    B149: verbatim
+    B150: verbatim
+    B151: verbatim
+    B152: verbatim
+    B153: verbatim
+    B154: verbatim
+    B155: verbatim
+    B155a: embedded
+    B156: verbatim
+    B157: verbatim
+    B158: verbatim
+    B159: verbatim
+    B160: verbatim
+    B161: embedded
+    B162: embedded
+    B163: note
+    B164: verbatim
+    B165: verbatim
+    B166: embedded
+    B167: verbatim
+    B168: embedded
+    B169: verbatim
+    B170: verbatim
+    B171: verbatim
+    B172: verbatim
+    B173: verbatim
+    B174: verbatim
+    B175: verbatim
+    B176: verbatim
+    B177: verbatim
+    B178: verbatim
+    B179: verbatim
+    B180: verbatim
+    B181: verbatim
+    B182: verbatim
+    B183: verbatim
+    B184: verbatim
+    B185: verbatim
+    B186: verbatim
+    B187: verbatim
+    B188: verbatim
+    B189: verbatim
+    B190: verbatim
+    B191: verbatim
+    B192: verbatim
+    B193: verbatim
+    B194: verbatim
+    B195: verbatim
+    B196: verbatim
+    B197: verbatim
+    B198: verbatim
+    B199: verbatim
+    B200: verbatim
+    B201: verbatim
+    B202: verbatim
+    B203: verbatim
+    B204: verbatim
+    B205: verbatim
+    B206: verbatim
+    B207: verbatim
+    B208: verbatim
+    B209: verbatim
+    B210: verbatim
+    B211: verbatim
+    B212: verbatim
+    B213: verbatim
+    B214: verbatim
+    B215: verbatim
+    B216: verbatim
+    B217: verbatim
+    B218: verbatim
+    B219: verbatim
+    B220: verbatim
+    B221: verbatim
+    B222: verbatim
+    B223: verbatim
+    B224: verbatim
+    B225: verbatim
+    B226: verbatim
+    B227: verbatim
+    B228: verbatim
+    B229: verbatim
+    B230: verbatim
+    B231: verbatim
+    B232: verbatim
+    B233: verbatim
+    B234: verbatim
+    B235: verbatim
+    B236: verbatim
+    B237: verbatim
+    B238: verbatim
+    B239: verbatim
+    B240: verbatim
+    B241: verbatim
+    B242: verbatim
+    B243: verbatim
+    B244: verbatim
+    B245: verbatim
+    B246: verbatim
+    B247: verbatim
+    B248: verbatim
+    B249: verbatim
+    B250: verbatim
+    B251: verbatim
+    B252: verbatim
+    B253: verbatim
+    B254: verbatim
+    B255: verbatim
+    B256: verbatim
+    B257: verbatim
+    B258: verbatim
+    B259: verbatim
+    B260: verbatim
+    B261: verbatim
+    B262: verbatim
+    B263: verbatim
+    B264: verbatim
+    B265: verbatim
+    B266: verbatim
+    B267: verbatim
+    B268: verbatim
+    B269: verbatim
+    B270: verbatim
+    B271: verbatim
+    B272: verbatim
+    B273: verbatim
+    B274: verbatim
+    B275: verbatim
+    B276: verbatim
+    B277: verbatim
+    B278: verbatim
+    B279: verbatim
+    B280: verbatim
+    B281: verbatim
+    B282: verbatim
+    B283: verbatim
+    B284: verbatim
+    B285: verbatim
+    B286: verbatim
+    B287: verbatim
+    B288: verbatim
+    B289: verbatim
+    B290: verbatim
+    B291: verbatim
+    B292: verbatim
+    B293: verbatim
+    B294: verbatim
+    B295: verbatim
+    B296: verbatim
+    B297: verbatim
+    B298: omit
+    B298a: embedded
+    B298b: title
+    B299: verbatim
+    B299a: title
+    B299b: title
+    B299c: title
+    B299d: title
+    B299e: title
+    B299f: title
+    B299g: title
+    B299h: embedded
+    B300: omit
+    B302: note
+    B302a: omit
+    B304: omit
+    B306: omit
+    B307: omit
+    B308: note
+    B309: omit
+
+# Digest fingerprint of the observed dk column spine (386 columns after
+
+# Freeman’s fifth-edition B16c is DK6 B15c. The five English-only
+# entries below were excluded from the committed clean JSON. DK B131 was
+# a false edition gap: sacred-texts prints its leading label as a scan
+# typo, `13I.` (capital I for the digit 1), which merged its text into
+# B130 until the extractor's numbering-typo correction was extended to
+# this class (I/l-for-1, accepted only as the exact expected successor).
+# Freeman coverage is complete: 386 of 386 columns.
+freeman_concordance:
+  B16c: B15c
+
+# Freeman order, after the concordance and English-only exclusions above,
+# is the existing DK spine order; no display_order declaration is needed.
+
+group_headers:
+  - before_column: B0a
+    level: 1
+    text: "The tetralogies of thrasyllus"
+    sha256_16: "8d8079998d42f783"
+  - before_column: B0a
+    level: 1
+    text: "Tetralogies I and II: Ethics."
+    sha256_16: "4f5934c61510aa6b"
+  - before_column: B4b
+    level: 1
+    text: "tetralogies III to VI: Natural Science, including Logic"
+    sha256_16: "18651b7944048868"
+  - before_column: B5a
+    level: 2
+    text: "Titles"
+    sha256_16: "3b23a123fa009f7f"
+  - before_column: B11b
+    level: 2
+    text: "unclassified writings on 'causes'"
+    sha256_16: "7de0919a1eb163eb"
+  - before_column: B11b
+    level: 2
+    text: "(Titles)"
+    sha256_16: "fda321cb633d70b6"
+  - before_column: B11l
+    level: 1
+    text: "tetralogies VII to IX: Mathematical"
+    sha256_16: "c01f5e97a82bbe51"
+  - before_column: B11l
+    level: 2
+    text: "(Titles)"
+    sha256_16: "fda321cb633d70b6"
+  - before_column: B14a
+    level: 2
+    text: "(Titles)"
+    sha256_16: "fda321cb633d70b6"
+  - before_column: B15c
+    level: 1
+    text: "tetralogies X and XI: Music"
+    sha256_16: "4f33657d18f371ec"
+  - before_column: B26b
+    level: 1
+    text: "tetralogies XII and XIII: On Medical Technique, Agriculture, etc."
+    sha256_16: "c45946acd24e7e51"
+  - before_column: B26b
+    level: 2
+    text: "(Titles)"
+    sha256_16: "fda321cb633d70b6"
+  - before_column: B28a
+    level: 2
+    text: "(Titles)"
+    sha256_16: "fda321cb633d70b6"
+  - before_column: B29
+    level: 2
+    text: "(End of the Tetralogies of Thrasyllus)"
+    sha256_16: "8d7c9aa3c52cc31f"
+  - before_column: B29
+    level: 1
+    text: "genuine fragments from unspecified works"
+    sha256_16: "be1840c9fecd0a6d"
+  - before_column: B35
+    level: 1
+    text: "gnômae"
+    sha256_16: "785faacf6fac88cd"
+  - before_column: B116
+    level: 2
+    text: "(End of the Gnomae)"
+    sha256_16: "ec326ab7fec4e1ab"
+  - before_column: B128
+    level: 2
+    text: "128-141. (Unusual words quoted by grammarians)"
+    sha256_16: "a9b53af0172b63f7"
+  - before_column: B298a
+    level: 2
+    text: "Doubtful fragment"
+    sha256_16: "99c27a68df6c8dcf"
+  - before_column: B298b
+    level: 2
+    text: "Spurious fragments."
+    sha256_16: "10f6738d93364b9b"
+  - before_column: B299a
+    level: 2
+    text: "(Titles)"
+    sha256_16: "fda321cb633d70b6"
+
+english:
+  primary:
+    id: freeman
+    name: "Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)"
+    model: freeman
+    file: "freeman-ancilla/freeman-democritus.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Kathleen Freeman's Ancilla to the Pre-Socratic Philosophers (1948) is treated as US public domain per John's 2026-07-23 ruling (CANON.md, Freeman Ancilla copyright ruling); covered by attribution.astro's site-wide translation public-domain notice."
+    group_headers_file: "freeman-ancilla/freeman-democritus.group_headers.json"
+  # John's ruling 2026-07-29: each of these is Freeman's own wholly
+  # parenthetical précis of a reporting source, with no translated
+  # context-english span covering the same material -- labeled a summary
+  # rather than suppressed (stage1_freeman_english.py gate 5; see
+  # EnglishChunk.summary). B10a and B14 were census edge cases (a leading
+  # parenthetical tag/group header followed by unrelated prose, not
+  # WHOLLY parenthetical) and are deliberately NOT declared here.
+  summary_labels:
+    [B12, B13, B16, B17, B20, B24, B28, B29a, B122a, B155a, B161, B162, B163,
+     B299h, B308]
+# title-strip and the two div_concat merges) -- stage2 recomputes and
+# compares it.
+section_spine: { count: 386, sha256: "18820fba5c2384209e676db041d25f9c32136753146c1f12abeb746e70b61bea" }
+
+# dk is bookless (a single declared book covers the whole spine, like the
+# flat `section` scheme's Enchiridion). Spine starts at B0a, not B1: DK's
+# own numbering opens with three lettered book-title entries (B0a
+# "Pythagoras", B0b "On the Disposition of the Wise Man", B0c "On Things in
+# Hades") preceding the numbered run -- there is no plain "B0".
+books:
+  - { n: 1, start: "B0a", end: "B309" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: democritus-fragments
+  slug: fragments
+  title: Fragments
+  abbr: Democr. B
+  author: democritus
+  language: grc
+  workType: fragments
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1951–52), 68 B'
+  greekSource:
+    short: Diels–Kranz (1951–52)
+    full: 'Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1951–52), 68 B'
+  translations:
+    - id: freeman
+      name: Kathleen Freeman, Ancilla to the Pre-Socratic Philosophers (Blackwell, 1948)
+      short: Freeman
+      slot: english
+  defaultTranslation: freeman
+  citation:
+    scheme: dk
+    copyAbbr: DK 68
+    dkChapter: 68
+    series: B
+  related:
+    - id: democritus-testimonia
+      label: 'The A-testimonia: ancient reports about Democritus'
+  blurb: The largest surviving body of Presocratic prose — 386 fragments spanning physics, epistemology, cosmology, and (from B35 on) the ethical maxims of the "laughing philosopher," DK's Democrates gnomai on the good disposition of the soul.

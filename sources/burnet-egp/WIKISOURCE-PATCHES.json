@@ -1,0 +1,52 @@
+[
+ {
+  "scope": "raw",
+  "chapter": "heraclitus",
+  "old": "the best man among them,}} <section end=\"DK121\" />",
+  "new": "the best man among them,}}",
+  "note": "Wikisource tagging defect, not a Burnet edition variant. Page:Early Greek philosophy by John Burnet, 3rd edition, 1920.djvu/154 (pinned revid 8943991) closes <section end=\"DK121\" /> prematurely, mid-sentence, right after '...for they have cast out Hermodoros, the best man among them,'. The fragment's translation genuinely continues onto Page:.../155 (pinned revid 8968046), which opens with the rest of the same sentence ('saying, \"We will have none who is best among us; if there be any such, let him be so elsewhere and among others.\" R. P. 29 b.') followed by a SECOND, correctly-placed <section end=\"DK121\" />. Removing this premature first close lets the general begin/end scan capture the whole two-page fragment up to the genuine closing tag, reproducing Burnet's actual single continuous sentence (matches both the 1930 4th-ed. OCR witness and the Greek, a single sentence in both DK and every other witness)."
+ },
+ {
+  "scope": "raw",
+  "chapter": "xenophanes",
+  "old": "{{fine|This is the sort of thing we should say by the fireside in the winter-time, as we lie on soft couches after a good meal, drinking sweet wine and crunching chickpeas: \"Of what country are you, and how old are you, good sir? And how old were you when the Mede appeared?\"}}",
+  "new": "<section begin=\"XenoFragB22\" />{{fine|This is the sort of thing we should say by the fireside in the winter-time, as we lie on soft couches after a good meal, drinking sweet wine and crunching chickpeas: \"Of what country are you, and how old are you, good sir? And how old were you when the Mede appeared?\"}}<section end=\"XenoFragB22\" />",
+  "note": "Grok review defect G2: Burnet DOES translate DK6 B22 (content-verified against the Greek, πὰρ πυρὶ χρὴ τοιαῦτα λέγειν χειμῶνος ἐν ὥρηι...), introduced two paragraphs after DK B8's own quotation, same biographical-narrative shape ('another poem (fr. 22 = 17 Karst.; R. P. 95 a):' immediately before this {{fine|...}} block, Page:.../116, pinned revid in _XENOPHANES_PAGE_REVISIONS). UNLIKE B8, Wikisource never wrapped it in a <section> tag of its own, so it fell through the heading scan (no printed '(NN)' numeral precedes it either) with no column at all -- alignment_allow_unmatched carried '1:B22' as a supposed genuine edition gap. This patch inserts this module's OWN 'XenoFragB22' tag pair around the exact, content-pinned span (matched exactly once) so build_xenophanes's re-attachment discipline (_xeno_reattach_tagged_fragment, shared with B8) picks it up the same way."
+ },
+ {
+  "scope": "chunk",
+  "chapter": "anaximander",
+  "column": "B1",
+  "replace": [
+   [
+    ",\" as he says in these somewhat poetical terms.—Phys. Op. fr. 2 (R. P. 16).",
+    ",\" R. P. 16."
+   ]
+  ],
+  "note": "Grok content audit trim defect: the micro-pass's {{fine|...}} block for Anaximander B1 (Page:.../66, pinned revid 9923142) runs past Burnet's own closing quotation mark to include his OWN connective frame ('as he says in these somewhat poetical terms') plus his source citation ('—Phys. Op. fr. 2 (R. P. 16)'), neither of which is part of the translated fragment itself. Every other committed Burnet work in this corpus (see e.g. burnet-heraclitus.clean.json B121: '...among others.” R. P. 29 b.') ends its English at the quotation's own closing quote mark, keeping only a bare trailing 'R. P. NN' locator with no source-citation apparatus and no editorial frame. This patch trims to that same convention, applied post-_finish_plain_text so it matches the module's straight-quote output (not Wikisource's curly quote)."
+ },
+ {
+  "scope": "chunk",
+  "chapter": "anaximenes",
+  "column": "B2",
+  "replace": [
+   [
+    ".\"—Aet. i. 3, 4 (R. P. 24).",
+    ".\" R. P. 24."
+   ]
+  ],
+  "note": "Grok content audit trim defect: the micro-pass's {{fine|...}} block for Anaximenes B2 (Page:.../87, pinned revid 8937159) runs past Burnet's own closing quotation mark to include his source citation ('—Aet. i. 3, 4 (R. P. 24)'), which is not part of the translated fragment itself. Matches the same committed convention as the Anaximander B1 patch above (and every other committed Burnet work): English ends at the closing quote, followed only by a bare 'R. P. NN' locator."
+ },
+ {
+  "scope": "chunk",
+  "chapter": "anaxagoras",
+  "column": "B10",
+  "replace": [
+   [
+    "flesh? R. P. 155, f, n. 1.",
+    "flesh? R. P. 155 f."
+   ]
+  ],
+  "note": "Grok content audit trim defect: Burnet's own printed citation for Anaxagoras B10 reads 'R. P. 155, f, n. 1.' (a footnote-marker-bearing form found nowhere else in this corpus). Every other lettered R. P. locator in the committed Burnet works uses the bare 'R. P. NNN x.' shape with no comma and no trailing footnote marker (e.g. this same file's B8: 'R. P. 155 e.'; B4: 'R. P. 151.'; burnet-empedocles.clean.json B11: 'R. P. 165 a.'). This patch normalizes B10's citation to that same bare convention, dropping the 'n. 1' footnote residue."
+ }
+]

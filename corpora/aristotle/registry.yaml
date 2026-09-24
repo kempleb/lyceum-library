@@ -1,0 +1,1169 @@
+registry:
+  Cat:
+    id: Cat
+    slug: categories
+    title: Categories
+    greekTitle: Κατηγορίαι
+    abbr: Cat.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: Minio-Paluello, Aristotelis Categoriae (OCT, 1949)
+    greekSource:
+      short: Minio-Paluello (OCT, 1949)
+      full: 'L. Minio-Paluello, ed. Aristotelis categoriae et liber de interpretatione. Oxford: Clarendon Press, 1949.'
+    translations:
+      - id: edghill
+        name: E. M. Edghill (Oxford, 1928)
+        short: Edghill
+        slot: english
+      - id: taylor
+        name: Thomas Taylor (London, 1812)
+        short: Taylor
+        slot: secondary
+      - id: ackrill
+        name: J. L. Ackrill (Oxford, 1963)
+        short: Ackrill
+        slot: third
+        private: true
+      - id: owen
+        name: O. F. Owen (Bohn, 1853)
+        short: Owen
+        slot: overlay
+    citation:
+      scheme: bekker
+    commentaries:
+      - Isa
+    blurb: Aristotle on the ten kinds of predication — the opening work of the Organon.
+  Int:
+    id: Int
+    slug: de-interpretatione
+    title: De Interpretatione
+    greekTitle: Περὶ ἑρμηνείας
+    abbr: Int.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: Minio-Paluello, Aristotelis De Interpretatione (OCT, 1949)
+    greekSource:
+      short: Minio-Paluello (OCT, 1949)
+      full: 'L. Minio-Paluello, ed. Aristotelis categoriae et liber de interpretatione. Oxford: Clarendon Press, 1949.'
+    translations:
+      - id: edghill
+        name: E. M. Edghill (Oxford, 1928)
+        short: Edghill
+        slot: english
+      - id: taylor
+        name: Thomas Taylor (London, 1812)
+        short: Taylor
+        slot: secondary
+      - id: ackrill
+        name: J. L. Ackrill (Oxford, 1963)
+        short: Ackrill
+        slot: third
+        private: true
+      - id: owen
+        name: O. F. Owen (Bohn, 1853)
+        short: Owen
+        slot: overlay
+    citation:
+      scheme: bekker
+    blurb: Aristotle on statements, truth, negation, and future contingents — the second work of the Organon.
+  Isa:
+    id: Isa
+    slug: isagoge
+    title: Isagoge
+    greekTitle: Εἰσαγωγή
+    abbr: Isag.
+    author: porphyry
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: Busse, Porphyrii Isagoge (CAG IV.1, 1887)
+    greekSource:
+      short: Busse (CAG IV.1, 1887)
+      full: 'A. Busse, ed. Porphyrii Isagoge et in Aristotelis Categorias commentarium. Commentaria in Aristotelem Graeca IV.1. Berlin: Reimer, 1887.'
+    translations:
+      - id: owen
+        name: O. F. Owen (Bohn, 1853)
+        short: Owen
+        slot: english
+        footnotes: true
+    citation:
+      scheme: busse
+      hideLineNumbers: true
+    related:
+      - id: Cat
+        label: Aristotle’s Categories — the work it introduces
+    blurb: Porphyry’s introduction to the five predicables — the standard late-antique gateway to the Categories and the whole Organon.
+  Phys:
+    id: Phys
+    slug: physics
+    title: Physics
+    greekTitle: Φυσικὴ ἀκρόασις
+    abbr: Phys.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 8
+    bookLabels:
+      - I
+      - II
+      - III
+      - IV
+      - V
+      - VI
+      - VII
+      - VIII
+    greekEdition: Ross, Aristotelis Physica (OCT, 1950)
+    greekSource:
+      short: Ross (OCT, 1950)
+      full: 'W. D. Ross, ed. Aristotelis Physica. Oxford: Clarendon Press (Oxford Classical Texts), 1950.'
+    translations:
+      - id: hardie
+        name: R. P. Hardie and R. K. Gaye (Oxford, 1930)
+        short: Hardie & Gaye
+        slot: english
+    citation:
+      scheme: bekker
+    blurb: Aristotle on nature, change, place, time, and the prime mover, in eight books.
+  Cael:
+    id: Cael
+    slug: on-the-heavens
+    title: On the Heavens
+    greekTitle: Περὶ οὐρανοῦ
+    abbr: Cael.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 4
+    bookLabels:
+      - I
+      - II
+      - III
+      - IV
+    greekEdition: 'Moraux, Aristote: Du ciel (Budé, 1965)'
+    greekSource:
+      short: Moraux (Budé, 1965)
+      full: 'P. Moraux, ed. Aristote: Du ciel. Paris: Les Belles Lettres (Budé), 1965.'
+    translations:
+      - id: stocks
+        name: J. L. Stocks (Oxford, 1922)
+        short: Stocks
+        slot: english
+    citation:
+      scheme: bekker
+    blurb: Aristotle on the cosmos, the elements, and the eternity of the heavens, in four books.
+  GC:
+    id: GC
+    slug: on-generation-and-corruption
+    title: On Generation and Corruption
+    greekTitle: Περὶ γενέσεως καὶ φθορᾶς
+    abbr: GC
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 2
+    bookLabels:
+      - I
+      - II
+    greekEdition: Joachim, Aristotelis De Generatione et Corruptione (Oxford, 1922)
+    greekSource:
+      short: Joachim (Oxford, 1922)
+      full: 'H. H. Joachim, ed. Aristotle on Coming-to-be and Passing-away (De Generatione et Corruptione). Oxford: Clarendon Press, 1922.'
+    translations:
+      - id: joachim
+        name: H. H. Joachim (Oxford, 1922)
+        short: Joachim
+        slot: english
+    citation:
+      scheme: bekker
+    blurb: Aristotle on coming-to-be, passing-away, mixture, and the elements, in two books.
+  Mete:
+    id: Mete
+    slug: meteorology
+    title: Meteorology
+    greekTitle: Μετεωρολογικά
+    abbr: Mete.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 4
+    bookLabels:
+      - I
+      - II
+      - III
+      - IV
+    greekEdition: Fobes, Aristotelis Meteorologicorum libri quattuor (1919)
+    greekSource:
+      short: Fobes (1919)
+      full: 'F. H. Fobes, ed. Aristotelis meteorologicorum libri quattuor. Cambridge, Mass.: Harvard University Press, 1919; repr. 1967.'
+    translations:
+      - id: webster
+        name: E. W. Webster (Oxford, 1923)
+        short: Webster
+        slot: english
+    citation:
+      scheme: bekker
+    blurb: Aristotle on the phenomena of the upper air and the earth — weather, comets, rivers, and the sea, in four books.
+  DA:
+    id: DA
+    slug: de-anima
+    title: De Anima
+    greekTitle: Περὶ ψυχῆς
+    abbr: DA
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 3
+    bookLabels:
+      - I
+      - II
+      - III
+    greekEdition: Ross, Aristotelis De Anima (OCT, 1956)
+    greekSource:
+      short: Ross (OCT, 1956)
+      full: 'W. D. Ross, ed. Aristotle, De Anima. Oxford: Clarendon Press (Oxford Classical Texts), 1956.'
+    translations:
+      - id: smith
+        name: J. A. Smith (Oxford, 1931)
+        short: Smith
+        slot: english
+      - id: wallace
+        name: Edwin Wallace (Cambridge, 1882)
+        short: Wallace
+        slot: secondary
+    citation:
+      scheme: bekker
+    blurb: Aristotle on the soul, perception, and intellect, in three books.
+  Sens:
+    id: Sens
+    slug: sense-and-sensibilia
+    title: Sense and Sensibilia
+    greekTitle: Περὶ αἰσθήσεως καὶ αἰσθητῶν
+    abbr: Sens.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: 'Ross, Aristotle: Parva Naturalia (OCT, 1955)'
+    greekSource:
+      short: Ross (OCT, 1955)
+      full: 'W. D. Ross, ed. Aristotle: Parva Naturalia. Oxford: Clarendon Press, 1955; repr. 1970.'
+    translations:
+      - id: beare
+        name: J. I. Beare (Oxford, 1908)
+        short: Beare
+        slot: english
+    citation:
+      scheme: bekker
+    blurb: Aristotle on perception and its objects — colour, sound, flavour, and smell.
+  Mem:
+    id: Mem
+    slug: on-memory
+    title: On Memory
+    greekTitle: Περὶ μνήμης καὶ ἀναμνήσεως
+    abbr: Mem.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: 'Ross, Aristotle: Parva Naturalia (OCT, 1955)'
+    greekSource:
+      short: Ross (OCT, 1955)
+      full: 'W. D. Ross, ed. Aristotle: Parva Naturalia. Oxford: Clarendon Press, 1955; repr. 1970.'
+    translations:
+      - id: beare
+        name: J. I. Beare (Oxford, 1908)
+        short: Beare
+        slot: english
+    citation:
+      scheme: bekker
+    blurb: Aristotle on memory and recollection.
+  Somn:
+    id: Somn
+    slug: on-sleep
+    title: On Sleep
+    greekTitle: Περὶ ὕπνου καὶ ἐγρηγόρσεως
+    abbr: Somn.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: 'Ross, Aristotle: Parva Naturalia (OCT, 1955)'
+    greekSource:
+      short: Ross (OCT, 1955)
+      full: 'W. D. Ross, ed. Aristotle: Parva Naturalia. Oxford: Clarendon Press, 1955; repr. 1970.'
+    translations:
+      - id: beare
+        name: J. I. Beare (Oxford, 1908)
+        short: Beare
+        slot: english
+    citation:
+      scheme: bekker
+    blurb: Aristotle on sleep and waking.
+  Insomn:
+    id: Insomn
+    slug: on-dreams
+    title: On Dreams
+    greekTitle: Περὶ ἐνυπνίων
+    abbr: Insom.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: 'Ross, Aristotle: Parva Naturalia (OCT, 1955)'
+    greekSource:
+      short: Ross (OCT, 1955)
+      full: 'W. D. Ross, ed. Aristotle: Parva Naturalia. Oxford: Clarendon Press, 1955; repr. 1970.'
+    translations:
+      - id: beare
+        name: J. I. Beare (Oxford, 1908)
+        short: Beare
+        slot: english
+    citation:
+      scheme: bekker
+    blurb: Aristotle on dreams and their causes.
+  DivSomn:
+    id: DivSomn
+    slug: on-divination-in-sleep
+    title: On Divination in Sleep
+    greekTitle: Περὶ τῆς καθ᾽ ὕπνον μαντικῆς
+    abbr: Div. Somn.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: 'Ross, Aristotle: Parva Naturalia (OCT, 1955)'
+    greekSource:
+      short: Ross (OCT, 1955)
+      full: 'W. D. Ross, ed. Aristotle: Parva Naturalia. Oxford: Clarendon Press, 1955; repr. 1970.'
+    translations:
+      - id: beare
+        name: J. I. Beare (Oxford, 1908)
+        short: Beare
+        slot: english
+    citation:
+      scheme: bekker
+    blurb: Aristotle on prophecy and divination through dreams.
+  Long:
+    id: Long
+    slug: on-length-and-shortness-of-life
+    title: On Length and Shortness of Life
+    greekTitle: Περὶ μακροβιότητος καὶ βραχυβιότητος
+    abbr: Long.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: 'Ross, Aristotle: Parva Naturalia (OCT, 1955)'
+    greekSource:
+      short: Ross (OCT, 1955)
+      full: 'W. D. Ross, ed. Aristotle: Parva Naturalia. Oxford: Clarendon Press, 1955; repr. 1970.'
+    translations:
+      - id: ross
+        name: G. R. T. Ross (Oxford, 1908)
+        short: Ross
+        slot: english
+    citation:
+      scheme: bekker
+    blurb: Aristotle on why some living things are long-lived and others short-lived.
+  Juv:
+    id: Juv
+    slug: on-youth-old-age-life-and-death-and-respiration
+    title: On Youth, Old Age, Life and Death, and Respiration
+    greekTitle: Περὶ νεότητος καὶ γήρως καὶ ζωῆς καὶ θανάτου καὶ περὶ ἀναπνοῆς
+    abbr: Juv.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: 'Ross, Aristotle: Parva Naturalia (OCT, 1955)'
+    greekSource:
+      short: Ross (OCT, 1955)
+      full: 'W. D. Ross, ed. Aristotle: Parva Naturalia. Oxford: Clarendon Press, 1955; repr. 1970.'
+    translations:
+      - id: ross
+        name: G. R. T. Ross (Oxford, 1908)
+        short: Ross
+        slot: english
+    citation:
+      scheme: bekker
+    blurb: Aristotle on youth and old age, life and death, and the role of respiration.
+  HA:
+    id: HA
+    slug: history-of-animals
+    title: History of Animals
+    greekTitle: Περὶ τὰ ζῷα ἱστορίαι
+    abbr: HA
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 9
+    bookLabels:
+      - I
+      - II
+      - III
+      - IV
+      - V
+      - VI
+      - VII
+      - VIII
+      - IX
+    greekEdition: 'Louis, Aristote: Histoire des animaux (Budé, 1964–69)'
+    greekSource:
+      short: Louis (Budé, 1964–69)
+      full: 'P. Louis, ed. Aristote: Histoire des animaux. 3 vols. Paris: Les Belles Lettres (Budé), 1964–69.'
+    translations:
+      - id: thompson
+        name: D’Arcy Wentworth Thompson (Oxford, 1910)
+        short: Thompson
+        slot: english
+    citation:
+      scheme: bekker
+    blurb: Aristotle’s great survey of animal life — anatomy, reproduction, habits, and behaviour — in nine books.
+  PA:
+    id: PA
+    slug: parts-of-animals
+    title: Parts of Animals
+    greekTitle: Περὶ ζῴων μορίων
+    abbr: PA
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 4
+    bookLabels:
+      - I
+      - II
+      - III
+      - IV
+    greekEdition: 'Louis, Aristote: Les parties des animaux (Budé, 1956)'
+    greekSource:
+      short: Louis (Budé, 1956)
+      full: 'P. Louis, ed. Aristote: Les parties des animaux. Paris: Les Belles Lettres (Budé), 1956.'
+    translations:
+      - id: ogle
+        name: William Ogle (Oxford, 1912)
+        short: Ogle
+        slot: english
+    citation:
+      scheme: bekker
+    blurb: Aristotle’s study of the causes and functions of animal parts — the foundational work of his biology — in four books.
+  MA:
+    id: MA
+    slug: movement-of-animals
+    title: Movement of Animals
+    greekTitle: Περὶ ζῴων κινήσεως
+    abbr: MA
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: Jaeger, Aristotelis De animalium motione (Teubner, 1913)
+    greekSource:
+      short: Jaeger (Teubner, 1913)
+      full: 'W. Jaeger, ed. Aristotelis de animalium motione et de animalium incessu. Leipzig: Teubner, 1913.'
+    translations:
+      - id: farquharson
+        name: A. S. L. Farquharson (Oxford, 1912)
+        short: Farquharson
+        slot: english
+    citation:
+      scheme: bekker
+    blurb: Aristotle on the common cause of all animal locomotion — what moves the moving animal.
+  IA:
+    id: IA
+    slug: progression-of-animals
+    title: Progression of Animals
+    greekTitle: Περὶ πορείας ζῴων
+    abbr: IA
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: Jaeger, Aristotelis De animalium incessu (Teubner, 1913)
+    greekSource:
+      short: Jaeger (Teubner, 1913)
+      full: 'W. Jaeger, ed. Aristotelis de animalium motione et de animalium incessu. Leipzig: Teubner, 1913.'
+    translations:
+      - id: farquharson
+        name: A. S. L. Farquharson (Oxford, 1912)
+        short: Farquharson
+        slot: english
+    citation:
+      scheme: bekker
+    blurb: Aristotle on the parts animals use to move — why they have the number and kind of limbs they do.
+  GA:
+    id: GA
+    slug: generation-of-animals
+    title: Generation of Animals
+    greekTitle: Περὶ ζῴων γενέσεως
+    abbr: GA
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 5
+    bookLabels:
+      - I
+      - II
+      - III
+      - IV
+      - V
+    greekEdition: Drossaart Lulofs, Aristotelis De Generatione Animalium (OCT, 1965)
+    greekSource:
+      short: Drossaart Lulofs (OCT, 1965)
+      full: 'H. J. Drossaart Lulofs, ed. Aristotelis de generatione animalium. Oxford: Clarendon Press (Oxford Classical Texts), 1965; repr. 1972.'
+    translations:
+      - id: platt
+        name: Arthur Platt (Oxford, 1910)
+        short: Platt
+        slot: english
+    citation:
+      scheme: bekker
+    blurb: Aristotle on animal reproduction — the sexes, semen, heredity, and the formation of the embryo — in five books.
+  Meta:
+    id: Meta
+    slug: metaphysics
+    title: Metaphysics
+    greekTitle: Τὰ μετὰ τὰ φυσικά
+    abbr: Met.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 14
+    bookLabels:
+      - Α
+      - α
+      - Β
+      - Γ
+      - Δ
+      - Ε
+      - Ζ
+      - Η
+      - Θ
+      - Ι
+      - Κ
+      - Λ
+      - Μ
+      - Ν
+    greekEdition: Ross, Aristotle’s Metaphysics (Oxford, 1924)
+    greekSource:
+      short: Ross (1924)
+      full: 'W. D. Ross, ed. Aristotle’s Metaphysics. 2 vols. Oxford: Clarendon Press, 1924 (corr. repr. 1953).'
+    translations:
+      - id: ross
+        name: W. D. Ross (Oxford, 1924)
+        short: Ross
+        slot: english
+    citation:
+      scheme: bekker
+    blurb: Aristotle’s inquiry into being, substance, and the unmoved mover, in fourteen books.
+  APr:
+    id: APr
+    slug: prior-analytics
+    title: Prior Analytics
+    greekTitle: Ἀναλυτικὰ πρότερα
+    abbr: APr.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 2
+    bookLabels:
+      - I
+      - II
+    greekEdition: Ross, Aristotelis Analytica Priora et Posteriora (OCT, 1964)
+    greekSource:
+      short: Ross (OCT, 1964)
+      full: 'W. D. Ross, ed. Aristotelis analytica priora et posteriora. Oxford: Clarendon Press, 1964.'
+    translations:
+      - id: jenkinson
+        name: A. J. Jenkinson (Oxford, 1928)
+        short: Jenkinson
+        slot: english
+      - id: owen
+        name: O. F. Owen (Bohn, 1853)
+        short: Owen
+        slot: secondary
+    citation:
+      scheme: bekker
+    blurb: Aristotle’s theory of the syllogism and deductive inference, in two books.
+  APo:
+    id: APo
+    slug: posterior-analytics
+    title: Posterior Analytics
+    greekTitle: Ἀναλυτικὰ ὕστερα
+    abbr: APo.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 2
+    bookLabels:
+      - I
+      - II
+    greekEdition: Ross, Aristotelis Analytica Priora et Posteriora (OCT, 1964)
+    greekSource:
+      short: Ross (OCT, 1964)
+      full: 'W. D. Ross, ed. Aristotelis analytica priora et posteriora. Oxford: Clarendon Press, 1964.'
+    translations:
+      - id: mure
+        name: G. R. G. Mure (Oxford, 1928)
+        short: Mure
+        slot: english
+      - id: bouchier
+        name: E. S. Bouchier (Blackwell, 1901)
+        short: Bouchier
+        slot: secondary
+      - id: owen
+        name: O. F. Owen (Bohn, 1853)
+        short: Owen
+        slot: third
+    citation:
+      scheme: bekker
+    blurb: Aristotle on demonstration, scientific knowledge, and first principles, in two books.
+  Top:
+    id: Top
+    slug: topics
+    title: Topics
+    greekTitle: Τοπικά
+    abbr: Top.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 8
+    bookLabels:
+      - I
+      - II
+      - III
+      - IV
+      - V
+      - VI
+      - VII
+      - VIII
+    greekEdition: Ross, Aristotelis Topica et Sophistici Elenchi (OCT, 1958)
+    greekSource:
+      short: Ross (OCT, 1958)
+      full: 'W. D. Ross, ed. Aristotelis topica et sophistici elenchi. Oxford: Clarendon Press, 1958.'
+    translations:
+      - id: pickard
+        name: W. A. Pickard-Cambridge (Oxford, 1928)
+        short: Pickard-Cambridge
+        slot: english
+      - id: owen
+        name: O. F. Owen (Bohn, 1853)
+        short: Owen
+        slot: secondary
+    citation:
+      scheme: bekker
+    blurb: Aristotle’s manual of dialectical argument and the topoi, in eight books.
+  SE:
+    id: SE
+    slug: sophistical-refutations
+    title: Sophistical Refutations
+    greekTitle: Περὶ σοφιστικῶν ἐλέγχων
+    abbr: SE
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: Ross, Aristotelis Topica et Sophistici Elenchi (OCT, 1958)
+    greekSource:
+      short: Ross (OCT, 1958)
+      full: 'W. D. Ross, ed. Aristotelis topica et sophistici elenchi. Oxford: Clarendon Press, 1958.'
+    translations:
+      - id: pickard
+        name: W. A. Pickard-Cambridge (Oxford, 1928)
+        short: Pickard-Cambridge
+        slot: english
+      - id: owen
+        name: O. F. Owen (Bohn, 1853)
+        short: Owen
+        slot: secondary
+    citation:
+      scheme: bekker
+    blurb: Aristotle on fallacies and sophistical argument — the closing work of the Organon, in thirty-four chapters.
+  EN:
+    id: EN
+    slug: nicomachean-ethics
+    title: Nicomachean Ethics
+    greekTitle: Ἠθικὰ Νικομάχεια
+    abbr: EN
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 10
+    bookLabels:
+      - I
+      - II
+      - III
+      - IV
+      - V
+      - VI
+      - VII
+      - VIII
+      - IX
+      - X
+    greekEdition: Bywater, Aristotelis Ethica Nicomachea (OCT, 1894)
+    greekSource:
+      short: Bywater (OCT, 1894)
+      full: 'Ingram Bywater, ed. Aristotelis Ethica Nicomachea. Oxford: Clarendon Press (Oxford Classical Texts), 1894; repr. 1962.'
+    translations:
+      - id: rackham
+        name: H. Rackham (Loeb, 1926)
+        short: Rackham
+        slot: english
+      - id: ross
+        name: W. D. Ross (Oxford, 1908)
+        short: Ross
+        slot: secondary
+      - id: ostwald
+        name: Martin Ostwald (Bobbs-Merrill, 1962)
+        short: Ostwald
+        slot: third
+        license:
+          status: public-domain-us
+          rationale: Copyright not renewed; public domain by lapse (John's research, ruling 2026-09-22)
+      - id: peters
+        name: F. H. Peters (Kegan Paul, 1881)
+        short: Peters
+        slot: overlay
+    defaultTranslation: ostwald
+    citation:
+      scheme: bekker
+    blurb: Aristotle’s central work of moral philosophy, in ten books.
+  EE:
+    id: EE
+    slug: eudemian-ethics
+    title: Eudemian Ethics
+    greekTitle: Ἠθικὰ Εὐδήμεια
+    abbr: EE
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 5
+    bookLabels:
+      - I
+      - II
+      - III
+      - VII
+      - VIII
+    missingBooks:
+      after: 3
+      label: IV–VI
+      note: The “common books”, shared with the Nicomachean Ethics and not reprinted here.
+      linkWork: EN
+      linkBook: 5
+      linkLabel: Nicomachean Ethics V–VII
+    greekEdition: Susemihl, Aristotelis Ethica Eudemia (Teubner, 1884)
+    greekSource:
+      short: Susemihl (Teubner, 1884)
+      full: 'F. Susemihl, ed. Aristotelis ethica Eudemia. Leipzig: Teubner, 1884.'
+    translations:
+      - id: solomon
+        name: J. Solomon (Oxford, 1915)
+        short: Solomon
+        slot: english
+      - id: rackham
+        name: H. Rackham (Loeb, 1935)
+        short: Rackham
+        slot: secondary
+        private: true
+    citation:
+      scheme: bekker
+    blurb: Aristotle’s other ethical treatise, closely related to the Nicomachean Ethics.
+  Pol:
+    id: Pol
+    slug: politics
+    title: Politics
+    greekTitle: Πολιτικά
+    abbr: Pol.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 8
+    bookLabels:
+      - I
+      - II
+      - III
+      - IV
+      - V
+      - VI
+      - VII
+      - VIII
+    greekEdition: Ross, Aristotelis Politica (OCT, 1957)
+    greekSource:
+      short: Ross (OCT, 1957)
+      full: 'W. D. Ross, ed. Aristotelis politica. Oxford: Clarendon Press, 1957.'
+    translations:
+      - id: jowett
+        name: Benjamin Jowett (Oxford, 1885)
+        short: Jowett
+        slot: english
+      - id: ellis
+        name: William Ellis (1776; rev. 1912)
+        short: Ellis
+        slot: secondary
+    citation:
+      scheme: bekker
+    blurb: Aristotle on the city, citizenship, constitutions, and the best life, in eight books.
+  Oec:
+    id: Oec
+    slug: oeconomica
+    title: Oeconomica
+    greekTitle: Οἰκονομικά
+    abbr: Oec.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 2
+    bookLabels:
+      - I
+      - II
+    greekEdition: Susemihl, Aristotelis quae feruntur Oeconomica (Teubner, 1887)
+    greekSource:
+      short: Susemihl (Teubner, 1887)
+      full: 'F. Susemihl, ed. Aristotelis quae feruntur Oeconomica. Leipzig: Teubner, 1887.'
+    translations:
+      - id: forster
+        name: E. S. Forster (Oxford, 1920)
+        short: Forster
+        slot: english
+    citation:
+      scheme: bekker
+    authenticity: spurious
+    blurb: A short treatise on household and civic economy — transmitted with Aristotle but not by him.
+  VV:
+    id: VV
+    slug: de-virtutibus-et-vitiis
+    title: De Virtutibus et Vitiis
+    greekTitle: Περὶ ἀρετῶν καὶ κακιῶν
+    abbr: VV
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: I. Bekker, Aristotelis Opera (Berlin, 1831)
+    greekSource:
+      short: Bekker (Berlin, 1831)
+      full: 'I. Bekker, ed. Aristotelis opera. Berlin: Georg Reimer, 1831.'
+    translations:
+      - id: solomon
+        name: J. Solomon (Oxford, 1915)
+        short: Solomon
+        slot: english
+    citation:
+      scheme: bekker
+    authenticity: spurious
+    blurb: A short ethical treatise transmitted with Aristotle but not by him.
+  DM:
+    id: DM
+    slug: de-mundo
+    title: De Mundo
+    greekTitle: Περὶ κόσμου
+    abbr: Mund.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: I. Bekker, Aristotelis Opera (Berlin, 1831)
+    greekSource:
+      short: Bekker (Berlin, 1831)
+      full: 'I. Bekker, ed. Aristotelis opera. Berlin: Georg Reimer, 1831.'
+    translations:
+      - id: forster
+        name: E. S. Forster (Oxford, 1914)
+        short: Forster
+        slot: english
+    citation:
+      scheme: bekker
+    authenticity: spurious
+    blurb: A spurious cosmological treatise addressed to Alexander.
+  Mech:
+    id: Mech
+    slug: mechanica
+    title: Mechanica
+    greekTitle: Μηχανικά
+    abbr: Mech.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: I. Bekker, Aristotelis Opera (Berlin, 1831)
+    greekSource:
+      short: Bekker (Berlin, 1831)
+      full: 'I. Bekker, ed. Aristotelis opera. Berlin: Georg Reimer, 1831.'
+    translations:
+      - id: forster
+        name: E. S. Forster (Oxford, 1913)
+        short: Forster
+        slot: english
+    citation:
+      scheme: bekker
+    authenticity: spurious
+    blurb: The earliest surviving treatise on mechanics — a preface and thirty-five problems — is spurious.
+  Col:
+    id: Col
+    slug: de-coloribus
+    title: De Coloribus
+    greekTitle: Περὶ χρωμάτων
+    abbr: Col.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: I. Bekker, Aristotelis Opera (Berlin, 1831)
+    greekSource:
+      short: Bekker (Berlin, 1831)
+      full: 'I. Bekker, ed. Aristotelis opera. Berlin: Georg Reimer, 1831.'
+    translations:
+      - id: loveday_forster
+        name: T. Loveday and E. S. Forster (Oxford, 1913)
+        short: Loveday & Forster
+        slot: english
+    citation:
+      scheme: bekker
+    authenticity: spurious
+    blurb: A short spurious work on colours and their causes.
+  Phgn:
+    id: Phgn
+    slug: physiognomonica
+    title: Physiognomonica
+    greekTitle: Φυσιογνωμονικά
+    abbr: Phgn.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: I. Bekker, Aristotelis Opera (Berlin, 1831)
+    greekSource:
+      short: Bekker (Berlin, 1831)
+      full: 'I. Bekker, ed. Aristotelis opera. Berlin: Georg Reimer, 1831.'
+    translations:
+      - id: loveday_forster
+        name: T. Loveday and E. S. Forster (Oxford, 1913)
+        short: Loveday & Forster
+        slot: english
+    citation:
+      scheme: bekker
+    authenticity: spurious
+    blurb: A short spurious work on inferring character from the body.
+  MXG:
+    id: MXG
+    slug: de-melisso-xenophane-gorgia
+    title: De Melisso Xenophane Gorgia
+    greekTitle: Περὶ Μελίσσου Ξενοφάνους Γοργίου
+    abbr: MXG
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: I. Bekker, Aristotelis Opera (Berlin, 1831)
+    greekSource:
+      short: Bekker (Berlin, 1831)
+      full: 'I. Bekker, ed. Aristotelis opera. Berlin: Georg Reimer, 1831.'
+    translations:
+      - id: loveday_forster
+        name: T. Loveday and E. S. Forster (Oxford, 1913)
+        short: Loveday & Forster
+        slot: english
+    citation:
+      scheme: bekker
+    authenticity: spurious
+    blurb: A short spurious work on the Eleatic philosophers Melissus and Xenophanes, and Gorgias.
+  Aud:
+    id: Aud
+    slug: de-audibilibus
+    title: De Audibilibus
+    greekTitle: Περὶ ἀκουστῶν
+    abbr: Aud.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: I. Bekker, Aristotelis Opera (Berlin, 1831)
+    greekSource:
+      short: Bekker (Berlin, 1831)
+      full: 'I. Bekker, ed. Aristotelis opera. Berlin: Georg Reimer, 1831.'
+    translations:
+      - id: loveday_forster
+        name: T. Loveday and E. S. Forster (Oxford, 1913)
+        short: Loveday & Forster
+        slot: english
+    citation:
+      scheme: bekker
+    authenticity: spurious
+    blurb: A short spurious work on sound and hearing.
+  Lin:
+    id: Lin
+    slug: de-lineis-insecabilibus
+    title: De Lineis Insecabilibus
+    greekTitle: Περὶ ἀτόμων γραμμῶν
+    abbr: Lin.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: I. Bekker, Aristotelis Opera (Berlin, 1831)
+    greekSource:
+      short: Bekker (Berlin, 1831)
+      full: 'I. Bekker, ed. Aristotelis opera. Berlin: Georg Reimer, 1831.'
+    translations:
+      - id: joachim
+        name: H. H. Joachim (Oxford, 1908)
+        short: Joachim
+        slot: english
+    citation:
+      scheme: bekker
+    authenticity: spurious
+    blurb: A short spurious work arguing about indivisible lines.
+  Vent:
+    id: Vent
+    slug: ventorum-situs
+    title: Ventorum Situs
+    greekTitle: Ἀνέμων θέσεις καὶ προσηγορίαι
+    abbr: Vent.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: I. Bekker, Aristotelis Opera (Berlin, 1831)
+    greekSource:
+      short: Bekker (Berlin, 1831)
+      full: 'I. Bekker, ed. Aristotelis opera. Berlin: Georg Reimer, 1831.'
+    translations:
+      - id: forster
+        name: E. S. Forster (Oxford, 1913)
+        short: Forster
+        slot: english
+    citation:
+      scheme: bekker
+    authenticity: spurious
+    blurb: A short spurious work on the names and positions of the winds.
+  Mirab:
+    id: Mirab
+    slug: de-mirabilibus-auscultationibus
+    title: De Mirabilibus Auscultationibus
+    greekTitle: Περὶ θαυμασίων ἀκουσμάτων
+    abbr: Mir.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: I. Bekker, Aristotelis Opera (Berlin, 1831)
+    greekSource:
+      short: Bekker (Berlin, 1831)
+      full: 'I. Bekker, ed. Aristotelis opera. Berlin: Georg Reimer, 1831.'
+    translations:
+      - id: dowdall
+        name: L. D. Dowdall (Oxford, 1909)
+        short: Dowdall
+        slot: english
+    citation:
+      scheme: bekker
+    authenticity: spurious
+    blurb: A short spurious collection of about 178 reported marvels.
+  Rhet:
+    id: Rhet
+    slug: rhetoric
+    title: Rhetoric
+    greekTitle: Τέχνη ῥητορική
+    abbr: Rhet.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 3
+    bookLabels:
+      - I
+      - II
+      - III
+    greekEdition: Ross, Aristotelis Ars Rhetorica (OCT, 1959)
+    greekSource:
+      short: Ross (OCT, 1959)
+      full: 'W. D. Ross, ed. Aristotelis ars rhetorica. Oxford: Clarendon Press, 1959.'
+    translations:
+      - id: freese
+        name: J. H. Freese (Loeb, 1926)
+        short: Freese
+        slot: english
+      - id: roberts
+        name: W. Rhys Roberts (Oxford, 1924)
+        short: Roberts
+        slot: secondary
+    citation:
+      scheme: bekker
+    blurb: Aristotle on persuasion — ēthos, pathos, logos, and the art of the orator, in three books.
+  Poet:
+    id: Poet
+    slug: poetics
+    title: Poetics
+    greekTitle: Περὶ ποιητικῆς
+    abbr: Poet.
+    author: aristotle
+    language: grc
+    workType: continuous
+    books: 1
+    bookLabels:
+      - '1'
+    greekEdition: Kassel, Aristotelis De Arte Poetica (OCT, 1965)
+    greekSource:
+      short: Kassel (OCT, 1965)
+      full: 'R. Kassel, ed. Aristotelis de arte poetica liber. Oxford: Clarendon Press, 1965; repr. 1968 [of 1966 corr. edn.].'
+    translations:
+      - id: fyfe
+        name: W. H. Fyfe (Loeb, 1932)
+        short: Fyfe
+        slot: english
+      - id: butcher
+        name: S. H. Butcher (Macmillan, 1895)
+        short: Butcher
+        slot: secondary
+    citation:
+      scheme: bekker
+    blurb: Aristotle on poetry and tragedy — the founding work of literary theory.

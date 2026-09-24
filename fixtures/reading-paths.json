@@ -1,0 +1,25 @@
+{
+  "paths": [
+    {
+      "id": "living-a-philosophy",
+      "title": "Living a Philosophy",
+      "description": "Three approaches to turning philosophical claims into habits of thought and action.",
+      "stops": [
+        {
+          "work": "epicurus-letter-to-menoeceus",
+          "note": "Begin with Epicurus' compact account of a good life."
+        },
+        {
+          "work": "enchiridion",
+          "locus": "1",
+          "note": "Compare Epictetus' opening distinction between what depends on us and what does not."
+        },
+        {
+          "work": "meditations",
+          "locus": "2.1",
+          "note": "End with Marcus Aurelius preparing himself for the day."
+        }
+      ]
+    }
+  ]
+}

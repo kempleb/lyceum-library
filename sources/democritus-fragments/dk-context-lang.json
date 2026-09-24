@@ -1,0 +1,1306 @@
+{
+ "01cb51b52d781559": {
+  "decision": "citation",
+  "note": "B302, citation apparatus"
+ },
+ "0374ab59345a53ea": {
+  "decision": "citation",
+  "note": "B15, citation apparatus"
+ },
+ "0453fe9076bdb554": {
+  "decision": "citation",
+  "note": "B19, citation apparatus"
+ },
+ "04c962f14351f354": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "05a7d57af7badefd": {
+  "decision": "citation",
+  "note": "B276, citation apparatus"
+ },
+ "0912c06f767ec1b6": {
+  "decision": "citation",
+  "note": "B24, citation apparatus"
+ },
+ "093dbd009afbab92": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "0c5c7429ab09675e": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "0e7810b1783773c4": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "0f22ae2642091d55": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "0f4cfa2217a31ca8": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "0ffacb212ee29198": {
+  "decision": "citation",
+  "note": "B4, citation apparatus"
+ },
+ "11ca5c1a7e552f5b": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "11d4193480e8f6d8": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "120c89e8412a8c0d": {
+  "decision": "citation",
+  "note": "B26c, citation apparatus"
+ },
+ "122c0628279a362d": {
+  "decision": "citation",
+  "note": "B166, citation apparatus"
+ },
+ "12fb74485740d989": {
+  "decision": "citation",
+  "note": "B18, citation apparatus"
+ },
+ "15c188a36b5ee55b": {
+  "decision": "citation",
+  "note": "B52, citation apparatus"
+ },
+ "164309070cbcaa69": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "17306bef5452d6c5": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "1771edff6c6c8929": {
+  "decision": "citation",
+  "note": "B13, citation apparatus"
+ },
+ "185b1e8fe53fa858": {
+  "decision": "citation",
+  "note": "B147, citation apparatus"
+ },
+ "18eee8740b46faa1": {
+  "decision": "citation",
+  "note": "B24, citation apparatus"
+ },
+ "190d52d86f134e36": {
+  "decision": "citation",
+  "note": "B9, citation apparatus"
+ },
+ "1af309bdd49d926a": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "1b0f7c88051f813f": {
+  "decision": "citation",
+  "note": "B5, citation apparatus"
+ },
+ "1b493b2566f0d0fa": {
+  "decision": "citation",
+  "note": "B260, citation apparatus"
+ },
+ "1bbd10983552ebae": {
+  "decision": "citation",
+  "note": "B63, citation apparatus"
+ },
+ "1c291d3744f947bb": {
+  "decision": "citation",
+  "note": "B147, citation apparatus"
+ },
+ "1c3d54806a5cddef": {
+  "decision": "citation",
+  "note": "B34, citation apparatus"
+ },
+ "1dc64a1dfcfdf240": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "1e16138888f55e58": {
+  "decision": "citation",
+  "note": "B77, citation apparatus"
+ },
+ "1e21ff61de5966de": {
+  "decision": "keep-latin",
+  "note": "B27, kept Latin quotation"
+ },
+ "1ee7e63882666829": {
+  "decision": "citation",
+  "note": "B266, citation apparatus"
+ },
+ "1f6555f31208fcda": {
+  "decision": "citation",
+  "note": "B155a, citation apparatus"
+ },
+ "1f83b16d7cc366b3": {
+  "decision": "citation",
+  "note": "B85, citation apparatus"
+ },
+ "2056bd8ddd2c6772": {
+  "decision": "citation",
+  "note": "B35, citation apparatus"
+ },
+ "207dd6e0db211dd2": {
+  "decision": "citation",
+  "note": "B302, citation apparatus"
+ },
+ "21bada5fb7fe45dc": {
+  "decision": "keep-latin",
+  "note": "B117, kept Latin quotation"
+ },
+ "22a33c85502d175d": {
+  "decision": "citation",
+  "note": "B4, citation apparatus"
+ },
+ "248154a02c1dd6a6": {
+  "decision": "citation",
+  "note": "B58, citation apparatus"
+ },
+ "2663fc9593aab59d": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "26873431a441f689": {
+  "decision": "citation",
+  "note": "B147, citation apparatus"
+ },
+ "271a890e91ac57a3": {
+  "decision": "citation",
+  "note": "B31, citation apparatus"
+ },
+ "278fbc6c7ed038b9": {
+  "decision": "keep-latin",
+  "note": "B300, kept Latin quotation"
+ },
+ "27e0a298f2dbacc5": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "291e1e47168e05f9": {
+  "decision": "keep-latin",
+  "note": "B126, kept Latin quotation"
+ },
+ "2a68d203160884e2": {
+  "decision": "citation",
+  "note": "B51, citation apparatus"
+ },
+ "2ab1b86f228a8f69": {
+  "decision": "citation",
+  "note": "B127, citation apparatus"
+ },
+ "2b2c1731ca657a06": {
+  "decision": "citation",
+  "note": "B25, citation apparatus"
+ },
+ "2b458d4b2d0ec998": {
+  "decision": "strip-german",
+  "note": "B300, stripped German commentary"
+ },
+ "2d023e8c4530a98f": {
+  "decision": "strip-german",
+  "note": "B299h, stripped German commentary"
+ },
+ "2d359d6dd692c18a": {
+  "decision": "citation",
+  "note": "B4b, citation apparatus"
+ },
+ "2dad6505f9b7dc28": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "2f8812be3a511b58": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "2fda4934066cfb4c": {
+  "decision": "citation",
+  "note": "B248, citation apparatus"
+ },
+ "30ba2919965387c3": {
+  "decision": "citation",
+  "note": "B60, citation apparatus"
+ },
+ "313a7c7565dae1e2": {
+  "decision": "citation",
+  "note": "B92, citation apparatus"
+ },
+ "313d8b05aea98668": {
+  "decision": "citation",
+  "note": "B33, citation apparatus"
+ },
+ "314902353b85b3bb": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "32869d903ce90272": {
+  "decision": "citation",
+  "note": "B165, citation apparatus"
+ },
+ "32a6343577cca78c": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "3444012caca27270": {
+  "decision": "citation",
+  "note": "B32, citation apparatus"
+ },
+ "357b3db8954dae53": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "35a5d3e2959afd91": {
+  "decision": "citation",
+  "note": "B29a, citation apparatus"
+ },
+ "3685d681c1c570da": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "369ac23746f39506": {
+  "decision": "citation",
+  "note": "B59, citation apparatus"
+ },
+ "36da8cbe2e4fd6ff": {
+  "decision": "citation",
+  "note": "B165, citation apparatus"
+ },
+ "378439895284fbbf": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "384fd648dc6937a2": {
+  "decision": "citation",
+  "note": "B15, citation apparatus"
+ },
+ "396f8e41b0bc548e": {
+  "decision": "keep-latin",
+  "note": "B300, kept Latin quotation"
+ },
+ "3a1eaef37920157b": {
+  "decision": "keep-latin",
+  "note": "B300, kept Latin quotation"
+ },
+ "3b1b1f1b148639d1": {
+  "decision": "strip-german",
+  "note": "B4b, stripped German commentary"
+ },
+ "3b4a17569e039b8f": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "3b60da02bc7beba2": {
+  "decision": "citation",
+  "note": "B26, citation apparatus"
+ },
+ "3b9f1cc82428983e": {
+  "decision": "citation",
+  "note": "B298, citation apparatus"
+ },
+ "3c25f5fa2f533e0e": {
+  "decision": "citation",
+  "note": "B11, citation apparatus"
+ },
+ "3ceb1533e97fa833": {
+  "decision": "citation",
+  "note": "B13, citation apparatus"
+ },
+ "3e617fac9a9c6ac5": {
+  "decision": "citation",
+  "note": "B39, citation apparatus (+1 more)"
+ },
+ "3eaee0f31f5dba26": {
+  "decision": "keep-latin",
+  "note": "B16, kept Latin quotation"
+ },
+ "40cc253eb41c70a7": {
+  "decision": "citation",
+  "note": "B306, citation apparatus"
+ },
+ "40ce6aa6b2312eea": {
+  "decision": "citation",
+  "note": "B26c, citation apparatus"
+ },
+ "411cf13e9c09b2ec": {
+  "decision": "keep-latin",
+  "note": "B155, kept Latin quotation"
+ },
+ "427b5b5dbf683057": {
+  "decision": "citation",
+  "note": "B36, citation apparatus"
+ },
+ "436a0f74b8d34637": {
+  "decision": "citation",
+  "note": "B42, citation apparatus"
+ },
+ "43a61b86213e5077": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "43b7d154a6dece8a": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "43ff57e14ee19ae8": {
+  "decision": "keep-latin",
+  "note": "B27a, kept Latin quotation"
+ },
+ "4421bd3db2a55904": {
+  "decision": "citation",
+  "note": "B165, citation apparatus"
+ },
+ "44ff6825277ddd4d": {
+  "decision": "citation",
+  "note": "B0c, citation apparatus"
+ },
+ "458c7c0e1e6772ae": {
+  "decision": "keep-latin",
+  "note": "B12, kept Latin quotation"
+ },
+ "45c3a664efe309c9": {
+  "decision": "citation",
+  "note": "B224, citation apparatus"
+ },
+ "4637dfd2fbf7f8f1": {
+  "decision": "citation",
+  "note": "B302, citation apparatus"
+ },
+ "48c26e5ada52b24c": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "48eedddf3448a742": {
+  "decision": "citation",
+  "note": "B53a, citation apparatus"
+ },
+ "492b3bb13557b7a8": {
+  "decision": "citation",
+  "note": "B129, citation apparatus"
+ },
+ "4b2f055909af3370": {
+  "decision": "citation",
+  "note": "B128, citation apparatus"
+ },
+ "4b92179d0ee71e6f": {
+  "decision": "citation",
+  "note": "B225, citation apparatus"
+ },
+ "4c0136f9ab7183e9": {
+  "decision": "citation",
+  "note": "B5, citation apparatus"
+ },
+ "4c1357981fd3bdfd": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "4cbea03283472bda": {
+  "decision": "citation",
+  "note": "B25, citation apparatus"
+ },
+ "4cd90d8710e3be43": {
+  "decision": "citation",
+  "note": "B209, citation apparatus"
+ },
+ "4d3cd09f93b5fb11": {
+  "decision": "citation",
+  "note": "B26, citation apparatus"
+ },
+ "4f332b911e8b7ace": {
+  "decision": "keep-latin",
+  "note": "B300, kept Latin quotation"
+ },
+ "4f3aa8e1cde621bc": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "5180b3afbbd2c2d1": {
+  "decision": "citation",
+  "note": "B302, citation apparatus"
+ },
+ "51f7554d251fb35c": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "52185e5ebfe91066": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "527bad5fe2b2f148": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "53f26aa9ae127162": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "542e687b7f8b5b6f": {
+  "decision": "keep-latin",
+  "note": "B14, kept Latin quotation"
+ },
+ "54e7a5d226c94642": {
+  "decision": "citation",
+  "note": "B165, citation apparatus [re-keyed: quote-mark polarity fix 2026-08-05]"
+ },
+ "56d5f506cb1e86d0": {
+  "decision": "citation",
+  "note": "B298, citation apparatus"
+ },
+ "575233bb7c82deec": {
+  "decision": "keep-latin",
+  "note": "B28, kept Latin quotation"
+ },
+ "5855ea06f62e6cc0": {
+  "decision": "keep-latin",
+  "note": "B28, kept Latin quotation"
+ },
+ "5999eb301faced4f": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "5a89c6eae5ea9437": {
+  "decision": "citation",
+  "note": "B21, citation apparatus"
+ },
+ "5b53e77d92477271": {
+  "decision": "keep-latin",
+  "note": "B26f, kept Latin quotation"
+ },
+ "5b98cc2f60fbce69": {
+  "decision": "citation",
+  "note": "B107, citation apparatus"
+ },
+ "5c2afc2c85e76156": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "5ddfe8ea24688be5": {
+  "decision": "citation",
+  "note": "B150, citation apparatus"
+ },
+ "5defa82294edb039": {
+  "decision": "citation",
+  "note": "B122, citation apparatus"
+ },
+ "5f8606341c41a3e1": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "5fe857d6f1d82142": {
+  "decision": "keep-latin",
+  "note": "B300, kept Latin quotation"
+ },
+ "613474ef91f0475b": {
+  "decision": "citation",
+  "note": "B48, citation apparatus"
+ },
+ "62357564e11634cd": {
+  "decision": "citation",
+  "note": "B30, citation apparatus"
+ },
+ "6293bf496f7a5f55": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "64ae95349bfa45d2": {
+  "decision": "citation",
+  "note": "B155, citation apparatus"
+ },
+ "652214dac7db2101": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "67154b6a2b5f3206": {
+  "decision": "keep-latin",
+  "note": "B148, kept Latin quotation"
+ },
+ "672e662286c1b155": {
+  "decision": "citation",
+  "note": "B124, citation apparatus"
+ },
+ "67b10fa65bc3fd9a": {
+  "decision": "citation",
+  "note": "B153, citation apparatus"
+ },
+ "6adbec22abee2394": {
+  "decision": "citation",
+  "note": "B124, citation apparatus"
+ },
+ "6c6aeaf2496b0203": {
+  "decision": "citation",
+  "note": "B36, citation apparatus"
+ },
+ "6c91ca7a19dc531f": {
+  "decision": "citation",
+  "note": "B161, citation apparatus"
+ },
+ "6ea33d5ad114c968": {
+  "decision": "citation",
+  "note": "B78, citation apparatus"
+ },
+ "706fb325a630423d": {
+  "decision": "keep-latin",
+  "note": "B300, kept Latin quotation"
+ },
+ "71cb1b9e200bb7c5": {
+  "decision": "citation",
+  "note": "B253, citation apparatus"
+ },
+ "72f1f28e1501f96d": {
+  "decision": "keep-latin",
+  "note": "B298a, kept Latin quotation"
+ },
+ "73b849a1bddcc371": {
+  "decision": "citation",
+  "note": "B127, citation apparatus"
+ },
+ "742c2d3ed9f2df93": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "75c89b6c2578860b": {
+  "decision": "strip-german",
+  "note": "B19, stripped German commentary"
+ },
+ "775e5800758d1ceb": {
+  "decision": "citation",
+  "note": "B10b, citation apparatus"
+ },
+ "777378f37534f3e7": {
+  "decision": "citation",
+  "note": "B44, citation apparatus"
+ },
+ "779a6132410368f5": {
+  "decision": "keep-latin",
+  "note": "B14, kept Latin quotation"
+ },
+ "78a9a34ebb443776": {
+  "decision": "keep-latin",
+  "note": "B300, kept Latin quotation"
+ },
+ "791654e1d7880f38": {
+  "decision": "citation",
+  "note": "B9, citation apparatus"
+ },
+ "79f84da3e9c90a89": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "7b645d698d40c660": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "7b8faeebb36150d1": {
+  "decision": "citation",
+  "note": "B55, citation apparatus"
+ },
+ "7c7123d6569d8130": {
+  "decision": "citation",
+  "note": "B58, citation apparatus"
+ },
+ "7d54fff073b92b61": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "7dffceb340a6b309": {
+  "decision": "keep-latin",
+  "note": "B300, kept Latin quotation"
+ },
+ "7e3bcb13dd09ad6e": {
+  "decision": "citation",
+  "note": "B118, citation apparatus"
+ },
+ "7f3a9e21d69c516a": {
+  "decision": "citation",
+  "note": "B119, citation apparatus"
+ },
+ "815e0b6d7be268bb": {
+  "decision": "keep-latin",
+  "note": "B300, kept Latin quotation"
+ },
+ "8558fa570a5ba76b": {
+  "decision": "citation",
+  "note": "B119, citation apparatus"
+ },
+ "856cc99d87343400": {
+  "decision": "strip-german",
+  "note": "B300, stripped German commentary"
+ },
+ "85fccc10a19f4d0e": {
+  "decision": "keep-latin",
+  "note": "B165, kept Latin quotation"
+ },
+ "87d5027be132a471": {
+  "decision": "citation",
+  "note": "B75, citation apparatus"
+ },
+ "895abf8c9a512aa0": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "8a6286ae08817bc2": {
+  "decision": "citation",
+  "note": "B47, citation apparatus"
+ },
+ "8bf5945b7aedcdb8": {
+  "decision": "citation",
+  "note": "B162, citation apparatus"
+ },
+ "8c4702a619cb92ae": {
+  "decision": "citation",
+  "note": "B5, citation apparatus"
+ },
+ "8cb6490e2a894b67": {
+  "decision": "keep-latin",
+  "note": "B300, kept Latin quotation"
+ },
+ "8d69349adc2646d0": {
+  "decision": "citation",
+  "note": "B65, citation apparatus"
+ },
+ "8e7198a7ca956aad": {
+  "decision": "citation",
+  "note": "B60, citation apparatus"
+ },
+ "8e7253a3af4d3234": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "8ec3a7e2b3b1402b": {
+  "decision": "citation",
+  "note": "B64, citation apparatus"
+ },
+ "8ec704744953e41b": {
+  "decision": "strip-german",
+  "note": "B300, stripped German commentary"
+ },
+ "8ecbf2b658390070": {
+  "decision": "citation",
+  "note": "B2, citation apparatus"
+ },
+ "8ee67a84dfb615c4": {
+  "decision": "citation",
+  "note": "B108, citation apparatus"
+ },
+ "8f54d20d4a71cd29": {
+  "decision": "citation",
+  "note": "B142, citation apparatus"
+ },
+ "903a9a7dd78a2c99": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "9210caa56115d60d": {
+  "decision": "citation",
+  "note": "B155a, citation apparatus"
+ },
+ "9284b029b180adce": {
+  "decision": "keep-latin",
+  "note": "B116, kept Latin quotation"
+ },
+ "92a4e17c65ee1f6c": {
+  "decision": "citation",
+  "note": "B196, citation apparatus"
+ },
+ "92ecbbadf5c2642c": {
+  "decision": "citation",
+  "note": "B169, citation apparatus"
+ },
+ "93e5a9f1d6d04da4": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "9434176c1f373b9e": {
+  "decision": "keep-latin",
+  "note": "B154, kept Latin quotation"
+ },
+ "945e7e938268aa69": {
+  "decision": "citation",
+  "note": "B302, citation apparatus"
+ },
+ "95568f16af9c7faa": {
+  "decision": "citation",
+  "note": "B222, citation apparatus"
+ },
+ "96b2726c6a3c8d7c": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "96eab4e2ffb3bbe5": {
+  "decision": "citation",
+  "note": "B29a, citation apparatus"
+ },
+ "976bc457cea2bb45": {
+  "decision": "citation",
+  "note": "B15, citation apparatus"
+ },
+ "97a80632a983f665": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "986c6647e94e507d": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "9980efd4c7aa762d": {
+  "decision": "citation",
+  "note": "B187, citation apparatus"
+ },
+ "99d628a9630f3789": {
+  "decision": "citation",
+  "note": "B143, citation apparatus"
+ },
+ "9a3854664ee90f50": {
+  "decision": "citation",
+  "note": "B4, citation apparatus"
+ },
+ "9b6330f82ce08223": {
+  "decision": "citation",
+  "note": "B233, citation apparatus"
+ },
+ "9b9281eba3350d13": {
+  "decision": "keep-latin",
+  "note": "B307, kept Latin quotation"
+ },
+ "9c44f67593ca3ca5": {
+  "decision": "citation",
+  "note": "B240, citation apparatus"
+ },
+ "9c5ebb03603fd50e": {
+  "decision": "citation",
+  "note": "B164, citation apparatus"
+ },
+ "9dbd7f8c07a49dc8": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "a07506ea2fc39f43": {
+  "decision": "keep-latin",
+  "note": "B125, kept Latin quotation"
+ },
+ "a0a857c4d04caccc": {
+  "decision": "keep-latin",
+  "note": "B17, kept Latin quotation"
+ },
+ "a0ff16658b1d36b5": {
+  "decision": "citation",
+  "note": "B29a, citation apparatus"
+ },
+ "a1165099e2fd99bd": {
+  "decision": "citation",
+  "note": "B10b, citation apparatus"
+ },
+ "a182dc374e8d5d7d": {
+  "decision": "keep-latin",
+  "note": "B300, kept Latin quotation"
+ },
+ "a1ab4716eb449149": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "a1c44c104d4a45a4": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "a2b9d76943a048ad": {
+  "decision": "citation",
+  "note": "B155a, citation apparatus"
+ },
+ "a39b58940c5f8fca": {
+  "decision": "citation",
+  "note": "B190, citation apparatus"
+ },
+ "a4276cd78aaa40a8": {
+  "decision": "citation",
+  "note": "B2, citation apparatus"
+ },
+ "a605e98c64ecb530": {
+  "decision": "citation",
+  "note": "B77, citation apparatus"
+ },
+ "a9ecb6697830a666": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "aa663d34a0366242": {
+  "decision": "citation",
+  "note": "B1a, citation apparatus"
+ },
+ "aaf47e65ddb7e90b": {
+  "decision": "citation",
+  "note": "B4, citation apparatus"
+ },
+ "ac802de1e00ac48e": {
+  "decision": "citation",
+  "note": "B41, citation apparatus"
+ },
+ "ae4dcf6bc5e8d71e": {
+  "decision": "keep-latin",
+  "note": "B159, kept Latin quotation"
+ },
+ "b062c403b7698f60": {
+  "decision": "citation",
+  "note": "B304, citation apparatus"
+ },
+ "b0fc289cc46c2646": {
+  "decision": "keep-latin",
+  "note": "B153, kept Latin quotation"
+ },
+ "b1efee4651b9d2bf": {
+  "decision": "citation",
+  "note": "B157, citation apparatus"
+ },
+ "b2646b1c1696f095": {
+  "decision": "citation",
+  "note": "B151, citation apparatus"
+ },
+ "b4440b5afa400812": {
+  "decision": "citation",
+  "note": "B19, citation apparatus"
+ },
+ "b445683924f082e6": {
+  "decision": "citation",
+  "note": "B5, citation apparatus"
+ },
+ "b45f3facfb3f45da": {
+  "decision": "citation",
+  "note": "B155a, citation apparatus"
+ },
+ "b4e99b0fbbfe616f": {
+  "decision": "keep-latin",
+  "note": "B300, kept Latin quotation"
+ },
+ "b5f15a17187dfafe": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "b65933e46a134916": {
+  "decision": "citation",
+  "note": "B117, citation apparatus"
+ },
+ "b92f9e02651cb8d2": {
+  "decision": "citation",
+  "note": "B297, citation apparatus"
+ },
+ "ba14525405ea1ef6": {
+  "decision": "citation",
+  "note": "B117, citation apparatus"
+ },
+ "ba1ec9b1b04d53ca": {
+  "decision": "citation",
+  "note": "B28, citation apparatus"
+ },
+ "ba1f539f8f0106bf": {
+  "decision": "citation",
+  "note": "B88, citation apparatus"
+ },
+ "ba3eb6a3687fbc53": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "bb18e9723717f0ca": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "bbd2369402bd9e45": {
+  "decision": "citation",
+  "note": "B121, citation apparatus"
+ },
+ "bc4d59b8da606015": {
+  "decision": "citation",
+  "note": "B300, citation apparatus (+1 more)"
+ },
+ "bc557d261d889e3b": {
+  "decision": "citation",
+  "note": "B127, citation apparatus"
+ },
+ "bd371e490a6860a0": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "be998b84b8f1e4cd": {
+  "decision": "keep-latin",
+  "note": "B34, kept Latin quotation"
+ },
+ "bed7d46b3ba01bda": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "bf02c473d7a00e6f": {
+  "decision": "citation",
+  "note": "B142, citation apparatus"
+ },
+ "bf23f6210369c041": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "bf52fa8a24d93a67": {
+  "decision": "citation",
+  "note": "B45, citation apparatus"
+ },
+ "bf7123eaa4c35395": {
+  "decision": "citation",
+  "note": "B175, citation apparatus"
+ },
+ "c187fa67325ed00e": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "c1900aec11281ceb": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "c449454eb873345e": {
+  "decision": "citation",
+  "note": "B144, citation apparatus"
+ },
+ "c54c4e3041703240": {
+  "decision": "citation",
+  "note": "B170, citation apparatus"
+ },
+ "c5b5a2d17b44d954": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "c6e92fd21ea1c324": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "c702c1e1e21e0891": {
+  "decision": "citation",
+  "note": "B23, citation apparatus"
+ },
+ "c711a98fcff4c588": {
+  "decision": "citation",
+  "note": "B14, citation apparatus [re-keyed: quote-mark polarity fix 2026-08-05]"
+ },
+ "c7f1947f00bc9033": {
+  "decision": "citation",
+  "note": "B22, citation apparatus"
+ },
+ "c808d8eba9f42482": {
+  "decision": "citation",
+  "note": "B22, citation apparatus"
+ },
+ "c847b2c64806e6bc": {
+  "decision": "citation",
+  "note": "B129, citation apparatus"
+ },
+ "c8a100b65007870a": {
+  "decision": "keep-latin",
+  "note": "B165, kept Latin quotation"
+ },
+ "c9b55c0f07975173": {
+  "decision": "citation",
+  "note": "B163, citation apparatus"
+ },
+ "c9d174156ac76903": {
+  "decision": "citation",
+  "note": "B126, citation apparatus"
+ },
+ "ca25157e1822b482": {
+  "decision": "citation",
+  "note": "B124, citation apparatus"
+ },
+ "cc5c52e46da63836": {
+  "decision": "citation",
+  "note": "B302, citation apparatus"
+ },
+ "cc85ce2d38d1c872": {
+  "decision": "keep-latin",
+  "note": "B309, kept Latin quotation"
+ },
+ "ccb08ce504eac748": {
+  "decision": "citation",
+  "note": "B1, citation apparatus"
+ },
+ "cccc892f356a1383": {
+  "decision": "citation",
+  "note": "B15, citation apparatus"
+ },
+ "cd5ceb8690ea8664": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "ce5223adc6aed423": {
+  "decision": "citation",
+  "note": "B122, citation apparatus"
+ },
+ "ce97463c09930276": {
+  "decision": "keep-latin",
+  "note": "B145, kept Latin quotation"
+ },
+ "d0064a413644418e": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "d10d1666f53d9271": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "d176fb323ba86fc5": {
+  "decision": "citation",
+  "note": "B299, citation apparatus"
+ },
+ "d1bfcb0445bf5105": {
+  "decision": "keep-latin",
+  "note": "B159, kept Latin quotation"
+ },
+ "d1f95bc974a51286": {
+  "decision": "citation",
+  "note": "B111, citation apparatus"
+ },
+ "d385359922c5ab2e": {
+  "decision": "keep-latin",
+  "note": "B300, kept Latin quotation"
+ },
+ "d46c275cc037ea88": {
+  "decision": "citation",
+  "note": "B121, citation apparatus"
+ },
+ "d4e1944f0c5cec38": {
+  "decision": "keep-latin",
+  "note": "B147, kept Latin quotation"
+ },
+ "d614c6c3ed706372": {
+  "decision": "citation",
+  "note": "B157, citation apparatus"
+ },
+ "d691ae24bb161a06": {
+  "decision": "keep-latin",
+  "note": "B14, kept Latin quotation"
+ },
+ "d69606dbe5582694": {
+  "decision": "strip-german",
+  "note": "B1a, stripped German commentary"
+ },
+ "d6a3320b809e4610": {
+  "decision": "citation",
+  "note": "B308, citation apparatus"
+ },
+ "d6d0fdc7ddc814bd": {
+  "decision": "citation",
+  "note": "B29, citation apparatus"
+ },
+ "d776e7c18b3b6549": {
+  "decision": "keep-latin",
+  "note": "B146, kept Latin quotation"
+ },
+ "d90047b80c57758a": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "d901550dea84214b": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "d9a3c7f4a06ece03": {
+  "decision": "keep-latin",
+  "note": "B300, kept Latin quotation"
+ },
+ "d9c2828f750aa3a2": {
+  "decision": "strip-german",
+  "note": "B19, stripped German commentary"
+ },
+ "da66036289a48897": {
+  "decision": "citation",
+  "note": "B120, citation apparatus"
+ },
+ "da8e979f2fd469b3": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "db8a10ab46561db7": {
+  "decision": "citation",
+  "note": "B165, citation apparatus"
+ },
+ "dc367fe8589444d4": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "dc62cd479c1523d0": {
+  "decision": "citation",
+  "note": "B304, citation apparatus"
+ },
+ "dc6872b3160a1966": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "dca5d73b32464ddd": {
+  "decision": "citation",
+  "note": "B86, citation apparatus"
+ },
+ "dd80947c7eb640a3": {
+  "decision": "citation",
+  "note": "B244, citation apparatus"
+ },
+ "ddaaba52f606f05e": {
+  "decision": "citation",
+  "note": "B62, citation apparatus"
+ },
+ "ddbd82caa5055f6a": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "de67a9a70c75d208": {
+  "decision": "citation",
+  "note": "B2, citation apparatus"
+ },
+ "df198dfcc386ac0e": {
+  "decision": "citation",
+  "note": "B149, citation apparatus"
+ },
+ "dfe591b65a0a7b94": {
+  "decision": "citation",
+  "note": "B20, citation apparatus"
+ },
+ "e113915a20a37e87": {
+  "decision": "citation",
+  "note": "B152, citation apparatus"
+ },
+ "e40c35e3b400f303": {
+  "decision": "keep-latin",
+  "note": "B300, kept Latin quotation"
+ },
+ "e672a6c746231605": {
+  "decision": "citation",
+  "note": "B130, citation apparatus (+1 more)"
+ },
+ "e8a74b18fec4224f": {
+  "decision": "citation",
+  "note": "B156, citation apparatus"
+ },
+ "e99de9f1a6b07e2f": {
+  "decision": "keep-latin",
+  "note": "B302a, kept Latin quotation"
+ },
+ "ea08a6c6c5856bdb": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "ea699c1d531ae08e": {
+  "decision": "citation",
+  "note": "B57, citation apparatus"
+ },
+ "ea7890b5f558012f": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "eb6d744110abb2b9": {
+  "decision": "citation",
+  "note": "B5, citation apparatus"
+ },
+ "eb919c0c9ecae5fe": {
+  "decision": "citation",
+  "note": "B167, citation apparatus"
+ },
+ "ed4d36059d2ea39a": {
+  "decision": "keep-latin",
+  "note": "B300, kept Latin quotation"
+ },
+ "eecec5f33c2f5307": {
+  "decision": "citation",
+  "note": "B11, citation apparatus"
+ },
+ "eefd4f0b36011bd8": {
+  "decision": "citation",
+  "note": "B144, citation apparatus"
+ },
+ "ef5af487ac8550af": {
+  "decision": "citation",
+  "note": "B3, citation apparatus"
+ },
+ "f0c8d3257eede697": {
+  "decision": "citation",
+  "note": "B147, citation apparatus"
+ },
+ "f25bdb5394ff12e1": {
+  "decision": "citation",
+  "note": "B46, citation apparatus"
+ },
+ "f2ef4849f9db1162": {
+  "decision": "citation",
+  "note": "B23, citation apparatus"
+ },
+ "f398c23928179fff": {
+  "decision": "citation",
+  "note": "B5, citation apparatus"
+ },
+ "f450943a34715ea1": {
+  "decision": "keep-latin",
+  "note": "B300, kept Latin quotation"
+ },
+ "f4a98cb094beb4b4": {
+  "decision": "citation",
+  "note": "B6, citation apparatus"
+ },
+ "f514b890fd3412a2": {
+  "decision": "citation",
+  "note": "B129a, citation apparatus"
+ },
+ "f56151d598fbcac4": {
+  "decision": "citation",
+  "note": "B136, citation apparatus"
+ },
+ "f5c7f8c13b95e46b": {
+  "decision": "citation",
+  "note": "B3, citation apparatus"
+ },
+ "f5db4f8d1c1f7413": {
+  "decision": "keep-latin",
+  "note": "B165, kept Latin quotation"
+ },
+ "f7443446fd278683": {
+  "decision": "citation",
+  "note": "B81, citation apparatus"
+ },
+ "f7c698acf6a633fa": {
+  "decision": "citation",
+  "note": "B144a, citation apparatus"
+ },
+ "f82e6a07462bcb40": {
+  "decision": "keep-latin",
+  "note": "B14, kept Latin quotation"
+ },
+ "f887f409270d5d57": {
+  "decision": "citation",
+  "note": "B300, citation apparatus"
+ },
+ "fa6b6ca31c3b7acb": {
+  "decision": "citation",
+  "note": "B14, citation apparatus"
+ },
+ "fa788e3674af213f": {
+  "decision": "citation",
+  "note": "B160, citation apparatus"
+ },
+ "fbfe2c25ece7202f": {
+  "decision": "citation",
+  "note": "B5, citation apparatus"
+ },
+ "fdbde3346775a7b6": {
+  "decision": "keep-latin",
+  "note": "B158, kept Latin quotation"
+ },
+ "fe42c3e0df6b9f01": {
+  "decision": "keep-latin",
+  "note": "B300, kept Latin quotation"
+ },
+ "feead68655eecdf8": {
+  "decision": "citation",
+  "note": "B308, citation apparatus"
+ },
+ "ff6fcfaf86e6f1c6": {
+  "decision": "citation",
+  "note": "B49, citation apparatus"
+ },
+ "ff8d03f5fb9ba568": {
+  "decision": "citation",
+  "note": "B73, citation apparatus"
+ }
+}

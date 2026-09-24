@@ -1,0 +1,60 @@
+---
+// Every work's reader routes at /read/<author>/<work>/<division>, where
+// <division> is shared/lib/works.ts's divisionId(workId, n): book-<n> by
+// default, text for a bookless work (Categories, Poetics, … — a single
+// treatise, only ever division 1), letter-<n> for Seneca's Epistulae
+// Morales, chapter-<n> for De Providentia/De Constantia Sapientis (John's
+// ruling, 2026-09-12). One page file covers every shape rather than a
+// literal "book-" prefix in the filename, since the segment itself now
+// varies by work. The bare /texts/<author>/<work>/ slug is the landing page
+// (src/pages/texts/[author]/[work]/index.astro), not the reader.
+//
+// A division id never starts with "section-" (isBookless(work) yields
+// 'text', not 'section-N', for every section-scheme work — see
+// shared/__tests__/works.test.ts) so this file's getStaticPaths never
+// collides with ../[author]/[work]/section-[n].astro's own alias pages in
+// the same directory.
+import ReaderShell from '../../../../components/ReaderShell.astro';
+import { getWorkBySlug, workSlug, divisionId } from '@shared/lib/works';
+import { getAuthor } from '@shared/lib/authors';
+import { builtWorks } from '../../../../lib/built-works';
+import '@shared/styles/global.css';
+
+// One {author, work, division} triple per *built* work × its book range.
+// `work` in the URL is the work's SLUG (see [author]/[work]/index.astro's
+// matching comment), not necessarily its id. The registry may list works
+// whose data isn't built in this checkout; only works with
+// public/data/<id>/manifest.json emit reader pages (see built-works.ts). A
+// work with no resolvable author is a build-time bug, not a page silently
+// missing its author segment. `n` (the real book/letter/chapter number)
+// travels as a prop since the URL segment itself is the division id, not
+// the bare number.
+export function getStaticPaths() {
+  return builtWorks().flatMap((w) => {
+    const author = getAuthor(w.author);
+    if (!author) {
+      throw new Error(`read/[author]/[work]/[division]: work '${w.id}' has unresolvable author '${w.author}'`);
+    }
+    return Array.from({ length: w.books }, (_, i) => {
+      const n = i + 1;
+      return {
+        params: { author: author.id, work: workSlug(w), division: divisionId(w.id, n) },
+        props: { n },
+      };
+    });
+  });
+}
+
+const authorParam = Astro.params.author!;
+const slugParam = Astro.params.work!;
+const { n } = Astro.props;
+// Resolve the URL's (author, slug) pair back to the work — also the guard
+// against a stale/mismatched pair: a slug that exists but isn't owned by
+// this author resolves to nothing.
+const work = getWorkBySlug(authorParam, slugParam);
+if (!work) {
+  throw new Error(`read/[author]/[work]/[division]: no work at author '${authorParam}' slug '${slugParam}'`);
+}
+const workId = work.id;
+---
+<ReaderShell workId={workId} n={n} />

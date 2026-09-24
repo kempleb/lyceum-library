@@ -1,0 +1,127 @@
+# De Divinatione — pipeline manifest (Wave 2 Batch 3 round 2: book-section
+# scheme, mechanically identical to De Officiis/manifests/de-officiis.yaml —
+# see that file's header for the shared PHI book-section shape (lowercase
+# @type div convention, citation.div_types.page override). English: W. A.
+# Falconer (Loeb Classical Library 154, 1923), 281/282 coverage — one
+# declared gap (see `alignment_allow_unmatched` below and
+# pipeline/tools/extract_falconer_perseus.py's module docstring for the
+# missing 1:25 milestone in Perseus's own XML).
+#
+# Pipeline Change A (superseded by adversarial-review Finding 2): De
+# Divinatione's per-book title headings end in a period — a shape the
+# original shape-heuristic title guard's regex did not admit. That guard
+# has since been replaced entirely by a declared-hash mechanism (see this
+# file's `citation.title_labels` below and stage1_latin.py's
+# `_check_title_drop`/`_finalize_title_drops`), so punctuation shape no
+# longer matters at all — only the declared content hash does.
+
+work:
+  id: de-divinatione
+  title: "De Divinatione"
+  author: "cicero"
+  language: "lat"
+  lexicon: true
+  phi_author: "0474"
+  phi_work: "053"
+  latin_edition: "Mueller, C. F. W. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Part 4, Vol. 2 (Leipzig: Teubner, 1890)"
+  # FATAL sourceDesc gate (De Officiis/De Rerum Natura precedent): verified
+  # verbatim against the real PHI export
+  # (build/export/Diogenes-Resources/xml/phi/phi0474053.xml).
+  expected_sourcedesc: 'M. Tullius Cicero. De Divinatione (M. Tulli Ciceronis Scripta Quae Manserunt Omnia. Part 4, Vol. 2, ed. C. F. W. Mueller, 1890)'
+
+citation:
+  scheme: book-section
+  hideLineNumbers: true
+  lined_source: true
+  lined_cross_column_wraps: 69
+  lined_indent_max: 4
+  div_types:
+    page: "book"
+    section: "section"
+  # Declared title-drop hashes (adversarial-review Finding 2, replacing the
+  # earlier shape-heuristic title guard) — see manifests/de-officiis.yaml's
+  # matching comment for the full mechanism.
+  title_labels:
+    - { sha256_16: "c95dc7048bf3dcba", note: "whole-work title (book n=\"t\")" }
+    - { sha256_16: "52f03a05e477800e", note: "book 1 heading (section n=\"t\")" }
+    - { sha256_16: "b05b95f1bdfce065", note: "book 2 heading (section n=\"t\")" }
+
+english:
+  primary:
+    id: falconer
+    name: "W. A. Falconer (Loeb Classical Library, 1923)"
+    model: archive
+    file: "falconer-div/falconer.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+
+# Genuine Perseus source gap, not an extraction bug: Book I's `unit=
+# "section"` milestones skip n="25" entirely (131 of 132 present, no
+# duplicate) -- content very likely present, folded into 1:24's span with no
+# recoverable single-sentence splice point, the same "content present,
+# editorial merge, no separate marker" shape as Miller's De Officiis 2:2.90
+# gap (see manifests/de-officiis.yaml's matching comment). See
+# pipeline/tools/extract_falconer_perseus.py's module docstring for the
+# full cross-check against the Latin spine and English word counts.
+alignment_allow_unmatched:
+  - "1:1.25"
+
+# Digest fingerprint of the observed book.section column spine (282
+# columns, 1.1..2.150: book 1 has 132 sections, book 2 has 150) -- stage2
+# recomputes and compares it. Computed directly against the real PHI export
+# (build/export/.../phi0474053.xml) via stage1_latin's own
+# _parse_book_section, mirroring De Officiis' section_spine workflow.
+section_spine: { count: 282, sha256: "0f8c28fc25a7922c62b8df499b3e2e696356acc129527a09b1c4ea1c9acebd39" }
+
+books:
+  - { n: 1, start: "1.1", end: "1.132" }
+  - { n: 2, start: "2.1", end: "2.150" }
+
+sources:
+  phi_dir_env: "PHI_DIR"
+  phi_dir_default: "../TLG Files/PHI"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: de-divinatione
+  title: De Divinatione
+  abbr: Div.
+  author: cicero
+  language: lat
+  workType: continuous
+  books: 2
+  bookLabels:
+    - I
+    - II
+  greekEdition: 'Mueller, C. F. W. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Part 4, Vol. 2 (Leipzig: Teubner, 1890)'
+  greekSource:
+    short: Mueller (1890)
+    full: 'Mueller, C. F. W. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Part 4, Vol. 2 (Leipzig: Teubner, 1890)'
+  translations:
+    - id: falconer
+      name: W. A. Falconer (Loeb Classical Library, 1923)
+      short: Falconer
+      slot: english
+  citation:
+    scheme: book-section
+    hideLineNumbers: true
+    # Block-per-section source layout (John, 2026-08-28: extend lined display
+    # to the section-numbered texts) — see WorkMeta["citation"].linedGreek.
+    # RULED OFF (John, 2026-08-31): this work carries no gutter apparatus at
+    # all (measured: 0 filled gutter cells), so its print lines aligned
+    # nothing, while forcing one rendered line per print line wrapped most of
+    # them at phone width into stubs ("qui illas for-" / "tunas morte"). Same
+    # ruling as Lives; prose reflows, quoted verse keeps its own lines via
+    # Reader.svelte's `isVerseLine` (see `proseIndent` above -- indent(2) is
+    # an ordinary paragraph here, indent(4)+ is verse).
+    linedGreek: false
+    # This edition sets ordinary paragraph openings at indent(2) and has no
+    # indent(1) at all (measured: levels present are 2,4[,5][,7]), unlike the
+    # Greek exports which start at 1. Without this, the verse test reads every
+    # Cicero paragraph opening -- dialogue turns included -- as quoted verse.
+    proseIndent: 2
+    linedSource: true
+    copyAbbr: Cic. Div.
+  blurb: A dialogue between Cicero and his brother Quintus weighing the case for and against divination — prophecy, omens, dreams, astrology — from a broadly Academic-skeptic standpoint.

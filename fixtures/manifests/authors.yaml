@@ -1,0 +1,17 @@
+authors:
+  - id: sample-author
+    name: Sample Author
+    nativeName: Δεῖγμα
+    languages:
+      - grc
+    period: imperial
+    schools:
+      - stoic
+    floruit: AD 100
+    blurb: A fixture author for exercising the registry before real content lands.
+    works:
+      - sample-work
+    holdings: complete
+school_groups: {}
+work_order:
+  - sample-work

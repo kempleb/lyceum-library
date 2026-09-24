@@ -1,0 +1,75 @@
+{
+ "1:A1": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.51-77",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925"
+   }
+  ]
+ },
+ "1:A29": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Sophist",
+    "locus": "242c-243a",
+    "status": "translated",
+    "translation_credit": "Fowler, 1921",
+    "emphasis": [
+     "Every one of them seems to tell us a story, as if we were children. One says there are three principles, that some of them are sometimes waging a sort of war with each other, and sometimes",
+     "become friends and marry and have children and bring them up; and another says there are two, wet and dry or hot and cold, which he settles together and unites in marriage. And the Eleatic sect in our region, beginning with Xenophanes and even earlier, have their story that all things, as they are called, are really one. Then some Ionian and later some Sicilian Muses reflected",
+     "that it was safest to combine the two tales and to say that being is many and one, and is (or are) held together by enmity and friendship. Str. For the more strenuous Muses say it is always simultaneously coming together and separating; but the gentler ones relaxed the strictness of the doctrine of perpetual strife; they say that the all is sometimes one and friendly, under the influence of Aphrodite,",
+     "and sometimes many and at variance with itself by reason of some sort of strife."
+    ]
+   }
+  ]
+ },
+ "1:A48": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Laws",
+    "locus": "889b-889c",
+    "status": "translated",
+    "translation_credit": "Bury, 1926",
+    "emphasis": [
+     "Fire and water and earth and air, they say, all exist by nature and chance, and none of them by art; and by means of these, which are wholly inanimate, the bodies which come next—those, namely, of the earth, sun, moon and stars—have been brought into existence. It is by chance all these elements move, by the interplay of their respective forces, and according as they meet together and combine fittingly,—hot with cold, dry with moist,",
+     "soft with hard, and all such necessary mixtures as result from the chance combination of these opposites,—in this way and by those means they have brought into being the whole Heaven and all that is in the Heaven, and all animals, too, and plants—after that all the seasons had arisen from these elements; and all this, as they assert, not owing to reason, nor to any god or art, but owing, as we have said, to nature and chance."
+    ]
+   }
+  ]
+ },
+ "1:A76": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Phaedo",
+    "locus": "96a-96b",
+    "status": "translated",
+    "translation_credit": "Fowler, 1914",
+    "emphasis": [
+     "When I was young, Cebes, I was tremendously eager for the kind of wisdom which they call investigation of nature. I thought it was a glorious thing to know the causes of everything, why each thing comes into being and why it perishes and why it exists;",
+     "and I was always unsettling myself with such questions as these: Do heat and cold, by a sort of fermentation, bring about the organization of animals, as some people say? Is it the blood, or air, or fire by which we think? Or is it none of these, and does the brain furnish the sensations of hearing and sight and smell"
+    ]
+   }
+  ]
+ },
+ "1:A92": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Meno",
+    "locus": "76c-76d",
+    "status": "translated",
+    "translation_credit": "Lamb, 1924",
+    "emphasis": [
+     "Then would you like me to answer you in the manner of Gorgias, which you would find easiest to follow? Men. I should like that, of course. Soc. Do not both of you say there are certain effluences of existent things, as Empedocles held? Men. Certainly. Soc. And passages into which and through which the effluences pass? Men. To be sure. Soc. And some of the effluences fit into various passages,",
+     "while some are too small or too large? Men. That is so. Soc. And further, there is what you call sight? Men. Yes. Soc. So now conceive my meaning, as Pindar says: color is an effluence of figures, commensurate with sight and sensible."
+    ]
+   }
+  ]
+ }
+}

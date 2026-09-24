@@ -1,0 +1,129 @@
+# De Officiis — pipeline manifest (Wave 2 Batch 1b: the first Latin work,
+# PHI corpus, book-section scheme). Latin spine text, citation, search AND
+# English (Miller 1913 Loeb, section-anchored), PLUS the lexicon layer
+# (stage4 latin-analyses.txt + stage5 Lewis & Short) — see
+# docs/wave2-latin-design.md §1 Batch 1b and §4.2's no-lexicon-first
+# posture (Batch 1a shipped with `lexicon: false`; Batch 1b turns it on).
+# PHI's book-section export nests <div type="section"> directly under
+# <div type="book"> (lowercase @type, unlike TLG's capitalized "Book") —
+# see pipeline/reader_pipeline/scheme.py's citation.div_types.page override
+# and stage1_latin.py's module doc for the full structural diff from Marcus
+# Aurelius' Meditations (the book-section scheme's TLG default).
+
+work:
+  id: de-officiis
+  title: "De Officiis"
+  author: "cicero"
+  language: "lat"
+  phi_author: "0474"
+  phi_work: "055"
+  latin_edition: "Atzert, C. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Fasc. 48 (Leipzig: Teubner, 1932)"
+  # FATAL sourceDesc gate (Wave 1c Sol nit, ported to PHI here): verified
+  # verbatim against the real PHI export
+  # (build/export/Diogenes-Resources/xml/phi/phi0474055.xml).
+  expected_sourcedesc: 'M. Tullius Cicero. De Officiis (M. Tulli Ciceronis Scripta Quae Manserunt Omnia. Fasc. 48, ed. C. Atzert, 1932)'
+
+citation:
+  scheme: book-section
+  hideLineNumbers: true
+  lined_source: true
+  lined_cross_column_wraps: 95
+  lined_indent_max: 7
+  div_types:
+    page: "book"
+    section: "section"
+  # Declared title-drop hashes (adversarial-review Finding 2, replacing the
+  # earlier shape-heuristic title guard): one entry per non-citable n="t"
+  # div stage1_latin.py's _parse_book_section expects to drop — the
+  # whole-work title (book n="t") and each real book's own per-book heading
+  # (section n="t"). Hash is the first 16 hex chars of sha256(exact
+  # flattened text) — the dk_lang.py hash-key convention (corpus source
+  # text is never committed); note is a non-verbatim structural label only.
+  title_labels:
+    - { sha256_16: "ce926d6915c4499b", note: "whole-work title (book n=\"t\")" }
+    - { sha256_16: "6587086848089b36", note: "book 1 heading (section n=\"t\")" }
+    - { sha256_16: "a0c8bc396c47f6a2", note: "book 2 heading (section n=\"t\")" }
+    - { sha256_16: "9815ea46f3ac03da", note: "book 3 heading (section n=\"t\")" }
+
+english:
+  primary:
+    id: miller
+    name: "Walter Miller (Loeb Classical Library, 1913)"
+    model: archive
+    file: "miller-de-officiis/miller.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Published 1913, pre-1931 — safely US public domain"
+      source_url: "https://raw.githubusercontent.com/PerseusDL/canonical-latinLit/master/data/phi0474/phi055/phi0474.phi055.perseus-eng1.xml"
+
+# Genuine translator/edition numbering merge, not an extraction bug (same
+# shape as Meditations' Haines 5.37 -- see manifests/meditations.yaml):
+# Miller's own Book II section numbering runs a clean, continuous 1..89,
+# with no separate marker for the Atzert/PHI Latin spine's 2.90 ("Reliqua
+# deinceps persequemur." / "Let us now pass on to the remaining problems.")
+# -- that exact sentence is present, folded into the tail of Miller's own
+# 2.89. See pipeline/tools/extract_miller_perseus.py's module docstring and
+# sources/INVENTORY.md for the full verification.
+alignment_allow_unmatched:
+  - "2:2.90"
+
+# Digest fingerprint of the observed book.section column spine (372 columns,
+# 1.1..3.121: book 1 has 161 sections, book 2 has 90, book 3 has 121) --
+# stage2 recomputes and compares it. Filled in from stage2's self-reported
+# `got` values on the first real pipeline run (per docs/tlg-phi-export.md's
+# recipe; see stage2_validate.py's section_spine check).
+section_spine: { count: 372, sha256: "2de9db97f558cb937de16c327dfbb1a42adee05fa2841108b2e190a18d9632b6" }
+
+books:
+  - { n: 1, start: "1.1", end: "1.161" }
+  - { n: 2, start: "2.1", end: "2.90" }
+  - { n: 3, start: "3.1", end: "3.121" }
+
+sources:
+  phi_dir_env: "PHI_DIR"
+  phi_dir_default: "../TLG Files/PHI"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: de-officiis
+  title: De Officiis
+  abbr: Off.
+  author: cicero
+  language: lat
+  workType: continuous
+  books: 3
+  bookLabels:
+    - I
+    - II
+    - III
+  greekEdition: 'Atzert, C. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Fasc. 48 (Leipzig: Teubner, 1932)'
+  greekSource:
+    short: Atzert (1932)
+    full: 'Atzert, C. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Fasc. 48 (Leipzig: Teubner, 1932)'
+  translations:
+    - id: miller
+      name: Walter Miller (Loeb Classical Library, 1913)
+      short: Miller
+      slot: english
+  citation:
+    scheme: book-section
+    hideLineNumbers: true
+    # Block-per-section source layout (John, 2026-08-28: extend lined display
+    # to the section-numbered texts) — see WorkMeta["citation"].linedGreek.
+    # RULED OFF (John, 2026-08-31): this work carries no gutter apparatus at
+    # all (measured: 0 filled gutter cells), so its print lines aligned
+    # nothing, while forcing one rendered line per print line wrapped most of
+    # them at phone width into stubs ("qui illas for-" / "tunas morte"). Same
+    # ruling as Lives; prose reflows, quoted verse keeps its own lines via
+    # Reader.svelte's `isVerseLine` (see `proseIndent` above -- indent(2) is
+    # an ordinary paragraph here, indent(4)+ is verse).
+    linedGreek: false
+    # This edition sets ordinary paragraph openings at indent(2) and has no
+    # indent(1) at all (measured: levels present are 2,4[,5][,7]), unlike the
+    # Greek exports which start at 1. Without this, the verse test reads every
+    # Cicero paragraph opening -- dialogue turns included -- as quoted verse.
+    proseIndent: 2
+    linedSource: true
+    copyAbbr: Cic. Off.
+  blurb: Cicero's last philosophical work, a treatise on moral duty written for his son in the year before his death, drawing chiefly on the Stoic Panaetius to work out what the honorable life requires in practice.

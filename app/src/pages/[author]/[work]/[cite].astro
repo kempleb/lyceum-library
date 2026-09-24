@@ -1,0 +1,26 @@
+---
+import Forward from '../../../components/Forward.astro';
+import { getWorkBySlug, workPath } from '@shared/lib/works';
+import { citationRoutes } from '../../../lib/citation-routes';
+
+export function getStaticPaths() {
+  return citationRoutes.map((route) => ({
+    params: { author: route.author, work: route.work, cite: route.cite },
+    props: { bookN: route.bookN },
+  }));
+}
+
+const author = Astro.params.author!;
+const slug = Astro.params.work!;
+const cite = Astro.params.cite!;
+const { bookN } = Astro.props;
+const work = getWorkBySlug(author, slug);
+if (!work) {
+  throw new Error(`[author]/[work]/[cite]: no work at author '${author}' slug '${slug}'`);
+}
+const target = `${workPath(work.id, bookN)}?loc=${encodeURIComponent(cite)}`;
+const title = `${work.title} ${cite}`;
+---
+<Forward target={target} title={title}>
+  {work.title} {cite}. <a href={target}>Continue to the passage</a>.
+</Forward>

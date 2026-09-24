@@ -1,0 +1,182 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  app:
+    name: app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Install dependencies
+        run: cd app && npm ci
+
+      - name: Run tests
+        run: cd app && npm test
+
+      - name: Verify @shared imports resolve
+        run: node scripts/verify-shared-imports.mjs
+
+      # CI carries no corpus data (no TLG/PHI access — see this repo's
+      # CLAUDE.md), so these are the only two builds CI can ever exercise:
+      # zero-works (WORKS/AUTHORS empty, the state every commit builds in
+      # today) and the PUBLIC_READER_FIXTURES=1 fixture route (the only data
+      # path CI has for proving the reader/router actually work — see
+      # app/scripts/stage-fixtures.mjs and fixtures/data/sample-work/).
+      - name: Build (zero-works)
+        run: cd app && npm run build
+
+      - name: Assert zero-works build carries no sitemap
+        run: |
+          if [ -f app/dist/client/sitemap-index.xml ]; then
+            echo "sitemap-index.xml present in a no-PUBLIC_SITE_ORIGIN build" >&2
+            exit 1
+          fi
+          if grep -q '^Sitemap:' app/dist/client/robots.txt; then
+            echo "robots.txt carries a Sitemap: line in a no-PUBLIC_SITE_ORIGIN build" >&2
+            exit 1
+          fi
+
+      - name: Build (PUBLIC_READER_FIXTURES=1)
+        run: |
+          rm -rf app/dist build/dist
+          cd app && PUBLIC_READER_FIXTURES=1 PUBLIC_SITE_ORIGIN=https://ci-staging.example/ npm run build
+
+      - name: Assert fixture build carries a sitemap with no double slash
+        run: |
+          # A real deploy never bakes a staging origin into the build (see
+          # this repo's CLAUDE.md) — this throwaway example origin only
+          # exercises the PUBLIC_SITE_ORIGIN sitemap/robots.txt mechanism in
+          # CI, and regression-tests a trailing-slash origin (the
+          # postbuild-robots.mjs/astro.config.mjs double-slash bug).
+          if [ ! -f app/dist/client/sitemap-index.xml ]; then
+            echo "sitemap-index.xml missing from a PUBLIC_SITE_ORIGIN build" >&2
+            exit 1
+          fi
+          expected='Sitemap: https://ci-staging.example/sitemap-index.xml'
+          actual=$(grep '^Sitemap:' app/dist/client/robots.txt || true)
+          if [ "$actual" != "$expected" ]; then
+            echo "robots.txt Sitemap line mismatch:" >&2
+            echo "  expected: $expected" >&2
+            echo "  actual:   $actual" >&2
+            exit 1
+          fi
+          # Protocol-aware double-slash check on the sitemap XML itself
+          # (not just robots.txt): "//" is fine right after a URL scheme's
+          # ":" (https://...) but nowhere else in a URL.
+          if grep -PnH '(?<!:)//' app/dist/client/sitemap-*.xml; then
+            echo "double slash found in sitemap XML (see matches above)" >&2
+            exit 1
+          fi
+
+      - name: Check links (fixture build)
+        run: node scripts/check-links.mjs app/dist/client
+
+      - name: Verify fixture build
+        run: node scripts/verify-fixture-build.mjs app/dist/client
+
+      - name: Verify off-origin Pages artifact (fixture build)
+        run: |
+          cd app
+          PUBLIC_DATA_ROOT=https://ci-data.invalid/data PUBLIC_READER_FIXTURES=1 PUBLIC_SITE_ORIGIN=https://ci-staging.example/ npm run build
+          PUBLIC_DATA_ROOT=https://ci-data.invalid/data node scripts/postbuild-prune-data.mjs
+          node ../scripts/verify-pages-artifact.mjs --expect-data-root https://ci-data.invalid/data
+
+  shared:
+    name: shared
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: shared/package-lock.json
+
+      - name: Install dependencies
+        run: cd shared && npm ci
+
+      - name: Check registry agreement
+        run: node scripts/check-registry-agreement.mjs
+
+      - name: Check route registry collisions
+        run: node scripts/build-registry.mjs && node scripts/build-route-registry.mjs
+
+      - name: Run tests
+        run: cd shared && npm test
+
+      - name: Typecheck
+        run: cd shared && npm run check
+
+  pipeline:
+    name: pipeline
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+
+      # pyproject.toml's requires-python (">=3.9") has no upper bound, so a
+      # bare `uv sync`/`uv run` resolves to uv's own newest managed Python,
+      # ignoring the "Setup Python" step above entirely. `--python 3.9` pins
+      # every uv invocation to the interpreter that step actually installed.
+      - name: Install pipeline dependencies
+        run: cd pipeline && uv sync --python 3.9
+
+      - name: Run corpus preflight fixture
+        run: |
+          cd pipeline
+          uv run --python 3.9 python -m reader_pipeline.preflight \
+            tests/fixtures/preflight/valid/data \
+            tests/fixtures/preflight/valid/manifests
+
+      - name: Validate versioned contract fixtures
+        run: |
+          cd pipeline
+          # fixtures/snapshot.lyceum.json was deleted in 1b699e8 (the
+          # taxonomy/start_here contract moved to fixtures/taxonomy.json —
+          # see docs/lyceum-shared-repo-plan.md and this repo's own
+          # pipeline/tests/test_validate_contracts.py and
+          # scripts/build-public.mjs, both already pointed at the new path).
+          uv run --python 3.9 python -m reader_pipeline.validate_contracts \
+            --schemas ../schemas \
+            --snapshot ../fixtures/taxonomy.json \
+            --manifest ../fixtures/data/sample-work/manifest.json
+
+      # The old exit-5 ("no tests collected") tolerance dated from before the
+      # pipeline test suite existed. It's gone now: 1776 real tests do exist
+      # and collect and pass under Python 3.9 (see the test-file fixes in
+      # this same change), so a bare pytest failing to collect anything would
+      # be a real regression worth failing on, not a status to swallow.
+      - name: Run pipeline tests
+        run: cd pipeline && uv run --python 3.9 --with pytest pytest

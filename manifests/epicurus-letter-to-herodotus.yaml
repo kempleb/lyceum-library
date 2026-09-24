@@ -1,0 +1,156 @@
+# Epicurus, Letter to Herodotus (Ep. Hdt.) — pipeline manifest. TLG 0537:010,
+# Arrighetti edition. Flat, bookless `section` scheme (Epictetus' Enchiridion
+# precedent, manifests/enchiridion.yaml) — but TLG's own div type here is
+# "Section" (capitalized), not the scheme's registered default "Chapter", so
+# citation.div_types.page overrides it (same seam Cato Maior's PHI export
+# uses for the opposite direction, manifests/cato-maior-de-senectute.yaml).
+#
+# NON-1-START (design memo's own flag, verified against the real export):
+# this letter's own numbering does not start at 1 — it runs 35-83, Diogenes
+# Laertius' own section numbers for Book X (the letter sits mid-book, after
+# 34 sections of DL's biographical narrative). Verified against
+# pipeline/reader_pipeline/scheme.py's `compose_column`/`_boundary_column`:
+# neither does any arithmetic on the token (a flat column IS the div's own
+# @n, unchanged) — a non-1 start is not a distinct case for this scheme at
+# all, just a books[] declaration whose `start` isn't "1". No pipeline
+# tolerance gap found; nothing to report as broken.
+#
+# TITLE/GREETING DIV (Wave 3 finding, stage1_greek.py's new
+# `_load_flat_title_declarations`): the export carries one extra top-level
+# div, <div type="Section" n="t">, sitting BEFORE section 35 — Epicurus'
+# own opening salutation ("Ἐπίκουρος Ἡροδότῳ χαίρειν."), not a bare title.
+# Contrast Ep. Pythoclem, where the IDENTICAL greeting formula is exported
+# as an <l n="t"> INSIDE section 84's own div (no special handling needed
+# there at all) — TLG is simply inconsistent about where this lands.
+# Declared here as `title_labels` (dropped, same as a bare collection
+# title): every printed edition (Bailey, Hicks) treats this salutation as
+# an unnumbered rubric above section 35, never as part of its cited text —
+# section 35 accordingly opens on its own first sentence, "Τοῖς μὴ
+# δυναμένοις..." — see that function's doc comment for the full mechanism.
+
+work:
+  id: epicurus-letter-to-herodotus
+  title: "Letter to Herodotus"
+  author: "epicurus"
+  language: "grc"
+  tlg_author: "0537"
+  tlg_work: "010"
+  greek_edition: "Arrighetti, G. (ed.), Epicuro: Opere, 2nd ed. (Turin: Einaudi, 1973)"
+  # FATAL sourceDesc gate: verified verbatim against the real export
+  # (build/phi-test/out-epicurus/Diogenes-Resources/xml/tlg/tlg0537010.xml).
+  expected_sourcedesc: 'Epicurus Phil. (c. 4-3 B.C.), Epistula ad Herodotum (0537: 010) "Epicuro. Opere, 2nd edn.", Ed. Arrighetti, G. Turin: Einaudi, 1973.'
+
+citation:
+  scheme: section
+  hideLineNumbers: true
+  # John's ruling (2026-08-29, docs/lined-rollout-plan.md Ruling 1/wave 1):
+  # the Greek column renders Arrighetti's own print lines, hyphenated
+  # line-end splits included, extending Discourses' treatment
+  # (docs/lined-source-plan.md) to the flat `section` scheme. Gates
+  # stage1_greek's per-<l> emission (`_lined_chapter_lines` +
+  # `_apply_lined_wraps`) inside `_parse_flat_chapter`. No
+  # `lined_section_div`: this work's column div (Section) IS the leaf — no
+  # sub-column granularity exists to record, so no line carries `sec`
+  # (Ruling 1c).
+  lined_source: true
+  lined_indent_max: 1
+  div_types:
+    page: "Section"
+  title_labels:
+    - sha256_16: "cfdf290a37dc24a2"
+      note: >
+        "Ἐπίκουρος Ἡροδότῳ χαίρειν." (Epicurus to Herodotus, greetings) —
+        the letter's own opening salutation, exported as its own div
+        immediately before section 35; dropped as an unnumbered rubric
+        (see the manifest's own comment above).
+
+# English: R. D. Hicks's 1925 Loeb translation, transcribed by Diogenes
+# Laertius (Lives, Book X) and already built as sources/hicks-dl/
+# hicks-lives.clean.json (see manifests/lives.yaml equivalent — the Lives
+# work's own entry in works.ts — and pipeline/tools/extract_hicks_dl_perseus.py).
+# pipeline/tools/build_hicks_epicurus_letters.py re-keys this letter's own
+# DL 10.35-83 span out of that store into one shared
+# hicks-epicurus-letters.clean.json, keyed "letter-to-herodotus:<n>" —
+# `key_prefix` slices this work's own bare-column entries back out (see
+# stage1_common.load_english_source's docstring for the mechanism; the
+# three Letters share this one file, disjoint DL ranges, no manifest needs
+# an allow-list of the other two letters' keys).
+#
+# BOUNDARY MATTER (verified, not trimmed): 10.83 — this letter's own last
+# DL section — ends with Diogenes' own connective sentence running directly
+# into the Letter to Pythocles' salutation, all inside this one section's
+# Hicks text (see build_hicks_epicurus_letters.py's module docstring for
+# the exact trailing string and the verification). Kept verbatim: the
+# section IS Diogenes' own section, and guessing at a trim boundary risks
+# silently cutting real Epicurus text.
+english:
+  primary:
+    id: hicks
+    name: "R. D. Hicks (Loeb Classical Library, 1925)"
+    model: archive
+    file: "hicks-dl/hicks-epicurus-letters.clean.json"
+    license:
+      status: public-domain-us
+      rationale: "Asserted US public domain by attribution.astro's site-wide translation notice: every translation listed there is United States public domain."
+    key_prefix: "letter-to-herodotus:"
+
+# Digest fingerprint of the observed bare-section column spine (49 columns,
+# "35".."83") — stage2 recomputes and compares it. Computed directly
+# against the real export.
+section_spine: { count: 49, sha256: "94dfbe6a959135750ab25cd7a8001e753aabd3ff55f1078889013c13a5487a57" }
+
+# Flat scheme: exactly one book, bounded by the work's own non-1-start
+# section-integer tokens.
+books:
+  - { n: 1, start: "35", end: "83" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"
+
+registry:
+  id: epicurus-letter-to-herodotus
+  slug: letter-to-herodotus
+  title: Letter to Herodotus
+  abbr: Ep. Hdt.
+  author: epicurus
+  language: grc
+  workType: letters
+  books: 1
+  bookLabels:
+    - '1'
+  greekEdition: 'Arrighetti, G. (ed.), Epicuro: Opere, 2nd ed. (Turin: Einaudi, 1973)'
+  greekSource:
+    short: Arrighetti (1973)
+    full: 'Arrighetti, G. (ed.), Epicuro: Opere, 2nd ed. (Turin: Einaudi, 1973)'
+  translations:
+    - id: hicks
+      name: R. D. Hicks (Loeb Classical Library, 1925)
+      short: Hicks
+      slot: english
+  citation:
+    scheme: section
+    hideLineNumbers: true
+    copyAbbr: Ep. Hdt.
+    unitNoun:
+      singular: section
+      plural: sections
+    # RULED (John, 2026-08-31, on Letter to Menoeceus): "if this is not
+    # cited by line numbers, then this needs prose reflow." These works are
+    # cited by chapter/section, never by line, so their print lines serve no
+    # citation and align no gutter apparatus (measured: 0 gutter cells), yet
+    # forced 91% of Menoeceus' lines to wrap into stubs at 375px. Prose now
+    # reflows; `linedSource` stays true so quoted verse keeps real lines.
+    proseReflow: true
+    # Reader-side flag mirroring pipeline citation.lined_source 1:1
+    # (2026-08-29, docs/lined-rollout-plan.md Stage 1/3) — see
+    # WorkMeta['citation'].linedSource in shared/lib/works.ts.
+    linedSource: true
+  related:
+    - id: lives
+      label: 'Diogenes Laertius, Book X: the same letter transcribed within his Life of Epicurus'
+    - id: epicurus-kuriai-doxai
+      label: 'Kuriai Doxai: the maxims that distill this letter''s physics and epistemology'
+  blurb: Epicurus' summary of his physics for the beginner Herodotus — atoms and void, the infinity of worlds, and the mechanics of perception — meant to be memorized whole.

@@ -1,0 +1,33 @@
+# Self-contained schema-only fixture (used by test_preflight.py's schema
+# tests, which validate manifest SHAPE only — no matching data/ tree here).
+# A flat, bookless `section`-scheme Latin work (Wave 2 Batch 3 round 2 —
+# Cicero's Cato Maior/Laelius/De Fato/Lucullus/Paradoxa Stoicorum shape),
+# used to test the `no_english` relaxation extended to `scheme.flat_numeric`
+# (previously only book-section/verse-line could omit `english`).
+work:
+  id: FlatLatin
+  title: "Flat Latin Fixture"
+  author: "cicero"
+  language: "lat"
+  lexicon: true
+  no_english: true
+  phi_author: "0474"
+  phi_work: "999"
+  latin_edition: "Fixture Edition"
+
+citation:
+  scheme: section
+  hideLineNumbers: true
+  div_types:
+    page: "section"
+
+section_spine: { count: 10, sha256: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }
+
+books:
+  - { n: 1, start: "1", end: "10" }
+
+sources:
+  phi_dir_env: "PHI_DIR"
+  phi_dir_default: "../TLG Files/PHI"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"

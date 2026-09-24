@@ -1,0 +1,32 @@
+# Self-contained schema-only fixture (used by test_preflight.py's schema
+# tests, which validate manifest SHAPE only — no matching data/ tree here).
+work:
+  id: Euthyphro
+  title: "Euthyphro"
+  author: "plato"
+  language: "grc"
+  tlg_author: "0059"
+  tlg_work: "001"
+  greek_edition: "Burnet, Platonis Opera vol. 1 (OCT, 1900)"
+
+citation:
+  scheme: stephanus
+  hideLineNumbers: true
+
+english:
+  primary:
+    id: fowler
+    name: "H. N. Fowler (Loeb, 1914)"
+    model: perseus_stephanus
+    file: "perseus-eng/tlg0059.tlg001.perseus-eng2.xml"
+
+section_spine: { count: 10, sha256: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }
+
+books:
+  - { n: 1, start: "2a1", end: "16a99" }
+
+sources:
+  tlg_dir_env: "TLG_DIR"
+  tlg_dir_default: "../TLG Files/TLG"
+  diogenes_server: "/Applications/Diogenes.app/Contents/server"
+  diogenes_data: "/Applications/Diogenes.app/Contents/dependencies/data"

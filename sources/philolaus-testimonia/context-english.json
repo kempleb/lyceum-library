@@ -1,0 +1,73 @@
+{
+ "1:A1": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.84-85",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Philolaus of Croton was a Pythagorean, and it was from him that Plato requests Dion to buy the Pythagorean treatises. He (Dion) was put to death because he was thought to be aiming at a tyranny. This is what we have written upon him: Fancies of all things are most flattering; If you intend, but do not, you are lost. So Croton taught Philolaus to his cost, Who fancied he would like to be their king.",
+     "His doctrine is that all things are brought about by necessity and in harmonious inter-relation. He was the first to declare that the earth moves in a circle, though some say that it was Hicetas of Syracuse. He wrote one book, and it was this work which, according to Hermippus, some writer said that Plato the philosopher, when he went to Sicily to Dionysius’s court, bought from Philolaus’s relatives for the sum of forty Alexandrine minas of silver, from which also the Timaeus was transcribed. Others say that Plato received it as a present for having procured from Dionysius the release of a young disciple of Philolaus who had been cast into prison. According to Demetrius in his work on Men of the Same Name, Philolaus was the first to publish the Pythagorean treatises, to which he gave the title On Nature, beginning as follows: “Nature in the ordered universe was composed of unlimited and limiting elements, and so was the whole universe and all that is therein.”"
+    ]
+   }
+  ]
+ },
+ "1:A1a": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Phaedo",
+    "locus": "61e",
+    "status": "translated",
+    "translation_credit": "Fowler, 1914",
+    "emphasis": [
+     "I heard Philolaus, when he was living in our city"
+    ]
+   }
+  ]
+ },
+ "1:A2": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.38",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Apollodorus of Cyzicus, again, will have it that he lived with Philolaus."
+    ]
+   }
+  ]
+ },
+ "1:A4": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.46",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "For the last of the Pythagoreans, whom Aristoxenus in his time saw, were Xenophilus from the Thracian Chalcidice, Phanton of Phlius, and Echecrates, Diocles and Polymnastus, also of Phlius, who were pupils of Philolaus and Eurytus of Tarentum."
+    ]
+   }
+  ]
+ },
+ "1:A5": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "3.6",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Then at the age of twenty-eight, according to Hermodorus, he withdrew to Megara to Euclides, with certain other disciples of Socrates. Next he proceeded to Cyrene on a visit to Theodorus the mathematician, thence to Italy to see the Pythagorean philosophers Philolaus and Eurytus"
+    ]
+   }
+  ]
+ }
+}

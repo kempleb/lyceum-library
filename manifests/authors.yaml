@@ -1,0 +1,462 @@
+authors:
+  - id: marcus-aurelius
+    name: Marcus Aurelius
+    nativeName: Μᾶρκος Αὐρήλιος
+    languages:
+      - grc
+    period: imperial
+    schools:
+      - stoic
+    floruit: AD 121–180
+    blurb: Roman emperor and Stoic philosopher whose private notebook, the Meditations, remains the school’s most-read work.
+    works:
+      - meditations
+    holdings: complete
+  - id: epictetus
+    name: Epictetus
+    nativeName: Ἐπίκτητος
+    languages:
+      - grc
+    period: imperial
+    schools:
+      - stoic
+    floruit: c. AD 55–135
+    blurb: Former slave turned Stoic teacher whose classroom lectures, recorded by his pupil Arrian, ground philosophy down to what is and isn’t up to us.
+    works:
+      - discourses
+      - enchiridion
+    holdings: complete
+  - id: diogenes-laertius
+    name: Diogenes Laertius
+    nativeName: Διογένης Λαέρτιος
+    languages:
+      - grc
+    period: imperial
+    schools: []
+    floruit: fl. early 3rd c. AD
+    blurb: Doxographer and biographer whose ten books of philosophers’ lives, sayings, and doctrines are the single largest source for how antiquity told its own philosophical history.
+    works:
+      - lives
+    holdings: complete
+  - id: heraclitus
+    name: Heraclitus
+    nativeName: Ἡράκλειτος
+    languages:
+      - grc
+    period: presocratic
+    schools: []
+    floruit: fl. c. 500 BC
+    blurb: Obscure, aphoristic philosopher of Ephesus who taught that all things flow and that a hidden order — the logos — governs a world of opposites.
+    works:
+      - heraclitus-testimonia
+      - heraclitus-fragments
+    holdings: complete
+  - id: parmenides
+    name: Parmenides
+    nativeName: Παρμενίδης
+    languages:
+      - grc
+    period: presocratic
+    schools:
+      - eleatic
+    floruit: fl. c. 475 BC
+    blurb: Poet-philosopher of Elea whose hexameter Way of Truth argues that what-is is one, ungenerated, and unchanging — the founding text of Western metaphysics and logic.
+    works:
+      - parmenides-testimonia
+      - parmenides-fragments
+    holdings: complete
+  - id: xenophanes
+    name: Xenophanes
+    nativeName: Ξενοφάνης
+    languages:
+      - grc
+    period: presocratic
+    schools:
+      - eleatic
+    floruit: fl. c. 540–478 BC
+    blurb: Wandering poet of Colophon whose elegies and satires mocked the anthropomorphic gods of Homer and Hesiod and proposed a single, motionless god unlike mortals in form or thought.
+    works:
+      - xenophanes-testimonia
+      - xenophanes-fragments
+    holdings: complete
+  - id: empedocles
+    name: Empedocles
+    nativeName: Ἐμπεδοκλῆς
+    languages:
+      - grc
+    period: presocratic
+    schools:
+      - pluralist
+    floruit: fl. c. 450 BC
+    blurb: Physician, mystic, and hexameter poet of Acragas whose two poems — On Nature, on the four roots and the cosmic cycle of Love and Strife, and the Purifications, on the soul’s fall and transmigration — are the largest surviving body of Presocratic verse.
+    works:
+      - empedocles-testimonia
+      - empedocles-fragments
+    holdings: complete
+  - id: zeno
+    name: Zeno of Elea
+    nativeName: Ζήνων ὁ Ἐλεάτης
+    languages:
+      - grc
+    period: presocratic
+    schools:
+      - eleatic
+    floruit: fl. c. 465 BC
+    blurb: Parmenides’ student from Elea, whose paradoxes of motion and plurality — Achilles and the tortoise, the arrow, the stadium — defended the One against common sense by making its rivals self-contradictory.
+    works:
+      - zeno-testimonia
+      - zeno-fragments
+    holdings: complete
+  - id: melissus
+    name: Melissus of Samos
+    nativeName: Μέλισσος ὁ Σάμιος
+    languages:
+      - grc
+    period: presocratic
+    schools:
+      - eleatic
+    floruit: fl. c. 441 BC
+    blurb: 'Samian admiral and the last of the great Eleatics, whose prose treatise On Nature, or On What Is pushed Parmenides’ One to its logical conclusion: infinite, motionless, and without body.'
+    works:
+      - melissus-testimonia
+      - melissus-fragments
+    holdings: complete
+  - id: anaxagoras
+    name: Anaxagoras
+    nativeName: Ἀναξαγόρας
+    languages:
+      - grc
+    period: presocratic
+    schools:
+      - pluralist
+    floruit: fl. c. 480–450 BC
+    blurb: Clazomenian cosmologist who brought philosophy to Athens, taught Pericles, and argued that Mind (Nous) set an infinity of intermingled seeds — “everything in everything” — into cosmic order.
+    works:
+      - anaxagoras-testimonia
+      - anaxagoras-fragments
+    holdings: complete
+  - id: thales
+    name: Thales of Miletus
+    nativeName: Θαλῆς ὁ Μιλήσιος
+    languages:
+      - grc
+    period: presocratic
+    schools:
+      - milesian
+    floruit: fl. c. 585 BC
+    blurb: Traditionally the first philosopher — a Milesian sage credited with predicting a solar eclipse and declaring water the origin of all things, though he left no writings and not one certainly genuine word of his survives.
+    works:
+      - thales-testimonia
+      - thales-fragments
+    holdings: complete
+  - id: anaximander
+    name: Anaximander
+    nativeName: Ἀναξίμανδρος
+    languages:
+      - grc
+    period: presocratic
+    schools:
+      - milesian
+    floruit: fl. c. 546 BC
+    blurb: Thales’ pupil and successor at Miletus, who proposed the apeiron — an unbounded, undefined origin beyond the four elements — from which opposites separate out and to which, by a kind of cosmic justice, they return.
+    works:
+      - anaximander-testimonia
+      - anaximander-fragments
+    holdings: complete
+  - id: anaximenes
+    name: Anaximenes
+    nativeName: Ἀναξιμένης
+    languages:
+      - grc
+    period: presocratic
+    schools:
+      - milesian
+    floruit: fl. c. 546–525 BC
+    blurb: The third Milesian, who made air the single material principle of things, thinning into fire and thickening through wind, cloud, water, earth, and stone as it condenses.
+    works:
+      - anaximenes-testimonia
+      - anaximenes-fragments
+    holdings: complete
+  - id: leucippus
+    name: Leucippus
+    nativeName: Λεύκιππος
+    languages:
+      - grc
+    period: presocratic
+    schools:
+      - atomist
+    floruit: fl. c. 440 BC
+    blurb: The founder of atomism, of disputed origin (Miletus, Elea, or Abdera) and once-disputed existence, whose Great World-System proposed indivisible bodies moving in the void as the first principles of all things.
+    works:
+      - leucippus-testimonia
+      - leucippus-fragments
+    holdings: complete
+  - id: democritus
+    name: Democritus
+    nativeName: Δημόκριτος
+    languages:
+      - grc
+    period: presocratic
+    schools:
+      - atomist
+    floruit: fl. c. 420 BC
+    blurb: The “laughing philosopher” of Abdera, Leucippus’ student and by far the most prolific of the Presocratics, who systematized atomism into a complete account of nature, perception, and ethics.
+    works:
+      - democritus-testimonia
+      - democritus-fragments
+    holdings: complete
+  - id: pythagoras
+    name: Pythagoras
+    nativeName: Πυθαγόρας
+    languages:
+      - grc
+    period: presocratic
+    schools:
+      - pythagorean
+    floruit: fl. c. 540 BC
+    blurb: Samian sage who founded a religious and philosophical brotherhood at Croton, credited with the doctrine of the transmigration of souls and the discovery that number underlies the order of the cosmos, though he left no writings and every report of his teaching is later paraphrase.
+    works:
+      - pythagoras-testimonia
+    holdings: complete
+  - id: philolaus
+    name: Philolaus
+    nativeName: Φιλόλαος
+    languages:
+      - grc
+    period: presocratic
+    schools:
+      - pythagorean
+    floruit: fl. c. 420 BC
+    blurb: Pythagorean of Croton and Tarentum, and the first to publish a book of Pythagorean doctrine — his surviving fragments describe a cosmos fitted together out of "limiters" and "unlimiteds" bound by number and harmonia, with a central fire at the world’s hearth.
+    works:
+      - philolaus-testimonia
+      - philolaus-fragments
+    holdings: complete
+  - id: protagoras
+    name: Protagoras
+    nativeName: Πρωταγόρας
+    languages:
+      - grc
+    period: sophists
+    schools:
+      - sophist
+    floruit: fl. c. 450–420 BC
+    blurb: Sophist of Abdera, friend of Pericles and the first to call himself a paid teacher of virtue — author of the "man is the measure of all things" doctrine of relative truth and the "two opposing arguments" method, and of an agnostic opening on the gods so notorious it reportedly got his books burned at Athens.
+    works:
+      - protagoras-testimonia
+      - protagoras-fragments
+    holdings: complete
+  - id: gorgias
+    name: Gorgias
+    nativeName: Γοργίας
+    languages:
+      - grc
+    period: sophists
+    schools:
+      - sophist
+    floruit: fl. c. 427 BC – d. c. 380 BC
+    blurb: Sicilian sophist of Leontini and virtuoso of epideictic rhetoric, whose lost treatise On Not-Being argued in succession that nothing exists, that if it existed it could not be known, and that if known it could not be communicated — best known today through his two surviving display-speeches defending the indefensible, Helen and Palamedes.
+    works:
+      - gorgias-testimonia
+      - gorgias-fragments
+    holdings: complete
+  - id: prodicus
+    name: Prodicus
+    nativeName: Πρόδικος
+    languages:
+      - grc
+    period: sophists
+    schools:
+      - sophist
+    floruit: fl. c. 435–395 BC
+    blurb: Sophist of Ceos, colleague of Protagoras and Gorgias, celebrated (and gently mocked by Plato) for his painstaking distinctions between near-synonyms — and, through Xenophon's retelling, for the allegory of Heracles at the crossroads between Virtue and Vice.
+    works:
+      - prodicus-testimonia
+      - prodicus-fragments
+    holdings: complete
+  - id: hippias
+    name: Hippias
+    nativeName: Ἱππίας
+    languages:
+      - grc
+    period: sophists
+    schools:
+      - sophist
+    floruit: fl. c. 420 BC
+    blurb: Polymath sophist of Elis, a byword in Plato's two dialogues named for him — diplomat, orator, and self-taught craftsman of his own clothes and jewelry, who lectured on mathematics, astronomy, grammar, and the antiquarian "Register of Olympic Victors" that first fixed Greek chronology by Olympiad.
+    works:
+      - hippias-testimonia
+      - hippias-fragments
+    holdings: complete
+  - id: antiphon-sophist
+    name: Antiphon
+    nativeName: Ἀντιφῶν
+    languages:
+      - grc
+    period: sophists
+    schools:
+      - sophist
+    floruit: fl. late 5th c. BC
+    blurb: Athenian sophist and dream-interpreter — distinguished by ancient scholars themselves from his contemporary Antiphon the orator, though the two are sometimes confused even in the sources translated here — whose treatise On Truth (recovered on damaged papyrus) argues that the demands of law and the demands of nature routinely pull apart, and whose On Concord practiced a therapeutic style of argument he compared to medicine for the soul.
+    works:
+      - antiphon-sophist-testimonia
+      - antiphon-sophist-fragments
+    holdings: complete
+  - id: critias
+    name: Critias
+    nativeName: Κριτίας
+    languages:
+      - grc
+    period: sophists
+    schools:
+      - sophist
+    floruit: c. 460–403 BC
+    blurb: Athenian aristocrat, elegiac and tragic poet, and the most notorious of Socrates' associates — leader of the oligarchic Thirty Tyrants, killed in the civil war that overthrew them — whose verse ranges from a Spartan drinking-song and a hymn to Alcibiades to the satyr-play Sisyphus, source of the starkest surviving ancient argument that the gods were a lawgiver's invention to police behavior no human court could see.
+    works:
+      - critias-testimonia
+      - critias-fragments
+    holdings: complete
+  - id: cicero
+    name: Cicero
+    nativeName: Marcus Tullius Cicero
+    languages:
+      - lat
+    period: roman
+    schools: []
+    floruit: 106–43 BC
+    blurb: Roman orator and statesman whose Latin philosophical dialogues — written in a burst of late-life retirement from politics — made Greek philosophy, especially Stoic and Academic ethics, available to a Latin-reading audience for the first time.
+    works:
+      - de-officiis
+      - tusculan-disputations
+      - de-legibus
+      - de-finibus
+      - de-divinatione
+      - cato-maior-de-senectute
+      - laelius-de-amicitia
+      - de-fato
+      - lucullus
+      - paradoxa-stoicorum
+    holdings: partial
+  - id: lucretius
+    name: Lucretius
+    nativeName: T. Lucretius Carus
+    languages:
+      - lat
+    period: roman
+    schools: []
+    floruit: c. 99–55 BC
+    blurb: Epicurean poet-philosopher whose six-book Latin hexameter poem De Rerum Natura ("On the Nature of Things") sets out atomism, the mortality of the soul, and a materialist account of the cosmos as an argument against the fear of death and the gods.
+    works:
+      - de-rerum-natura
+    holdings: complete
+  - id: seneca
+    name: Seneca
+    nativeName: L. Annaeus Seneca
+    languages:
+      - lat
+    period: roman
+    schools:
+      - stoic
+    floruit: fl. c. AD 50
+    blurb: Roman Stoic statesman, playwright, and Nero's tutor, whose Latin dialogues and letters — written from the vantage of a life spent close to imperial power — turned Greek Stoicism into a practical ethics of adversity, anger, and the constancy of the wise mind.
+    works:
+      - de-providentia
+      - de-constantia-sapientis
+      - epistulae-morales
+    holdings: partial
+  - id: epicurus
+    name: Epicurus
+    nativeName: Ἐπίκουρος
+    languages:
+      - grc
+    period: hellenistic
+    schools:
+      - epicurean
+    floruit: 341–270 BC
+    blurb: Athenian founder of the Garden, whose atomist physics and hedonist ethics — pleasure as the absence of pain and disturbance, the gods as untroubled and uninvolved, death as nothing to us — survive mainly in three doctrinal letters and two collections of maxims preserved by Diogenes Laertius and a Vatican manuscript.
+    works:
+      - epicurus-letter-to-herodotus
+      - epicurus-letter-to-pythocles
+      - epicurus-letter-to-menoeceus
+      - epicurus-kuriai-doxai
+      - epicurus-vatican-sayings
+    holdings: partial
+school_groups:
+  presocratic:
+    - school: milesian
+    - school: pythagorean
+    - author: heraclitus
+    - school: eleatic
+      order:
+        - xenophanes
+        - parmenides
+        - zeno
+        - melissus
+    - school: pluralist
+      order:
+        - anaxagoras
+        - empedocles
+    - school: atomist
+work_order:
+  - meditations
+  - discourses
+  - enchiridion
+  - lives
+  - heraclitus-testimonia
+  - heraclitus-fragments
+  - parmenides-testimonia
+  - parmenides-fragments
+  - xenophanes-testimonia
+  - xenophanes-fragments
+  - empedocles-testimonia
+  - empedocles-fragments
+  - zeno-testimonia
+  - zeno-fragments
+  - melissus-testimonia
+  - melissus-fragments
+  - anaxagoras-testimonia
+  - anaxagoras-fragments
+  - thales-testimonia
+  - thales-fragments
+  - anaximander-testimonia
+  - anaximander-fragments
+  - anaximenes-testimonia
+  - anaximenes-fragments
+  - leucippus-testimonia
+  - leucippus-fragments
+  - democritus-testimonia
+  - democritus-fragments
+  - pythagoras-testimonia
+  - philolaus-testimonia
+  - philolaus-fragments
+  - protagoras-testimonia
+  - protagoras-fragments
+  - gorgias-testimonia
+  - gorgias-fragments
+  - prodicus-testimonia
+  - prodicus-fragments
+  - hippias-testimonia
+  - hippias-fragments
+  - antiphon-sophist-testimonia
+  - antiphon-sophist-fragments
+  - critias-testimonia
+  - critias-fragments
+  - de-officiis
+  - de-rerum-natura
+  - tusculan-disputations
+  - de-legibus
+  - de-finibus
+  - de-divinatione
+  - cato-maior-de-senectute
+  - laelius-de-amicitia
+  - de-fato
+  - lucullus
+  - paradoxa-stoicorum
+  - de-providentia
+  - de-constantia-sapientis
+  - epistulae-morales
+  - epicurus-letter-to-herodotus
+  - epicurus-letter-to-pythocles
+  - epicurus-letter-to-menoeceus
+  - epicurus-kuriai-doxai
+  - epicurus-vatican-sayings

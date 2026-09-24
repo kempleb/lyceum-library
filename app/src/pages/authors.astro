@@ -1,0 +1,123 @@
+---
+// The A–Z author index at /authors — authors with ≥1 built work, sorted by
+// display name, with period + floruit and a link to their landing page. The
+// registry may list works whose data isn't built in this checkout; only
+// authors that have something to serve appear here (see built-works.ts). See
+// src/pages/[author]/index.astro for the per-author page this links into, and
+// src/pages/index.astro for the period-shelf home view of the same registry.
+import ThemeInit from '../components/ThemeInit.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import Pwa from '../components/Pwa.astro';
+import { AUTHORS, PERIOD_LABEL } from '@shared/lib/authors';
+import { authorPath } from '@shared/lib/works';
+import LyceumBand from '../components/LyceumBand.astro';
+import { siteNameFor } from '../lib/site';
+import { jsonLdSafe } from '../lib/jsonld';
+import { isBuilt } from '../lib/built-works';
+import '@shared/styles/global.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// PUBLIC_LYCEUM_CHROME=1 puts the sitewide Lyceum band and name on this page
+// too (docs/design-spec.md §4), so the demo origin reads as one site; with the
+// flag off every line below is the page this route has always served.
+const lyceumChrome = import.meta.env.PUBLIC_LYCEUM_CHROME === '1';
+const siteName = siteNameFor(lyceumChrome);
+
+const sorted = [...AUTHORS]
+  .filter((a) => a.works.some((id) => isBuilt(id)))
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+const pageTitle = `Authors — ${siteName}`;
+const metaDescription =
+  `An A–Z index of every philosopher in the reader — ${sorted.length}` +
+  ` author${sorted.length === 1 ? '' : 's'} from the Presocratics to Late Antiquity.`;
+const canonical = Astro.site ? new URL(`${base}/authors/`, Astro.site).href : undefined;
+const ogImage = Astro.site ? new URL(`${base}/og-default.png`, Astro.site).href : undefined;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: pageTitle,
+  description: metaDescription,
+  ...(canonical ? { url: canonical } : {}),
+  isPartOf: { '@type': 'WebSite', name: siteName },
+};
+---
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <ThemeInit />
+  <title>{pageTitle}</title>
+  <meta name="description" content={metaDescription} />
+  {canonical && <link rel="canonical" href={canonical} />}
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={metaDescription} />
+  {canonical && <meta property="og:url" content={canonical} />}
+  <meta property="og:site_name" content={siteName} />
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={metaDescription} />
+  {ogImage && <meta name="twitter:image" content={ogImage} />}
+  <script type="application/ld+json" set:html={jsonLdSafe(jsonLd)} />
+  <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+  <link rel="icon" href={`${base}/favicon.png`} type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} sizes="180x180" />
+  <style>
+    .aui-body { max-width: 760px; margin: 0 auto; padding: 2rem 1rem 5rem; font-family: var(--font-english); color: var(--text); }
+    .aui-h1 { font-size: 1.8rem; font-weight: 600; margin: 0 0 0.4rem; }
+    .aui-lede { color: var(--text-mid); line-height: 1.6; margin: 0 0 1.4rem; max-width: 60ch; }
+    .aui-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.45rem; }
+    .aui-list a { display: flex; justify-content: space-between; gap: 0.8rem; align-items: baseline; text-decoration: none; color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 0.65rem 0.9rem; }
+    .aui-list a:hover { border-color: var(--accent); }
+    .aui-name { font-family: var(--font-greek); font-size: 1.15rem; }
+    .aui-meta { font-family: var(--font-ui); font-size: 0.78rem; color: var(--text-mid); text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; }
+    .aui-empty { color: var(--text-mid); font-size: 0.95rem; margin: 1rem 0; }
+  </style>
+  <Pwa />
+</head>
+<body class={lyceumChrome ? 'lyceum-chrome lyc-page' : undefined}>
+  {lyceumChrome ? (
+    <div class="lyc-chrome">
+      <LyceumBand siteName={siteName} searchHref={`${base}/search`}>
+        <a class="tool" href={`${base}/catalog/`}>Catalog</a>
+        <a class="tool" href={`${base}/lemma/grc/`}>Lexica</a>
+        <ThemeToggle />
+        <a class="tool tool-signin" href="https://lyceum.institute">Sign in</a>
+      </LyceumBand>
+    </div>
+  ) : (
+  <header class="simple-header">
+    <div class="header-title">
+      <a class="home-link" href={`${base}/`} aria-label="Home">Home</a>
+      <span class="title-sep">›</span>
+      <span class="header-static">Authors</span>
+    </div>
+    <nav class="header-actions" aria-label="Navigation">
+      <a href={`${base}/`} class="search-link">All works</a>
+      <a href={`${base}/search`} class="search-link">Search</a>
+      <ThemeToggle />
+    </nav>
+  </header>
+  )}
+  <main class="aui-body">
+    <h1 class="aui-h1">Authors</h1>
+    <p class="aui-lede">
+      {sorted.length} philosopher{sorted.length === 1 ? '' : 's'}, Presocratics to Late Antiquity.
+    </p>
+    <ul class="aui-list">
+      {sorted.map((a) => (
+        <li>
+          <a href={`${base}${authorPath(a.id)}`}>
+            <span class="aui-name">{a.name}</span>
+            <span class="aui-meta">{PERIOD_LABEL[a.period]} · {a.floruit}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    {sorted.length === 0 && <p class="aui-empty">No authors yet.</p>}
+  </main>
+</body>
+</html>

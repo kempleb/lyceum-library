@@ -1,0 +1,471 @@
+{
+ "witness": "https://archive.org/details/EpicurusTheExtantRemainsBaileyOxford1926_201309",
+ "source_file": "bailey-extant-remains-1926.djvu.txt",
+ "source_sha256": "50924207cdee3361c00aabd8d4fdfb443e022e912958e2f1f43ab2c4aebbd55f",
+ "generation": {
+  "tool": "pipeline/tools/extract_bailey_epicurus.py",
+  "method": "Greek-Unicode line filter + all-caps running-head filter + decimal/roman section-number anchor walk; deterministic from the vendored OCR text alone."
+ },
+ "known_limitations": [
+  "Bailey's printed page carries a narrow marginal synopsis column (short topic labels) beside the main translation; the flat OCR interleaves fragments of that column into the same line as the main prose, mid-sentence, with no reliable per-line signal to separate them. This script does not attempt to strip them: a sparse residue of marginal-gloss word fragments may appear inline in the extracted text. Not fixed by patches (too diffuse to enumerate); disclosed here rather than silently left unclean."
+ ],
+ "letters": {
+  "letter-to-herodotus": {
+   "expected_range": [
+    35,
+    83
+   ],
+   "expected_count": 49,
+   "extracted_count": 12,
+   "gaps": [
+    {
+     "section": 37,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 38,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 39,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 40,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 41,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 42,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 46,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 47,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 51,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 53,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 54,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 58,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 59,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 60,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 61,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 62,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 63,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 64,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 65,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 66,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 67,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 68,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 69,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 70,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 71,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 72,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 73,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 74,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 75,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 76,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 77,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 78,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 79,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 80,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 81,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 82,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 83,
+     "reason": "OCR marker not found or too corrupted to recover"
+    }
+   ],
+   "unassigned": [
+    {
+     "after_section": 57,
+     "text": "For the addition of opinion with regard to the unseen, that the moments perceptible only by thought will also contain continuity of motion, 1s not true in such cases; for we must remember that it 1s what we observe with the senses or grasp with the mind by an apprehension that 47°is true Nor must it either be supposed that in moments Nor of course perceptible only by thought the moving body too passes to the several places to which its component atoms move perform the (for this too is unthinkable, and in that case, when it jus OM arrives all together in a sensible period of time from any atoms point that may be in the infinite void, it would not be taking its departure from the place from which we appre- hend tts motion) ; for the motion of the whole body will be the outward expression of its internal collisions, even though up to the limits of perception we suppose the speed of tts motion not to be retarded by collision, It is of advantage to grasp this first principle as well. Next, referring always to the sensations and the feelings y, The soul. (for in this way you will obtain the most trustworthy * ed ground of belief), you must consider that the soul 15 a wiemes like. body of fine particles distributed throughout the whole wind and structure, and most resembling wind with a certain admix- era ture of heat, and in some respects like to one of these and more subtle, in some to the other. There ts also the part which is many degrees more advanced even than these in fineness of composition, and for this reason 1s more capable of feeling in harmony with the rest of the structure as well. Now all this is made manifest by the activities of the soul and the feelings and the readiness of its movements and its processes of thought and by what we lose at the moment of death. Further, you must grasp that the soul possesses 2, The soul the chief cause of sensation: yet it could not have acquired pear sensation, unless it were in some way enclosed by the rest protection of the structure. And this in its turn having afforded the re soul this cause of sensation acquires itself too a share in which 1 then this contingent capacity from the soul. Yet it does not communicates acquire all the capacities which the soul possesses: and therefore when the soul is released from the body, the I. TO HERODOTUS ane body no longer has sensation. For it never possessed this power in itself, but used to afford opportunity for it to another existence, brought into being at the same time with itself: and this existence, owing to the power now consummated within itself as a result of motion, used spontaneously to produce for itself the capacity of sensation and then to communicate it to the body as well, in virtue of its contact and correspondence of movement, as | have already said. Therefore, so long as the soul remains in 3 Even the body, even though some other part of the body be lost, SO Baa it will never lose sensation; nay more, whatever portions be lost the of the soul may perish too, when that which enclosed it is cag removed either in whole or in part, if the soul continues to exist at all, it will retain sensation. On the other hand but if the soul the rest of the structure, though it continues to exist either apie as a whole or in part, does not retain sensation, if it to feel; has once lost that sum of atoms, however small it be, which together goes to produce the nature of the soul. Moreover, if the whole structure is dissolved, the soul 15 and so does dispersed and no longer has the same powers nor performs {Pe SOU, its movements, so that it does not possess sensation either. body 1s For it is impossible to imagine it with sensation, if it is '**\" ¥P not in this organism and cannot effect these movements, when what encloses and surrounds it is no longer the same as the surroundings in which it now exists and per- forms these movements Furthermore, we must clearly 4 The soul comprehend as well, that the incorporeal in the general eels acceptation of the term is applied to that which could be for if it were thought of as such as an independent existence. Now it eee is impossible to conceive the incorporeal as a separate dependent existence, except the void: and the void can neither act cuca. nor be acted upon, but only provides opportunity of motion not at or be acted on. va? « a Lg ig 4 > , ¥ a? © through itself to bodies So that those who say that the soul is incorporeal are talking idly. For it would not be able to act or be acted on in any respect, if it were of chis nature, But as it is, both these occurrences are clearly distinguished in respect of the soul. Now if one refers all These general these reasonings about the soul to the standards of feeling a eae and sensation and remembers what was said at the outset, & basis for he will see that they are sufficiently embraced in these on general formulae to enable him to work out with certainty on this basis the details of the system as well. Moreover, as regards shape and colour and size and VI. Properties weight and all other things that are predicated of body, elaesten as though they were concomitant properties either of all are not things or of things visible or recognizable through the ooear sensation of these qualities, we must not suppose that existences or they are either independent existences (for it 1s impossible RCorPoree! to imagine that), nor that they absolutely do not exist, nor parts of body, that they are some other kind of incorporeal existence atic accompanying body, nor that they are material parts of physical con- body: rather we should suppose that the whole body in bode Its totality owes its own permanent existence to all these, put body owes yet not in the sense that it is composed of properties \"15 essential brought together to form it (as when, for instance, a larger soceagate of structure 1s put together out of the parts which compose propetties, al- it, whether the first units of size or other parts smaller ae than itself, whatever it 1s), but only, as I say, that it owes untling to its own permanent existence to all of them. All these ae properties have their own peculiar means of being per- ceived and distinguished, provided always that the aggre- gate body goes along with them and is never wrested trom them, but in virtue of its comprehension as an aggregate of qualities acquires the predicate of body. Furthermore, there often happen to bodies and yet do 2 Accidents not permanently accompany them (accidents, of which we must suppose neither that they do not exist at all nor that existences, they have the nature of a whole body), nor that they can alle and be classed among unseen things nor as incorporeal. So soonattached to body, but Bignone nently. that when according to the most general usage we employ this name, we make it clear that accidents have neither the nature of the whole, which we comprehend in its aggregate and call body, nor that of the qualities which permanently accompany it, without which a given body cannot be conceived. But as the result of certain acts ot apprehension, provided the aggregate body goes along with them, they might each be given this name, but only on occasions when each one of them 1s seen to occur, since accidents are not permanent accompaniments. And we Both their must not banish this clear vision from the realm of exis- tence, because it does not possess the nature of the whole transitory to which it 1s Joined nor that of the permanent accompani- cherecict ments, nor must we suppose that such contingencies exist recognized. independently (for this is inconceivable both with regard to them and to the permanent properties), but, just as it appears In sensation, we must think of them all as accidents occurring to bodies, and that not as permanent accom- paniments, or again as having in themselves a place in the ranks of material existence; rather they are seen to be Just what our actual sensation shows their proper character to be. Moreover, you must firmly grasp this point as well ; we 3. Time is not we look for in an object, by referring them to the general as are con- conceptions which we perceive in our own minds, but we Satu: must take the direct intuition, in accordance with which we butisa special speak of ’a long time’ or ‘a short time’, and examine it, ae meets applying our intuition to time as we do to other things. Neither must we search for expressions as likely to be better, but employ just those which are in common use about it. Nor again must we predicate of time anything else as having the same essential nature as this special perception, as some people do, but we must turn our thoughts particularly to that only with which we associate this peculiar perception and by which we measure it. For indeed this requires no demonstration, but only reflection, to show that it is with days and nights and their divisions that we associate it, and likewise also with internal feelings or absence of feeling, and with movements and states of rest; in connexion with these last again we think of this very perception as a peculiar kind of accident, and in virtue of this we call it time. And in addition to what we have already said we must VII Worlds, believe that worlds, and indeed every limited compound dine body which continuously exhibits a similar appearance to shapes, and the things we see, were created from the infinite, and that all such things, greater and less alike, were separated off are created oc . out of the from individual agglomerations of matter ; and that all are }o.4 be tanita again dissolved, some more quickly, some more slowly, of separate some suffering from one set of causes, others from another. of taatlerand And further we must believe that these worlds were are similarly neither (created) all of necessity with one configuration (nor grihiee yet with every kind of shape. Furthermore, we must Ais aricnk: 3. believe that 1n all worlds there are living creatures and Shapes. plants and other things we see in this world ;) for indeed oe no one could prove that 1n a world of one kind there might animals, or might not have been included the kinds of seeds from Besa a which living things and plants and all the rest of the things we see are composed, and that in a world of another kind they could not have been. Moreover, we must suppose that human nature too was VIII. The taught and constrained to do many things of every kind oe merely by circumstances; and that later on reasoning and the ongin elaborated what had been suggested by nature and made 2 gl further inventions, in some matters quickly, in others were iaught slowly, at some epochs and times (making great advances), develope and lesser again at others. And so names too were not reason at first deliberately given to things, but men’s natures 2 Language according to their different nationalities had their own bays peculiar feelings and received their peculiar impressions, natural and so each in their own way emitted air formed into Saal shape by each of these feelings and impressions, according feelings and to the differences made in the different nations by the places '™Pression® of their abode as well, And then later on by common con: and was sent in each nationality special names were deliberately gece given in order to make their meanings less ambiguous to dehberately one another and more briefly demonstrated. And some- New names times those who were acquainted with them brought in Maced etl things hitherto unknown and introduced sounds for them, these ways on some occasions being naturally constrained to utter them, and on others choosing them by reasoning in accord- ance with the prevailing mode of formation, and thus Furthermore, the motions of the heavenly bodies and X Celesteat their turnings and eclipses and risings and settings, and kin- | Their dred phenomena to these, must not be thought to be due to causes 2 ‘ (a) The mo- any being who controls and ordains or has ordained them tions of the and at the same time enjoys perfect bliss together with im- heavenly ° . bodies are mortality (for trouble and care and anger and kindness are pot controlled not consistent with a hfe of blessedness, but these things by any 1m- mortal blessed come to pass where there is weakness and fear and depen- peing, dence on neighbours). Nor again must we believe that (4) nor are they, which are but fire agglomerated in a mass, possess Bee blessedness, and voluntarily take upon themselves these selves movements. But we must preserve their full majestic We must not significance in all expressions which we apply to such regis conceptions, in order that there may not arise out of them derogate from opinions contrary to this notion of majesty. Otherwise pened this very contradiction will cause the greatest disturbance in men’s souls. Therefore we must believe that it 1s due to the original inclusion of matter in such agglomerations during the birth-process of the world that this law of regular succession is also brought about. Furthermore, we must believe that to discover accurately 2. Ihe know- the cause of the most essential facts is the function of the eee oe. science of nature, and that blessedness for us in the know- heavenly ledge of celestial phenomena lies in this and in the bodies, &c., understanding of the nature of the existences seen in these %Scrtain and celestial phenomena, and of all else that is akin to the ourhappiness, exact knowledge requisite for our happiness: in knowing too that what occurs in several ways or is capable of being otherwise has no place here, but that nothing which suggests doubt or alarm can be included at all in that which is naturally immortal and blessed. Now this we but not the can ascertain by our mind is absolutely the case. But Hnowlcdge of what falls within the investigation of risings and settings causes of and turnings and eclipses, and all'that is akin to this, is no ‘Be Works: longer of any value for the happiness which knowledge brings, but persons who have perceived all this, but yet do not know what are the natures of these things and what are the essential causes, are still im fear, just as if they did not know these things at all: indeed, their fear may be even greater, since the wonder which arses out of the observation of these things cannot discover any solution or realize the regulation of the essentials. And for this We must very reason, even if we discover several causes for turnings therefore be and settings and risings and eclipses and the like, as has of we find been the case already in our investigation of detail, we Soveral causes must not suppose that our inquiry into these things has phenomenon, not reached sufficient accuracy to contribute to our peace of mind and happiness So we must carefully consider in We must how many ways a similar phenomenon is produced on lace earth, when we reason about the causes of celestial pheno- phenomena mena and all that is imperceptible to the senses ; and we or hisone must despise those persons who do not recognize either earth, and not what exists or comes into being in one way only, or that acne ei, which may occur in several ways in the case of things several causes which can only be seen by us from a distance, and further *t Wo\" are not aware under what conditions is :mpossible to have peace of mind. If, therefore, we think that a pheno- menon probably occurs in some such particular way, and that in circumstances under which it is equally possible for us to be at peace, when we realize that it may occur in several ways, we shall be just as little disturbed as if we know that it occurs in some such particular way. And besides all these matters in general we must grasp 8. The causes this point, that the principal disturbance in the minds of 4 pee icatd men arises because they think that these celestial bodies causes cf are blessed and immortal, and yet have wills and actions “y's and motives inconsistent with these attributes ; and because (a) the belief they are always expecting or imagining some everlasting meee misery, such as is depicted in legends, or even fear the boctes are loss of feeling in death as though it would concern them Ot far themselves; and, again, because they are brought to this of eternal pass not by reasoned opinion, but rather by some irrational presentiment, and therefore, as they do not know the limits hon after of pain, they suffer a disturbance equally great or even more %*#*>. extensive than if they had reached this belief by opinion. But peace of mind 1s being delivered from all this, and Peace of mind having a constant memory of the general and most essential alpen Wherefore we must pay attention to internal feelings 4, {rust m and to external sensations in general and in particular, To be quit of according as the subject 1s general or particular, and to our fears, we every immediate intuition in accordance with each of the percarpvas l standards of judgement. For if we pay attention to these, pee we shall rightly trace the causes whence arose our mental and disturbance and fear, and, by learning the true causes of sensalions, celestial phenomena and all other occurrences that come eres eas to pass from time to time, we shall free ourselves from all of judgement, which produces the utmost fear in other men. Here, Herodotus, 1s my treatise on the chief points Conciuston. concerning the nature of the general principles, abridged ee so that my account would be easy to grasp with accuracy. value both to I think that, even if one were unable to proceed to all the [Pe advanced detailed particulars of the system, he would from this the more obtain an unrivalled strength compared with other men. acer For indeed he will clear up for himself many of the detailed points by reference to our general system, and these very principles, if he stores them in his mind, will constantly aid him. For such is their character that even those who are at present engaged in working out the details to a considerable degree, or even completely, will be able to carry out the greater part of their investigations into the’ nature of the whole by conducting their analysis in reference to such a survey as this. And as for all who are not fully among those on the way to being perfected, some of them can from this summary obtain a hasty view of the most important matters without oral instruction so as to secure peace of mind. nw ~ , a 3, , »"
+    }
+   ]
+  },
+  "letter-to-pythocles": {
+   "expected_range": [
+    84,
+    116
+   ],
+   "expected_count": 33,
+   "extracted_count": 8,
+   "gaps": [
+    {
+     "section": 84,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 85,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 86,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 87,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 88,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 89,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 90,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 91,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 92,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 93,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 94,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 96,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 98,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 99,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 100,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 102,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 104,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 105,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 106,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 110,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 111,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 112,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 113,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 115,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 116,
+     "reason": "OCR marker not found or too corrupted to recover"
+    }
+   ],
+   "unassigned": []
+  },
+  "letter-to-menoeceus": {
+   "expected_range": [
+    122,
+    135
+   ],
+   "expected_count": 14,
+   "extracted_count": 2,
+   "gaps": [
+    {
+     "section": 124,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 125,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 126,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 127,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 128,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 129,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 130,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 131,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 132,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 133,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 134,
+     "reason": "OCR marker not found or too corrupted to recover"
+    },
+    {
+     "section": 135,
+     "reason": "OCR marker not found or too corrupted to recover"
+    }
+   ],
+   "unassigned": [
+    {
+     "after_section": 123,
+     "text": "Wemint And again independence of desire we think a great be content good—not that we may at all times enjoy but a fewthings, W''h 5 httle, but that, if we do not possess many, we may enjoy the few in the genuine persuasion that those have the sweetest enjoy luxury pleasure in luxury who least need it, and that all that is rey u sg natural is easy to be obtained, but that which is superfluous is hard. And so pla savours bring us a pleasure equal to a luxurious diet, when all the pain due to want is removed; and bread and water produce the highest pleasure, when one who needs them puts them to his lips. To grow accustomed therefore to simple and not luxurious Simple diet diet gives us health to the full, and makes a man alert for Segues health the needful employments of life, and when after long intervals we approach luxuries disposes us better towards them, and fits us to be fearless of fortune. When, therefore, we maintain that pleasure is the end, ee. we do not mean the pleasures of profligates and those that mean sensual consist in sensuality, as is supposed by some who are *Joyment, either ignorant or disagree with us or do not understand, but freedom from pain in the body and from trouble in the mind. For it is not continuous drinkings and revellings, rine nor the satisfaction of lusts, nor the enjoyment of fish and ae oo other luxuries of the wealthy table, which produce a the md on pleasant life, but sober reasoning, searching out the pluborophy motives for all choice and avoidance, and banishing mere go 111, MENOIKEA opinions, to which are due the greatest disturbance of the spirit. Of all this the beginning and the greatest good is pru-5 The dence. Wherefore prudence is a more precious thing Cee even than philosophy: for from prudence are sprung all the other virtues, and it teaches us that it 1s not possible which teaches to live pleasantly without living prudently and honourably nie and justly, (nor, again, to live a life of prudence, honour, and justice) without living pleasantly. For the virtues are and they by nature bound up with the pleasant life, and the pleasant sisasset lite life is inseparable from them. For indeed who, think you, The prudent is a better man than he who holds reverent opinions con. ™4” 18 supe- A . rior to all cerning the gods, and ts at all times free from fear of death, others and has reasoned out the end ordained by nature? He He knows understands that the limit of good things is easy to fulfil peotend oa and easy to attain, whereas the course of ills is either short in time or slight in pain: he laughs at (destiny), whom and 1s not some have introduced as the mistress of all things. (He eau thinks that with us lies the chief power in determining events, some of which happen by necessity) and some by chance, and some are within our control ; for while neces- sity cannot be called to account, he sees that chance is inconstant, but that which 15 in our control is subject to no master, and to it are naturally attached praise and blame. For, indeed, it were better to follow the myths about the which ts gods than to become a slave to the destiny of the natural pean philosophers: for the former suggests a hope of placating popular the gods by worship, whereas the latter involves a necessity \"8\" which knows no placation As to chance, he does not He regards regard it as a god as most men do (for in a god’s acts Sed there is no disorder), nor as an uncertain cause (of all tumty for things): for he does not believe that good and evil are good, given by chance to man for the framing of a blessed life, but that opportunities for great good and great evil are but prefers afforded by it. He therefore thinks it better to be unfor- pene tunate in reasonable action than to prosper in unreason. prosperity with folly For it is better in a man’s actions that what is well chosen (should fail, rather than that what is ill chosen) should be Meditate therefore on these things and things akin to Peroraton, them night and day by yourself, and with a companion ager like to yourself, and never shall you be disturbed waking cepts will or asleep, but you shall live like a god among men. For gog ainong a man who lives among immortal blessings is not like men. to a mortal being"
+    }
+   ]
+  }
+ },
+ "kd": {
+  "expected_range": [
+   1,
+   40
+  ],
+  "expected_count": 40,
+  "extracted_count": 38,
+  "gaps": [
+   {
+    "doctrine": 12,
+    "reason": "OCR marker not found or too corrupted to recover"
+   },
+   {
+    "doctrine": 38,
+    "reason": "OCR marker not found or too corrupted to recover"
+   }
+  ],
+  "numeral_corrections": [
+   "1: numeral '1' read as 'I' (OCR damage)",
+   "2: numeral 'If' read as 'II' (OCR damage)",
+   "3: numeral '111' read as 'III' (OCR damage)",
+   "13: numeral 'XIU' read as 'XIII' (OCR damage, forward jump over 1 unrecovered marker(s))",
+   "26: numeral 'XXXVI' read as 'XXVI' (spurious doubled letter)",
+   "27: numeral 'XXVIII' read as 'XXVII' (spurious doubled letter)",
+   "28: numeral 'XXVUI' read as 'XXVIII' (OCR damage)",
+   "29: numeral 'XXI1X' read as 'XXIX' (spurious doubled letter)",
+   "35: numeral 'XXXVI' read as 'XXXV' (spurious doubled letter)",
+   "36: numeral 'XXXVII' read as 'XXXVI' (spurious doubled letter)",
+   "37: numeral 'XXXVIII' read as 'XXXVII' (spurious doubled letter)",
+   "39: numeral 'XXXIX' read as 'XXXIX' (OCR damage, forward jump over 1 unrecovered marker(s))"
+  ],
+  "unassigned": []
+ },
+ "vs": {
+  "expected_range": [
+   1,
+   81
+  ],
+  "expected_count": 81,
+  "extracted_count": 67,
+  "cross_reference_only": [
+   {
+    "saying": 1,
+    "evidence": "I. = Κύριαι Δόξαι I."
+   },
+   {
+    "saying": 2,
+    "evidence": "II. = Κύριαι Δόξαι II."
+   },
+   {
+    "saying": 3,
+    "evidence": "IIL. = Κύριαι Δόξαι IV."
+   },
+   {
+    "saying": 5,
+    "evidence": "V. = Κύριαι Δόξαι V."
+   },
+   {
+    "saying": 6,
+    "evidence": "VI. = Κύριαε Δόξαι XXXV."
+   },
+   {
+    "saying": 8,
+    "evidence": "VITE = Κύριαι Δόξαι XV."
+   },
+   {
+    "saying": 12,
+    "evidence": "XII. = Κύριαε Δόξαι XVII."
+   },
+   {
+    "saying": 13,
+    "evidence": "XIII. = Κύριαι Δόξαι XXVII."
+   },
+   {
+    "saying": 20,
+    "evidence": "XX = Κύριαι Δόξαι ΧΧΙΧ"
+   },
+   {
+    "saying": 22,
+    "evidence": "XXII. = Κύριαι Δόξαι XIX."
+   },
+   {
+    "saying": 49,
+    "evidence": "HLIX. = Κύριαι Δόξαι XII."
+   },
+   {
+    "saying": 50,
+    "evidence": "L. = Κύριαι Δόξαι VIIL"
+   },
+   {
+    "saying": 72,
+    "evidence": "1ΧΧῚ]. = Κύριαι Δόξαι XIII"
+   }
+  ],
+  "compound_sayings": [
+   {
+    "key": "56-57",
+    "covers": [
+     56,
+     57
+    ]
+   }
+  ],
+  "gaps": [],
+  "numeral_corrections": [
+   "18: numeral 'AVIII' read as 'XVIII' (OCR damage)",
+   "23: numeral 'XXII' read as 'XXIII' (dropped trailing stroke(s))",
+   "25: numeral 'AXV' read as 'XXV' (OCR damage)",
+   "31: numeral 'AXXI' read as 'XXXI' (OCR damage)",
+   "33: numeral 'XXXII' read as 'XXXIII' (dropped trailing stroke(s))",
+   "34: numeral 'AXXIV' read as 'XXXIV' (OCR damage)",
+   "43: numeral 'XLII' read as 'XLIII' (dropped trailing stroke(s))",
+   "48: numeral 'XLVI' read as 'XLVIII' (dropped trailing stroke(s))",
+   "67: numeral 'LXAVII' read as 'LXVII' (spurious doubled letter)"
+  ],
+  "unassigned": []
+ },
+ "patches_applied": 9
+}

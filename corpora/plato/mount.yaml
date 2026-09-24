@@ -1,0 +1,46 @@
+# Lyceum Plato mount (docs/todo/plato-mount.md). Mount configuration for the
+# plato corpus: where its built data lives on this machine, and what
+# mount-corpus.mjs excludes when it flat-merges the corpus's work
+# directories into build/dist alongside the classical and aristotle works.
+#
+# HOLD (John's ruling, 2026-09-23): Plato stays out of any release sent to
+# the test copy until he lifts the hold. mount-corpus.mjs skips a held
+# corpus (clean no-op, logged) unless READER_INCLUDE_HELD=1 is set in its
+# environment.
+hold: true
+
+corpus: plato
+
+# Resolved as: process.env[source_env] ?? source_default, relative to this
+# repo's root. The sibling repo is read-only; nothing here is ever written
+# back to it (see mount-corpus.mjs's realpath(dest)-inside-this-repo assert).
+source_env: PLATO_DATA_DIR
+source_default: ../plato-reader/build/dist
+
+# Top-level entries under the source directory that are never copied into
+# build/dist -- documentary, mirroring corpora/aristotle/mount.yaml's own
+# list: the per-work copy loop only ever copies sourceDir/<workId>, so none
+# of these are structurally reachable by mount-corpus.mjs's copy step
+# either way. lsj-heads.json is listed explicitly (aristotle's own list
+# omits it) because nothing in this repo reads a top-level lsj-heads.json
+# for the aristotle mount either (grepped scripts/ and pipeline/ -- zero
+# hits) -- it is dead weight for both corpora, excluded rather than carried
+# on the "why ship what nothing reads" principle. lsj/ is deliberately
+# absent from this list -- it is merged key-by-key via
+# corpus-adapter/lsj-merge.mjs, not copied or excluded wholesale.
+exclude:
+  - lemmata
+  - lemmata.json
+  - lemma-map
+  - ngrams
+  - reports
+  - lsj-heads.json
+
+# Per-work search/ subdirectory entries that are never copied. Mirrors
+# corpora/aristotle/mount.yaml -- no consumer in this repo's reader.
+search_exclude:
+  - offsets.json
+  - grammar-dict.json
+  - grammar-col.bin
+
+citationRoutes: true

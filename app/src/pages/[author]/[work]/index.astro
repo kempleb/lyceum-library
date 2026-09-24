@@ -1,0 +1,31 @@
+---
+// Forwarder: every work's landing page now lives at /texts/<author>/<work>/
+// (see ../../texts/[author]/[work]/index.astro). This address,
+// /<author>/<work>, is kept as a forwarding page for old links.
+import Forward from '../../../components/Forward.astro';
+import { getWorkBySlug, workSlug, workLanding } from '@shared/lib/works';
+import { getAuthor } from '@shared/lib/authors';
+import { builtWorks } from '../../../lib/built-works';
+
+export function getStaticPaths() {
+  return builtWorks().map((w) => {
+    const author = getAuthor(w.author);
+    if (!author) {
+      throw new Error(`[author]/[work]/index: work '${w.id}' has unresolvable author '${w.author}'`);
+    }
+    return { params: { author: author.id, work: workSlug(w) } };
+  });
+}
+
+const authorParam = Astro.params.author!;
+const slugParam = Astro.params.work!;
+const work = getWorkBySlug(authorParam, slugParam);
+if (!work) {
+  throw new Error(`[author]/[work]/index: no work at author '${authorParam}' slug '${slugParam}'`);
+}
+const target = workLanding(work.id);
+const title = work.title;
+---
+<Forward target={target} title={title}>
+  {title}. <a href={target}>Continue to {title}</a>.
+</Forward>

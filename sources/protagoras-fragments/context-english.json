@@ -1,0 +1,16 @@
+{
+ "1:B6a": {
+  "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "9.51",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "Protagoras was the first to maintain that there are two sides to every question, opposed to each other"
+    ]
+   }
+  ]
+ }
+}
