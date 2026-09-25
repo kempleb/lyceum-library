@@ -65,8 +65,23 @@ describe('/attribution carries the Parnassos Gorgias credit and licence', () => 
     expect(PAGE).toContain('Defense of Palamedes');
     // John's 2026-09-23 ruling dropped the section-wide "every translation
     // is public domain, with one exception" framing (a blanket claim), but
-    // the speeches' own CC status must still be stated plainly.
-    expect(PAGE).toMatch(/Gorgias.{0,220}are used under a Creative Commons licence/);
+    // the speeches' own CC status must still be stated plainly -- in the
+    // citation itself (John, 2026-09-25: no explanatory paragraph).
+    expect(PAGE).toMatch(/Defense of Palamedes.{0,400}Licensed under CC BY-NC-ND 4\.0/);
     expect(PAGE).not.toContain('is United States public domain, with one exception');
+  });
+});
+
+describe('/attribution carries the Bury Sextus credit for Gorgias B3', () => {
+  it('names Bury, the Sextus passage and 1935, and does not call that credit public domain', () => {
+    expect(PAGE).toContain('trans. R.&nbsp;G. Bury');
+    expect(PAGE).toContain('Against the Logicians</em> I 65–87');
+    expect(PAGE).toContain('1935');
+    // The next paragraph credits Bury's pre-1931 Plato Loebs as United
+    // States public domain, so the same regex on the whole PAGE matches
+    // that sentence. This check is the Sextus credit alone.
+    const start = PAGE.indexOf('Sextus Empiricus, <em>Against the Logicians</em>');
+    const end = PAGE.indexOf('Where a testimonium quotes Plato');
+    expect(PAGE.slice(start, end)).not.toMatch(/Bury.{0,300}public domain/i);
   });
 });

@@ -173,22 +173,26 @@ def _apply_freeman_concordance(manifest: Manifest, clean: dict) -> dict:
 _SECTION_MARKER_RE = re.compile(r"\((\d+)\)")
 
 
-def _greek_section_count(spine: dict, column: str) -> int:
-    """The count of distinct DK section markers -- "(1)", "(2)", ... --
-    printed inline in the GREEK text of `column`. The ground truth an
-    `english.column_sources` file's section records must match exactly
-    (finding 3, Sol review): the manifest's own column_sources comment
-    attests these numbers are byte-identical between the two languages
-    ((1)-(21) for Helen, (1)-(37) for Palamedes), so counting them in the
-    Greek spine is a real cross-check against the source file, not an
-    assumption layered on top of it."""
+def _greek_section_numbers(spine: dict, column: str) -> set[int]:
+    """The set of distinct DK section markers -- "(1)", "(2)", ... --
+    printed inline in the GREEK text of `column`. The ground truth for
+    the "(N)" markers an `english.column_sources` file will print: those
+    printed markers must equal this set (finding 3, Sol review). Sections
+    may start at any number, not only at 1 (Bury's Sextus sections 65-87
+    for Gorgias B3; the Greek prints "(66)"-"(87)" and no "(65)", so 65
+    is an unmarked opening and belongs to neither set). A count is not
+    the check -- equal counts with different numbers would still ship
+    against the wrong text. The manifest's own column_sources comment
+    attests these numbers are the same in both languages, so reading them
+    off the Greek spine is a real cross-check against the source file,
+    not an assumption layered on top of it."""
     numbers: set[int] = set()
     for seg in spine["segments"]:
         if seg["column"] != column:
             continue
         for line in seg["lines"]:
             numbers.update(int(n) for n in _SECTION_MARKER_RE.findall(line["text"]))
-    return len(numbers)
+    return numbers
 
 
 def _load_column_sources(manifest: Manifest, spine: dict, clean: dict) -> dict[str, dict]:
@@ -228,13 +232,25 @@ def _load_column_sources(manifest: Manifest, spine: dict, clean: dict) -> dict[s
     naturally peels it off as its own leading paragraph, unmarked, matching
     the Greek div's own title line (also unmarked, for the same reason).
 
+    `unmarked_lead` is optional (default false). Set it when the source's
+    first section is the column's opening and the Greek prints no "(N)"
+    for it: Bury's Sextus sections 65-87 for Gorgias B3, where section 65
+    is the unmarked opening and "(66)" through "(87)" are the printed
+    markers. The first record's text is then emitted with no "(N) "
+    prefix; every later record keeps one. `unmarked_lead` together with
+    `heading` is fatal: both would render as one merged unmarked opening
+    paragraph.
+
     The file is the same array-of-records shape the other vendored
-    translations use, one record per printed section of the speech:
-    `[{"section": 1, "text": "..."}, ...]`, contiguous from 1, each text
-    non-empty. Sections join into one chunk with their own numbers inline
-    as "(N)", exactly as DK prints them in the Greek this column carries --
-    so the two columns read section for section with no new alignment
-    machinery.
+    translations use, one record per section of the source:
+    `[{"section": N, "text": "..."}, ...]`. Sections are contiguous
+    integers and may start at any number >= 1 (B11/B11a run from 1;
+    Bury's B3 runs 65-87), each text non-empty. The set of section
+    numbers printed as "(N)" -- every record, or every record but the
+    first when `unmarked_lead` is set -- must equal the "(N)" markers in
+    the Greek of that column, as a set. Sections join into one chunk with
+    those numbers inline, so the two columns read section for section
+    with no new alignment machinery.
 
     Fatal, so an override can never ship silently or half-applied: a
     malformed entry; a repeated column; a column absent from the Greek
@@ -242,7 +258,9 @@ def _load_column_sources(manifest: Manifest, spine: dict, clean: dict) -> dict[s
     no chunk to replace); a column whose resolved primary disposition is
     `omit` (the ruling that withheld English there must be lifted in the
     manifest, not routed around); a missing/malformed source file; a
-    non-contiguous section sequence; an incomplete credit.
+    non-contiguous section sequence; a non-bool `unmarked_lead`; printed
+    markers that are not exactly the Greek's markers; `unmarked_lead` set
+    beside `heading`; an incomplete credit.
     """
     declared = (manifest.data.get("english") or {}).get("column_sources")
     if declared is None:
@@ -305,32 +323,52 @@ def _load_column_sources(manifest: Manifest, spine: dict, clean: dict) -> dict[s
                 f"{{section, text}} records"
             )
         for j, rec in enumerate(records):
-            if (not isinstance(rec, dict) or rec.get("section") != j + 1
-                    or not isinstance(rec.get("text"), str)
-                    or not rec["text"].strip()):
+            got = rec.get("section") if isinstance(rec, dict) else rec
+            text = rec.get("text") if isinstance(rec, dict) else None
+            # Contiguous integers starting at any number >= 1. A bool is an
+            # int in Python (`True == 1`) and must not pass as a section.
+            section_ok = (
+                isinstance(got, int)
+                and not isinstance(got, bool)
+                and got >= 1
+                and (j == 0 or got == records[j - 1]["section"] + 1)
+            )
+            text_ok = isinstance(text, str) and bool(text.strip())
+            if not isinstance(rec, dict) or not section_ok or not text_ok:
                 raise ValueError(
                     f"{manifest.work_id}: english.column_sources[{i}] file "
                     f"{path!r} record {j} is malformed -- every record must "
-                    f"be {{section, text}} with a non-empty text, and the "
-                    f"section sequence must run contiguously from 1 (got "
-                    f"{rec.get('section') if isinstance(rec, dict) else rec!r} "
-                    f"at position {j})"
+                    f"be {{section, text}} with a non-empty text, and sections "
+                    f"must be contiguous integers starting at any number >= 1 "
+                    f"(got {got!r} at position {j})"
                 )
-        # Finding 3 (Sol review): a contiguous-from-1 sequence alone never
-        # caught a source file missing its LAST section (or carrying an
-        # extra one past the Greek's own last marker) -- either would still
-        # pass the loop above and ship silently against the wrong text. The
-        # section count must match the Greek spine's own printed markers
-        # for this column exactly.
-        greek_count = _greek_section_count(spine, column)
-        if len(records) != greek_count:
+        # Default false. Any present non-bool is fatal before it can be
+        # read as true (a truthy string would otherwise drop the lead).
+        unmarked_lead = entry.get("unmarked_lead", False)
+        if not isinstance(unmarked_lead, bool):
+            raise ValueError(
+                f"{manifest.work_id}: english.column_sources[{i}].unmarked_lead "
+                f"must be a boolean when present"
+            )
+        # Finding 3 (Sol review), as a set rather than a count. The sections
+        # PRINTED as "(N)" -- every record, or every record but the first
+        # when unmarked_lead is set -- must equal the Greek spine's own
+        # markers for this column. Equal counts with different numbers
+        # (English 1..22 against Greek 66..87) would still ship against
+        # the wrong text.
+        printed = {rec["section"] for rec in records}
+        if unmarked_lead:
+            printed.discard(records[0]["section"])
+        greek_numbers = _greek_section_numbers(spine, column)
+        if printed != greek_numbers:
+            missing = sorted(greek_numbers - printed)
+            extra = sorted(printed - greek_numbers)
             raise ValueError(
                 f"{manifest.work_id}: english.column_sources[{i}] file "
-                f"{path!r} for column {column!r} has {len(records)} "
-                f"section(s), but the Greek spine for column {column!r} "
-                f"prints {greek_count} DK section marker(s) -- the source "
-                f"file's section count must match the Greek exactly, or "
-                f"the English would silently ship against the wrong text"
+                f"{path!r} for column {column!r} prints section markers "
+                f"{sorted(printed)}, but the Greek spine for column "
+                f"{column!r} prints {sorted(greek_numbers)} -- missing in "
+                f"English: {missing}; extra in English: {extra}"
             )
         heading = entry.get("heading")
         if heading is not None and (not isinstance(heading, str) or not heading.strip()):
@@ -352,8 +390,18 @@ def _load_column_sources(manifest: Manifest, spine: dict, clean: dict) -> dict[s
                 f"\"(N)\" -- it would be indistinguishable from a genuine "
                 f"DK section marker once joined onto the body text"
             )
+        # Both are an unmarked opening paragraph. Together they would merge
+        # into one, and the reader could not tell the title from the lead.
+        if unmarked_lead and heading is not None:
+            raise ValueError(
+                f"{manifest.work_id}: english.column_sources[{i}] sets "
+                f"unmarked_lead and heading together -- both would render "
+                f"as one merged unmarked opening paragraph"
+            )
         body = " ".join(
-            f"({rec['section']}) {rec['text'].strip()}" for rec in records
+            rec["text"].strip() if unmarked_lead and j == 0
+            else f"({rec['section']}) {rec['text'].strip()}"
+            for j, rec in enumerate(records)
         )
         out[column] = {
             "text": f"{heading.strip()} {body}" if heading else body,

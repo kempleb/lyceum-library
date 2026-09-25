@@ -126,7 +126,7 @@ describe('WORKS registry invariants (N >= 0 — Phase 0 ships no real works)', (
     const gorgiasFragments = WORKS.find((w) => w.id === 'gorgias-fragments');
     if (!gorgiasFragments) return; // registry doesn't carry this work in every build (Phase 0 fixture builds)
     expect(gorgiasFragments.alsoCredits).toBe(
-      'the Encomium of Helen and Defence of Palamedes are translated by J. R. Gatt and G. A. Gazis'
+      'the Encomium of Helen, Defence of Palamedes and On Not-Being are translated by J. R. Gatt, G. A. Gazis and R. G. Bury'
     );
   });
 

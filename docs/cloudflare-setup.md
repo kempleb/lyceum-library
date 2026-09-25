@@ -110,9 +110,13 @@ this instead:
    is resolved by Cloudflare's edge before the Worker sees it and returns the
    same file with the same etag (seen 2026-09-23); one that tries to leave
    `/data/<v>/` returns 404.
-6. Once the release is live, if the build printed "new addresses not in the
-   baseline", record them: `node scripts/check-addresses.mjs --update`, then
-   commit `scripts/address-baseline.txt`. The baseline advances only when a
+6. Once the release is live, if the PLAIN `npm run build:public` (the one that
+   made the release, not the staging build in step 2) printed "new addresses
+   not in the baseline", rebuild or keep that plain build's `app/dist/client`,
+   record them with `node scripts/check-addresses.mjs --update`, then commit
+   `scripts/address-baseline.txt`. The staging build always shows one extra
+   page, `/catalog/` (Lyceum settings only); never record it, or every plain
+   build and the weekly GitHub rebuild would fail on it (seen 2026-09-25). The baseline advances only when a
    release goes live, so the weekly GitHub rebuild of the live release never
    trips on pages that exist only in an unreleased build. A build that drops
    a baselined address fails; dropping one needs John's approval.

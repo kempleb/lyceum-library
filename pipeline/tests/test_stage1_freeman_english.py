@@ -18,17 +18,29 @@ from reader_pipeline.config import Manifest
 from reader_pipeline.stage7_emit import emit_books
 
 
-def _spine(columns: list[str], markers: dict[str, int] | None = None) -> dict:
+def _spine(columns: list[str], markers: dict[str, int] | None = None,
+           marker_numbers: dict[str, list[int]] | None = None) -> dict:
     """`markers` (column -> count) gives that column a single Greek line
-    printing "(1) (2) ... (N)" -- the DK section markers _greek_section_count
-    reads to cross-check an english.column_sources file's own section count
-    (finding 3, Sol review). A column absent from `markers` keeps the old
+    printing "(1) (2) ... (N)" -- the DK section markers
+    _greek_section_numbers reads to cross-check an english.column_sources
+    file's printed markers (finding 3, Sol review). `marker_numbers`
+    (column -> the exact ints to print) overrides that for a column whose
+    markers do not run from 1. A column absent from both keeps the old
     empty-lines shape (no column_sources test ever touches it)."""
     markers = markers or {}
+    marker_numbers = marker_numbers or {}
+
+    def _lines(c: str) -> list:
+        if c in marker_numbers:
+            nums = marker_numbers[c]
+        elif c in markers:
+            nums = range(1, markers[c] + 1)
+        else:
+            return []
+        return [{"n": 1, "text": " ".join(f"({i})" for i in nums)}]
+
     return {"work": "FIX", "segments": [
-        {"id": f"1:{c}", "book": 1, "column": c,
-         "lines": [{"n": 1, "text": " ".join(f"({i})" for i in range(1, markers[c] + 1))}]
-         if c in markers else []}
+        {"id": f"1:{c}", "book": 1, "column": c, "lines": _lines(c)}
         for c in columns
     ]}
 
@@ -707,6 +719,14 @@ def _column_source_file(tmp_path, name, sections) -> str:
     return rel
 
 
+def _write_column_records(tmp_path, manifest, records) -> None:
+    """Overwrite the fixture column-source file with explicit records.
+    `_column_source_file` always numbers from 1; Bury-shaped tests need
+    their own section numbers."""
+    rel = manifest.data["english"]["column_sources"][0]["file"]
+    (tmp_path / rel).write_text(json.dumps(records), encoding="utf-8")
+
+
 _FIXTURE_CREDIT = {
     "translator": "A. Translator",
     "source": "Fixture Edition (Fixture Press)",
@@ -807,7 +827,7 @@ def test_column_source_with_a_gap_in_its_section_sequence_is_fatal(tmp_path):
     (tmp_path / rel).write_text(json.dumps(
         [{"section": 1, "text": "a"}, {"section": 3, "text": "b"}]
     ), encoding="utf-8")
-    with pytest.raises(ValueError, match="contiguously from 1"):
+    with pytest.raises(ValueError, match="contiguous integers"):
         sfe.run(manifest, _spine(["B1", "B2"]))
 
 
@@ -870,16 +890,16 @@ def test_column_source_licence_needs_both_a_name_and_a_url(tmp_path):
 
 
 def test_column_source_section_count_mismatched_against_greek_is_fatal(tmp_path):
-    """Finding 3 (Sol review): the per-record contiguous-from-1 check alone
+    """Finding 3 (Sol review): the per-record contiguous check alone
     never caught a source file missing its LAST section (or carrying one
     past the Greek's own last marker) -- either would still pass that loop
     and ship silently against the wrong Greek text. The Greek spine here
     prints THREE section markers for B2; the fixture source file only
-    supplies two."""
+    supplies two. The error names both set differences."""
     manifest = _column_source_manifest(tmp_path)  # 2-record source (sections 1-2)
     with pytest.raises(
         ValueError,
-        match=r"has 2 section\(s\), but the Greek spine for column 'B2' prints 3",
+        match=r"missing in English: \[3\]; extra in English: \[\]",
     ):
         sfe.run(manifest, _spine(["B1", "B2"], markers={"B2": 3}))
 
@@ -893,7 +913,7 @@ def test_column_source_with_an_extra_section_past_the_greek_is_fatal(tmp_path):
     )
     with pytest.raises(
         ValueError,
-        match=r"has 3 section\(s\), but the Greek spine for column 'B2' prints 2",
+        match=r"missing in English: \[\]; extra in English: \[3\]",
     ):
         sfe.run(manifest, _spine(["B1", "B2"], markers={"B2": 2}))
 
@@ -947,16 +967,105 @@ def test_column_source_heading_with_parenthesized_number_is_fatal(tmp_path):
         sfe.run(manifest, _spine(["B1", "B2"], markers={"B2": 2}))
 
 
+def test_column_source_unmarked_lead_omits_the_opening_marker(tmp_path):
+    """Bury's Gorgias B3 shape: section 65 is the unmarked opening (the
+    Greek prints no "(65)"); "(66)" and "(67)" stay marked."""
+    manifest = _column_source_manifest(tmp_path)
+    _write_column_records(tmp_path, manifest, [
+        {"section": 65, "text": "lead text"},
+        {"section": 66, "text": "middle."},
+        {"section": 67, "text": "end."},
+    ])
+    manifest.data["english"]["column_sources"][0]["unmarked_lead"] = True
+    sfe.run(manifest, _spine(["B1", "B2"], marker_numbers={"B2": [66, 67]}))
+
+    english = json.loads(
+        (sfe.BUILD_DIR / "stage1" / "english_chunks.json").read_text(encoding="utf-8")
+    )
+    chunks = {c["column"]: c for c in english["chunks"]}
+    assert chunks["B2"]["text"] == "lead text (66) middle. (67) end."
+    assert "(65)" not in chunks["B2"]["text"]
+
+
+def test_column_source_sections_starting_above_1_pass_when_every_marker_is_printed(tmp_path):
+    """A file whose sections run 65..87, all marked, against Greek markers
+    65..87. No unmarked_lead: "(65)" is printed with the rest."""
+    manifest = _column_source_manifest(tmp_path)
+    _write_column_records(tmp_path, manifest, [
+        {"section": 65 + i, "text": f"Section {65 + i}."} for i in range(23)
+    ])
+    sfe.run(manifest, _spine(
+        ["B1", "B2"], marker_numbers={"B2": list(range(65, 88))},
+    ))
+
+    english = json.loads(
+        (sfe.BUILD_DIR / "stage1" / "english_chunks.json").read_text(encoding="utf-8")
+    )
+    chunks = {c["column"]: c for c in english["chunks"]}
+    assert chunks["B2"]["text"].startswith("(65) Section 65.")
+    assert "(87) Section 87." in chunks["B2"]["text"]
+
+
+def test_column_source_equal_count_but_different_numbers_is_fatal(tmp_path):
+    """A count check would pass (22 == 22). The set check must not:
+    English 1..22 against Greek 66..87 shares no number."""
+    manifest = _column_source_manifest(
+        tmp_path, sections=tuple(f"Section {i}." for i in range(1, 23))
+    )
+    with pytest.raises(
+        ValueError,
+        match=r"missing in English: \[66, 67,.*\]; extra in English: \[1, 2,",
+    ):
+        sfe.run(manifest, _spine(
+            ["B1", "B2"], marker_numbers={"B2": list(range(66, 88))},
+        ))
+
+
+def test_column_source_unmarked_lead_together_with_heading_is_fatal(tmp_path):
+    """Both would render as one merged unmarked opening paragraph.
+    Greek markers are the printed set ({2}, the lead dropped) so the set
+    check passes and the conflict itself is what fails."""
+    manifest = _column_source_manifest(tmp_path)
+    entry = manifest.data["english"]["column_sources"][0]
+    entry["unmarked_lead"] = True
+    entry["heading"] = "A Fixture Speech"
+    with pytest.raises(ValueError, match="unmarked opening paragraph"):
+        sfe.run(manifest, _spine(["B1", "B2"], marker_numbers={"B2": [2]}))
+
+
+def test_column_source_unmarked_lead_must_be_a_boolean(tmp_path):
+    manifest = _column_source_manifest(tmp_path)
+    manifest.data["english"]["column_sources"][0]["unmarked_lead"] = "yes"
+    with pytest.raises(ValueError, match=r"unmarked_lead must be a boolean"):
+        sfe.run(manifest, _spine(["B1", "B2"], markers={"B2": 2}))
+
+
+def test_column_source_gap_in_a_sequence_starting_above_1_is_fatal(tmp_path):
+    """65, 66, 68 is a gap even though it does not start at 1. Greek
+    markers are exactly those three numbers, so only the sequence check
+    can fail -- the set check would pass."""
+    manifest = _column_source_manifest(tmp_path)
+    _write_column_records(tmp_path, manifest, [
+        {"section": 65, "text": "a"},
+        {"section": 66, "text": "b"},
+        {"section": 68, "text": "c"},
+    ])
+    with pytest.raises(ValueError, match="contiguous integers"):
+        sfe.run(manifest, _spine(
+            ["B1", "B2"], marker_numbers={"B2": [65, 66, 68]},
+        ))
+
+
 # Fix round (Sol adversarial review on commit 7287b10, finding 3): the
 # previous version of this test read `marker_counts` straight off the
 # vendored English files and used THAT SAME number to build the synthetic
-# Greek spine's "(N)" markers -- so the cross-check
-# `len(records) == greek_count` inside `_load_column_sources` was
-# tautological by construction: the Greek side could never disagree with the
-# English side, because both were derived from one number. Pinning the
-# expected counts as literal constants, independent of either file, makes
-# both sides real assertions again -- a drift in the vendored file's record
-# count OR a regression in `_greek_section_count`'s own parsing now fails.
+# Greek spine's "(N)" markers -- so the cross-check inside
+# `_load_column_sources` was tautological by construction: the Greek side
+# could never disagree with the English side, because both were derived
+# from one number. Pinning the expected counts as literal constants,
+# independent of either file, makes both sides real assertions again -- a
+# drift in the vendored file's record count OR a regression in
+# `_greek_section_numbers`'s own parsing now fails.
 _HELEN_SECTIONS = 21
 _PALAMEDES_SECTIONS = 37
 
@@ -986,18 +1095,26 @@ def test_gorgias_b11_ships_parnassos_not_freemans_summary():
     assert len(palamedes_records) == _PALAMEDES_SECTIONS
 
     # A synthetic Greek spine built from the PINNED constants (not from the
-    # files above) -- so `_greek_section_count` is exercised against a
-    # number it had no part in producing.
-    marker_counts = {"B11": _HELEN_SECTIONS, "B11a": _PALAMEDES_SECTIONS}
+    # files above) -- so `_greek_section_numbers` is exercised against a
+    # number it had no part in producing. B3's markers are Sextus's own
+    # 66-87: section 65 is the unmarked opening and is not printed.
+    def _marker_line(column: str) -> list:
+        if column == "B11":
+            nums = range(1, _HELEN_SECTIONS + 1)
+        elif column == "B11a":
+            nums = range(1, _PALAMEDES_SECTIONS + 1)
+        elif column == "B3":
+            nums = range(66, 88)
+        else:
+            return []
+        return [{"n": 1, "text": " ".join(f"({i})" for i in nums)}]
+
     spine = {"work": "gorgias-fragments", "segments": [
-        {"id": f"1:{c}", "book": 1, "column": c,
-         "lines": [{"n": 1, "text": " ".join(
-             f"({i})" for i in range(1, marker_counts[c] + 1)
-         )}] if c in marker_counts else []}
+        {"id": f"1:{c}", "book": 1, "column": c, "lines": _marker_line(c)}
         for c in resolved
     ]}
-    assert sfe._greek_section_count(spine, "B11") == _HELEN_SECTIONS
-    assert sfe._greek_section_count(spine, "B11a") == _PALAMEDES_SECTIONS
+    assert len(sfe._greek_section_numbers(spine, "B11")) == _HELEN_SECTIONS
+    assert len(sfe._greek_section_numbers(spine, "B11a")) == _PALAMEDES_SECTIONS
     # The real sources/ tree, not the tmp_path fixture one.
     sources = ROOT / "sources"
     original = sfe.SOURCES_DIR
@@ -1021,6 +1138,14 @@ def test_gorgias_b11_ships_parnassos_not_freemans_summary():
     assert chunks["B11a"]["text"].startswith("Defence of Palamedes (1) ")
     assert chunks["B11a"]["credit"]["translator"].startswith("George Alexander Gazis")
     assert "(37) " in chunks["B11a"]["text"]
+    # B3: Bury, section 65 unmarked, (66)-(87) printed. No licence key.
+    assert "(65)" not in chunks["B3"]["text"]
+    assert chunks["B3"]["text"].startswith("Gorgias of Leontini belonged")
+    assert "(66) " in chunks["B3"]["text"]
+    assert "(87) " in chunks["B3"]["text"]
+    assert chunks["B3"]["credit"]["translator"] == "R. G. Bury"
+    assert chunks["B3"]["credit"]["year"] == 1935
+    assert "licence" not in chunks["B3"]["credit"]
 
 
 # ── english.summary_overlay: Freeman's own DISPLACED summary text for one
@@ -1104,7 +1229,7 @@ def test_no_summary_overlay_declared_writes_empty_overlays_file(tmp_path):
 def test_gorgias_summary_overlay_carries_freemans_original_b11_b11a_text():
     """Wired end to end from the real manifest and the real vendored
     source files: the summary overlay carries Freeman's OWN (displaced)
-    B11/B11a text, sparse -- no other column carries an entry."""
+    B11/B11a/B3 text, sparse -- no other column carries an entry."""
     manifest = Manifest.load(ROOT / "manifests" / "gorgias-fragments.yaml")
     clean = json.loads(
         (ROOT / "sources" / "freeman-ancilla"
@@ -1123,15 +1248,16 @@ def test_gorgias_summary_overlay_carries_freemans_original_b11_b11a_text():
     assert cfg is not None
     overlay_id, columns = cfg
     assert overlay_id == "freeman-summary"
-    assert set(columns) == {"B11", "B11a"}
+    assert set(columns) == {"B11", "B11a", "B3"}
     overlay = sfe.build_summary_overlay(spine, resolved, columns)
-    assert set(overlay) == {"1:B11", "1:B11a"}
-    # Freeman's own summary text -- NOT the Parnassos text column_sources
-    # ships as the default -- and starts as her printed summary label says.
+    assert set(overlay) == {"1:B11", "1:B11a", "1:B3"}
+    # Freeman's own summary text -- NOT the column_sources text that ships
+    # as the default -- and starts as her printed summary label says.
     assert overlay["1:B11"][0]["text"] == clean["B11"]["text"]
     assert overlay["1:B11"][0]["text"].startswith("('Encomium on Helen': summary)")
     assert overlay["1:B11a"][0]["text"] == clean["B11a"]["text"]
     assert overlay["1:B11a"][0]["text"].startswith("(The 'Defence of Palam")
+    assert overlay["1:B3"][0]["text"] == clean["B3"]["text"]
     # Sparse: no other column (e.g. B12, the column right after Palamedes)
     # carries an overlay entry at all.
     assert "1:B12" not in overlay
@@ -1295,11 +1421,16 @@ def test_gorgias_b4_end_to_end_via_run(tmp_path, monkeypatch):
     )
     resolved = sfe._resolve_kind_overrides(manifest, clean)
     marker_counts = {"B11": _HELEN_SECTIONS, "B11a": _PALAMEDES_SECTIONS}
+    # B3's Greek markers are Sextus 66-87 (section 65 is unmarked), or
+    # column_sources refuses to load Bury's file against an empty spine.
+    b3_markers = list(range(66, 88))
     spine = {"work": "gorgias-fragments", "segments": [
         {"id": f"1:{c}", "book": 1, "column": c,
          "lines": [{"n": 1, "text": " ".join(
-             f"({i})" for i in range(1, marker_counts[c] + 1)
-         )}] if c in marker_counts else []}
+             f"({i})" for i in (
+                 b3_markers if c == "B3" else range(1, marker_counts[c] + 1)
+             )
+         )}] if c == "B3" or c in marker_counts else []}
         for c in resolved
     ]}
     eng_path, _ = sfe.run(manifest, spine)

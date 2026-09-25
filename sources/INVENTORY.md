@@ -2623,3 +2623,42 @@ misread as "l", and Principal Doctrine I's own opening "Tue" misread as
 Determinism re-verified (two runs byte-identical); full spot-check set
 (Herodotus §35, Principal Doctrine IV, Vatican Collection sayings 4 and 81,
 compound saying 56-57) still holds.
+
+---
+
+## Gorgias B3 — R. G. Bury, Sextus Empiricus, *Against the Logicians* I 65–87 (1935)
+
+### COLUMN SOURCE (work `gorgias-fragments`, column B3) — R. G. Bury, *Sextus
+Empiricus*, vol. II: *Against the Logicians* (Loeb Classical Library, 1935)
+
+**Not public domain; used by John's ruling (2026-09-24).** Published 1935,
+after the US cut-off. John: "If we're fine with grey area for other works
+that are almost pd, I'm fine with that for gorgias b3." Same treatment as
+J. A. Smith's *De Anima* and W. H. Fyfe's *Poetics*: licence string
+`unverified`, no public-domain claim. Replaces Freeman's outline of the
+argument for B3 (review item 85). Full provenance, boundary table and
+corrections in `bury-sextus-gorgias/README.md`.
+
+| | |
+|---|---|
+| Translator | Rev. Robert Gregg Bury (1869–1951) |
+| Publisher | London: William Heinemann Ltd; Cambridge, MA: Harvard University Press |
+| Publication year | 1935 (first printing: title page MCMXXXV, no reprint line) |
+| Licence | `unverified` — John's grey-area ruling, 2026-09-24; no public-domain claim |
+| Attribution | R. G. Bury, trans., Sextus Empiricus, vol. II: Against the Logicians (Loeb Classical Library; London: Heinemann; Cambridge, MA: Harvard University Press, 1935) |
+| Passage | *Against the Logicians* I 65–87 = *Adv. Math.* VII 65–87 = DK 82 B3 |
+| Working text | John's cleaned OCR, `Sextus Empiricus Vol II Against the Logicians.txt` (SHA-256 `cee00858a527cd15f405822cc4dc85ca08a2825528707824155dcc5a36b3b829`), lines 609–777; not vendored |
+| Check witness | archive.org item in.ernet.dli.2015.183448 (PDF SHA-256 `fe2dd9627cf74dbbd1fffbbbb76a144c271ce0dd72ecacacb728eb19b2a4c30e`; `_djvu.txt` SHA-256 `7f0d435d3fb4ffaaf7b0d17d8dd43dc0677d969ab123e89ff5a46bc854f8dc3c`); not vendored |
+| Greek | Bury's facing Greek is not used; the Greek for B3 is DK's |
+| File | `bury-sextus-gorgias/bury-b3.clean.json` — `[{"section": n, "text": "..."}]`, sections 65–87 (23, contiguous), 1,769 words |
+| SHA-256 (bury-b3.clean.json) | `c39eda046564fd0b7e7b7003dcb14bdff4e286ea245bf47bdc97461a92f2005c` |
+
+**Extraction.** English only, page furniture, footnotes and Greek pages
+dropped, Bury's margin numbers removed, three print hyphen breaks mended,
+quotes made curly, split at the Sextus section openings as DK's Greek places
+them (four fall mid-sentence: §§69, 75, 79, 85). One correction to John's
+text (§75, "non- existent" joined across a page turn). A word-by-word check
+against the archive.org OCR found no other difference in the English that
+was not an OCR fault.
+
+**Not yet wired in.** `manifests/gorgias-fragments.yaml` is untouched.

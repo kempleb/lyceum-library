@@ -259,6 +259,15 @@ citation:
     B30: omit
     B31: omit
 
+  # B3 (On Not-Being) carries Sextus's own inline ascending "(N)" listing
+  # in both the Greek ((66)-(87); §65 is the unmarked opening, DK prints
+  # no "(65)") and the default English (Bury). Unlike B11/B11a this is a
+  # narrower, non-attesting declaration: it asserts nothing about
+  # authorial voice, only that the reader should paragraph-break the
+  # column at the same points, the same way whole_column_verbatim columns
+  # already do. See preflight.py's `_validate_section_paragraph_columns`.
+  section_paragraph_columns: [B3]
+
 # Freeman's fifth-edition numbering matches the corresponding DK6 tokens
 # exactly; no remap needed.
 freeman_concordance: {}
@@ -345,20 +354,32 @@ english:
           status: cc
           name: "CC BY-NC-ND 4.0"
           url: "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+    # John's ruling 2026-09-24 accepts Bury (1935) as a grey-area source,
+    # licence string unverified, no public-domain claim; see
+    # sources/bury-sextus-gorgias/README.md; §65 is the unmarked opening
+    # of the column (DK prints no "(65)").
+    - column: B3
+      file: "bury-sextus-gorgias/bury-b3.clean.json"
+      unmarked_lead: true
+      credit:
+        translator: "R. G. Bury"
+        source: "Sextus Empiricus II: Against the Logicians (Loeb Classical Library)"
+        year: 1935
   # REVIEW-CHECKLIST item 84 (John, 2026-07-28): "This would also allow us
   # to have the [Freeman] summaries of B11 & B11a -- labeled as such -- and
   # the Gatt translations." Freeman's own entries for B11/B11a are her
-  # SUMMARIES (the reason column_sources above displaces them as the
-  # DEFAULT), but the summary itself is worth reaching, clearly labelled --
-  # never mistaken for a translation. Offered back as a sparse per-passage
-  # ALTERNATE translation (shared/lib/works.ts registers it on the
-  # 'overlay' slot, short label "Freeman (summary)"), pulled straight from
-  # the ALREADY-LOADED freeman-gorgias.clean.json record for each named
+  # SUMMARIES, and her B3 entry is her outline of On Not-Being (the reason
+  # column_sources above displaces B11, B11a and B3 as the DEFAULT). The
+  # summary itself is worth reaching, clearly labelled -- never mistaken
+  # for a translation. Offered back as a sparse per-passage ALTERNATE
+  # translation (shared/lib/works.ts registers it on the 'overlay' slot,
+  # short label "Freeman (summary)"), pulled straight from the
+  # ALREADY-LOADED freeman-gorgias.clean.json record for each named
   # column -- the exact text column_sources replaces, never a re-derived
   # or re-typed one. `id` here is the translations[] id that registers it.
   summary_overlay:
     id: freeman-summary
-    columns: [B11, B11a]
+    columns: [B11, B11a, B3]
     license:
       status: public-domain-us
       rationale: "Kathleen Freeman's Ancilla to the Pre-Socratic Philosophers (1948) is treated as US public domain per John's 2026-07-23 ruling (CANON.md, Freeman Ancilla copyright ruling); covered by attribution.astro's site-wide translation public-domain notice."
@@ -414,7 +435,7 @@ registry:
     copyAbbr: DK 82
     dkChapter: 82
     series: B
-  alsoCredits: the Encomium of Helen and Defence of Palamedes are translated by J. R. Gatt and G. A. Gazis
+  alsoCredits: the Encomium of Helen, Defence of Palamedes and On Not-Being are translated by J. R. Gatt, G. A. Gazis and R. G. Bury
   related:
     - id: gorgias-testimonia
       label: 'The A-testimonia: ancient reports about Gorgias'
