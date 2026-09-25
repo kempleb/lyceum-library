@@ -212,20 +212,176 @@ def lift_demoted_siblings(
     return lifted
 
 
+_LETTER_ADDR = re.compile(r"^[A-Z]$")
+_ROMAN = re.compile(r"^[IVX]+$")
+
+
+def _is_letter_addr(n: str) -> bool:
+    """True for a print letter-band address (A, B, C...) -- never I, V, X,
+    which read as roman numerals rather than letters. Adapted from
+    Grammata's `is_letter_addr` (scripts/wordtool/t8rows.py)."""
+    return bool(_LETTER_ADDR.match(n)) and n not in ("I", "V", "X")
+
+
+def demote_band_first_sense(
+    senses: list[tuple[int, str]],
+) -> list[tuple[int, str]]:
+    """Fix Perseus TEI's demoted division run under a print letter band
+    (review item 99, second shape).
+
+    Ported from Grammata's `demote_band_first_sense`
+    (scripts/wordtool/t8rows.py, 2026-08-31) -- the mirror image of
+    `lift_demoted_siblings` above. There, the demoted run sits under an
+    entry-opening unnumbered sense and gets lifted up to join it. Here
+    the same demotion happens under a letter band's own unnumbered first
+    sense (A., B., ...), and the fix is the opposite move: demote that
+    first sense down one level, INTO the run, rather than lift the run
+    out to meet it.
+
+    ἀραρίσκω prints "A. ... join together ... II. fit together ... III.
+    fit, equip ... IV. make fitting ... B. ...". Perseus gives A and the
+    unnumbered "join together" the same level, so "join together" reads
+    as a second band and II-IV nest under it instead of beside it.
+    Demoting "join together" to join its roman siblings restores the
+    print's single band with one division series.
+
+    Same trigger as the lift, checked at every unnumbered sense in the
+    entry (not just the first): the run one level down must open on "II"
+    (or "II."). Here the unnumbered sense is additionally required to sit
+    immediately after a same-level print letter address (A, B, C...,
+    never I, V, X) -- that is what marks it as a band's own opener rather
+    than some other unnumbered sense, and is why this rule can't just
+    reuse the lift's opener-only check. Grammata measured 3 Greek entries
+    against this shape: ἀραρίσκω, ἐρύω, φύω; none in Latin.
+    """
+    out = list(senses)
+    for i in range(1, len(out)):
+        lvl, n = out[i]
+        if n.strip():
+            continue
+        prev = None
+        for j in range(i - 1, -1, -1):
+            if out[j][0] < lvl:
+                break
+            if out[j][0] == lvl:
+                prev = out[j]
+                break
+        if prev is None or not _is_letter_addr((prev[1] or "").strip().rstrip(".")):
+            continue
+        stop = next((j for j in range(i + 1, len(out)) if out[j][0] <= lvl), len(out))
+        run = range(i + 1, stop)
+        if not len(run) or min(out[j][0] for j in run) != lvl + 1:
+            continue
+        first = next(j for j in run if out[j][0] == lvl + 1)
+        if (out[first][1] or "").strip().rstrip(".") != "II":
+            continue
+        out[i] = (lvl + 1, n)
+    return out
+
+
+def demote_roman_first_subsense(
+    senses: list[tuple[int, str]],
+) -> list[tuple[int, str]]:
+    """Fix Perseus TEI's roman "I" where the print means arabic "1."
+    (review item 99, third shape -- an OCR misread, not a mis-nesting).
+
+    Ported from Grammata's `demote_roman_first_subsense`
+    (scripts/wordtool/t8rows.py, 2026-08-31). A division's first
+    sub-sense sits at the DIVISION's own level instead of one below it --
+    the same demotion `lift_demoted_siblings` and `demote_band_first_sense`
+    fix -- and where that sub-sense opens an arabic run, its "1." also
+    arrives transcribed as a capital "I": the two are one glyph apart in
+    the printed face, an OCR read rather than something Liddell and Scott
+    wrote.
+
+    σπουδάζω proves it inside one entry: "II. trans." has children 1.,
+    2., while "I. intr." has children I., 2., 3., 4. -- same position,
+    same entry, two different glyphs for it.
+
+    Three conditions, all required, because "I." followed by "2." is
+    ordinary LSJ everywhere else -- φρήν is "I. midriff ... 2. heart ...
+    3. mind ... 4. will", a division with sub-senses that must not be
+    renumbered. What marks the artifact: the sense itself is numbered
+    "I" (not unnumbered); a roman sibling already stands before it at the
+    same level, so this cannot be another division opening a fresh
+    series; and the run beneath it opens on the print's own "2." The
+    sense then takes the level AND numeral ("1", matching Perseus's
+    undotted `n` attribute -- entry_html supplies the period) that run
+    belongs at. Grammata measured 3 entries against this shape, two in Greek
+    (ἐπιτυγχάνω, σπουδάζω) and one in Latin (exspiro, Lewis & Short) --
+    out of scope here, LSJ only.
+    """
+    out = list(senses)
+    for i in range(1, len(out)):
+        lvl, n = out[i]
+        if (n or "").strip().rstrip(".") != "I":
+            continue
+        prev = None
+        for j in range(i - 1, -1, -1):
+            if out[j][0] < lvl:
+                break
+            if out[j][0] == lvl:
+                prev = (out[j][1] or "").strip().rstrip(".")
+                break
+        if not prev or not _ROMAN.match(prev):
+            continue
+        stop = next((j for j in range(i + 1, len(out)) if out[j][0] <= lvl), len(out))
+        run = range(i + 1, stop)
+        if not len(run):
+            continue
+        deep = min(out[j][0] for j in run)
+        first = next(j for j in run if out[j][0] == deep)
+        if (out[first][1] or "").strip().rstrip(".") != "2":
+            continue
+        # A fourth condition, from our own data (w(s, Grok review
+        # 2026-09-24): the artifact "I." sits INSIDE a roman series, so
+        # the next roman sibling, if any, continues from the one before it
+        # (I. -> II., II. -> III.). ὡς B. lists "I.-IV." as a summary and
+        # then restarts "I." to treat each in full; that "I." is followed
+        # by "II.", not "V.", and must not move.
+        nxt = out[stop][1] if stop < len(out) and out[stop][0] == lvl else ""
+        nxt = (nxt or "").strip().rstrip(".")
+        if _ROMAN.match(nxt) and _roman_value(nxt) != _roman_value(prev) + 1:
+            continue
+        out[i] = (deep, "1")
+    return out
+
+
+def _roman_value(numeral: str) -> int:
+    values = {"I": 1, "V": 5, "X": 10}
+    total = 0
+    for k, ch in enumerate(numeral):
+        v = values[ch]
+        total += -v if k + 1 < len(numeral) and values[numeral[k + 1]] > v else v
+    return total
+
+
 def _lift_entry_sense_levels(entry_el) -> None:
-    """Apply `lift_demoted_siblings` to one LSJ entry's <sense> children in
-    place, correcting each one's `level` attribute before HTML emission.
+    """Apply the three demoted-sense fixes above to one LSJ entry's
+    <sense> children in place, correcting each one's `level` (and, for
+    `demote_roman_first_subsense`, `n`) attribute before HTML emission.
     LSJ-only (see entry_html's call site: <div2> is LSJ, Lewis & Short's
     <div1> is untouched). <sense> elements are flat direct children of the
     entry div, each carrying its own level/n -- confirmed against χείρ and
-    ἁγνός (no nested <sense> in the TEI)."""
+    ἁγνός (no nested <sense> in the TEI).
+
+    Order: `lift_demoted_siblings` first (an entry-opening demotion), then
+    `demote_band_first_sense` (a band-opening demotion, which reads levels
+    the lift may have already corrected), then `demote_roman_first_subsense`
+    (an independent OCR misread) last -- it is the only one of the three
+    that changes a sense's numeral rather than only its level, so applying
+    it last keeps the other two rules' level-only bookkeeping simple."""
     sense_els = entry_el.findall("sense")
     senses = [(int(el.get("level") or "1"), el.get("n") or "") for el in sense_els]
-    lifted = lift_demoted_siblings(senses)
-    if lifted is senses:
+    fixed = lift_demoted_siblings(senses)
+    fixed = demote_band_first_sense(fixed)
+    fixed = demote_roman_first_subsense(fixed)
+    if fixed == senses:
         return
-    for el, (level, _n) in zip(sense_els, lifted):
+    for el, (level, n), (_orig_level, orig_n) in zip(sense_els, fixed, senses):
         el.set("level", str(level))
+        if n != orig_n:
+            el.set("n", n)
 
 
 def _to_html(el) -> str:

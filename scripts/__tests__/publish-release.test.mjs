@@ -103,6 +103,8 @@ test('publishes safely with the local rclone backend', { skip: !rcloneAvailable 
       const fresh = runPublish({ dist, bucket, config });
       const elapsed = performance.now() - started;
       assert.equal(fresh.status, 0, fresh.stderr);
+      assert.match(fresh.stdout, /^uploading \d+ file\(s\) to releases\//m);
+      assert.doesNotMatch(fresh.stdout, /resuming/);
       assert.equal(readFileSync(join(release, 'alpha.txt'), 'utf8'), 'alpha\n');
       assert.equal(readFileSync(join(release, 'nested/beta.txt'), 'utf8'), 'beta\n');
       assert.ok(statSync(join(release, 'RELEASE.json')).isFile());
@@ -122,6 +124,7 @@ test('publishes safely with the local rclone backend', { skip: !rcloneAvailable 
     await t.test('missing remote data file is restored without touching RELEASE.json', () => {
       const resumed = runPublish({ dist, bucket, config });
       assert.equal(resumed.status, 0, resumed.stderr);
+      assert.match(resumed.stdout, /^resuming: uploading 1 local-only file\(s\)/m);
       assert.equal(readFileSync(join(release, 'alpha.txt'), 'utf8'), 'alpha\n');
       assert.equal(statSync(join(release, 'RELEASE.json')).mtimeMs, releaseMtime);
     });

@@ -110,6 +110,12 @@ this instead:
    is resolved by Cloudflare's edge before the Worker sees it and returns the
    same file with the same etag (seen 2026-09-23); one that tries to leave
    `/data/<v>/` returns 404.
+6. Once the release is live, if the build printed "new addresses not in the
+   baseline", record them: `node scripts/check-addresses.mjs --update`, then
+   commit `scripts/address-baseline.txt`. The baseline advances only when a
+   release goes live, so the weekly GitHub rebuild of the live release never
+   trips on pages that exist only in an unreleased build. A build that drops
+   a baselined address fails; dropping one needs John's approval.
 
 One known gap: a bucket-mode rebuild changes only `manifests/index.json` (its
 data-root and URL fields), so `publish-release.mjs --dry-run` afterward flags

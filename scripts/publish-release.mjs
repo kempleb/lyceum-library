@@ -191,7 +191,11 @@ async function main() {
     return;
   }
 
-  console.log(`resuming: uploading ${firstDecision.paths.length} local-only file(s); existing bytes will not change`);
+  if (checked.identical.length) {
+    console.log(`resuming: uploading ${firstDecision.paths.length} local-only file(s); existing bytes will not change`);
+  } else {
+    console.log(`uploading ${firstDecision.paths.length} file(s) to ${releaseFolder} in ${values.bucket}`);
+  }
   const copies = buildCopyCommands(values);
   if (options.dryRun) {
     for (const command of copies) printCommand(command);

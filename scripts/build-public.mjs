@@ -482,6 +482,15 @@ if (!finalReleaseCheck.ok) {
 console.log('\nChecking link integrity of the built site');
 run('node', [join(ROOT, 'scripts', 'check-links.mjs'), join(ROOT, 'app', 'dist', 'client')]);
 
+// Address-stability gate (scripts/check-addresses.mjs): readers bookmark and
+// cite our pages, so a page address that existed in the last public release
+// must never quietly disappear from this one. New addresses are fine. Runs
+// right after check-links, before the data prune, for the same reason
+// check-links does: this is the pre-deploy build, the one point where the
+// gate can hold the line (CI builds no real corpus data to check against).
+console.log('\nChecking published addresses against the baseline');
+run('node', [join(ROOT, 'scripts', 'check-addresses.mjs'), join(ROOT, 'app', 'dist', 'client')]);
+
 // Deploy-artifact hygiene (Lyceum P6 plan, Settled decision 3 / docs/p6-plan.md
 // Stage 1): once check-links has validated the full-data dist above, prune
 // dist/client/data whenever this build shipped a PUBLIC_DATA_ROOT (either an
