@@ -27,7 +27,7 @@ describe('/attribution Greek Text section lists only built works', () => {
 
   it('the Greek edition list is filtered by isBuilt(w.id)', () => {
     expect(PAGE).toMatch(
-      /WORKS\.filter\(\(w\) => isBuilt\(w\.id\)\)\.map\(\(w\) => \( <li><strong>\{w\.title\}<\/strong> — \{w\.greekSource\.full\}<\/li>/,
+      /WORKS\.filter\(\(w\) => isBuilt\(w\.id\) && w\.language !== 'en'\)\.map\(\(w\) => \( <li><strong>\{w\.title\}<\/strong> — \{w\.greekSource\.full\}<\/li>/,
     );
   });
 

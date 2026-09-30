@@ -18,8 +18,8 @@ describe('generated registry golden value', () => {
     expect(AUTHORS).toHaveLength(30);
     // After a deliberate registry change, regenerate with this exact command from shared/:
     // node --experimental-strip-types --input-type=module -e "import{createHash}from'node:crypto';import{CORPUS_WORKS as WORKS,CORPUS_AUTHORS as AUTHORS}from'./lib/registry.generated.ts';console.log(createHash('sha256').update(JSON.stringify(WORKS)+JSON.stringify(AUTHORS)).digest('hex'))"
-    // 2026-09-25: gorgias-fragments alsoCredits names R. G. Bury for
-    // On Not-Being. WORKS/AUTHORS membership and order unchanged.
-    expect(hash).toBe('83404f873279328f69b63ecb2eaf08eb678415a954c20b1b15cb3fa218962e5a');
+    // 2026-09-26: owner-approved TLG Greek-edition labels for 11 Aristotle works.
+    // WORKS/AUTHORS membership and order unchanged.
+    expect(hash).toBe('60d34b6e64c0c8c0ab41f2377e8c79db188198cd3bdd148f84bed9cdb9ed739e');
   });
 });

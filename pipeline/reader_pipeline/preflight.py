@@ -1203,30 +1203,6 @@ _DK_QUOTE_CLOSE = "’"  # RIGHT SINGLE QUOTATION MARK (U+2019)
 _DK_QUOTE_CHARS = _DK_QUOTE_OPEN + _DK_QUOTE_CLOSE
 
 
-def _div_map_label_strip_re(manifest: WorkManifest) -> re.Pattern[str] | None:
-    """A div_map merge block's own synthetic label prefix (stage1_greek.
-    _parse_fragments: `f"[{label}] {text}"`, Parmenides B7/B8) -- stripped
-    before re-deriving non-Greek runs for the bounded-stopword check below;
-    see that check's own comment for why.
-
-    Built EXACTLY from this work's own manifest-declared citation.div_map
-    labels (Sol review nit (b)), never a generic "any leading [...]" regex:
-    the old blanket pattern would strip ANY bracketed lead-in a source
-    happened to carry -- including a genuine DK apparatus bracket that is
-    NOT a div_map label (e.g. a bracketed cross-reference like "[vgl. B
-    13]") -- silently widening what this gate exempts from the bounded-
-    stopword scan. `None` when the work declares no div_map at all (no
-    merge block, nothing to strip)."""
-    labels = sorted({
-        e.get("label") for e in (manifest.data.get("citation") or {}).get("div_map", [])
-        if isinstance(e, dict) and isinstance(e.get("label"), str)
-    })
-    if not labels:
-        return None
-    alternation = "|".join(re.escape(label) for label in labels)
-    return re.compile(rf"^\[(?:{alternation})\]\s*")
-
-
 def _dk_expected_all_context_columns(manifest: WorkManifest, scheme) -> set[str]:
     """The exact set of dk columns preflight independently EXPECTS to carry
     zero citable (non-negative-n, role='text'-derived) lines, derived from
@@ -1442,7 +1418,6 @@ def _validate_dk_work(
     # `_DK_BOUNDED_STOPWORDS` occurrence back to a specific `citation`
     # decision (see `_DK_BOUNDED_STOPWORDS`' doc comment).
     decisions = _dk_decisions_for_preflight(manifest)
-    div_map_label_re = _div_map_label_strip_re(manifest)
 
     for book in manifest.data.get("books", []):
         if not isinstance(book, dict) or not isinstance(book.get("n"), int):
@@ -1559,18 +1534,7 @@ def _validate_dk_work(
             # rather than the unconditional half re-scanning the whole raw
             # line text separately -- a stopword only ever appears inside a
             # non-Greek run in the first place, and per-run scanning is what
-            # lets S1's per-exact-run exemption (below) work at all. A
-            # div_map merge block's own synthetic "[Label] " prefix
-            # (stage1_greek._parse_fragments, Parmenides B7/B8's
-            # alternate-source/scholion context) is stripped first: it was
-            # added AFTER stage1 already ran apply_context_language over the
-            # original div text, so it was never part of any decided run --
-            # left in, a label ending in non-Greek punctuation ("...
-            # witnesses)] 7, 1—2...") would fuse with the immediately-
-            # following decided run into one combined string this
-            # re-derivation can't find in the decision file, a false
-            # positive with no bearing on whether the ORIGINAL run was
-            # actually decided.
+            # lets S1's per-exact-run exemption (below) work at all.
             work_stopword_exemptions = _DK_UNCONDITIONAL_STOPWORD_EXEMPTIONS.get(
                 manifest.work_id, {}
             )
@@ -1580,11 +1544,7 @@ def _validate_dk_work(
                 text = line.get("text")
                 if not isinstance(text, str):
                     continue
-                stripped_text = (
-                    div_map_label_re.sub("", text, count=1)
-                    if div_map_label_re is not None else text
-                )
-                for run in dk_lang.find_non_greek_runs(stripped_text):
+                for run in dk_lang.find_non_greek_runs(text):
                     run_words = {w.lower() for w in _DK_WORD_RE.findall(run)}
                     normalized_run = dk_lang.normalize_run(run)
                     run_key = dk_lang.decision_key(normalized_run)

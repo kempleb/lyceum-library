@@ -541,3 +541,21 @@ works: every conflicted column resolves either via the Protagoras
 B6a-embedded precedent, the Hippias B5/Gorgias B9 title-only precedent, the
 Gorgias B11/B11a unmarked-but-genuine exception (this work's own
 documented finding), or John's 2026-07-23 no-greek-support `omit` ruling.
+
+## Page-break label removed (2026-09-29)
+
+Where a page break split a paragraph mid-sentence, sacred-texts opens the
+next page's paragraph with `<span class="contnote">[paragraph continues]</span>`.
+That label is the site's markup, not Freeman's text, but the extractor kept
+it, so three stores carried it into the site. Each break falls mid-sentence
+(p. 66, p. 76, p. 116); the label is removed and the words joined with one
+space:
+
+- Empedocles B122 (`app26.htm`, p. 66): "Beauty and Ugliness, the Speed-Nymph …"
+- Philolaus B13 (`app39.htm`, p. 76): "the seat of the Mind, the Heart of the Soul …"
+- Democritus B266 (`app63.htm`, p. 116): "for anyone else (*any more*) than for oneself …"
+
+The extractor now drops the label (`_strip_continuation_notes`), so the
+fixture re-extraction locks still match these stores byte for byte, and
+`test_no_committed_source_store_carries_paragraph_continues` fails if the
+label reappears in any JSON store under `sources/`.

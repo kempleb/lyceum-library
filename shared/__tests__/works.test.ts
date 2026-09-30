@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   SHELVES, START_HERE, WORK_ORDER, WORKS,
   authorPath, bookLabel, divisionId, furtherReading, getWork, getWorkBySlug, inPrintHref, isBookless,
-  languageLabel, lyceumWorkKey, visibleTranslations, workByDkCitation, workIdFromLyceumKey, workLanding,
+  LANGUAGE_LABEL, languageLabel, lyceumWorkKey, visibleTranslations, workByDkCitation, workIdFromLyceumKey, workLanding,
   workPath, workSlug, type Work,
 } from '../lib/works';
 import { AUTHORS, getAuthor } from '../lib/authors';
@@ -45,6 +45,8 @@ describe('works registry helpers (fixture-driven, registry-independent)', () => 
     expect(languageLabel(multiBookFixture)).toBe('Greek');
     const latinFixture: Work = { ...multiBookFixture, id: 'FixtureLatinWork', language: 'lat' };
     expect(languageLabel(latinFixture)).toBe('Latin');
+    expect(languageLabel({ ...multiBookFixture, language: 'en' })).toBe('English');
+    expect(LANGUAGE_LABEL.en).toBe('English');
   });
 
   it('throws rather than emitting a broken URL for an unresolvable work', () => {
@@ -89,7 +91,7 @@ describe('WORKS registry invariants (N >= 0 — Phase 0 ships no real works)', (
   });
 
   it('every work has a valid language', () => {
-    for (const w of WORKS) expect(['grc', 'lat']).toContain(w.language);
+    for (const w of WORKS) expect(['grc', 'lat', 'en']).toContain(w.language);
   });
 
   it('every work has a valid workType', () => {
@@ -244,6 +246,14 @@ describe('author-scoped URL resolution (PUBLIC_READER_FIXTURES)', () => {
     expect(fresh.workLanding('sample-work')).toBe('/texts/sample-author/sample-work/');
     expect(fresh.workPath('sample-work', 2)).toBe('/read/sample-author/sample-work/book-2');
     expect(fresh.authorPath('sample-author')).toBe('/sample-author');
+  });
+
+  it('resolves the English fixture work to an essay-numbered reader path', async () => {
+    vi.stubEnv('PUBLIC_READER_FIXTURES', '1');
+    vi.resetModules();
+    const fresh = await import('../lib/works');
+    expect(fresh.getWork('sample-english-work')?.language).toBe('en');
+    expect(fresh.workPath('sample-english-work', 2)).toBe('/read/sample-english-author/sample-english-work/essay-2');
   });
 
   it('workPath falls back to book 1 for non-finite/non-integer book numbers before clamping', async () => {
@@ -405,7 +415,8 @@ describe('corpus-scoping (PUBLIC_WING)', () => {
     vi.resetModules();
     const fresh = await import('../lib/works');
     expect(fresh.getWork('sample-work')).toBeDefined();
-    expect(fresh.WORKS.length).toBe(42); // 41 aristotle + 1 fixture
+    expect(fresh.getWork('sample-english-work')).toBeDefined();
+    expect(fresh.WORKS.length).toBe(43); // 41 aristotle + 2 fixtures
   });
 
   it('an unknown corpus id scopes WORKS to empty (no work belongs to it)', async () => {

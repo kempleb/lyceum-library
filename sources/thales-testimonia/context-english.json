@@ -6,7 +6,10 @@
     "source_work": "Lives of Eminent Philosophers",
     "locus": "1.22-40",
     "status": "translated",
-    "translation_credit": "Hicks, 1925"
+    "translation_credit": "Hicks, 1925",
+    "trim": {
+     "end": "though admitting that it was appropriated by Chilon."
+    }
    }
   ]
  },
@@ -20,7 +23,247 @@
     "translation_credit": "Fowler, 1921",
     "emphasis": [
      "Why, take the case of Thales, Theodorus. While he was studying the stars and looking upwards, he fell into a pit, and a neat, witty Thracian servant girl jeered at him, they say, because he was so eager to know the things in the sky that he could not see what was there before him at his very feet."
+    ],
+    "trim": {
+     "start": "Why, take the case of Thales, Theodorus.",
+     "end": "at his very feet."
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "I will illustrate my meaning, Theodorus",
+      "end": "what was before his feet."
+     }
+    }
+   }
+  ]
+ },
+ "1:A10": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Politics",
+    "locus": "1259a5-1259a18",
+    "status": "translated",
+    "translation_credit": "Jowett, 1885",
+    "emphasis": [
+     "for all this is useful to persons who value the art of getting wealth. There is the anecdote of Thales the Milesian and his financial device, which involves a principle of universal application, but is attributed to him on account of his reputation for wisdom. He was reproached for his poverty, which was supposed to show that philosophy was of no use. According to the story, he knew by his skill in the stars while it was yet winter that there would be a great harvest of olives in the coming year; so, having a little money, he gave deposits for the use of all the olive-presses in Chios and Miletus, which he hired at a low price because no one bid against him. When the harvest-time came, and many were wanted all at once and of a sudden, he let them out at any rate which he pleased, and made a quantity of money. Thus he showed the world that philosophers can easily be rich if they like, but that their ambition is of another sort."
     ]
+   }
+  ]
+ },
+ "1:A12": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "983b6-983b33",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "Of the first philosophers, then, most thought the principles which were of the nature of matter were the only principles of all things. That of which all things that are consist, the first from which they come to be, the last into which they are resolved (the substance remaining, but changing in its modifications), this they say is the element and this the principle of things, and therefore they think nothing is either generated or destroyed, since this sort of entity is always conserved",
+     "for there must be some entity-either one or more than one-from which all other things come to be, it being conserved.",
+     "Yet they do not all agree as to the number and the nature of these principles. Thales, the founder of this type of philosophy, says the principle is water (for which reason he declared that the earth rests on water), getting the notion perhaps from seeing that the nutriment of all things is moist, and that heat itself is generated from the moist and kept alive by it (and that from which they come to be is a principle of all things). He got his notion from this fact, and from the fact that the seeds of all things have a moist nature, and that water is the origin of the nature of moist things.",
+     "Some think that even the ancients who lived long before the present generation, and first framed accounts of the gods, had a similar view of nature; for they made Ocean and Tethys the parents of creation, and described the oath of the gods as being by water, to which they give the name of Styx; for what is oldest is most honourable, and the most honourable thing is that by which one swears."
+    ]
+   }
+  ]
+ },
+ "1:A14": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On the Heavens",
+    "locus": "294a28-294a33",
+    "status": "translated",
+    "translation_credit": "Stocks, 1922",
+    "emphasis": [
+     "Others say the earth rests upon water. This, indeed, is the oldest theory that has been preserved, and is attributed to Thales of Miletus. It was supposed to stay still because it floated like wood and other similar substances, which are so constituted as to rest upon water but not upon air. As if the same account had not to be given of the water which carries the earth as of the earth itself!"
+    ]
+   }
+  ]
+ },
+ "1:A22": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "De Anima",
+    "locus": "411a7-411a8",
+    "status": "translated",
+    "translation_credit": "Smith, 1931",
+    "emphasis": [
+     "Certain thinkers say that soul is intermingled in the whole universe, and it is perhaps for that reason that Thales came to the opinion that all things are full of gods."
+    ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "De Anima",
+    "locus": "405a19-405a21",
+    "status": "translated",
+    "translation_credit": "Smith, 1931",
+    "emphasis": [
+     "Thales, too, to judge from what is recorded about him, seems to have held soul to be a motive force, since he said that the magnet has a soul in it because it moves the iron."
+    ]
+   }
+  ]
+ },
+ "1:A13b": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.1",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Thales and his followers",
+     "end": "the world is one."
+    }
+   }
+  ]
+ },
+ "1:A13c": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.12",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Thales, Pythagoras, and the",
+     "end": "from pole to pole."
+    }
+   }
+  ]
+ },
+ "1:A15": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.11",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "The disciples of Thales",
+     "end": "centre of the universe."
+    }
+   }
+  ]
+ },
+ "1:A16": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "4.1",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Thales conjectures that the",
+     "end": "sea rushing into it."
+    }
+   }
+  ]
+ },
+ "1:A17a": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.13",
+    "head": "AËT. II 13, 1 (D. 341)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Thales believes that they",
+     "end": "earth set on fire."
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.24",
+    "head": "24, 1 (D. 353)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Thales was the first",
+     "end": "direct line below it."
+    }
+   }
+  ]
+ },
+ "1:A22a": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "4.2",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Thales first pronounced that",
+     "end": "proceeds from itself."
+    }
+   }
+  ]
+ },
+ "1:A8": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Solon",
+    "locus": "12",
+    "status": "translated",
+    "translation_credit": "Perrin, 1914",
+    "trim": {
+     "start": "A similar insight into futurity",
+     "end": "the market-place of Miletus."
+    }
+   }
+  ]
+ },
+ "1:A11": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Solon",
+    "locus": "2",
+    "head": "PLUT. Sol. 2",
+    "status": "translated",
+    "translation_credit": "Perrin, 1914",
+    "trim": {
+     "start": "Thales is said to have engaged in trade",
+     "end": "by the sale of oil."
+    }
+   },
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Iside et Osiride",
+    "locus": "364c-364d",
+    "head": "de Is. et Osir. 34",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1936",
+    "trim": {
+     "start": "They think also that Homer",
+     "end": "the source and origin of all things;"
+    }
+   }
+  ]
+ },
+ "1:A21": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Septem Sapientium Convivium",
+    "locus": "147a",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1928",
+    "trim": {
+     "start": "you simply set your walking-stick upright",
+     "end": "as the one shadow to the other."
+    }
    }
   ]
  }

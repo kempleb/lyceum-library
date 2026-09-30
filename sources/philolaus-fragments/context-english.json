@@ -8,8 +8,89 @@
     "status": "translated",
     "translation_credit": "Hicks, 1925",
     "emphasis": [
-     "to which he gave the title On Nature, beginning as follows: “Nature in the ordered universe was composed of unlimited and limiting elements, and so was the whole universe and all that is therein.”"
-    ]
+     "On Nature, beginning as follows: “Nature in the ordered universe was composed of unlimited and limiting elements, and so was the whole universe and all that is therein.”"
+    ],
+    "trim": {
+     "start": "On Nature, beginning as follows"
+    }
+   }
+  ]
+ },
+ "1:B14": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Gorgias",
+    "locus": "493a-493c",
+    "status": "translated",
+    "translation_credit": "Lamb, 1925",
+    "emphasis": [
+     "I once heard sages say that we are now dead, and the body is our tomb, and the part of the soul in which we have desires is liable to be over-persuaded and to vacillate to and fro, and so some smart fellow, a Sicilian, I daresay, or Italian, made a fable in which—by a play of words—he named this part, as being so impressionable and persuadable, a jar, and the thoughtless he called uninitiate: in these uninitiate that part of the soul where the desires are, the licentious and fissured part, he named a leaky jar in his allegory, because it is so insatiate.",
+     "and will carry water into their leaky jar with a sieve which is no less leaky. And then by the sieve, as my story-teller said, he means the soul"
+    ],
+    "trim": {
+     "start": "I once heard sages say",
+     "omit": [
+      [
+       "So you see this person, Callicles",
+       "these uninitiate will be most wretched,"
+      ]
+     ],
+     "end": "he means the soul"
+    }
+   }
+  ]
+ },
+ "1:B15": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Phaedo",
+    "locus": "61d-61e",
+    "status": "translated",
+    "translation_credit": "Fowler, 1914",
+    "emphasis": [
+     "How is this, Cebes? Have you and Simmias, who are pupils of Philolaus, not heard about such things?Nothing definite, Socrates.I myself speak of them only from hearsay;",
+     "I heard Philolaus, when he was living in our city, say the same thing you just said, and I have heard it from others, too, that one must not do this; but I never heard anyone say anything definite about it."
+    ],
+    "trim": {
+     "start": "How is this, Cebes?",
+     "omit": [
+      [
+       "but I have no objection to telling what I have heard.",
+       "kill oneself, Socrates?"
+      ]
+     ],
+     "end": "say anything definite about it."
+    }
+   },
+   {
+    "source_author": "Plato",
+    "source_work": "Phaedo",
+    "locus": "62b",
+    "status": "translated",
+    "translation_credit": "Fowler, 1914",
+    "emphasis": [
+     "Now the doctrine that is taught in secret about this matter, that we men are in a kind of prison and must not set ourselves free or run away, seems to me to be weighty and not easy to understand. But this at least, Cebes, I do believe is sound, that the gods are our guardians and that we men are one of the chattels of the gods."
+    ],
+    "trim": {
+     "start": "Now the doctrine that is taught in secret",
+     "end": "one of the chattels of the gods."
+    }
+   },
+   {
+    "source_author": "Plato",
+    "source_work": "Phaedo",
+    "locus": "82d",
+    "status": "translated",
+    "translation_credit": "Fowler, 1914",
+    "emphasis": [
+     "And therefore those who care for their own souls, and do not live in service to the body, turn their backs upon all these men and do not walk in their ways, for they feel that they know not whither they are going. They themselves believe that philosophy, with its deliverance and purification, must not be resisted, and so they turn and follow it whithersoever it leads."
+    ],
+    "trim": {
+     "start": "And therefore those who care for their own souls",
+     "end": "whithersoever it leads."
+    }
    }
   ]
  }

@@ -175,10 +175,10 @@ registry:
     bookLabels:
       - I
       - II
-    greekEdition: Joachim, Aristotelis De Generatione et Corruptione (Oxford, 1922)
+    greekEdition: Mugler, Aristote. De la génération et de la corruption (Les Belles Lettres, 1966)
     greekSource:
-      short: Joachim (Oxford, 1922)
-      full: 'H. H. Joachim, ed. Aristotle on Coming-to-be and Passing-away (De Generatione et Corruptione). Oxford: Clarendon Press, 1922.'
+      short: Mugler (Les Belles Lettres, 1966)
+      full: 'C. Mugler, ed. Aristote. De la génération et de la corruption. Paris: Les Belles Lettres, 1966.'
     translations:
       - id: joachim
         name: H. H. Joachim (Oxford, 1922)
@@ -228,10 +228,10 @@ registry:
       - I
       - II
       - III
-    greekEdition: Ross, Aristotelis De Anima (OCT, 1956)
+    greekEdition: 'Ross, Aristotle: De Anima (Oxford, 1961)'
     greekSource:
-      short: Ross (OCT, 1956)
-      full: 'W. D. Ross, ed. Aristotle, De Anima. Oxford: Clarendon Press (Oxford Classical Texts), 1956.'
+      short: Ross (Oxford, 1961)
+      full: 'W. D. Ross, ed. Aristotle: De Anima. Oxford: Clarendon Press, 1961.'
     translations:
       - id: smith
         name: J. A. Smith (Oxford, 1931)
@@ -256,9 +256,9 @@ registry:
     books: 1
     bookLabels:
       - '1'
-    greekEdition: 'Ross, Aristotle: Parva Naturalia (OCT, 1955)'
+    greekEdition: 'Ross, Aristotle: Parva Naturalia (Oxford, 1955)'
     greekSource:
-      short: Ross (OCT, 1955)
+      short: Ross (Oxford, 1955)
       full: 'W. D. Ross, ed. Aristotle: Parva Naturalia. Oxford: Clarendon Press, 1955; repr. 1970.'
     translations:
       - id: beare
@@ -280,9 +280,9 @@ registry:
     books: 1
     bookLabels:
       - '1'
-    greekEdition: 'Ross, Aristotle: Parva Naturalia (OCT, 1955)'
+    greekEdition: 'Ross, Aristotle: Parva Naturalia (Oxford, 1955)'
     greekSource:
-      short: Ross (OCT, 1955)
+      short: Ross (Oxford, 1955)
       full: 'W. D. Ross, ed. Aristotle: Parva Naturalia. Oxford: Clarendon Press, 1955; repr. 1970.'
     translations:
       - id: beare
@@ -304,9 +304,9 @@ registry:
     books: 1
     bookLabels:
       - '1'
-    greekEdition: 'Ross, Aristotle: Parva Naturalia (OCT, 1955)'
+    greekEdition: 'Ross, Aristotle: Parva Naturalia (Oxford, 1955)'
     greekSource:
-      short: Ross (OCT, 1955)
+      short: Ross (Oxford, 1955)
       full: 'W. D. Ross, ed. Aristotle: Parva Naturalia. Oxford: Clarendon Press, 1955; repr. 1970.'
     translations:
       - id: beare
@@ -328,9 +328,9 @@ registry:
     books: 1
     bookLabels:
       - '1'
-    greekEdition: 'Ross, Aristotle: Parva Naturalia (OCT, 1955)'
+    greekEdition: 'Ross, Aristotle: Parva Naturalia (Oxford, 1955)'
     greekSource:
-      short: Ross (OCT, 1955)
+      short: Ross (Oxford, 1955)
       full: 'W. D. Ross, ed. Aristotle: Parva Naturalia. Oxford: Clarendon Press, 1955; repr. 1970.'
     translations:
       - id: beare
@@ -352,9 +352,9 @@ registry:
     books: 1
     bookLabels:
       - '1'
-    greekEdition: 'Ross, Aristotle: Parva Naturalia (OCT, 1955)'
+    greekEdition: 'Ross, Aristotle: Parva Naturalia (Oxford, 1955)'
     greekSource:
-      short: Ross (OCT, 1955)
+      short: Ross (Oxford, 1955)
       full: 'W. D. Ross, ed. Aristotle: Parva Naturalia. Oxford: Clarendon Press, 1955; repr. 1970.'
     translations:
       - id: beare
@@ -376,9 +376,9 @@ registry:
     books: 1
     bookLabels:
       - '1'
-    greekEdition: 'Ross, Aristotle: Parva Naturalia (OCT, 1955)'
+    greekEdition: 'Ross, Aristotle: Parva Naturalia (Oxford, 1955)'
     greekSource:
-      short: Ross (OCT, 1955)
+      short: Ross (Oxford, 1955)
       full: 'W. D. Ross, ed. Aristotle: Parva Naturalia. Oxford: Clarendon Press, 1955; repr. 1970.'
     translations:
       - id: ross
@@ -400,9 +400,9 @@ registry:
     books: 1
     bookLabels:
       - '1'
-    greekEdition: 'Ross, Aristotle: Parva Naturalia (OCT, 1955)'
+    greekEdition: 'Ross, Aristotle: Parva Naturalia (Oxford, 1955)'
     greekSource:
-      short: Ross (OCT, 1955)
+      short: Ross (Oxford, 1955)
       full: 'W. D. Ross, ed. Aristotle: Parva Naturalia. Oxford: Clarendon Press, 1955; repr. 1970.'
     translations:
       - id: ross
@@ -578,7 +578,7 @@ registry:
       full: 'W. D. Ross, ed. Aristotle’s Metaphysics. 2 vols. Oxford: Clarendon Press, 1924 (corr. repr. 1953).'
     translations:
       - id: ross
-        name: W. D. Ross (Oxford, 1924)
+        name: W. D. Ross (Oxford, 1928)
         short: Ross
         slot: english
     citation:
@@ -846,10 +846,10 @@ registry:
     bookLabels:
       - I
       - II
-    greekEdition: Susemihl, Aristotelis quae feruntur Oeconomica (Teubner, 1887)
+    greekEdition: van Groningen and Wartelle, Aristote. Économique (Les Belles Lettres, 1968)
     greekSource:
-      short: Susemihl (Teubner, 1887)
-      full: 'F. Susemihl, ed. Aristotelis quae feruntur Oeconomica. Leipzig: Teubner, 1887.'
+      short: van Groningen and Wartelle (Les Belles Lettres, 1968)
+      full: 'B. A. van Groningen and A. Wartelle, eds. Aristote. Économique. Paris: Les Belles Lettres, 1968.'
     translations:
       - id: forster
         name: E. S. Forster (Oxford, 1920)
@@ -896,10 +896,10 @@ registry:
     books: 1
     bookLabels:
       - '1'
-    greekEdition: I. Bekker, Aristotelis Opera (Berlin, 1831)
+    greekEdition: Lorimer, Aristotelis qui fertur libellus De mundo (Les Belles Lettres, 1933)
     greekSource:
-      short: Bekker (Berlin, 1831)
-      full: 'I. Bekker, ed. Aristotelis opera. Berlin: Georg Reimer, 1831.'
+      short: Lorimer (Les Belles Lettres, 1933)
+      full: 'W. L. Lorimer, ed. Aristotelis qui fertur libellus De mundo. Paris: Les Belles Lettres, 1933.'
     translations:
       - id: forster
         name: E. S. Forster (Oxford, 1914)

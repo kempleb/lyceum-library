@@ -1,0 +1,39 @@
+{
+ "1:B18": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Facie in Orbe Lunae",
+    "locus": "929b",
+    "status": "translated",
+    "translation_credit": "Cherniss, 1957",
+    "emphasis": [
+     "the sun imparts to the moon her brilliance"
+    ],
+    "trim": {
+     "start": "Our comrade in his discourse",
+     "end": "the sun imparts to the moon her brilliance’"
+    }
+   }
+  ]
+ },
+ "1:B21b": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Fortuna",
+    "locus": "98f",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1928",
+    "emphasis": [
+     "experience, memory, wisdom, and skill",
+     "which are ours, and ours only"
+    ],
+    "trim": {
+     "start": "Indeed, in all these matters",
+     "end": "taking entire control over them."
+    }
+   }
+  ]
+ }
+}

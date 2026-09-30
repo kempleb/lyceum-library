@@ -1,4 +1,5 @@
 <script lang="ts" module>
+  import type { Work } from '../lib/works';
   // Pure greek-line DOM-id → citation parts. Exported for unit tests.
   // Shapes:
   //   L{col}-{n}      → { column, line: n }  (numbered verse/prose line)
@@ -21,6 +22,16 @@
   // it that way (instead of null) is a pure bugfix, not a citation-grammar
   // change: nothing downstream can tell the difference from a real numbered
   // line's citation.
+  // `#paragraph-N` on an essay work (`divisionNoun: 'essay'`, cited by
+  // book-section) is an alias for that book's Nth section column, "book.N".
+  // Null for every other work or hash, so no existing hash resolves any
+  // differently.
+  export function paragraphAliasColumn(hash: string, bookNum: number, work: Pick<Work, 'divisionNoun' | 'citation'> | undefined): string | null {
+    if (work?.divisionNoun !== 'essay' || work.citation?.scheme !== 'book-section') return null;
+    const m = /^paragraph-([1-9]\d*)$/.exec(hash);
+    return m ? `${bookNum}.${m[1]}` : null;
+  }
+
   export function greekLineIdToCite(id: string): { column: string; line?: number | null } | null {
     const m = id.match(/^L(.+?)-(\d+)(?:-c\d*)?$/);
     if (m) return { column: m[1], line: Number(m[2]) };
@@ -44,6 +55,47 @@
   // token from its `id="col-{column}"` (the `.seg-ref-label` is not rendered).
   export function sectionFlowSpyLabel(id: string): string {
     return id.replace(/^col-/, '');
+  }
+
+  // What a DK source heading shows in the Greek column (John, 2026-09-27:
+  // "None of these dashes"). The pipeline's `display` string wins when it
+  // describes this heading (a continuation's full citation, e.g. "AËT. II 20,
+  // 16 (D. 351)"); otherwise DK's leading continuation dash(es) and the space
+  // after them are dropped ("—II 20, 16" -> "II 20, 16", "— —94" -> "94").
+  // Display only: the stored text, offsets and tokens are untouched, and
+  // lineRenderParts finds each token by its word, so click lookup still works.
+  export function sourceHeadDisplayText(text: string, head?: { text: string; display?: string }): string {
+    if (head?.display && head.text === text) return head.display;
+    const stripped = text.replace(/^\s*(?:[—–]\s*)+/, '');
+    return stripped.trim() ? stripped : text;
+  }
+
+  // Row matching for a DK source passage whose English is split into
+  // sections (John, 2026-09-27, Heraclitus A1: the first line of each Greek
+  // section level with the first line of its English). `greekMarkers` are the
+  // "(N)" labels the Greek prints, in order; `englishLoci` the English
+  // sections' loci ("9.12"), whose trailing number is the section number.
+  // Returns one group of English paragraph indexes per row: group 0 holds the
+  // sections before the first printed label (beside the Greek that precedes
+  // it), group k the sections from label k up to the next label. Where DK
+  // leaves a label unprinted (A1 prints no (13) or (14)), those sections stay
+  // with the Greek section that contains them, beside (12). Returns null --
+  // keep the unsplit layout -- unless both sides ascend and every printed
+  // label names an English section.
+  export function contextSectionGroups(greekMarkers: readonly number[], englishLoci: readonly string[]): number[][] | null {
+    if (!greekMarkers.length || !englishLoci.length) return null;
+    const nums = englishLoci.map((l) => { const m = /(\d+)\s*$/.exec(l); return m ? Number(m[1]) : NaN; });
+    const ascending = (xs: readonly number[]) => xs.every((x, i) => Number.isFinite(x) && (i === 0 || x > xs[i - 1]!));
+    if (!ascending(nums) || !ascending(greekMarkers)) return null;
+    if (!greekMarkers.every((g) => nums.includes(g))) return null;
+    const groups: number[][] = greekMarkers.map(() => []);
+    groups.unshift([]);
+    nums.forEach((n, i) => {
+      let k = 0;
+      while (k < greekMarkers.length && greekMarkers[k]! <= n) k++;
+      groups[k]!.push(i);
+    });
+    return groups;
   }
 
   // A NON-verse line's first-line inset: `level` is the line's own literal
@@ -71,9 +123,13 @@
 <script lang="ts">
   import { onMount, onDestroy, afterUpdate, tick } from 'svelte';
   import { fade } from 'svelte/transition';
-  import { fetchBook, parseLocation, fetchSidenotes, fetchFigures, fetchParatext, type Segment, type GreekLine, type Token, type BookData, type OverlayPiece, type Paratext, type ExpandedCitationEntry, type TranslationCredit, type ContextEnglishSpan, type Witness } from '../lib/data';
+  import { buildDkSourceRows, contextSectionMarkerNumbers, type DkSourceRow } from '../lib/dk-layout';
+  import { fetchBook, fetchColumns, parseLocation, fetchSidenotes, fetchFigures, fetchParatext, type Segment, type GreekLine, type Token, type BookData, type OverlayPiece, type Paratext, type ExpandedCitationEntry, type TranslationCredit, type ContextEnglishSpan, type Witness } from '../lib/data';
   import { schemeFor, formatCite, formatCopyCitationRange, unitNounFor } from '../lib/citation';
   import { lineRenderParts, buildFlowRows, buildEnglishTurnBlocks, labelSuppression, splitGreekSections, splitWrapLine, type SpeakerEvent, type LineRenderPart, type FlowRow, type EnglishTurnBlock } from '../lib/speakers';
+  import { applyDkCrossRefs, dkCrossRefWorkId, findDkCrossRefs, resolveDkCrossRef, type DkRenderPart } from '../lib/dk-crossrefs';
+  import { applyEditionNotes, findEditionNotes, numberEditionNotes, type DkNoteRenderPart, type NumberedEditionNote } from '../lib/dk-edition-notes';
+  import { applyDkFills, locateDkFills, type DkFillLine } from '../lib/dk-fills';
   import { assignSpeakerSlots, collectDisplayOrder } from '../lib/speaker-colors';
   import { greekFold } from '../lib/search';
   import { highlightPrefixMatches } from '../lib/text';
@@ -113,7 +169,11 @@
   // De Officiis is the first `lat` work) — matches Landing.astro's existing
   // sourceLangTag convention ('la', not 'lat') and drives global.css's
   // [lang="la"] --font-greek override (see that rule's own comment).
-  const sourceLang = workMeta?.language === 'lat' ? 'la' : 'grc';
+  const sourceLang = workMeta?.language === 'lat' ? 'la' : workMeta?.language === 'en' ? 'en' : 'grc';
+  // A work whose only language is English: one column, no view or
+  // translation controls, no claim of a parallel text.
+  const englishOnly = workMeta?.language === 'en';
+  const copyHintTail = englishOnly ? '' : `, ${sourceLanguageLabel} or English`;
   // The citation scheme this work is cited by (bekker / busse / stephanus) — the
   // single dispatch point for every scheme-conditional below, in place of
   // scattered string tests. See shared/lib/citation.ts.
@@ -185,6 +245,13 @@
   // hanging-indent wrap CSS below (Wave 1b Parmenides pilot, design memo
   // §3's "minor Greek-side verse CSS").
   const dkVerse = cscheme.id === 'dk' && cscheme.hasUserFacingLines;
+  // DK cross-reference links (John, 2026-09-27 ruling — see
+  // shared/lib/dk-crossrefs.ts): this work's own DK chapter number, used to
+  // resolve a BARE reference ("B 10", no chapter of its own) against the
+  // current author. Undefined for a non-dk work, which correctly makes
+  // every bare reference unresolvable there too (dk cross-refs only ever
+  // occur in dk-scheme Greek text — dkAnnotate below is a no-op elsewhere).
+  const dkChapter = workMeta?.citation?.dkChapter;
   // verse-line (Lucretius' DRN): the spine's citable unit is one Latin verse
   // line per segment (John's flag, 2026-07-24 — each line was rendering as
   // its own bordered .segment with a bold column-ref chip and a mostly-empty
@@ -315,6 +382,192 @@
   let displayOrder: string[] | null = bookData?.displayOrder ?? null;
   let loading = !bookData;
   let error = '';
+  // DK cross-reference links (John, 2026-09-27 ruling — shared/lib/dk-
+  // crossrefs.ts): a resolved reference only renders as a link once its
+  // target COLUMN is confirmed to exist (a chapter/author not in the
+  // library, or an item that doesn't exist in an otherwise-known work,
+  // stays plain text). This work's own columns come free from `segments`
+  // (every dk work is single-book, so `segments` already holds the whole
+  // work); a reference to a DIFFERENT dk work fetches that work's
+  // columns.json lazily, the same cached fetchColumns() every Bekker/dk
+  // jump control already uses. `dkOtherColumns[id]` stays absent while a
+  // fetch is in flight (or forever, on failure) — either way the reference
+  // simply stays plain text, never an error.
+  $: dkOwnColumns = new Set(segments.map((s) => s.column));
+  let dkOtherColumns: Record<string, Set<string>> = {};
+  const dkColumnsRequested = new Set<string>();
+  function dkEnsureColumnsLoaded(workId: string) {
+    if (workId === work || dkColumnsRequested.has(workId)) return;
+    dkColumnsRequested.add(workId);
+    fetchColumns(workId)
+      .then((cols) => { dkOtherColumns = { ...dkOtherColumns, [workId]: new Set(Object.keys(cols)) }; })
+      .catch(() => {});
+  }
+  // Once this work's Greek text is loaded, prefetch every OTHER dk work a
+  // cross-reference in it names — a pure scan (dk-crossrefs.ts's own
+  // parser/resolver), side-effecting only via the guarded fetch above. Runs
+  // once per book load; a non-dk work's `segments` never carries a bracket
+  // this parser matches, so this is a no-op cost there too.
+  $: if (cscheme.id === 'dk' && segments.length) {
+    const needed = new Set<string>();
+    for (const seg of segments) {
+      for (const line of seg.greek) {
+        for (const ref of findDkCrossRefs(line.text)) {
+          const targetWorkId = dkCrossRefWorkId(ref, dkChapter);
+          if (targetWorkId && targetWorkId !== work) needed.add(targetWorkId);
+        }
+      }
+    }
+    needed.forEach(dkEnsureColumnsLoaded);
+  }
+  // Splice DK cross-reference links into a line's already-built render
+  // parts (see dk-crossrefs.ts's applyDkCrossRefs) — a no-op for any
+  // non-dk work, and for a dk line with no bracket at all. `ownColumns`/
+  // `otherColumns` are taken as parameters (not read from the outer
+  // `dkOwnColumns`/`dkOtherColumns` directly) so every call site names them
+  // in the template expression itself — Svelte's reactivity only re-runs a
+  // template block for a variable it sees referenced IN the template (the
+  // same reason segTransToggle reads its state directly rather than via a
+  // bare helper call — see that snippet's own comment).
+  //
+  // Edition references (John, 2026-09-28; dk-edition-notes.ts): a bracket
+  // citing another edition leaves the line and becomes a numbered note
+  // marker; `notes` is the line's own DK column's numbered notes
+  // (dkNotesByColumn), and a cross-reference inside such a bracket links
+  // from the note's pop-up (dkNoteParts), not from the line.
+  //
+  // Filled abbreviations (John, 2026-09-29; dk-fills.ts): `fills` is the
+  // line's own DK column's lines that carry fills (dkFillsByColumn); each
+  // "..." DK prints for words given in full elsewhere shows those words.
+  function dkAnnotate(
+    parts: LineRenderPart[],
+    ownColumns: Set<string>,
+    otherColumns: Record<string, Set<string>>,
+    notes: NumberedEditionNote[] = [],
+    fills: DkFillLine[] = [],
+  ): DkNoteRenderPart[] {
+    if (cscheme.id !== 'dk') return parts;
+    const text = parts.filter((p) => p.kind !== 'speaker').map((p) => p.text).join('');
+    const noteSpans = notes.length ? findEditionNotes(text) : [];
+    const refs = findDkCrossRefs(text).filter((ref) => !noteSpans.some((n) => ref.start >= n.start && ref.end <= n.end));
+    let linked: DkRenderPart[] = parts;
+    if (refs.length) {
+      const hasColumn = (workId: string, column: string) =>
+        workId === work ? ownColumns.has(column) : (otherColumns[workId]?.has(column) ?? false);
+      const spans = refs.map((ref) => {
+        const target = resolveDkCrossRef(ref, dkChapter, hasColumn);
+        return { start: ref.start, end: ref.end, href: target?.href ?? null };
+      });
+      linked = applyDkCrossRefs(text, parts, spans);
+    }
+    const fillSpans = fills.length ? locateDkFills(text, fills) : [];
+    const filled = fillSpans.length ? applyDkFills(text, linked, fillSpans) : linked;
+    if (!noteSpans.length) return filled;
+    // Match each span to ITS OWN note by (line, offset) identity, not just
+    // its bracket text -- two occurrences of the identical bracket (e.g.
+    // Empedocles testimonia A1's "[fr. 27 FHG III 42]" on two different
+    // lines) must resolve to their own numbers, never both to the first
+    // match (GPT-6-Sol review, 2026-09-28). Falls back to a text-only match
+    // for a renderer that reproduces a MODIFIED line (a source-citation
+    // head's `headText` override, a witness row's excerpt) where `text`
+    // itself isn't one of the column's own lines.
+    return applyEditionNotes(text, filled, noteSpans, (span) => {
+      const exact = notes.find((n) => n.line === text && n.start === span.start && n.text === span.text);
+      return (exact ?? notes.find((n) => n.text === span.text))?.n;
+    });
+  }
+  // Each DK column's edition-reference notes, numbered from 1 in reading
+  // order (dk-edition-notes.ts). Empty for every non-dk work.
+  let dkNotesByColumn: Record<string, NumberedEditionNote[]> = {};
+  $: {
+    const byColumn: Record<string, NumberedEditionNote[]> = {};
+    if (cscheme.id === 'dk') {
+      for (const seg of segments) {
+        const notes = numberEditionNotes(seg.greek.map((l) => l.text));
+        if (notes.length) byColumn[seg.column] = notes;
+      }
+    }
+    dkNotesByColumn = byColumn;
+  }
+  // Each DK column's lines that carry filled abbreviations (GreekLine.fills).
+  // Empty for every non-dk work, and for a dk column with none.
+  let dkFillsByColumn: Record<string, DkFillLine[]> = {};
+  $: {
+    const byColumn: Record<string, DkFillLine[]> = {};
+    if (cscheme.id === 'dk') {
+      for (const seg of segments) {
+        const lines = seg.greek.filter((l) => l.fills?.length).map((l) => ({ line: l.text, fills: l.fills! }));
+        if (lines.length) byColumn[seg.column] = lines;
+      }
+    }
+    dkFillsByColumn = byColumn;
+  }
+  // A note's pop-up text: the bracket exactly as printed, its DK cross-
+  // references linked just as they would be in the line.
+  function dkNoteParts(
+    text: string,
+    ownColumns: Set<string>,
+    otherColumns: Record<string, Set<string>>,
+  ): DkNoteRenderPart[] {
+    return dkAnnotate([{ kind: 'text', text }], ownColumns, otherColumns);
+  }
+  // The open note pop-up (one at a time), on the pattern of FootnotePopup:
+  // click/tap/Enter/Space on the marker opens it and moves focus into it;
+  // Tab reaches any link in it. Escape, tabbing past its end, a click
+  // outside, or a second click on the marker closes it, and focus returns
+  // to the marker (not for a click outside, which puts focus where it lands).
+  let dkNoteOpen: { column: string; n: number; text: string; marker: HTMLElement; pos: string } | null = null;
+  let dkNotePopEl: HTMLElement | undefined;
+  function dkNotePos(marker: HTMLElement): string {
+    const r = marker.getBoundingClientRect();
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const w = Math.min(360, vw - 16);
+    const left = Math.max(8, Math.min(r.left - 12, vw - w - 8));
+    // Below the marker unless it sits low on the screen; then above it.
+    const vert = r.bottom + 180 > vh && r.top > vh / 2 ? `bottom:${vh - r.top + 6}px` : `top:${r.bottom + 6}px`;
+    return `left:${left}px;${vert};width:${w}px`;
+  }
+  async function toggleDkNote(e: MouseEvent, column: string, n: number, text: string) {
+    e.stopPropagation();
+    if (dkNoteOpen?.marker === e.currentTarget) { closeDkNote(true); return; }
+    const marker = e.currentTarget as HTMLElement;
+    dkNoteOpen = { column, n, text, marker, pos: dkNotePos(marker) };
+    await tick();
+    dkNotePopEl?.focus();
+  }
+  function closeDkNote(refocus = false) {
+    const marker = dkNoteOpen?.marker;
+    dkNoteOpen = null;
+    if (refocus) marker?.focus();
+  }
+  function onDkNoteKey(e: KeyboardEvent) {
+    if (e.key === 'Escape') { e.stopPropagation(); closeDkNote(true); return; }
+    if (e.key !== 'Tab' || !dkNotePopEl) return;
+    const links = Array.from(dkNotePopEl.querySelectorAll<HTMLElement>('a[href]'));
+    const active = document.activeElement;
+    const leaving = e.shiftKey
+      ? active === dkNotePopEl || active === links[0]
+      : !links.length || active === links[links.length - 1];
+    if (leaving) { e.preventDefault(); closeDkNote(true); }
+  }
+  function onWindowKeyDown(e: KeyboardEvent) {
+    if (e.key === 'Escape' && dkNoteOpen) closeDkNote(true);
+  }
+  function onWindowMove() {
+    if (dkNoteOpen) dkNoteOpen = { ...dkNoteOpen, pos: dkNotePos(dkNoteOpen.marker) };
+  }
+  // Belt-and-suspenders for setView's explicit close above: whatever else
+  // might make a note's marker vanish from the page (a segment swap on
+  // navigation between pages/columns, say) is a DOM change, and every DOM
+  // change runs afterUpdate -- so an open note whose marker has actually
+  // left the document closes itself here rather than lingering with a
+  // detached anchor. isConnected, not visibility, since jsdom/happy-dom
+  // don't lay out CSS display:none (setView already handles that case
+  // directly).
+  function closeDkNoteIfMarkerGone() {
+    if (dkNoteOpen && !dkNoteOpen.marker.isConnected) closeDkNote();
+  }
+  afterUpdate(closeDkNoteIfMarkerGone);
   // OS "reduce motion" preference — gates the JS fade transitions below, which
   // the CSS @media (prefers-reduced-motion) query can't reach. Set in onMount.
   let reduceMotion = false;
@@ -615,6 +868,11 @@
   let view: View = 'both';
   async function setView(v: View) {
     view = v;
+    // Switching view can hide the Greek column (view-english's CSS) or the
+    // English column (view-greek's) without removing it from the DOM, so an
+    // open edition-reference note's marker can vanish from the screen while
+    // its pop-up stays open and keeps focus (GPT-6-Sol review, 2026-09-28).
+    closeDkNote();
     try { localStorage.setItem('reader-view', v); } catch {}
     // The tracked anchors differ by view (Greek lines vs. whole columns), so
     // rebuild the scroll-spy once the DOM reflects the new view.
@@ -1117,7 +1375,7 @@
   // chapter's `sections` channel (Discourses); rendered as a small muted
   // label before the line.
   type RLine = GreekLine & { cont?: boolean; paraN?: number };
-  interface Block { chapter: string | null; bekker: string; lines: RLine[]; flow: FlowPart[]; oflows: Record<string, FlowPart[]>; otables: Record<string, { n: number; rows: string[][] }[]>; sidenotes: number[]; figs: number[]; }
+  interface Block { dkRow?: DkSourceRow; chapter: string | null; bekker: string; lines: RLine[]; flow: FlowPart[]; oflows: Record<string, FlowPart[]>; otables: Record<string, { n: number; rows: string[][] }[]>; sidenotes: number[]; figs: number[]; }
   // EnrichedBlock annotates each block with the chapter it belongs to (tracking
   // across segments so continuation blocks know their chapter too).
   interface EnrichedBlock extends Block { currentChapter: string; }
@@ -1486,20 +1744,6 @@
   // check beside `frag-txt`/`run.cls` below), and it needs no per-column
   // `english.credit` override: the work's ordinary primary English (Freeman)
   // already carries the same ascending markers, preflight-verified.
-  function contextSectionMarkerNumbers(seg: Segment): Set<number> | undefined {
-    const nums = new Set<number>();
-    const spans = seg.contextEnglish;
-    for (const span of spans ?? []) {
-      for (const locus of span.sectionLoci ?? []) {
-        const m = /(\d+)\s*$/.exec(locus);
-        if (m) nums.add(Number(m[1]));
-      }
-    }
-    if ((seg.wholeColumnVerbatim && seg.english?.credit) || seg.sectionParagraphSplit) {
-      for (const m of (seg.english?.text ?? '').matchAll(/\((\d+)\)/g)) nums.add(Number(m[1]));
-    }
-    return nums.size ? nums : undefined;
-  }
   // Group a block's Greek lines into render items: runs of table rows (lines
   // carrying `cells`, e.g. the De Int 22a modal square) become one table; other
   // lines render individually. DK prose columns (docs/prose-flow-design.md) are
@@ -1883,6 +2127,7 @@
   // every run start sits). No overflow fallback is needed: every run start
   // line exists in exactly one block's lines, by construction.
   function expandedCitationByBlock(seg: Segment, blocks: Block[]): ExpandedCitationEntry[][][] {
+    if (seg.citationHeads !== undefined) return blocks.map(b => b.dkRow?.head ? [b.dkRow.head.expanded] : []);
     const runs = seg.expandedCitation;
     if (!runs?.length) return blocks.map(() => []);
     const blockOfLine = new Map<number, number>();
@@ -2017,6 +2262,15 @@
     // Book-section works never have chapterStarts (chapter = segment, 1:1),
     // so this is the ONLY branch splitGreekSections needs to run from — see
     // its doc comment.
+    if (cscheme.id === 'dk' && seg.citationHeads !== undefined) {
+      return buildDkSourceRows(seg, cscheme.hasUserFacingLines, incipitColumnSet.has(seg.column)).map(dkRow => ({
+        dkRow, chapter: null, bekker: '', lines: dkRow.lines,
+        flow: dkRow.ownsEnglish ? flowFor(0, text.length) : [],
+        sidenotes: dkRow.ownsEnglish ? sidesIn(0, text.length) : [],
+        figs: dkRow.ownsEnglish ? figsIn(0, text.length) : [],
+        ...(dkRow.ownsEnglish ? overlaysFor(null) : { oflows: {}, otables: {} }),
+      }));
+    }
     if (!starts.length) return [{ chapter: null, bekker: '', lines: splitGreekSections(greek), flow: flowFor(0, text.length), sidenotes: sidesIn(0, text.length), figs: figsIn(0, text.length), ...overlaysFor(null) }];
 
     const lineIdx = (beforeLine: number) => {
@@ -2164,9 +2418,17 @@
   // doesn't fully cover the declared markers keeps its whole text in row 0
   // and renders empty in every other row, rather than a fabricated
   // per-row alignment.
+  function blockGreekItems(seg: Segment, block: Block): GreekItem[] {
+    return block.dkRow?.items ?? greekItems(block.lines, seg.column, contextSectionMarkerNumbers(seg), seg.sectionParagraphSplit, seg.wholeColumnVerbatim ? undefined : seg.witnesses);
+  }
+
   function sectionRowsFor(seg: Segment, block: Block): SectionRow[] {
+    if (block.dkRow) seg = { ...seg,
+      english: block.dkRow.ownsEnglish ? seg.english : null,
+      contextEnglish: block.dkRow.contextIndexes.map(i => seg.contextEnglish![i]!),
+    };
     const markerNumbers = contextSectionMarkerNumbers(seg);
-    const items = greekItems(block.lines, seg.column, markerNumbers, seg.sectionParagraphSplit, seg.wholeColumnVerbatim ? undefined : seg.witnesses);
+    const items = blockGreekItems(seg, block);
     const rows = groupGreekRows(items);
 
     const text = seg.english?.text ?? '';
@@ -2176,7 +2438,7 @@
 
     const oflowsByRow: Record<string, FlowPart[]>[] = rows.map(() => ({}));
     for (const t of secondaries) {
-      const pieces = piecesFor(seg, t);
+      const pieces = block.dkRow && !block.dkRow.ownsEnglish ? [] : piecesFor(seg, t);
       const piece = pieces.find((p) => !p.cont) ?? pieces[0];
       const oText = piece?.text ?? '';
       if (!oText) continue;
@@ -2196,6 +2458,81 @@
       flow: primaryFlows[i]!,
       oflows: oflowsByRow[i]!,
     }));
+  }
+
+  // ── DK source rows in the Both view (John, 2026-09-27) ──────────────────
+  // One grid per DK source: a heading row (the Greek source heading beside
+  // the English citation, with the source passage's translation picker at
+  // that line's right end), then the passage row, so the first line of the
+  // English translation sits level with the first line of the Greek passage
+  // under the heading. Where the passage is split into numbered sections on
+  // both sides, each section gets its own row as well: item 85's primary-
+  // English "(N)" split (sectionRowsFor), or a source passage's English
+  // sections matched to DK's printed "(N)" labels (contextSectionGroups). A
+  // shorter side leaves its gap at the end of its row; nothing is stretched.
+  // Compare view keeps the ordinary layout, and so do Greek-only and
+  // English-only, except for item 85's columns, which were rows already.
+  type DkGridRow = {
+    kind: 'head' | 'body' | 'section';
+    items: GreekItem[];
+    // 'primary' mode: this row's slice of the segment's own translation.
+    flow?: FlowPart[];
+    oflows?: Record<string, FlowPart[]>;
+    // 'context' mode: this row's paragraphs of the sole source-passage span.
+    paras?: number[];
+  };
+  type DkGrid = { mode: 'whole' | 'primary' | 'context'; rows: DkGridRow[]; spanIdx?: number };
+
+  function dkPrimaryEmpty(block: Block): boolean {
+    return !block.flow.length && Object.values(block.oflows).every((f) => !f.length);
+  }
+
+  function dkGridFor(seg: Segment, block: Block): DkGrid | null {
+    const dk = block.dkRow;
+    if (!dk) return null;
+    const items = blockGreekItems(seg, block);
+    const head = items[0]?.kind === 'source-head' ? items[0] : undefined;
+    const rest = head ? items.slice(1) : items;
+    const rows: DkGridRow[] = head ? [{ kind: 'head', items: [head] }] : [];
+
+    if (sectionRowSplit(seg)) {
+      const srows = sectionRowsFor(seg, block);
+      if (srows.length > 1) {
+        const lead = srows[0]!;
+        const leadItems = head && lead.items[0] === head ? lead.items.slice(1) : lead.items;
+        if (leadItems.length || lead.flow.length) rows.push({ kind: 'body', items: leadItems, flow: lead.flow, oflows: lead.oflows });
+        for (const r of srows.slice(1)) rows.push({ kind: 'section', items: r.items, flow: r.flow, oflows: r.oflows });
+        return { mode: 'primary', rows };
+      }
+    } else if (dk.contextIndexes.length === 1 && dkPrimaryEmpty(block) && !seg.english?.credit) {
+      const spanIdx = dk.contextIndexes[0]!;
+      const span = seg.contextEnglish![spanIdx]!;
+      const grows = groupGreekRows(rest);
+      const groups = span.status === 'translated' && !span.alts?.length && span.sectionLoci?.length
+        && (span.text ?? '').split('\n\n').length === span.sectionLoci.length && grows.length > 1
+        ? contextSectionGroups(grows.slice(1).map((r) => Number(r.marker)), span.sectionLoci)
+        : null;
+      if (groups) {
+        if (grows[0]!.items.length || groups[0]!.length) rows.push({ kind: 'body', items: grows[0]!.items, paras: groups[0]! });
+        grows.slice(1).forEach((r, k) => rows.push({ kind: 'section', items: r.items, paras: groups[k + 1]! }));
+        return { mode: 'context', rows, spanIdx };
+      }
+    }
+    if (!head) return null;
+    rows.push({ kind: 'body', items: rest });
+    return { mode: 'whole', rows };
+  }
+
+  // The source-passage span whose picker moves up to the heading line: the
+  // first English beside the passage, when it is a picker-bearing span and
+  // the segment's own translation is not shown above it.
+  function dkMovedPickerSpan(seg: Segment, block: Block, grid: DkGrid, transId: string): number | undefined {
+    if (grid.mode !== 'whole' || grid.rows[0]?.kind !== 'head') return undefined;
+    const flow = transId === engSlot?.id ? block.flow : (block.oflows[transId] ?? []);
+    if (flow.length || (block.dkRow?.ownsEnglish && seg.english?.credit && transId === engSlot?.id)) return undefined;
+    const spanIdx = block.dkRow?.contextIndexes[0];
+    const span = spanIdx === undefined ? undefined : seg.contextEnglish?.[spanIdx];
+    return span?.status === 'translated' && span.alts?.length ? spanIdx : undefined;
   }
 
   // Active popup state
@@ -2256,6 +2593,7 @@
   function onDocPointerDown(e: MouseEvent) {
     const t = e.target as HTMLElement | null;
     if (bekkerInfoOpen && !t?.closest?.('.bekker-info')) bekkerInfoOpen = false;
+    if (dkNoteOpen && !t?.closest?.('.dk-note-mark') && !t?.closest?.('.dk-note-pop')) closeDkNote();
     if (!fnPinned) return;
     if (t?.closest?.('.fn-marker') || t?.closest?.('.footnote-popup')) return;
     closeFootnote();
@@ -2397,6 +2735,8 @@
             // the top.
             let el = document.getElementById(hash) ?? document.getElementById(`col-${hash}`)
               ?? findColElementCaseInsensitive(hash) ?? findColElementCaseInsensitive(`col-${hash}`);
+            const paraAlias = el ? null : paragraphAliasColumn(hash, bookNum, workMeta);
+            if (paraAlias) el = document.getElementById(`col-${paraAlias}`);
             // A hidden target (the turn flow's Greek gutter tick in
             // English-only view) falls back to the row-level English tick.
             if (el && (el as HTMLElement).offsetParent === null) {
@@ -2911,7 +3251,7 @@
 {:else if error}
   <p style="padding:2rem;color:red">{error}</p>
 {:else}
-  {#snippet greekToks(parts: LineRenderPart[])}{#each parts as part}{#if part.kind === 'token'}<span
+  {#snippet greekToks(parts: LineRenderPart[], column: string = '')}{#each dkAnnotate(parts, dkOwnColumns, dkOtherColumns, dkNotesByColumn[column], dkFillsByColumn[column]) as part}{#if part.kind === 'token'}<span
         class="tok"
         class:active={popup?.token === part.tok}
         class:hit={isHit(part.tok.t)}
@@ -2921,7 +3261,24 @@
         aria-haspopup="dialog"
         on:click={(e) => handleTokenClick(e, part.tok)}
         on:keydown={(e) => onTokenKey(e, part.tok)}
-      >{part.text}</span>{:else if part.kind === 'speaker'}<span class="speaker" class:speaker-dash={part.dash} lang={sourceLang}>{part.label}</span>{:else}{part.text}{/if}{/each}{/snippet}
+      >{part.text}</span>{:else if part.kind === 'speaker'}<span class="speaker" class:speaker-dash={part.dash} lang={sourceLang}>{part.label}</span>{:else if part.kind === 'dklink'}<a class="dk-crossref" href={part.href}>{part.text}</a>{:else if part.kind === 'dknote'}<span class="dk-note-anchor">{#if part.lead}{#if part.lead.kind === 'token'}<span
+        class="tok"
+        class:active={popup?.token === part.lead.tok}
+        class:hit={isHit(part.lead.tok.t)}
+        role="button"
+        tabindex="-1"
+        aria-label="Analyse {part.lead.tok.t}"
+        aria-haspopup="dialog"
+        on:click={(e) => handleTokenClick(e, (part.lead as Extract<LineRenderPart, {kind: 'token'}>).tok)}
+        on:keydown={(e) => onTokenKey(e, (part.lead as Extract<LineRenderPart, {kind: 'token'}>).tok)}
+      >{part.lead.text}</span>{:else if part.lead.kind === 'dklink'}<a class="dk-crossref" href={part.lead.href}>{part.lead.text}</a>{:else if part.lead.kind === 'text'}{part.lead.text}{/if}{/if}<sup class="dk-note"><button
+        type="button"
+        class="dk-note-mark"
+        aria-label="Note {part.n}"
+        aria-haspopup="dialog"
+        aria-expanded={dkNoteOpen?.column === column && dkNoteOpen?.n === part.n}
+        on:click={(e) => toggleDkNote(e, column, part.n, part.text)}
+      >{part.n}</button></sup></span>{:else if part.kind === 'dkfill'}<span class="dk-fill" title={part.title}>{part.fill}</span>{:else}{part.text}{/if}{/each}{/snippet}
   {#snippet chapterHead(block: Block)}
     <div class="chapter-head" id="ch-{bookNum}-{block.chapter}">
       <span class="chapter-label">{#if bookLabel}<span class="chapter-book">{bookLabel},&nbsp;</span>{/if}{chapterUnitNoun} {block.chapter}{#if chapterTitles[block.chapter ?? '']}: {chapterTitles[block.chapter ?? '']}{/if}</span>
@@ -3001,6 +3358,163 @@
         {/each}
       </div>
     {/if}
+  {/snippet}
+
+  <!-- DK source-citation expansion runs (the English beside a Greek source
+       heading). Shared by every layout that shows them; plain lines, never
+       inside the translation card (John, 2026-09-27). -->
+  {#snippet expandedCitationRuns(runs: ExpandedCitationEntry[][])}
+    {#each runs as run}
+      {#if run.length}
+      <div class="expanded-citation">
+        {#each run as entry, i}
+          {#if i > 0}<span class="expanded-citation-sep">; </span>{/if}
+          {#if entry.resolution === 'direct' || entry.resolution === 'dash'}
+            <span class="expanded-citation-entry">{#if entry.authorDisplay}{`${entry.authorDisplay}, `}{/if}{#if entry.work?.italic}<em>{entry.work.title}</em>{:else}{entry.work?.title}{/if}{entry.locus ? (entry.work?.title ? ` ${entry.locus}` : entry.locus) : ''}{entry.apparatus ? ((entry.work?.title || entry.locus) ? ` ${entry.apparatus}` : entry.apparatus) : ''}</span>{#if entry.note}{' '}<span class="context-english-credit">{entry.note}</span>{/if}
+          {:else}
+            <span class="expanded-citation-entry expanded-citation-verbatim">{entry.verbatim}</span>
+          {/if}
+        {/each}
+      </div>
+      {/if}
+    {/each}
+  {/snippet}
+
+  <!-- Item 82's per-span translation picker (Plain-text toggle, not a
+       <select> -- that pattern is reserved for the work-level picker):
+       primary label first, then each alt, active one bold/underlined.
+       Page-local only -- see contextEnglishAlt above. Rendered on the DK
+       heading line when the span opens the passage (John, 2026-09-27), or
+       -- `floatRight` -- floated at the right end of the span's OWN first
+       line when it doesn't (a later source-passage span sharing the same
+       heading, e.g. prodicus-testimonia A17's second Laches span, gorgias-
+       testimonia A20/A28's second span: only ONE span can move to the
+       shared heading line, so a later alt-bearing span keeps its picker
+       beside its own text instead of opening a fresh block-level line
+       above it -- see contextEnglishSpan's own doc for why that matters).
+       contextEnglishAlt is indexed directly here so Svelte re-renders on a
+       click. -->
+  {#snippet contextAltToggle(seg: Segment, spanIdx: number, floatRight: boolean = false)}
+    {@const span = seg.contextEnglish![spanIdx]!}
+    {@const spanKey = `${seg.id}:${spanIdx}`}
+    {@const selectedAltId = span.alts?.length ? (contextEnglishAlt[spanKey] ?? null) : null}
+    <div class="context-english-alt-toggle" class:context-english-alt-toggle-float={floatRight} role="group" aria-label="Translation">
+      <button
+        type="button"
+        class="context-english-alt-btn"
+        class:active={!selectedAltId}
+        aria-pressed={!selectedAltId}
+        on:click={() => selectContextEnglishAlt(spanKey, null)}
+      >{contextEnglishPrimaryLabel(span)}</button>
+      {#each span.alts ?? [] as alt}
+        <span class="context-english-alt-sep">·</span>
+        <button
+          type="button"
+          class="context-english-alt-btn"
+          class:active={selectedAltId === alt.id}
+          aria-pressed={selectedAltId === alt.id}
+          on:click={() => selectContextEnglishAlt(spanKey, alt.id)}
+        >{alt.label}</button>
+      {/each}
+    </div>
+  {/snippet}
+
+  <!-- One source-passage English span (docs/source-passage-english-scoping.md);
+       see the call site in the English column for the placement history.
+       `pickerMoved`: its translation picker renders on the DK heading line
+       instead (John, 2026-09-27) -- only ever true for ONE span per heading
+       (dkMovedPickerSpan picks at most one), since there is only one heading
+       line to put it on. `floatPicker` (John, 2026-09-27, finding from Sol's
+       review): when a heading has SEVERAL source-passage spans and a LATER
+       one (not the one moved) carries alts of its own -- prodicus-testimonia
+       A17's second Laches span (197d) has a Jowett alternate while the
+       first (197b) doesn't; gorgias-testimonia A20/A28 both carry alts on
+       EVERY span, so only the first moves and the rest still need a picker
+       -- that span's toggle used to open its own block-level line above the
+       paragraph, pushing this span's English down with nothing corresponding
+       pushing the Greek down too (the Greek is one continuous column here,
+       not row-locked per span): the owner's rule is that an English
+       passage's first line sits level with its own first Greek line, so
+       that extra line was a real defect, not cosmetic. Floating the toggle
+       at the right end of the paragraph's own first line (CSS, see
+       .context-english-alt-toggle-float) adds no height before the text
+       starts, instead of trying to open a second heading line these spans
+       don't have (there is exactly one heading, already spoken for by the
+       first span; see the module's contextAltToggle doc for why float is
+       the one of the two options this codebase actually has room for). -->
+  {#snippet contextEnglishSpan(seg: Segment, spanIdx: number, pickerMoved: boolean, floatPicker: boolean = false)}
+    {@const span = seg.contextEnglish![spanIdx]!}
+    {@const spanKey = `${seg.id}:${spanIdx}`}
+    {@const selectedAltId = span.alts?.length ? (contextEnglishAlt[spanKey] ?? null) : null}
+    {@const activeAlt = selectedAltId ? span.alts?.find((a) => a.id === selectedAltId) : undefined}
+    {@const activeCredit = activeAlt ? activeAlt.translationCredit : span.translationCredit}
+    <!-- Item 82 (REVIEW-CHECKLIST): data-eng-credit lives on this
+         wrapping div, closer than the ancestor .english-col's own
+         attribute (that one names the SEGMENT's own primary
+         translation credit, not this source passage's) -- so a
+         copy of context-english text always carries the credit
+         for whichever translation (primary or alt) is on screen
+         here, not the wrong ancestor's. Fix round, finding 5
+         (Sol xhigh review): this used to be set only for an
+         alt-BEARING span, so an alt-free span's own
+         translationCredit (every span carries one when
+         status==='translated', alts or not) never made it onto
+         the copy path — set whenever the span has a credit to
+         show, alts or not. `context-english-float-contain` (John,
+         2026-09-27): only when this span's own picker floats (above) --
+         establishes a new block-formatting context so the floated toggle
+         never bleeds past THIS span's own card into the next span's. -->
+    <div
+      class="context-english"
+      class:context-english-float-contain={floatPicker && !!span.alts?.length && !pickerMoved}
+      data-eng-credit={span.status === 'translated' && activeCredit
+        ? `Source passage: ${span.sourceAuthor}, ${span.sourceWork} ${span.locus.replace('-', '–')} (tr. ${activeCredit}).`
+        : undefined}
+    >
+      {#if span.status === 'translated'}
+        {#if span.alts?.length && !pickerMoved}{@render contextAltToggle(seg, spanIdx, floatPicker)}{/if}
+        {#if activeAlt}
+          <!-- One entry per locus of the span's own range, in
+               span order (data contract) -- a gap section (no
+               `text`) gets the honest marker, never a blank
+               paragraph. -->
+          {#each activeAlt.sections as sec}
+            {#if activeAlt.sections.length > 1}
+              <div class="context-english-section-marker">{sec.locus}</div>
+            {/if}
+            {#if sec.text}
+              <p class="context-english-text">{sec.text}</p>
+            {:else}
+              <p class="context-english-text context-english-gap">No {activeAlt.label} translation for this section.</p>
+            {/if}
+          {/each}
+          <div class="context-english-credit">Source passage: {span.sourceAuthor}, {span.sourceWork} {span.locus.replace('-', '–')} (tr. {activeAlt.translationCredit}).</div>
+        {:else}
+          <!-- A multi-section range (span.sectionLoci) carries one
+               resolved paragraph per source section -- mark each with
+               its own locus, same treatment as the work's own .seg-ref
+               column reference, so a many-paragraph range (e.g. 19
+               sections) stays navigable instead of reading as one
+               undifferentiated block. A single-section span carries no
+               sectionLoci (its one paragraph is already named by the
+               credit line below). Item 83: span.emphasis (primary
+               translation only -- an activeAlt never carries it, see
+               the branch above) bolds the DK-excerpt words within each
+               paragraph; a span with no emphasis renders one plain
+               segment per paragraph, byte-identical to before. -->
+          {@const paragraphs = contextEnglishParagraphs(span.text ?? '', span.emphasis)}
+          {#each paragraphs as p, i}
+            {#if span.sectionLoci?.[i]}
+              <div class="context-english-section-marker">{span.sectionLoci[i]}</div>
+            {/if}
+            <p class="context-english-text">{#each p.segments as s}{#if s.bold}<strong class="context-english-emphasis">{s.text}</strong>{:else}{s.text}{/if}{/each}</p>
+          {/each}
+          <div class="context-english-credit">Source passage: {span.sourceAuthor}, {span.sourceWork} {span.locus.replace('-', '–')} (tr. {span.translationCredit}).</div>
+        {/if}
+      {:else}
+        <div class="context-english-desert">No public-domain English translation of this source passage exists yet. Only the Greek is shown.</div>
+      {/if}
+    </div>
   {/snippet}
 
   <!-- One English column for a translation: the primary's flow (block.flow) or
@@ -3298,7 +3812,7 @@
       </div>
       {#if freemanCredit}<div class="rc-freeman-credit">{freemanCredit}</div>{/if}
       <div class="rc-controls">
-        {#if !hasEnglish}
+        {#if !hasEnglish && !englishOnly}
           <!-- design pin (task #4): PD translations often exist but aren't
                wired yet — never imply none exists. -->
           <span class="rc-no-english">No English translation wired yet.</span>
@@ -3318,7 +3832,7 @@
         {/if}
         <!-- Desktop only — on mobile these live in the ⚙ Settings sidebar. -->
         <div class="rc-desktop-controls">
-          {@render viewToggle()}
+          {#if !englishOnly}{@render viewToggle()}{/if}
           {@render printControl()}
         </div>
       </div>
@@ -3448,16 +3962,17 @@
                     <tr id={`L${seg.column}-${row.n}`} class:target={targetId === `L${seg.column}-${row.n}`}>
                       <td class="line-num">{showLineNum(row.n)}</td>
                       {#each (row.cells ?? []) as cell}
-                        <td class="line-text" lang={sourceLang}>{@render greekToks(cellParts(cell))}</td>
+                        <td class="line-text" lang={sourceLang}>{@render greekToks(cellParts(cell), seg.column)}</td>
                       {/each}
                     </tr>
                   {/each}
                 </tbody></table>
               {:else if item.kind === 'source-head'}
+                {@const headText = sourceHeadDisplayText(item.line.text, block.dkRow?.head)}
                 <!-- DK source-citation head (prose-flow post-draft ruling):
                      pure Latin/ASCII apparatus citation on its own hanging
                      small-caps line, muted — DK's own page grammar. -->
-                <div class="frag-source-head" lang={sourceLang}>{@render greekToks(lineRenderParts(item.line.text, item.line.tokens, speakerEvents(seg, item.line)))}</div>
+                <div class="frag-source-head" lang={sourceLang}>{@render greekToks(headText === item.line.text ? lineRenderParts(item.line.text, item.line.tokens, speakerEvents(seg, item.line)) : lineRenderParts(headText, item.line.tokens), seg.column)}</div>
               {:else if item.kind === 'witness'}
                 <!-- DK apparatus witness row (dk_witness.py's split_witnesses,
                      Segment.witnesses): one row per ancient source instead of
@@ -3470,7 +3985,7 @@
                      split columns would otherwise go dead. -->
                 <p class="greek-line frag-flow frag-witness">
                   <span class="line-num"></span>
-                  <span class="line-text" lang={sourceLang}><span class="frag-ctx">{#if item.witness.source}<span class="frag-witness-source">{item.witness.source}</span>{' '}{/if}{@render greekToks(lineRenderParts(item.witness.text, item.witness.tokens ?? []))}</span></span>
+                  <span class="line-text" lang={sourceLang}><span class="frag-ctx">{#if item.witness.source}<span class="frag-witness-source">{item.witness.source}</span>{' '}{/if}{@render greekToks(lineRenderParts(item.witness.text, item.witness.tokens ?? []), seg.column)}</span></span>
                 </p>
               {:else if item.kind === 'flow'}
                 <!-- DK prose-flow (docs/prose-flow-design.md §1): one flowing
@@ -3523,7 +4038,7 @@
                     class:target={item.anchor && !firstCont && targetId === firstId}
                   >
                     <span class="line-num"></span>
-                    <span class="line-text" lang={sourceLang}>{#if sectionFlow}<span class="sect-tick-inline" data-n={seg.column} aria-hidden="true"></span>{/if}{#each item.prose.runs as run, ri}{@const rline = run.line as RLine}{@const rid = flowRunId(rline, seg.column)}{#if ri > 0 && run.space}{' '}{/if}{#if rline.paraN != null}<span class="para-n" class:greek-para-n-flow={gutterFlags[ri]} aria-hidden="true" data-n={rline.paraN}></span>{/if}<span id={ri > 0 ? rid : undefined} class:target={ri > 0 && !rline.cont && targetId === rid} class={run.cls}>{@render greekToks(lineRenderParts(run.line.text, run.line.tokens, speakerEvents(seg, run.line as RLine)))}</span>{/each}</span>
+                    <span class="line-text" lang={sourceLang}>{#if sectionFlow}<span class="sect-tick-inline" data-n={seg.column} aria-hidden="true"></span>{/if}{#each item.prose.runs as run, ri}{@const rline = run.line as RLine}{@const rid = flowRunId(rline, seg.column)}{#if ri > 0 && run.space}{' '}{/if}{#if rline.paraN != null}<span class="para-n" class:greek-para-n-flow={gutterFlags[ri]} aria-hidden="true" data-n={rline.paraN}></span>{/if}<span id={ri > 0 ? rid : undefined} class:target={ri > 0 && !rline.cont && targetId === rid} class={run.cls}>{@render greekToks(lineRenderParts(run.line.text, run.line.tokens, speakerEvents(seg, run.line as RLine)), seg.column)}</span>{/each}</span>
                   </p>
                 {:else}
                 <!-- DK inline "(NN)" section marker (John's thales/testimonia
@@ -3548,7 +4063,7 @@
                        weight (frag-txt) instead of run.cls's ordinary
                        role-driven muting (frag-ctx) — see
                        Segment.wholeColumnVerbatim's doc comment. -->
-                  <span class="line-text" lang={sourceLang}>{#each item.prose.runs as run, ri}{#if ri > 0 && run.space}{' '}{/if}<span class={seg.wholeColumnVerbatim ? 'frag-txt' : run.cls}>{#if run.incipit}<span class="frag-incipit">{@render greekToks(lineRenderParts(run.line.text, run.line.tokens, speakerEvents(seg, run.line as RLine)))}</span>{:else}{@render greekToks(lineRenderParts(run.line.text, run.line.tokens, speakerEvents(seg, run.line as RLine)))}{/if}</span>{/each}</span>
+                  <span class="line-text" lang={sourceLang}>{#each item.prose.runs as run, ri}{#if ri > 0 && run.space}{' '}{/if}<span class={seg.wholeColumnVerbatim ? 'frag-txt' : run.cls}>{#if run.incipit}<span class="frag-incipit">{@render greekToks(lineRenderParts(run.line.text, run.line.tokens, speakerEvents(seg, run.line as RLine)), seg.column)}</span>{:else}{@render greekToks(lineRenderParts(run.line.text, run.line.tokens, speakerEvents(seg, run.line as RLine)), seg.column)}{/if}</span>{/each}</span>
                 </p>
                 {/if}
               {:else}
@@ -3621,13 +4136,103 @@
                          (located by `wrapO`) as the truncated head + hyphen
                          via splitWrapLine. Both no-ops (parts pass through
                          unchanged) for every line without these fields. -->
-                    <span class="line-text" lang={sourceLang} style:text-indent={item.vIndent == null ? linedIndent(item.line.indent) : undefined} style:--v-inset={item.vIndent != null ? verseInset(item.vIndent) : undefined}>{@render greekToks(lineParts(item, seg))}</span>
+                    <span class="line-text" lang={sourceLang} style:text-indent={item.vIndent == null ? linedIndent(item.line.indent) : undefined} style:--v-inset={item.vIndent != null ? verseInset(item.vIndent) : undefined}>{@render greekToks(lineParts(item, seg), seg.column)}</span>
                   {/if}
                 </div>
               {/if}
             {/each}
           {/snippet}
-          {#if sectionRowSplit(seg) && trans !== 'compare'}
+          {@const dkGrid = trans !== 'compare' && (view === 'both' || sectionRowSplit(seg)) ? dkGridFor(seg, block) : null}
+          {#if dkGrid}
+            <!-- DK source rows (John, 2026-09-27; see dkGridFor): the heading
+                 row puts the English citation -- and the passage's picker, at
+                 its right end -- beside the Greek source heading; the passage
+                 row starts the English translation level with the Greek
+                 passage; section rows, where both sides are split, start
+                 each section level. Same grid mechanics as item 85's rows
+                 below: `.frag-row` is display:contents, every cell pins its
+                 own grid-row/grid-column, the card background spans the
+                 passage rows only (the citation is not part of the card),
+                 the credit sits in the last row, and data-eng-credit is on
+                 every English cell for the copy path. Item 85's own
+                 section-split columns take these rows in every view but
+                 compare (they always had rows), so their citation leaves the
+                 card in English-only view too. -->
+            {@const firstBody = dkGrid.rows.findIndex((r) => r.kind !== 'head')}
+            {@const lastRow = dkGrid.rows.length - 1}
+            {@const pickerSpan = dkMovedPickerSpan(seg, block, dkGrid, segTransId)}
+            {@const gridFlow = segTransId === engSlot?.id ? block.flow : (block.oflows[segTransId] ?? [])}
+            {@const gridCredit = !!(block.dkRow?.ownsEnglish && seg.english?.credit && segTransId === engSlot?.id)}
+            <div class="seg-row frag-row-split dk-source-grid" class:dk-context-rows={dkGrid.mode === 'context'} data-chapter={block.currentChapter}>
+              {#each dkGrid.rows as row, ri}
+                <div class="frag-row" class:dk-head-row={row.kind === 'head'} class:dk-body-first={ri === firstBody} class:dk-body-whole={dkGrid.mode === 'whole' && row.kind === 'body'}>
+                  <div
+                    class="greek-col"
+                    data-column={seg.column}
+                    lang={sourceLang}
+                    style="grid-row: {ri + 1}; grid-column: 1"
+                  >
+                    {@render greekColumnItems(row.items, seg, si)}
+                  </div>
+                  <div
+                    class="english-col frag-row-cell"
+                    data-trans={segTransId}
+                    data-eng-credit={engCreditFor(segTransId, seg)}
+                    style="grid-row: {ri + 1}; grid-column: 2"
+                  >
+                    {#if row.kind === 'head'}
+                      <div class="dk-head-line">
+                        {@render expandedCitationRuns(citationByBlock[bi] ?? [])}
+                        {#if pickerSpan !== undefined}{@render contextAltToggle(seg, pickerSpan)}{/if}
+                      </div>
+                    {:else if dkGrid.mode === 'whole'}
+                      {#if gridFlow.length || gridCredit}
+                        <div class="frag-eng-card">
+                          {@render transFlow(block, segTransId, seg.kind, sectionFlow ? seg.column : undefined)}
+                          {#if gridCredit && seg.english?.credit}{@render translationCredit(seg.english.credit)}{/if}
+                        </div>
+                      {/if}
+                      {#each block.dkRow?.contextIndexes ?? [] as spanIdx}
+                        <!-- floatPicker=true: any span reaching this branch is,
+                             by definition, NOT the one span dkMovedPickerSpan
+                             moved to the heading line (that one skips straight
+                             to pickerMoved=true and never renders its own
+                             toggle here) -- so its picker, if it has one,
+                             always needs the float treatment, never the old
+                             block-above-the-paragraph one. -->
+                        {@render contextEnglishSpan(seg, spanIdx, spanIdx === pickerSpan, true)}
+                      {/each}
+                    {:else if dkGrid.mode === 'primary'}
+                      {@render transFlow({ chapter: null, bekker: '', lines: [], flow: row.flow ?? [], oflows: row.oflows ?? {}, otables: {}, sidenotes: [], figs: [] }, segTransId, seg.kind)}
+                      {#if ri === lastRow && gridCredit && seg.english?.credit}{@render translationCredit(seg.english.credit)}{/if}
+                    {:else}
+                      {@const span = seg.contextEnglish![dkGrid.spanIdx!]!}
+                      {@const paragraphs = contextEnglishParagraphs(span.text ?? '', span.emphasis)}
+                      <div
+                        class="context-english context-english-row"
+                        data-eng-credit={`Source passage: ${span.sourceAuthor}, ${span.sourceWork} ${span.locus.replace('-', '–')} (tr. ${span.translationCredit}).`}
+                      >
+                        {#each row.paras ?? [] as i}
+                          <div class="context-english-section-marker">{span.sectionLoci?.[i]}</div>
+                          <p class="context-english-text">{#each paragraphs[i]?.segments ?? [] as s}{#if s.bold}<strong class="context-english-emphasis">{s.text}</strong>{:else}{s.text}{/if}{/each}</p>
+                        {/each}
+                        {#if ri === lastRow}
+                          <div class="context-english-credit">Source passage: {span.sourceAuthor}, {span.sourceWork} {span.locus.replace('-', '–')} (tr. {span.translationCredit}).</div>
+                        {/if}
+                      </div>
+                    {/if}
+                  </div>
+                </div>
+              {/each}
+              {#if dkGrid.mode !== 'whole' && firstBody >= 0}
+                <div
+                  class="frag-eng-card-bg"
+                  aria-hidden="true"
+                  style="grid-row: {firstBody + 1} / span {dkGrid.rows.length - firstBody}; grid-column: 2"
+                ></div>
+              {/if}
+            </div>
+          {:else if sectionRowSplit(seg) && trans !== 'compare'}
             <!-- Item 85 (John's live-review layout ruling): each DK numbered
                  section renders as its own row (Greek cell + English cell)
                  instead of the two columns flowing independently -- ordinary
@@ -3680,12 +4285,10 @@
                        occupies that space. This segment's own imported
                        chapter title (never present for a dk fragment/
                        testimonium, but kept for parity) still renders in the
-                       HEADING row's cell (row 0). The visible translation
-                       credit and the DK source-citation expansion render
-                       once, in the LAST row, same "once per segment" posture
-                       the pre-split rendering used (there `bi === blocks.length
-                       - 1`; these segments always have exactly one block, so
-                       "last row" is this branch's equivalent). data-eng-credit
+                       HEADING row's cell (row 0). The DK source-citation
+                       expansion starts row 0 beside its Greek head; the
+                       visible translation credit stays in the last row.
+                       data-eng-credit
                        stays on every row (not just the last) so the
                        copy-with-citation path resolves it from whichever row
                        the reader selected. -->
@@ -3697,6 +4300,20 @@
                     style="grid-row: {ri + 1}; grid-column: 2"
                   >
                     {#if ri === 0}
+                      {#each citationByBlock[bi] ?? [] as run}
+                        {#if run.length}
+                        <div class="expanded-citation">
+                          {#each run as entry, i}
+                            {#if i > 0}<span class="expanded-citation-sep">; </span>{/if}
+                            {#if entry.resolution === 'direct' || entry.resolution === 'dash'}
+                              <span class="expanded-citation-entry">{#if entry.authorDisplay}{`${entry.authorDisplay}, `}{/if}{#if entry.work?.italic}<em>{entry.work.title}</em>{:else}{entry.work?.title}{/if}{entry.locus ? (entry.work?.title ? ` ${entry.locus}` : entry.locus) : ''}{entry.apparatus ? ((entry.work?.title || entry.locus) ? ` ${entry.apparatus}` : entry.apparatus) : ''}</span>{#if entry.note}{' '}<span class="context-english-credit">{entry.note}</span>{/if}
+                            {:else}
+                              <span class="expanded-citation-entry expanded-citation-verbatim">{entry.verbatim}</span>
+                            {/if}
+                          {/each}
+                        </div>
+                        {/if}
+                      {/each}
                       {#if seg.english?.title && segTransId === engSlot?.id && (busse || verseLine)}
                         <div class="overlay-chapter-title eng-chapter-title">{seg.english.title}</div>
                       {/if}
@@ -3706,20 +4323,6 @@
                       {#if seg.english?.credit && segTransId === engSlot?.id}
                         {@render translationCredit(seg.english.credit)}
                       {/if}
-                      {#each citationByBlock[bi] ?? [] as run}
-                        {#if run.length}
-                        <div class="expanded-citation">
-                          {#each run as entry, i}
-                            {#if i > 0}<span class="expanded-citation-sep">; </span>{/if}
-                            {#if entry.resolution === 'direct' || entry.resolution === 'dash'}
-                              <span class="expanded-citation-entry">{#if entry.authorDisplay}{`${entry.authorDisplay}, `}{/if}{#if entry.work?.italic}<em>{entry.work.title}</em>{:else}{entry.work?.title}{/if}{entry.locus ? ` ${entry.locus}` : ''}{entry.apparatus ? ` ${entry.apparatus}` : ''}</span>{#if entry.note}{' '}<span class="context-english-credit">{entry.note}</span>{/if}
-                            {:else}
-                              <span class="expanded-citation-entry expanded-citation-verbatim">{entry.verbatim}</span>
-                            {/if}
-                          {/each}
-                        </div>
-                        {/if}
-                      {/each}
                     {/if}
                   </div>
                 </div>
@@ -3750,7 +4353,7 @@
                  a selection there via the owning column instead. -->
             <div class="greek-col" data-column={seg.column} lang={sourceLang}>
               {#if spacerTitle}<div class="overlay-chapter-title overlay-chapter-title-spacer" aria-hidden="true">{spacerTitle}</div>{/if}
-              {#each greekItems(block.lines, seg.column, contextSectionMarkerNumbers(seg), seg.sectionParagraphSplit, seg.wholeColumnVerbatim ? undefined : seg.witnesses) as item}
+              {#each blockGreekItems(seg, block) as item}
                 {#if item.kind === 'table'}
                   <!-- Greek inline table (the TLG ⎪ column square, e.g. De Int 22a). -->
                   <table class="greek-table"><tbody>
@@ -3758,16 +4361,17 @@
                       <tr id={`L${seg.column}-${row.n}`} class:target={targetId === `L${seg.column}-${row.n}`}>
                         <td class="line-num">{showLineNum(row.n)}</td>
                         {#each (row.cells ?? []) as cell}
-                          <td class="line-text" lang={sourceLang}>{@render greekToks(cellParts(cell))}</td>
+                          <td class="line-text" lang={sourceLang}>{@render greekToks(cellParts(cell), seg.column)}</td>
                         {/each}
                       </tr>
                     {/each}
                   </tbody></table>
                 {:else if item.kind === 'source-head'}
+                  {@const headText = sourceHeadDisplayText(item.line.text, block.dkRow?.head)}
                   <!-- DK source-citation head (prose-flow post-draft ruling):
                        pure Latin/ASCII apparatus citation on its own hanging
                        small-caps line, muted — DK's own page grammar. -->
-                  <div class="frag-source-head" lang={sourceLang}>{@render greekToks(lineRenderParts(item.line.text, item.line.tokens, speakerEvents(seg, item.line)))}</div>
+                  <div class="frag-source-head" lang={sourceLang}>{@render greekToks(headText === item.line.text ? lineRenderParts(item.line.text, item.line.tokens, speakerEvents(seg, item.line)) : lineRenderParts(headText, item.line.tokens), seg.column)}</div>
                 {:else if item.kind === 'witness'}
                   <!-- DK apparatus witness row (dk_witness.py's split_witnesses,
                        Segment.witnesses): one row per ancient source instead of
@@ -3779,7 +4383,7 @@
                        byte-identical whitespace handling with every other row. -->
                   <p class="greek-line frag-flow frag-witness">
                     <span class="line-num"></span>
-                    <span class="line-text" lang={sourceLang}><span class="frag-ctx">{#if item.witness.source}<span class="frag-witness-source">{item.witness.source}</span>{' '}{/if}{@render greekToks(lineRenderParts(item.witness.text, []))}</span></span>
+                    <span class="line-text" lang={sourceLang}><span class="frag-ctx">{#if item.witness.source}<span class="frag-witness-source">{item.witness.source}</span>{' '}{/if}{@render greekToks(lineRenderParts(item.witness.text, []), seg.column)}</span></span>
                   </p>
                 {:else if item.kind === 'flow'}
                   <!-- DK prose-flow (docs/prose-flow-design.md §1): one flowing
@@ -3832,7 +4436,7 @@
                       class:target={item.anchor && !firstCont && targetId === firstId}
                     >
                       <span class="line-num"></span>
-                      <span class="line-text" lang={sourceLang}>{#if sectionFlow}<span class="sect-tick-inline" data-n={seg.column} aria-hidden="true"></span>{/if}{#each item.prose.runs as run, ri}{@const rline = run.line as RLine}{@const rid = flowRunId(rline, seg.column)}{#if ri > 0 && run.space}{' '}{/if}{#if rline.paraN != null}<span class="para-n" class:greek-para-n-flow={gutterFlags[ri]} aria-hidden="true" data-n={rline.paraN}></span>{/if}<span id={ri > 0 ? rid : undefined} class:target={ri > 0 && !rline.cont && targetId === rid} class={run.cls}>{@render greekToks(lineRenderParts(run.line.text, run.line.tokens, speakerEvents(seg, run.line as RLine)))}</span>{/each}</span>
+                      <span class="line-text" lang={sourceLang}>{#if sectionFlow}<span class="sect-tick-inline" data-n={seg.column} aria-hidden="true"></span>{/if}{#each item.prose.runs as run, ri}{@const rline = run.line as RLine}{@const rid = flowRunId(rline, seg.column)}{#if ri > 0 && run.space}{' '}{/if}{#if rline.paraN != null}<span class="para-n" class:greek-para-n-flow={gutterFlags[ri]} aria-hidden="true" data-n={rline.paraN}></span>{/if}<span id={ri > 0 ? rid : undefined} class:target={ri > 0 && !rline.cont && targetId === rid} class={run.cls}>{@render greekToks(lineRenderParts(run.line.text, run.line.tokens, speakerEvents(seg, run.line as RLine)), seg.column)}</span>{/each}</span>
                     </p>
                   {:else}
                   <!-- DK inline "(NN)" section marker (John's thales/testimonia
@@ -3857,7 +4461,7 @@
                          weight (frag-txt) instead of run.cls's ordinary
                          role-driven muting (frag-ctx) — see
                          Segment.wholeColumnVerbatim's doc comment. -->
-                    <span class="line-text" lang={sourceLang}>{#each item.prose.runs as run, ri}{#if ri > 0 && run.space}{' '}{/if}<span class={seg.wholeColumnVerbatim ? 'frag-txt' : run.cls}>{#if run.incipit}<span class="frag-incipit">{@render greekToks(lineRenderParts(run.line.text, run.line.tokens, speakerEvents(seg, run.line as RLine)))}</span>{:else}{@render greekToks(lineRenderParts(run.line.text, run.line.tokens, speakerEvents(seg, run.line as RLine)))}{/if}</span>{/each}</span>
+                    <span class="line-text" lang={sourceLang}>{#each item.prose.runs as run, ri}{#if ri > 0 && run.space}{' '}{/if}<span class={seg.wholeColumnVerbatim ? 'frag-txt' : run.cls}>{#if run.incipit}<span class="frag-incipit">{@render greekToks(lineRenderParts(run.line.text, run.line.tokens, speakerEvents(seg, run.line as RLine)), seg.column)}</span>{:else}{@render greekToks(lineRenderParts(run.line.text, run.line.tokens, speakerEvents(seg, run.line as RLine)), seg.column)}{/if}</span>{/each}</span>
                   </p>
                   {/if}
                 {:else}
@@ -3921,7 +4525,7 @@
                            the truncated head + hyphen via splitWrapLine.
                            Both no-ops (parts pass through unchanged) for every line
                            without these fields. -->
-                      <span class="line-text" lang={sourceLang} style:text-indent={item.vIndent == null ? linedIndent(item.line.indent) : undefined} style:--v-inset={item.vIndent != null ? verseInset(item.vIndent) : undefined}>{@render greekToks(lineParts(item, seg))}</span>
+                      <span class="line-text" lang={sourceLang} style:text-indent={item.vIndent == null ? linedIndent(item.line.indent) : undefined} style:--v-inset={item.vIndent != null ? verseInset(item.vIndent) : undefined}>{@render greekToks(lineParts(item, seg), seg.column)}</span>
                     {/if}
                   </div>
                 {/if}
@@ -3936,6 +4540,8 @@
                  all — every other line-segment renders no english-col, so
                  the continuous verse block never carries an empty cell. -->
             {#if !verseLine || seg.english}
+            {@const engColTrans = trans === 'compare' ? compareLeft : segTransId}
+            {@const engCardFilled = (engColTrans === engSlot?.id ? block.flow : (block.oflows[engColTrans] ?? [])).length > 0 || !!((block.dkRow ? block.dkRow.ownsEnglish : bi === blocks.length - 1) && seg.english?.credit && engColTrans === engSlot?.id)}
             <!-- data-eng-credit backs the copy-with-citation path's English
                  side (finding 2, Sol review): handleCopy/clickCopyBtn walk up
                  to this attribute for an English-only selection, same shape
@@ -3976,8 +4582,7 @@
                    reuses .context-english's exact tokens (same --accent-light
                    border, same tinted background, same padding rhythm) —
                    see the CSS comment beside .context-english in global.css.
-                   Wraps only the translation content (chapter title through
-                   the expanded-citation run below); the .context-english
+                   Wraps the citation and translation content; the .context-english
                    block further down is a SIBLING, outside this div, so a
                    segment carrying both never gets a card nested inside an
                    identical card — .context-english keeps the exact look it
@@ -3987,7 +4592,16 @@
                    (translator-picker alignment fix), so the card's own top
                    margin/padding is zeroed in global.css -- nothing occupies
                    that space here anymore. -->
-              <div class:frag-eng-card={cscheme.id === 'dk'}>
+              <!-- Each expanded source run starts its English block beside
+                   the Greek source head. Keep distinct runs on distinct lines.
+                   John, 2026-09-27 ("no block quote style for the english
+                   attribution citation title"): the citation sits above the
+                   card, not inside it. A card left holding nothing once the
+                   citation moved out loses its card class (it would draw an
+                   empty accent bar); a card that was empty before stays as
+                   it was. -->
+              {@render expandedCitationRuns(citationByBlock[bi] ?? [])}
+              <div class:frag-eng-card={cscheme.id === 'dk' && (engCardFilled || !citationByBlock[bi]?.some((run) => run.length))}>
               <!-- A chapter's own descriptive heading (Discourses' Oldfather
                    subtitle — see EnglishChunk.title). Chunk-level, not
                    chapterStarts-driven (book-section works have no
@@ -4036,44 +4650,9 @@
                    chunk's text, not to an alternate translation's overlay
                    (item 84: segTransId, so a per-passage switch away from
                    the primary hides this too). -->
-              {#if bi === blocks.length - 1 && seg.english?.credit && (trans === 'compare' ? compareLeft : segTransId) === engSlot?.id}
+              {#if (block.dkRow ? block.dkRow.ownsEnglish : bi === blocks.length - 1) && seg.english?.credit && (trans === 'compare' ? compareLeft : segTransId) === engSlot?.id}
                 {@render translationCredit(seg.english.credit)}
               {/if}
-              <!-- DK source-citation expansion (docs/citation-expansion-
-                   wiring-design.md): the Hackett-style English form of this
-                   column's DK apparatus head(s) -- the English counterpart to
-                   the small-caps Greek `.frag-source-head` line. Rendered in
-                   the primary English column only, never the compare column.
-                   One line per RUN (fix round finding 2/4): `citationByBlock`
-                   groups entries by the distinct context run they came from
-                   and places each run's line in the block where that run's
-                   head actually sits (a multi-block/multi-run segment no
-                   longer dumps every run onto the last block, and two
-                   unrelated runs never merge into one false attribution). A
-                   `direct` entry -- and a `dash` entry, identically (rule E,
-                   John 2026-09-24) -- prints "Author, Work locus [apparatus]" with
-                   the work title italic only when `work.italic` says so
-                   (never baked markup) and any Doxographi/editor apparatus
-                   ref kept verbatim, unexpanded; a `verbatim` entry --
-                   unresolved or dash-continuation -- prints the head exactly
-                   as DK printed it, honest, no invented author or title, and
-                   never italicized just for being verbatim. Multiple SOURCES
-                   within one run join with "; ", as DK's own semicolon-
-                   separated heads do. -->
-              {#each citationByBlock[bi] as run}
-                {#if run.length}
-                <div class="expanded-citation">
-                  {#each run as entry, i}
-                    {#if i > 0}<span class="expanded-citation-sep">; </span>{/if}
-                    {#if entry.resolution === 'direct' || entry.resolution === 'dash'}
-                      <span class="expanded-citation-entry">{#if entry.authorDisplay}{`${entry.authorDisplay}, `}{/if}{#if entry.work?.italic}<em>{entry.work.title}</em>{:else}{entry.work?.title}{/if}{entry.locus ? ` ${entry.locus}` : ''}{entry.apparatus ? ` ${entry.apparatus}` : ''}</span>{#if entry.note}{' '}<span class="context-english-credit">{entry.note}</span>{/if}
-                    {:else}
-                      <span class="expanded-citation-entry expanded-citation-verbatim">{entry.verbatim}</span>
-                    {/if}
-                  {/each}
-                </div>
-                {/if}
-              {/each}
               </div>
               <!-- Source-passage English (docs/source-passage-english-scoping.md):
                    the quoting source author's own English for this column's
@@ -4096,99 +4675,9 @@
                    `hasEnglish` now counts contextEnglish too, so view is no
                    longer force-greek and the standard column-hiding CSS
                    applies exactly as it does for any other translation. -->
-              {#if bi === blocks.length - 1 && seg.contextEnglish?.length}
-                {#each seg.contextEnglish as span, spanIdx}
-                  {@const spanKey = `${seg.id}:${spanIdx}`}
-                  {@const selectedAltId = span.alts?.length ? (contextEnglishAlt[spanKey] ?? null) : null}
-                  {@const activeAlt = selectedAltId ? span.alts?.find((a) => a.id === selectedAltId) : undefined}
-                  {@const activeCredit = activeAlt ? activeAlt.translationCredit : span.translationCredit}
-                  <!-- Item 82 (REVIEW-CHECKLIST): data-eng-credit lives on this
-                       wrapping div, closer than the ancestor .english-col's own
-                       attribute (that one names the SEGMENT's own primary
-                       translation credit, not this source passage's) -- so a
-                       copy of context-english text always carries the credit
-                       for whichever translation (primary or alt) is on screen
-                       here, not the wrong ancestor's. Fix round, finding 5
-                       (Sol xhigh review): this used to be set only for an
-                       alt-BEARING span, so an alt-free span's own
-                       translationCredit (every span carries one when
-                       status==='translated', alts or not) never made it onto
-                       the copy path — set whenever the span has a credit to
-                       show, alts or not. -->
-                  <div
-                    class="context-english"
-                    data-eng-credit={span.status === 'translated' && activeCredit
-                      ? `Source passage: ${span.sourceAuthor}, ${span.sourceWork} ${span.locus.replace('-', '–')} (tr. ${activeCredit}).`
-                      : undefined}
-                  >
-                    {#if span.status === 'translated'}
-                      {#if span.alts?.length}
-                        <!-- Plain-text toggle (not a <select> -- that pattern is
-                             reserved for the work-level picker): primary label
-                             first, then each alt, active one bold/underlined.
-                             Page-local only -- see contextEnglishAlt above. -->
-                        <div class="context-english-alt-toggle" role="group" aria-label="Translation">
-                          <button
-                            type="button"
-                            class="context-english-alt-btn"
-                            class:active={!selectedAltId}
-                            aria-pressed={!selectedAltId}
-                            on:click={() => selectContextEnglishAlt(spanKey, null)}
-                          >{contextEnglishPrimaryLabel(span)}</button>
-                          {#each span.alts as alt}
-                            <span class="context-english-alt-sep">·</span>
-                            <button
-                              type="button"
-                              class="context-english-alt-btn"
-                              class:active={selectedAltId === alt.id}
-                              aria-pressed={selectedAltId === alt.id}
-                              on:click={() => selectContextEnglishAlt(spanKey, alt.id)}
-                            >{alt.label}</button>
-                          {/each}
-                        </div>
-                      {/if}
-                      {#if activeAlt}
-                        <!-- One entry per locus of the span's own range, in
-                             span order (data contract) -- a gap section (no
-                             `text`) gets the honest marker, never a blank
-                             paragraph. -->
-                        {#each activeAlt.sections as sec}
-                          {#if activeAlt.sections.length > 1}
-                            <div class="context-english-section-marker">{sec.locus}</div>
-                          {/if}
-                          {#if sec.text}
-                            <p class="context-english-text">{sec.text}</p>
-                          {:else}
-                            <p class="context-english-text context-english-gap">No {activeAlt.label} translation for this section.</p>
-                          {/if}
-                        {/each}
-                        <div class="context-english-credit">Source passage: {span.sourceAuthor}, {span.sourceWork} {span.locus.replace('-', '–')} (tr. {activeAlt.translationCredit}).</div>
-                      {:else}
-                        <!-- A multi-section range (span.sectionLoci) carries one
-                             resolved paragraph per source section -- mark each with
-                             its own locus, same treatment as the work's own .seg-ref
-                             column reference, so a many-paragraph range (e.g. 19
-                             sections) stays navigable instead of reading as one
-                             undifferentiated block. A single-section span carries no
-                             sectionLoci (its one paragraph is already named by the
-                             credit line below). Item 83: span.emphasis (primary
-                             translation only -- an activeAlt never carries it, see
-                             the branch above) bolds the DK-excerpt words within each
-                             paragraph; a span with no emphasis renders one plain
-                             segment per paragraph, byte-identical to before. -->
-                        {@const paragraphs = contextEnglishParagraphs(span.text ?? '', span.emphasis)}
-                        {#each paragraphs as p, i}
-                          {#if span.sectionLoci?.[i]}
-                            <div class="context-english-section-marker">{span.sectionLoci[i]}</div>
-                          {/if}
-                          <p class="context-english-text">{#each p.segments as s}{#if s.bold}<strong class="context-english-emphasis">{s.text}</strong>{:else}{s.text}{/if}{/each}</p>
-                        {/each}
-                        <div class="context-english-credit">Source passage: {span.sourceAuthor}, {span.sourceWork} {span.locus.replace('-', '–')} (tr. {span.translationCredit}).</div>
-                      {/if}
-                    {:else}
-                      <div class="context-english-desert">No public-domain English translation of this source passage exists yet. Only the Greek is shown.</div>
-                    {/if}
-                  </div>
+              {#if (block.dkRow || bi === blocks.length - 1) && seg.contextEnglish?.length}
+                {#each (block.dkRow?.contextIndexes ?? seg.contextEnglish.map((_, i) => i)) as spanIdx}
+                  {@render contextEnglishSpan(seg, spanIdx, false)}
                 {/each}
               {/if}
               <!-- Inline diagrams ([[figN]] markers), e.g. the Tree of Porphyry. -->
@@ -4239,7 +4728,7 @@
                      its text into the right compare column too: a licensed
                      translation may never render uncredited, whichever
                      column the reader put it in. -->
-                {#if bi === blocks.length - 1 && seg.english?.credit && compareRight === engSlot?.id}
+                {#if (block.dkRow ? block.dkRow.ownsEnglish : bi === blocks.length - 1) && seg.english?.credit && compareRight === engSlot?.id}
                   {@render translationCredit(seg.english.credit)}
                 {/if}
               </div>
@@ -4258,6 +4747,14 @@
           </div>
           {/if}
         {/each}
+        <!-- Edition-reference notes for print (dk-edition-notes.ts): the
+             pop-ups cannot open on paper, so print lists this column's
+             notes by number after it. Hidden on screen. -->
+        {#if view !== 'english' && dkNotesByColumn[seg.column]}
+          <ol class="dk-note-list">
+            {#each dkNotesByColumn[seg.column] as note}<li value={note.n}>{note.text}</li>{/each}
+          </ol>
+        {/if}
       </div>
     {/each}
     {/if}
@@ -4272,10 +4769,12 @@
   <div class="settings-body">
     <!-- Mobile-only: on desktop the view toggle and print control live in the
          reader header (see .settings-mobile-only in global.css). -->
+    {#if !englishOnly}
     <div class="settings-section settings-mobile-only">
       <div class="settings-section-label">View</div>
       {@render viewToggle()}
     </div>
+    {/if}
     {#if translations.length > 1}
       <!-- Mobile-only: on desktop the picker sits beside the view toggle in the
            header (see .settings-trans in global.css). -->
@@ -4401,7 +4900,7 @@
       <label class="settings-check-row">
         <span class="settings-check-name">
           Append citation and translator credit on copy
-          <span class="settings-check-hint">Applies to any selection, {sourceLanguageLabel} or English</span>
+          <span class="settings-check-hint">Applies to any selection{copyHintTail}</span>
         </span>
         <span class="settings-pill">
           <input type="checkbox" bind:checked={citeCopy} on:change={saveCiteCopy} aria-label="Append citation when copying text" />
@@ -4433,7 +4932,21 @@
   />
 {/if}
 
-<svelte:window on:pointerdown={onDocPointerDown} />
+<svelte:window on:pointerdown={onDocPointerDown} on:keydown={onWindowKeyDown} on:scroll={onWindowMove} on:resize={onWindowMove} />
+
+{#if dkNoteOpen}
+  <!-- An edition-reference note (dk-edition-notes.ts): the bracket exactly
+       as DK prints it, its DK cross-references linked. -->
+  <div
+    class="popup dk-note-pop"
+    role="dialog"
+    aria-label="Note {dkNoteOpen.n}"
+    tabindex="-1"
+    style={dkNoteOpen.pos}
+    bind:this={dkNotePopEl}
+    on:keydown={onDkNoteKey}
+  ><p class="dk-note-text">{#each dkNoteParts(dkNoteOpen.text, dkOwnColumns, dkOtherColumns) as np}{#if np.kind === 'dklink'}<a class="dk-crossref" href={np.href}>{np.text}</a>{:else if np.kind === 'text'}{np.text}{/if}{/each}</p></div>
+{/if}
 
 {#if footnote}
   <FootnotePopup

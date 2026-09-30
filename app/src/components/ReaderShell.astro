@@ -95,6 +95,9 @@ if (isVerseLineScheme) {
 const chipUnitNoun = unitNounFor(workId).capitalized;
 const label = bookLabel(work, n);
 const langLabel = languageLabel(work);
+// A work whose only language is English: one column, no parallel-text or
+// dictionary wording, no lexicon links.
+const englishOnly = work.language === 'en';
 const windowedBooks = work.books > 15;
 // Driven off the registry's divisionNoun (default 'book') -- the same field
 // shared/lib/works.ts's divisionId uses for the URL, so the page and the URL
@@ -265,9 +268,10 @@ const chapterHref = (b: number, chapter: string) =>
 // bookNounCap (declared above, with bookNoun) fixed finding 2, Sol review:
 // this used to hardcode "Book" for every scheme, so Seneca's Epistle 47 read
 // "…, Book 47" in the tab title and meta description.
+const titleSuffix = englishOnly ? '' : ` — ${langLabel} Text & English Translation`;
 const pageTitle = (bookless
-  ? `${work.title} — ${langLabel} Text & English Translation`
-  : `${work.title}, ${bookNounCap} ${label} — ${langLabel} Text & English Translation`)
+  ? `${work.title}${titleSuffix}`
+  : `${work.title}, ${bookNounCap} ${label}${titleSuffix}`)
   // Under the flag every page's title ends with the library's name.
   + (lyceumChrome ? ` — ${siteName}` : '');
 
@@ -295,8 +299,9 @@ const ogImage = Astro.site
 // work regardless of scheme, so a dk/letter/verse-line/book-section work's
 // meta description falsely advertised Stephanus citation).
 const citeWord = citeDescriptorFor(workId);
-const metaDescription =
-  `Read ${authorName}'s ${work.title}${bookSuffix} — the original ${langLabel}` +
+const metaDescription = englishOnly
+  ? `${work.title}${bookSuffix} by ${authorName}. ${work.blurb}`
+  : `Read ${authorName}'s ${work.title}${bookSuffix} — the original ${langLabel}` +
   ` (${work.greekSource.short}) side by side with` +
   (translatorName ? ` ${translatorName}'s` : ' an') +
   ` English translation, with click-to-parse morphology, dictionary entries,` +
@@ -310,7 +315,7 @@ const jsonLd = {
   ...(translatorName
     ? { translator: { '@type': 'Person', name: translatorName } }
     : {}),
-  inLanguage: [work.language, 'en'],
+  inLanguage: englishOnly ? ['en'] : [work.language, 'en'],
   ...(canonical ? { url: canonical } : {}),
   isPartOf: { '@type': 'CreativeWorkSeries', name: `The Works of ${authorName}` },
   description: metaDescription,
@@ -335,12 +340,13 @@ const breadcrumbLd = Astro.site
     }
   : null;
 const h1Text =
-  `${authorName}, ${work.title}${bookSuffix} — ${langLabel} text with English translation`;
+  `${authorName}, ${work.title}${bookSuffix}` + (englishOnly ? '' : ` — ${langLabel} text with English translation`);
 // A short topical paragraph (the curated one-line blurb, framed with the Greek
 // source and translator) so the page carries real descriptive prose for search
 // snippets and screen readers, distinct from the dense parallel-text body.
-const intro =
-  `${work.title}${bookSuffix} by ${authorName}, in the original ${langLabel}` +
+const intro = englishOnly
+  ? `${work.title}${bookSuffix} by ${authorName}. ${work.blurb}`
+  : `${work.title}${bookSuffix} by ${authorName}, in the original ${langLabel}` +
   ` (${work.greekSource.short})` +
   (translatorName ? `, with the English translation of ${translatorName}` : '') +
   `. ${work.blurb}`;
@@ -536,10 +542,10 @@ const lycStartColumn = sections[0]?.column ?? chapters[0]?.chapter ?? '';
           <span class="hs-text">Search</span>
           <kbd class="hs-kbd" aria-hidden="true">⌘K</kbd>
         </a>
-        <a class="header-search header-lexicon" href={`${base}/lemma/${work.language}/`} aria-label={`${langLabel} Lexicon`}>
+        {!englishOnly && <a class="header-search header-lexicon" href={`${base}/lemma/${work.language}/`} aria-label={`${langLabel} Lexicon`}>
           <svg class="hs-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M8 3.6C6.6 2.6 4.2 2.6 2.6 3.1v9C4.2 11.6 6.6 11.6 8 12.6M8 3.6C9.4 2.6 11.8 2.6 13.4 3.1v9C11.8 11.6 9.4 11.6 8 12.6M8 3.6v9"/></svg>
           <span class="hs-text">Lexicon</span>
-        </a>
+        </a>}
         <button type="button" class="settings-toggle" aria-label="Reader settings" aria-expanded="false">
           <svg class="settings-icon" width="18" height="14" viewBox="0 0 18 14" aria-hidden="true" fill="currentColor" stroke="none">
             <rect x="1" y="0" width="16" height="1.5" rx="0.75"/>
@@ -551,7 +557,7 @@ const lycStartColumn = sections[0]?.column ?? chapters[0]?.chapter ?? '';
           </svg>
           <span class="settings-text">Settings</span>
         </button>
-        <HelpButton client:load />
+        {!englishOnly && <HelpButton client:load />}
         <ThemeToggle />
       </div>
     </div>
@@ -750,10 +756,10 @@ const lycStartColumn = sections[0]?.column ?? chapters[0]?.chapter ?? '';
         <span class="toc-action-name">Search</span>
         <span class="toc-action-hint">Greek, Latin &amp; English</span>
       </a>
-      <a class="toc-action" href={`${base}/lemma/${work.language}/`}>
+      {!englishOnly && <a class="toc-action" href={`${base}/lemma/${work.language}/`}>
         <span class="toc-action-name">{langLabel} Lexicon</span>
         <span class="toc-action-hint">Word frequency &amp; concordance</span>
-      </a>
+      </a>}
     </div>
     <div class="toc-work-head"><span class="toc-work">{work.title}</span></div>
     <nav class="toc-outline">
@@ -882,10 +888,10 @@ const lycStartColumn = sections[0]?.column ?? chapters[0]?.chapter ?? '';
       <a class="toc-action" href={`${base}/attribution`}>
         <span class="toc-action-name">Texts &amp; Licences</span>
       </a>
-      <button type="button" class="toc-action toc-help">
+      {!englishOnly && <button type="button" class="toc-action toc-help">
         <span class="toc-action-name">Help</span>
         <span class="toc-action-hint">How to use this reader</span>
-      </button>
+      </button>}
     </div>
   </aside>
   </>

@@ -6,7 +6,33 @@
     "source_work": "Lives of Eminent Philosophers",
     "locus": "9.1-17",
     "status": "translated",
-    "translation_credit": "Hicks, 1925"
+    "translation_credit": "Hicks, 1925",
+    "trim": {
+     "omit": [
+      [
+       "There is a piece of my own about him as follows",
+       "quenched the light in his eyes and brought on darkness."
+      ],
+      [
+       "“King Darius, son of Hystaspes, to Heraclitus the wise man of Ephesus",
+       "when that little is to my mind.”"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "1:A4": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Rhetoric",
+    "locus": "1407b11-1407b18",
+    "status": "translated",
+    "translation_credit": "Freese, 1926",
+    "emphasis": [
+     "Generally speaking, that which is written should be easy to read or easy to utter, which is the same thing. Now, this is not the case when there is a number of connecting particles, or when the punctuation is hard, as in the writings of Heraclitus. For it is hard, since it is uncertain to which word another belongs, whether to that which follows or that which precedes; for instance, at the beginning of his composition he says: Of this reason which exists always men are ignorant, where it is uncertain whether always should go with which exists or with are ignorant."
+    ]
    }
   ]
  },
@@ -20,6 +46,44 @@
     "translation_credit": "Fowler, 1926",
     "emphasis": [
      "Heracleitus says, you know, that all things move and nothing remains still, and he likens the universe to the current of a river, saying that you cannot step twice into the same stream."
+    ],
+    "trim": {
+     "start": "Heracleitus says, you know",
+     "end": "you cannot step twice into the same stream."
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "Heracleitus is supposed to say",
+      "end": "you cannot go into the same water twice."
+     }
+    }
+   }
+  ]
+ },
+ "1:A7": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "1005b23-1005b25",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "For it is impossible for any one to believe the same thing to be and not to be, as some think Heraclitus says."
+    ]
+   }
+  ]
+ },
+ "1:A9": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Parts of Animals",
+    "locus": "645a17-645a23",
+    "status": "translated",
+    "translation_credit": "Ogle, 1912",
+    "emphasis": [
+     "as Heraclitus, when the strangers who came to visit him found him warming himself at the furnace in the kitchen and hesitated to go in, reported to have bidden them not to be afraid to enter, as even in that kitchen divinities were present, so we should venture on the study of every kind of animal without distaste; for each and all will reveal to us something natural and something beautiful."
     ]
    }
   ]
@@ -33,10 +97,228 @@
     "status": "translated",
     "translation_credit": "Fowler, 1921",
     "emphasis": [
-     "Then some Ionian and later some Sicilian Muses reflected",
-     "that it was safest to combine the two tales and to say that being is many and one, and is (or are) held together by enmity and friendship. Str. For the more strenuous Muses say it is always simultaneously coming together and separating; but the gentler ones relaxed the strictness of the doctrine of perpetual strife; they say that the all is sometimes one and friendly, under the influence of Aphrodite,",
+     "Then some Ionian and",
+     "some Sicilian Muses reflected",
+     "that it was safest",
+     "to say that being is many and one, and is (or are) held together by enmity and friendship. Str. For the more strenuous Muses say it is always simultaneously coming together and separating; but the gentler ones relaxed the strictness of the doctrine of perpetual strife; they say that the all is sometimes one and friendly, under the influence of Aphrodite,",
      "and sometimes many and at variance with itself by reason of some sort of strife."
+    ],
+    "trim": {
+     "start": "Then some Ionian and later some Sicilian Muses",
+     "end": "by reason of some sort of strife.",
+     "omit": [
+      [
+       "later",
+       "later"
+      ],
+      [
+       "to combine the two tales and",
+       "to combine the two tales and"
+      ]
+     ]
+    },
+    "alt_loci": {
+     "jowett": "242c"
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "Then there are Ionian, and in more recent times Sicilian muses",
+      "end": "by reason of a principle of strife.",
+      "omit": [
+       [
+        "in more recent times",
+        "in more recent times"
+       ],
+       [
+        "to unite the two principles",
+        "to unite the two principles"
+       ]
+      ]
+     }
+    }
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "On the Heavens",
+    "locus": "279b12-279b17",
+    "status": "translated",
+    "translation_credit": "Stocks, 1922",
+    "emphasis": [
+     "That the world was generated all are agreed, but, generation over, some say that it is eternal, others say that it is destructible like any other natural formation. Others again, with Empedocles of Acragas and Heraclitus of Ephesus, believe that there is alternation in the destructive process, which takes now this direction, now that, and continues without end."
     ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "205a3-205a4",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "as Heraclitus says that at some time all things become fire."
+    ],
+    "trim": {
+     "start": "as Heraclitus says that at some time"
+    }
+   }
+  ]
+ },
+ "1:A15": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "De Anima",
+    "locus": "405a25-405a26",
+    "status": "translated",
+    "translation_credit": "Smith, 1931",
+    "emphasis": [
+     "Heraclitus too says that the first principle-the 'warm exhalation' of which, according to him, everything else is composed-is soul"
+    ],
+    "trim": {
+     "end": "everything else is composed-is soul"
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "4.3",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "the exhalation",
+     "exhalations"
+    ],
+    "trim": {
+     "start": "Heraclitus, that the soul",
+     "end": "is homogeneous to it."
+    }
+   }
+  ]
+ },
+ "1:A18": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.23",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Heraclitus and the Stoics",
+     "end": "seminal serum is emitted."
+    }
+   }
+  ]
+ },
+ "1:A5": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "1.3",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Heraclitus and Hippasus of",
+     "end": "the universal conflagration."
+    }
+   }
+  ]
+ },
+ "1:A12": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.22",
+    "head": "—22, 2 (D. 352)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Heraclitus, that it hath",
+     "end": "is somewhat crooked."
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.24",
+    "head": "—24, 3 (D. 354)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Heraclitus, that it is",
+     "end": "the convex nethermost."
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.27",
+    "head": "—27, 2 (D. 358)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Heraclitus, a boat.",
+     "end": "Heraclitus, a boat."
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.28",
+    "head": "—28, 6 (D. 359)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Heraclitus, that the sun",
+     "end": "more troubled and gross."
+    }
+   }
+  ]
+ },
+ "1:A8": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "1.27",
+    "head": "I, 27, 1 (D. 322)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Heraclitus, who attributes all",
+     "end": "same thing with it."
+    }
+   }
+  ]
+ },
+ "1:A3b": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Garrulitate",
+    "locus": "511b-511c",
+    "status": "translated",
+    "translation_credit": "Helmbold, 1939",
+    "trim": {
+     "start": "And are not those who indicate by signs",
+     "end": "to keep cities in peace and concord."
+    }
+   }
+  ]
+ },
+ "1:A19": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Defectu Oraculorum",
+    "locus": "415e",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1936",
+    "trim": {
+     "start": "Those who read ‘in their vigour’",
+     "end": "a son who is a father also;"
+    }
    }
   ]
  }

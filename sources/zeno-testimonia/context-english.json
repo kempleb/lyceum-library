@@ -6,7 +6,29 @@
     "source_work": "Lives of Eminent Philosophers",
     "locus": "9.25-29",
     "status": "translated",
-    "translation_credit": "Hicks, 1925"
+    "translation_credit": "Hicks, 1925",
+    "trim": {
+     "omit": [
+      [
+       "You wished, Zeno, and noble was your wish",
+       "It was your body that he beat, and not you."
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "1:A5": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Rhetoric",
+    "locus": "1372b3-1372b5",
+    "status": "translated",
+    "translation_credit": "Freese, 1926",
+    "emphasis": [
+     "and when, on the contrary, the unjust acts tend to our credit, for instance, if one avenges father or mother, as was the case with Zeno"
+    ]
    }
   ]
  },
@@ -20,7 +42,10 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "Aristotle in his Sophist calls Empedocles the inventor of rhetoric as Zeno of dialectic."
-    ]
+    ],
+    "trim": {
+     "end": "as Zeno of dialectic."
+    }
    }
   ]
  },
@@ -37,7 +62,208 @@
      "that Zeno and Parmenides once came to the Great Panathenaea; that Parmenides was already quite elderly, about sixty-five years old, very white-haired, and of handsome and noble countenance; Zeno was at that time about forty years of age; he was tall and good-looking, and there was a story that Parmenides had been in love with him.",
      "He said that they lodged with Pythodorus outside of the wall, in Cerameicus, and that Socrates and many others with him went there because they wanted to hear Zeno’s writings, which had been brought to Athens for the first time by them. Socrates was then very young. So Zeno himself read aloud to them, and Parmenides was not in the house.",
      "Pythodorus said the reading of the treatises was nearly finished when he came in himself with Parmenides and Aristoteles (the one who was afterwards one of the thirty), so they heard only a little that remained of the written works."
+    ],
+    "trim": {
+     "start": "Antiphon, then, said that Pythodorus told him",
+     "end": "they heard only a little that remained of the written works."
+    }
+   }
+  ]
+ },
+ "1:A12": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Parmenides",
+    "locus": "128b-128e",
+    "status": "translated",
+    "translation_credit": "Fowler, 1926",
+    "emphasis": [
+     "Yes, Socrates, said Zeno, but you have not perceived all aspects of the truth about my writings. You follow the arguments with a scent as keen as a Laconian hound’s, but you do not observe that my treatise is not by any means so pretentious that it could have been written with the intention you ascribe to it, of disguising itself as a great performance in the eyes of men. What you mentioned is a mere accident, but in truth these writings are meant to support the argument of Parmenides against those who attempt to jeer at him and assert that if the all is one many absurd results follow which contradict his theory. Now this treatise opposes the advocates of the many and gives them back their ridicule with interest, for its purpose is to show that their hypothesis that existences are many, if properly followed up, leads to still more absurd results than the hypothesis that they are one. It was in such a spirit of controversy that I wrote it when I was young, and when it was written some one stole it, so that I could not even consider whether it should be published or not. So, Socrates, you are not aware of this and you think that the cause of its composition was not the controversial spirit of a young man, but the ambition of an old one. In other respects, as I said, you guessed its meaning pretty well."
+    ],
+    "trim": {
+     "start": "Yes, Socrates, said Zeno, but you have not perceived",
+     "end": "you guessed its meaning pretty well."
+    }
+   }
+  ]
+ },
+ "1:A13": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Phaedrus",
+    "locus": "261d",
+    "status": "translated",
+    "translation_credit": "Fowler, 1914",
+    "emphasis": [
+     "Do we not know that the Eleatic Palamedes (Zeno) has such an art of speaking that the same things appear to his hearers to be alike and unlike, one and many, stationary and in motion?"
+    ],
+    "trim": {
+     "start": "Do we not know that the Eleatic Palamedes",
+     "end": "stationary and in motion?"
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "Have we not heard of the Eleatic Palamedes",
+      "end": "at rest and in motion?"
+     }
+    }
+   }
+  ]
+ },
+ "1:A14": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Sophistical Refutations",
+    "locus": "170b19-170b25",
+    "status": "translated",
+    "translation": "owen",
+    "translation_credit": "Owen, 1853",
+    "emphasis": [
+     "If indeed any one, when a name signifies many things, fancies that it signifies one thing, both the questionist and the person questioned, (as perhaps being, or one, signifies many things, but the respondent and the questionist (Zeno), thinking it to be one, interrogate, and the argument is that all things are one,) this discussion will belong to the name, or to the reason of the person interrogated."
     ]
+   }
+  ]
+ },
+ "1:A21": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "1001b7-1001b13",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "Further, if unity-itself is indivisible, according to Zeno's postulate it will be nothing. For that which neither when added makes a thing greater nor when subtracted makes it less, he asserts to have no being, evidently assuming that whatever has being is a spatial magnitude. And if it is a magnitude, it is corporeal; for the corporeal has being in every dimension, while the other objects of mathematics, e.g. a plane or a line, added in one way will increase what they are added to, but in another way will not do so, and a point or a unit does so in no way."
+    ]
+   }
+  ]
+ },
+ "1:A22": {
+  "context_spans": [
+   {
+    "source_author": "pseudo-Aristotle",
+    "source_work": "De Lineis Insecabilibus",
+    "locus": "968a18-968a23",
+    "status": "translated",
+    "translation_credit": "Joachim, 1908",
+    "emphasis": [
+     "Again, Zeno’s argument proves that there must be simple magnitudes.",
+     "For the body, which is moving along a line, must reach the half-way point before it reaches the end. And since there always is a half-way point in any ‘stretch’ which is not simple, motion—unless there be simple magnitudes—involves that the moving body touches successively one-by-one an infinite number of points in a finite time: which is impossible"
+    ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "187a1-187a3",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "Some thinkers did, in point of fact, give way to both arguments.",
+     "To the argument that all things are one",
+     "to that from bisection, they yielded by positing atomic magnitudes."
+    ]
+   }
+  ]
+ },
+ "1:A24": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "210b22-210b25",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "Zeno's problem-that if Place is something it must be in something-is not difficult to solve. There is nothing to prevent the first place from being 'in' something else-not indeed in that as 'in' place"
+    ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "209a23-209a25",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "Zeno's difficulty demands an explanation: for if everything that exists has a place, place too will have a place, and so on ad infinitum."
+    ]
+   }
+  ]
+ },
+ "1:A28": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "239b33-240a17",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "The fourth argument is that concerning the two rows of bodies, each row being composed of an equal number of bodies of equal size, passing each other on a race-course as they proceed with equal velocity in opposite directions, the one row originally occupying the space between the goal and the middle point of the course and the other that between the middle point and the starting-post. This, he thinks, involves the conclusion that half a given time is equal to double that time.",
+     "The fallacy of the reasoning lies in the assumption that a body occupies an equal time in passing with equal velocity a body that is in motion and a body of equal size that is at rest; which is false. For instance (so runs the argument), let A, A...be the stationary bodies of equal size, B, B...the bodies, equal in number and in size to A, A...,originally occupying the half of the course from the starting-post to the middle of the A's, and G, G...those originally occupying the other half from the goal to the middle of the A's, equal in number, size, and velocity to B, B....Then three consequences follow:",
+     "First, as the B's and the G's pass one another, the first B reaches the last G at the same moment as the first G reaches the last B. Secondly at this moment the first G has passed all the A's, whereas the first B has passed only half the A's, and has consequently occupied only half the time occupied by the first G, since each of the two occupies an equal time in passing each A. Thirdly, at the same moment all the B's have passed all the G's: for the first G and the first B will simultaneously reach the opposite ends of the course, since (so says Zeno) the time occupied by the first G in passing each of the B's is equal to that occupied by it in passing each of the A's, because an equal time is occupied by both the first B and the first G in passing all the A's."
+    ]
+   }
+  ]
+ },
+ "1:A29": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "250a19-250a22",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "Hence Zeno's reasoning is false when he argues that there is no part of the millet that does not make a sound: for there is no reason why any such part should not in any length of time fail to move the air that the whole bushel moves in falling."
+    ]
+   }
+  ]
+ },
+ "1:A4": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Pericles",
+    "locus": "4",
+    "status": "translated",
+    "translation_credit": "Perrin, 1916",
+    "trim": {
+     "start": "Pericles was also a pupil of Zeno",
+     "end": "bring an opponent to grief;"
+    }
+   }
+  ]
+ },
+ "1:A7": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Adversus Colotem",
+    "locus": "1126d-1126e",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Zeno, the disciple of Parmenides",
+     "end": "in the tyrant’s face."
+    }
+   }
+  ]
+ },
+ "1:A17": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Pericles",
+    "locus": "5",
+    "status": "translated",
+    "translation_credit": "Perrin, 1916",
+    "trim": {
+     "start": "Zeno, when men called the austerity",
+     "end": "habitual practice of it."
+    }
    }
   ]
  }

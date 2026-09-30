@@ -1,0 +1,290 @@
+{
+  "comment": "Exact observed exceptions only. Changed marker arrays or span identities and unused entries fail the gate. Section evidence comes from the local DK export; a printed-volume review remains separate. Context exceptions were requested by the owner for unmatched spans.",
+  "sectionGaps": [
+    {
+      "work": "anaxagoras-testimonia",
+      "column": "A5",
+      "expected": [
+        34,
+        35
+      ],
+      "actual": [],
+      "reason": "The DK text in build/dist/anaxagoras-testimonia/book-01.json, 1:A5, prints no (34) or (35) labels. The source-passage English covers the full declared source range; the excerpt leaves these labels unprinted. This exception records the exported text, not an independent check of the printed volume."
+    },
+    {
+      "work": "democritus-fragments",
+      "column": "B5",
+      "expected": [
+        34,
+        35
+      ],
+      "actual": [],
+      "reason": "The DK text in build/dist/democritus-fragments/book-01.json, 1:B5, prints no (34) or (35) labels. The source-passage English covers the full declared source range; the excerpt leaves these labels unprinted. This exception records the exported text, not an independent check of the printed volume."
+    },
+    {
+      "work": "democritus-testimonia",
+      "column": "A1",
+      "expected": [
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        49
+      ],
+      "actual": [
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        49
+      ],
+      "reason": "Since the 2026-09-27 trim the English drops 9.46-48 (the book catalogue, which DK prints as A33); DK prints no (34) label, so the English keeps a 34 that DK does not label."
+    },
+    {
+      "work": "democritus-testimonia",
+      "column": "A33",
+      "expected": [
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "actual": [
+        46,
+        47,
+        48,
+        49
+      ],
+      "reason": "The DK text in build/dist/democritus-testimonia/book-01.json, 1:A33, prints no (45) label. The source-passage English covers the full declared source range; the excerpt leaves these labels unprinted. This exception records the exported text, not an independent check of the printed volume."
+    },
+    {
+      "work": "empedocles-fragments",
+      "column": "B1",
+      "expected": [
+        60,
+        61
+      ],
+      "actual": [],
+      "reason": "The DK text in build/dist/empedocles-fragments/book-01.json, 1:B1, prints no (60) or (61) labels. The source-passage English covers the full declared source range; the excerpt leaves these labels unprinted. This exception records the exported text, not an independent check of the printed volume."
+    },
+    {
+      "work": "empedocles-testimonia",
+      "column": "A1",
+      "expected": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        76,
+        77
+      ],
+      "actual": [
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        76,
+        77
+      ],
+      "reason": "Since the 2026-09-27 trim the English drops 8.75 (DL's epigram, which DK omits); DK prints no (51) label, so the English keeps a 51 that DK does not label."
+    },
+    {
+      "work": "gorgias-testimonia",
+      "column": "A3",
+      "expected": [
+        58,
+        59
+      ],
+      "actual": [],
+      "reason": "The DK text in build/dist/gorgias-testimonia/book-01.json, 1:A3, prints no (58) or (59) labels. The source-passage English covers the full declared source range; the excerpt leaves these labels unprinted. This exception records the exported text, not an independent check of the printed volume."
+    },
+    {
+      "work": "heraclitus-testimonia",
+      "column": "A1",
+      "expected": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        17
+      ],
+      "actual": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        15,
+        16,
+        17
+      ],
+      "reason": "(13) is gone from the English since the 2026-09-27 trim (DK omits the Darius letters, 9.13-14); DK prints the last sentence of 9.14 under its own (15), so the English keeps a 14 that DK does not label."
+    },
+    {
+      "work": "leucippus-testimonia",
+      "column": "A1",
+      "expected": [
+        30,
+        31,
+        32,
+        33
+      ],
+      "actual": [
+        31,
+        32,
+        33
+      ],
+      "reason": "The DK text in build/dist/leucippus-testimonia/book-01.json, 1:A1, prints no (30) label. The source-passage English covers the full declared source range; the excerpt leaves these labels unprinted. This exception records the exported text, not an independent check of the printed volume."
+    },
+    {
+      "work": "philolaus-testimonia",
+      "column": "A1",
+      "expected": [
+        84,
+        85
+      ],
+      "actual": [],
+      "reason": "The DK text in build/dist/philolaus-testimonia/book-01.json, 1:A1, prints no (84) or (85) labels. The source-passage English covers the full declared source range; the excerpt leaves these labels unprinted. This exception records the exported text, not an independent check of the printed volume."
+    },
+    {
+      "work": "protagoras-testimonia",
+      "column": "A1",
+      "expected": [
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56
+      ],
+      "actual": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56
+      ],
+      "reason": "The DK text in build/dist/protagoras-testimonia/book-01.json, 1:A1, prints no (50) label. The source-passage English covers the full declared source range; the excerpt leaves these labels unprinted. This exception records the exported text, not an independent check of the printed volume."
+    },
+    {
+      "work": "pythagoras-testimonia",
+      "column": "8",
+      "expected": [
+        4,
+        5
+      ],
+      "actual": [
+        5
+      ],
+      "reason": "The DK text in build/dist/pythagoras-testimonia/book-01.json, 1:8, prints no (4) label. The source-passage English covers the full declared source range; the excerpt leaves these labels unprinted. This exception records the exported text, not an independent check of the printed volume."
+    },
+    {
+      "work": "pythagoras-testimonia",
+      "column": "10",
+      "expected": [
+        45,
+        46
+      ],
+      "actual": [],
+      "reason": "The DK text in build/dist/pythagoras-testimonia/book-01.json, 1:10, prints no (45) or (46) labels. The source-passage English covers the full declared source range; the excerpt leaves these labels unprinted. This exception records the exported text, not an independent check of the printed volume."
+    },
+    {
+      "work": "pythagoras-testimonia",
+      "column": "19",
+      "expected": [
+        6,
+        7
+      ],
+      "actual": [
+        7
+      ],
+      "reason": "The DK text in build/dist/pythagoras-testimonia/book-01.json, 1:19, prints no (6) label. The source-passage English covers the full declared source range; the excerpt leaves these labels unprinted. This exception records the exported text, not an independent check of the printed volume."
+    },
+    {
+      "work": "xenophanes-fragments",
+      "column": "B8",
+      "expected": [
+        18,
+        19
+      ],
+      "actual": [],
+      "reason": "The DK text in build/dist/xenophanes-fragments/book-01.json, 1:B8, prints no (18) or (19) labels. The source-passage English covers the full declared source range; the excerpt leaves these labels unprinted. This exception records the exported text, not an independent check of the printed volume."
+    }
+  ],
+  "contextGaps": []
+}

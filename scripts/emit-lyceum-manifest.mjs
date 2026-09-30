@@ -86,6 +86,7 @@ export function parseArgs(argv) {
 export function mapLanguage(language) {
   if (language === 'grc') return 'grc';
   if (language === 'lat') return 'la';
+  if (language === 'en') return 'en';
   return null;
 }
 
@@ -275,7 +276,9 @@ function editionView(edition) {
   // in anything served or handed to the partner (John, 2026-09-09).
   const id =
     kind && author && work ? `edition-${author}-${work}` : null;
-  const sourceText = edition?.edition && author && work ? edition.edition : null;
+  // An English edition has no TLG/PHI ids; its name alone is the source text.
+  const sourceText =
+    edition?.edition && ((author && work) || edition.language === 'en') ? edition.edition : null;
   return {
     id,
     source: sourceText,

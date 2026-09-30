@@ -13,7 +13,21 @@
      "Well, Prodicus was still abed, wrapped up in sundry fleeces and rugs, and plenty of them too, it seemed;",
      "The subjects of their conversation I was unable to gather from outside, despite my longing to hear Prodicus; for I regard the man as all-wise and divine:",
      "but owing to the depth of his voice the room was filled with a booming sound which made the talk indistinct."
-    ]
+    ],
+    "trim": {
+     "start": "Nay more, Tantalus also did I there behold.",
+     "end": "which made the talk indistinct.",
+     "omit": [
+      [
+       "but now cleared out by Callias",
+       "turned into a guest-chamber."
+      ],
+      [
+       "and near him on the beds hard by lay Pausanias",
+       "and there seemed to be some others."
+      ]
+     ]
+    }
    }
   ]
  },
@@ -26,8 +40,12 @@
     "status": "translated",
     "translation_credit": "Fowler, 1926",
     "emphasis": [
-     "our friend here, Prodicus, often went to other places in a public capacity, and the last time, just lately, when he came here in a public capacity from Ceos, he gained great reputation by his speaking before the Council, and in his private capacity, by giving exhibitions and associating with the young, he received a marvellous sum of money;"
-    ]
+     "our friend here, Prodicus, often went to other places in a public capacity, and the last time, just lately, when he came here in a public capacity from Ceos, he gained great reputation by his speaking before the Council, and in his private capacity, by giving exhibitions and associating with the young, he received a marvellous sum of money"
+    ],
+    "trim": {
+     "start": "our friend here, Prodicus",
+     "end": "he received a marvellous sum of money"
+    }
    }
   ]
  },
@@ -41,7 +59,10 @@
     "translation_credit": "Fowler, 1921",
     "emphasis": [
      "But in some cases, Theaetetus, when they do not seem to me to be exactly pregnant, since I see that they have no need of me, I act with perfect goodwill as match-maker and, under God, I guess very successfully with whom they can associate profitably, and I have handed over many of them to Prodicus, and many to other wise and inspired men."
-    ]
+    ],
+    "trim": {
+     "end": "and many to other wise and inspired men."
+    }
    }
   ]
  },
@@ -56,7 +77,11 @@
     "emphasis": [
      "Although this also seems to me to be a fine thing, if one might be able to teach people, as Gorgias of Leontini and Prodicus of Ceos and Hippias of Elis are. For each of these men, gentlemen, is able to go into any one of the cities and persuade the young men, who can associate for nothing with whomsoever they wish among their own fellow citizens,",
      "to give up the association with those men and to associate with them and pay them money and be grateful besides."
-    ]
+    ],
+    "trim": {
+     "start": "Although this also seems to me to be a fine thing",
+     "end": "and be grateful besides."
+    }
    }
   ]
  },
@@ -65,11 +90,29 @@
    {
     "source_author": "Plato",
     "source_work": "Cratylus",
-    "locus": "384b",
+    "locus": "384b-384c",
     "status": "translated",
     "translation_credit": "Fowler, 1926",
     "emphasis": [
-     "and surely knowledge of names is no small matter. Now if I had attended Prodicus’s fifty-drachma course of lectures, after which, as he himself says, a man has a complete education on this subject, there would be nothing to hinder your learning the truth about the correctness of names at once; but I have heard only the one-drachma course,"
+     "and surely knowledge of names is no small matter. Now if I had attended Prodicus’s fifty-drachma course of lectures, after which, as he himself says, a man has a complete education on this subject, there would be nothing to hinder your learning the truth about the correctness of names at once; but I have heard only the one-drachma course"
+    ],
+    "trim": {
+     "start": "and surely knowledge of names is no small matter",
+     "end": "but I have heard only the one-drachma course"
+    }
+   }
+  ]
+ },
+ "1:A12": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Rhetoric",
+    "locus": "1415b12-1415b17",
+    "status": "translated",
+    "translation_credit": "Freese, 1926",
+    "emphasis": [
+     "Wherefore, when the right moment comes, one must say, And give me your attention, for it concerns you as much as myself; and, I will tell you such a thing as you have never yet heard of, so strange and wonderful. This is what Prodicus used to do; whenever his hearers began to nod, he would throw in a dash of his fifty-drachma lecture."
     ]
    }
   ]
@@ -86,7 +129,57 @@
      "When he had said this, Prodicus remarked: I think you are right, Critias: those who attend this sort of discussion ought to be joint, but not equal, hearers of both disputants. For there is a difference: we should listen jointly to them both, yet not give equal heed to each, but more to the wiser and less to the less intelligent. I on my part also, Protagoras and Socrates, call upon you to accede to our request, and to dispute,",
      "but not wrangle, with each other over your arguments: for friends dispute with friends, just from good feeling; whereas wrangling is between those who are at variance and enmity with one another. In this way our meeting will have highest success, since you the speakers will thus earn the greatest measure of good repute, not praise, from us who hear you. For good repute is present in the hearers’ souls without deception, but praise is too often in the words of liars who hide what they really think.",
      "Again, we listeners would thus be most comforted, not pleased; for he is comforted who learns something and gets a share of good sense in his mind alone, whereas he is pleased who eats something or has some other pleasant sensation only in his body. When Prodicus had thus spoken, quite a number of the company showed their approval"
-    ]
+    ],
+    "trim": {
+     "start": "When he had said this, Prodicus remarked",
+     "end": "quite a number of the company showed their approval"
+    }
+   }
+  ]
+ },
+ "1:A14": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Protagoras",
+    "locus": "340a-340b",
+    "status": "translated",
+    "translation_credit": "Lamb, 1924",
+    "emphasis": [
+     "For indeed to rehabilitate Simonides requires your artistry, by which you can discriminate between wishing and desiring as two distinct things",
+     "do you consider becoming and being to be the same or different? Different, to be sure, said Prodicus."
+    ],
+    "trim": {
+     "start": "For indeed to rehabilitate Simonides requires your artistry",
+     "omit": [
+      [
+       "in the fine and ample manner of your statement just now.",
+       "Now you, Prodicus, shall declare your verdict first:"
+      ]
+     ],
+     "end": "Different, to be sure, said Prodicus."
+    }
+   },
+   {
+    "source_author": "Plato",
+    "source_work": "Protagoras",
+    "locus": "341b-341c",
+    "status": "translated",
+    "translation_credit": "Lamb, 1924",
+    "emphasis": [
+     "For awful, he says, is bad;",
+     "What did Simonides mean, Prodicus, by hard? Bad, he replied."
+    ],
+    "trim": {
+     "start": "For awful, he says, is bad;",
+     "omit": [
+      [
+       "thus no one on this or that occasion",
+       "on the dialect of Simonides."
+      ]
+     ],
+     "end": "Bad, he replied."
+    }
    }
   ]
  },
@@ -95,12 +188,25 @@
    {
     "source_author": "Plato",
     "source_work": "Meno",
-    "locus": "75e",
+    "locus": "75d-75e",
     "status": "translated",
     "translation_credit": "Lamb, 1924",
     "emphasis": [
-     "as a limit, or extremity—I use all these terms in the same sense, though I daresay Prodicus might quarrel with us."
-    ]
+     "Tell me, is there something you call an end? Such a thing, I mean, as a limit, or extremity—I use all these terms in the same sense, though I daresay Prodicus might quarrel with us."
+    ],
+    "trim": {
+     "start": "Tell me, is there something you call an end?",
+     "end": "though I daresay Prodicus might quarrel with us."
+    },
+    "alt_loci": {
+     "jowett": "75c"
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "You will acknowledge, will you not, that there is such a thing as an end",
+      "end": "Prodicus might draw distinctions about them"
+     }
+    }
    }
   ]
  },
@@ -114,8 +220,12 @@
     "translation_credit": "Lamb, 1924",
     "emphasis": [
      "First of all, as Prodicus says, you have to learn about the correct use of words—the very point that our two visitors are making plain to you, namely, that you were unaware that learning is the name which people apply on the one hand to the case of a man who, having originally no knowledge about some matter, in course of time receives such knowledge;",
-     "and on the other hand the same word is applied when, having the knowledge already, he uses that knowledge for the investigation of the same matter whether occurring in action or in speech. It is true that they tend rather to call it understanding than learning, but occasionally they call it learning too;"
-    ]
+     "and on the other hand the same word is applied when, having the knowledge already, he uses that knowledge for the investigation of the same matter whether occurring in action or in speech. It is true that they tend rather to call it understanding than learning, but occasionally they call it learning too"
+    ],
+    "trim": {
+     "start": "First of all, as Prodicus says",
+     "end": "but occasionally they call it learning too"
+    }
    }
   ]
  },
@@ -129,7 +239,11 @@
     "translation_credit": "Lamb, 1924",
     "emphasis": [
      "I rather hold that the fearless and the courageous are not the same thing. In my opinion very few people are endowed with courage and forethought, while rashness, boldness, and fearlessness, with no forethought to guide it, are found in a great number"
-    ]
+    ],
+    "trim": {
+     "start": "I rather hold that the fearless and the courageous",
+     "end": "are found in a great number"
+    }
    },
    {
     "source_author": "Plato",
@@ -139,7 +253,16 @@
     "translation_credit": "Lamb, 1924",
     "emphasis": [
      "No, say nothing, Laches: for in fact you seem to me to have failed to perceive that he has acquired his wisdom from Damon, our good friend; and Damon constantly associates with Prodicus, who is supposed to be the cleverest of the sophists at distinguishing terms like these."
-    ]
+    ],
+    "trim": {
+     "end": "at distinguishing terms like these."
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "Do not answer him, Laches",
+      "end": "the best puller to pieces of words of this sort."
+     }
+    }
    }
   ]
  },
@@ -154,8 +277,12 @@
     "emphasis": [
      "Tell me, I said, do you not call making and doing the same?",
      "No indeed, he replied, nor working and making the same either: this I learnt from Hesiod, who said, Work is no reproach. Now, do you suppose that if he had given the names of working and doing to such works as you were mentioning just now, he would have said there was no reproach in shoe-making or pickle-selling or serving the stews? It is not to be thought, Socrates; he rather held,",
-     "I conceive, that making was different from doing and working, and that while a thing made might be a reproach if it had no connection with the honorable, work could never be a reproach. For things honorably and usefully made he called works, and such makings he called workings and doings;"
-    ]
+     "I conceive, that making was different from doing and working, and that while a thing made might be a reproach if it had no connection with the honorable, work could never be a reproach. For things honorably and usefully made he called works, and such makings he called workings and doings"
+    ],
+    "trim": {
+     "start": "Tell me, I said, do you not call making and doing the same?",
+     "end": "such makings he called workings and doings"
+    }
    },
    {
     "source_author": "Plato",
@@ -165,6 +292,24 @@
     "translation_credit": "Lamb, 1927",
     "emphasis": [
      "for in fact I have heard Prodicus drawing innumerable distinctions between names."
+    ],
+    "trim": {
+     "start": "for in fact I have heard Prodicus",
+     "end": "drawing innumerable distinctions between names."
+    }
+   }
+  ]
+ },
+ "1:A19": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Topics",
+    "locus": "112b21-112b24",
+    "status": "translated",
+    "translation_credit": "Pickard-Cambridge, 1928",
+    "emphasis": [
+     "Moreover, look and see also if he has stated a thing to be an accident of itself, taking it to be a different thing because it has a different name, as Prodicus used to divide pleasures into joy and delight and good cheer: for all these are names of the same thing, to wit, Pleasure."
     ]
    }
   ]
@@ -179,7 +324,20 @@
     "translation_credit": "Fowler, 1914",
     "emphasis": [
      "And once when Prodicus heard these inventions, he laughed, and said that he alone had discovered the art of proper speech, that discourses should be neither long nor short, but of reasonable length."
-    ]
+    ],
+    "trim": {
+     "start": "And once when Prodicus heard these inventions",
+     "end": "but of reasonable length."
+    },
+    "alt_loci": {
+     "jowett": "267a"
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "I remember Prodicus laughing",
+      "end": "but of a convenient length."
+     }
+    }
    }
   ]
  }

@@ -36,7 +36,7 @@ describe('AUTHORS registry invariants (N >= 0 — Phase 0 ships no real authors)
   it('has at least one language per author', () => {
     for (const a of AUTHORS) {
       expect(a.languages.length).toBeGreaterThan(0);
-      for (const lang of a.languages) expect(['grc', 'lat']).toContain(lang);
+      for (const lang of a.languages) expect(['grc', 'lat', 'en']).toContain(lang);
     }
   });
 
@@ -227,6 +227,17 @@ describe('fixture-flag gating (PUBLIC_READER_FIXTURES)', () => {
     expect(freshWorks.getWork('sample-work')?.author).toBe('sample-author');
   });
 
+  it('includes the English fixture author, owning the English fixture work, when the flag is set', async () => {
+    vi.stubEnv('PUBLIC_READER_FIXTURES', '1');
+    vi.resetModules();
+    const freshAuthors = await import('../lib/authors');
+    const freshWorks = await import('../lib/works');
+    const author = freshAuthors.getAuthor('sample-english-author');
+    expect(author?.languages).toEqual(['en']);
+    expect(author?.works).toEqual(['sample-english-work']);
+    expect(freshWorks.getWork('sample-english-work')?.author).toBe('sample-english-author');
+  });
+
   it('fixture author has a present, valid holdings value when the flag is set', async () => {
     vi.stubEnv('PUBLIC_READER_FIXTURES', '1');
     vi.resetModules();
@@ -277,7 +288,7 @@ describe('corpus-scoping (PUBLIC_WING)', () => {
     vi.resetModules();
     const fresh = await import('../lib/authors');
     expect(fresh.getAuthor('sample-author')).toBeDefined();
-    expect(fresh.AUTHORS.map((a) => a.id).sort()).toEqual(['aristotle', 'porphyry', 'sample-author']);
+    expect(fresh.AUTHORS.map((a) => a.id).sort()).toEqual(['aristotle', 'porphyry', 'sample-author', 'sample-english-author']);
   });
 
   it('an unknown corpus id scopes AUTHORS to empty (no author owns a work in it)', async () => {

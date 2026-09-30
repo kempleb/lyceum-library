@@ -131,6 +131,64 @@ async function main() {
     }
   }
 
+  // (e) The English-language fixture work (sample-english-author/
+  // sample-english-work, two essays, no translations): its pages exist, each
+  // essay carries its section anchors, and none of the page furniture that
+  // only makes sense beside a second language shows up -- no view toggle, no
+  // translation picker, no dictionary links, no "no translation" or
+  // "side by side" wording, no "Translation" in the <title>. The source text
+  // is English, so a source-text column must say lang="en", never "grc".
+  const english = {
+    authorIndex: 'sample-english-author/index.html',
+    workLanding: 'texts/sample-english-author/sample-english-work/index.html',
+    essay1: 'read/sample-english-author/sample-english-work/essay-1/index.html',
+    essay2: 'read/sample-english-author/sample-english-work/essay-2/index.html',
+  };
+  const englishHtml = {};
+  for (const [key, rel] of Object.entries(english)) {
+    englishHtml[key] = await readFile(dist, rel);
+    check(englishHtml[key] !== null, `missing page: ${rel}`);
+  }
+  const englishAnchors = {
+    essay1: ['col-1.1', 'col-1.2', 'col-1.3'],
+    essay2: ['col-2.1', 'col-2.2', 'col-2.3'],
+  };
+  for (const [key, anchors] of Object.entries(englishAnchors)) {
+    if (englishHtml[key] === null) continue;
+    for (const anchor of anchors) {
+      check(englishHtml[key].includes(`id="${anchor}"`), `${english[key]}: missing section anchor id="${anchor}"`);
+    }
+  }
+  const englishAbsent = [
+    ['view-toggle', /class="[^"]*\bview-toggle\b/],
+    ['rc-trans-select', /rc-trans-select/],
+    ['a /lemma/ link', /href="[^"]*\/lemma\//],
+    ['the text "No English translation"', /No English translation/],
+    ['the text "side by side"', /side by side/i],
+    ['"Translation", "Greek" or "Latin" in <title>', /<title>[^<]*(Translation|Greek|Latin)[^<]*<\/title>/i],
+    ['an element tagged lang="grc" or lang="la"', /\blang="(grc|la)"/],
+  ];
+  for (const key of ['authorIndex', 'workLanding', 'essay1', 'essay2']) {
+    if (englishHtml[key] === null) continue;
+    for (const [label, pattern] of englishAbsent) {
+      check(!pattern.test(englishHtml[key]), `${english[key]}: must not contain ${label}`);
+    }
+  }
+  for (const key of ['essay1', 'essay2']) {
+    const sourceColumns = (englishHtml[key] ?? '').match(/<[a-z][^>]*\bgreek-col\b[^>]*>/g) ?? [];
+    check(
+      sourceColumns.some((tag) => /\blang="en"/.test(tag)),
+      `${english[key]}: no greek-col element with lang="en"`,
+    );
+  }
+
+  // Non-vacuity control: the same patterns do fire on a Greek work, so the
+  // absences above mean something.
+  if (html.book1 !== null) {
+    check(/class="[^"]*\bview-toggle\b/.test(html.book1), `${pages.book1}: control failed, expected a view-toggle`);
+    check(/href="[^"]*\/lemma\/grc\//.test(html.book1), `${pages.book1}: control failed, expected a /lemma/grc/ link`);
+  }
+
   if (failures.length) {
     console.error(`verify-fixture-build: ${failures.length} check(s) failed:`);
     for (const f of failures) console.error(`  - ${f}`);

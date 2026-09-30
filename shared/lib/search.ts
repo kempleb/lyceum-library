@@ -521,8 +521,8 @@ export async function search(
       // work's search silently never matched u/v or i/j variants). Default
       // to 'grc' for an unregistered work id (matches greekFold's prior
       // unconditional behavior, so existing Greek-only callers/tests are
-      // unaffected).
-      const lang: SourceLanguage = getWork(w)?.language ?? 'grc';
+      // unaffected), and for any language that is not Latin.
+      const lang: SourceLanguage = getWork(w)?.language === 'lat' ? 'lat' : 'grc';
       return await searchWork(w, grkTerms, engTerms, grkMode, engMode, langOp, matchMode, lang);
     } catch (err) {
       console.warn(`search: skipping ${w} —`, err);

@@ -321,19 +321,19 @@ def test_unrecognized_div_n_is_a_hard_error():
 def test_div_map_merges_leading_context_into_target_column():
     # Mirrors Parmenides' n="7,8" -> B7 leading merge: the alternate-source
     # div appears BEFORE its target's own div in the export, and its content
-    # renders as a labeled context block ahead of B7's own text.
+    # renders as a context block ahead of B7's own text.
     xml = _fragmenta_xml(
         '<div type="Fragment" n="7,8"><p>ΑΑΑ ΒΒΒ</p></div>',
         '<div type="Fragment" n="7"><p><hi rend="letter-spacing">λόγος</hi></p></div>',
     )
     m = _manifest({"div_map": [
-        {"n": "7,8", "target": "B7", "role": "context", "position": "leading", "label": "Alt"},
+        {"n": "7,8", "target": "B7", "role": "context", "position": "leading"},
     ]})
     flat, _ = _parse_fragments(_tree(xml), SCHEME, m, "fixture")
     cols = {e["column"] for e in flat}
     assert cols == {"B7"}
     assert flat[0]["role"] == "context"
-    assert flat[0]["text"] == "[Alt] ΑΑΑ ΒΒΒ"
+    assert flat[0]["text"] == "ΑΑΑ ΒΒΒ"
     assert flat[1]["role"] == "text"
     assert flat[1]["text"] == "λόγος"
 
@@ -346,19 +346,36 @@ def test_div_map_merges_trailing_context_into_target_column():
         '<div type="Fragment" n="8schol"><p>ΓΓΓ ΔΔΔ</p></div>',
     )
     m = _manifest({"div_map": [
-        {"n": "8schol", "target": "B8", "role": "context", "position": "trailing", "label": "Schol"},
+        {"n": "8schol", "target": "B8", "role": "context", "position": "trailing"},
     ]})
     flat, _ = _parse_fragments(_tree(xml), SCHEME, m, "fixture")
     assert flat[0]["role"] == "text"
     assert flat[0]["text"] == "λόγος"
     assert flat[1]["role"] == "context"
-    assert flat[1]["text"] == "[Schol] ΓΓΓ ΔΔΔ"
+    assert flat[1]["text"] == "ΓΓΓ ΔΔΔ"
+
+
+def test_div_map_leading_and_trailing_blocks_have_no_prefix():
+    xml = _fragmenta_xml(
+        '<div type="Fragment" n="7,8"><p>ΑΑΑ ΒΒΒ</p></div>',
+        '<div type="Fragment" n="7"><p><hi rend="letter-spacing">λόγος</hi></p></div>',
+        '<div type="Fragment" n="8"><p><hi rend="letter-spacing">ἐστίν</hi></p></div>',
+        '<div type="Fragment" n="8schol"><p>ΓΓΓ ΔΔΔ</p></div>',
+    )
+    m = _manifest({"div_map": [
+        {"n": "7,8", "target": "B7", "role": "context", "position": "leading"},
+        {"n": "8schol", "target": "B8", "role": "context", "position": "trailing"},
+    ]})
+    flat, _ = _parse_fragments(_tree(xml), SCHEME, m, "fixture")
+    context_texts = [entry["text"] for entry in flat if entry["role"] == "context"]
+    assert context_texts == ["ΑΑΑ ΒΒΒ", "ΓΓΓ ΔΔΔ"]
+    assert all(not text.startswith("[") for text in context_texts)
 
 
 def test_div_map_entry_requires_context_role():
     xml = _fragmenta_xml('<div type="Fragment" n="7,8"><p>ΑΑΑ</p></div>')
     m = _manifest({"div_map": [
-        {"n": "7,8", "target": "B7", "role": "text", "position": "leading", "label": "Alt"},
+        {"n": "7,8", "target": "B7", "role": "text", "position": "leading"},
     ]})
     with pytest.raises(ValueError, match="role="):
         _parse_fragments(_tree(xml), SCHEME, m, "fixture")
@@ -367,9 +384,18 @@ def test_div_map_entry_requires_context_role():
 def test_div_map_entry_requires_position():
     xml = _fragmenta_xml('<div type="Fragment" n="7,8"><p>ΑΑΑ</p></div>')
     m = _manifest({"div_map": [
-        {"n": "7,8", "target": "B7", "role": "context", "label": "Alt"},
+        {"n": "7,8", "target": "B7", "role": "context"},
     ]})
     with pytest.raises(ValueError, match="position"):
+        _parse_fragments(_tree(xml), SCHEME, m, "fixture")
+
+
+def test_div_map_entry_requires_target():
+    xml = _fragmenta_xml('<div type="Fragment" n="7,8"><p>ΑΑΑ</p></div>')
+    m = _manifest({"div_map": [
+        {"n": "7,8", "role": "context", "position": "leading"},
+    ]})
+    with pytest.raises(ValueError, match="must declare target"):
         _parse_fragments(_tree(xml), SCHEME, m, "fixture")
 
 
@@ -378,7 +404,7 @@ def test_div_map_stale_declaration_is_a_hard_error():
         '<div type="Fragment" n="7"><p><hi rend="letter-spacing">λόγος</hi></p></div>',
     )
     m = _manifest({"div_map": [
-        {"n": "7,8", "target": "B7", "role": "context", "position": "leading", "label": "Alt"},
+        {"n": "7,8", "target": "B7", "role": "context", "position": "leading"},
     ]})
     with pytest.raises(ValueError, match="no such div was found"):
         _parse_fragments(_tree(xml), SCHEME, m, "fixture")
@@ -387,7 +413,7 @@ def test_div_map_stale_declaration_is_a_hard_error():
 def test_div_map_duplicate_source_n_is_a_hard_error():
     # Two declarations for the SAME source div @n (a manifest-authoring
     # copy-paste slip) must never silently overwrite -- the first entry's
-    # target/position/label would vanish with no error otherwise (Sol
+    # target/position would vanish with no error otherwise (Sol
     # review blocker 3).
     xml = _fragmenta_xml(
         '<div type="Fragment" n="7,8"><p>ΑΑΑ</p></div>',
@@ -395,8 +421,8 @@ def test_div_map_duplicate_source_n_is_a_hard_error():
         '<div type="Fragment" n="9"><p><hi rend="letter-spacing">ἐστίν</hi></p></div>',
     )
     m = _manifest({"div_map": [
-        {"n": "7,8", "target": "B7", "role": "context", "position": "leading", "label": "Alt"},
-        {"n": "7,8", "target": "B9", "role": "context", "position": "trailing", "label": "Alt2"},
+        {"n": "7,8", "target": "B7", "role": "context", "position": "leading"},
+        {"n": "7,8", "target": "B9", "role": "context", "position": "trailing"},
     ]})
     with pytest.raises(ValueError, match="more than once"):
         _parse_fragments(_tree(xml), SCHEME, m, "fixture")
@@ -407,7 +433,7 @@ def test_div_map_unconsumed_target_is_a_hard_error():
     # the merge's text would otherwise silently vanish.
     xml = _fragmenta_xml('<div type="Fragment" n="7,8"><p>ΑΑΑ</p></div>')
     m = _manifest({"div_map": [
-        {"n": "7,8", "target": "B9", "role": "context", "position": "leading", "label": "Alt"},
+        {"n": "7,8", "target": "B9", "role": "context", "position": "leading"},
     ]})
     with pytest.raises(ValueError, match="ever processed as an ordinary fragment"):
         _parse_fragments(_tree(xml), SCHEME, m, "fixture")
@@ -493,7 +519,7 @@ def test_div_concat_source_collides_with_div_map_is_a_hard_error():
     m = _manifest({
         "series": "A",
         "div_map": [{"n": "28,977a", "target": "A9", "role": "context",
-                      "position": "leading", "label": "X"}],
+                      "position": "leading"}],
         "div_concat": {"A28": ["28,977a", "28,977b"]},
     })
     with pytest.raises(ValueError, match="at most one merge mechanism"):
@@ -656,7 +682,7 @@ def test_compound_n_map_source_colliding_with_div_map_source_is_a_hard_error():
     m = _manifest({
         "compound_n_map": {"77,78": "77"},
         "div_map": [{"n": "77,78", "target": "B76", "role": "context",
-                     "position": "leading", "label": "Alt"}],
+                     "position": "leading"}],
         "expected_gaps": ["B78"],
     })
     xml = _fragmenta_xml('<div type="Fragment" n="77,78"><p>ααα</p></div>')
@@ -725,7 +751,7 @@ def test_div_map_target_colliding_with_div_concat_target_is_a_hard_error():
         "series": "A",
         "div_map": [
             {"n": "9", "target": "A28", "role": "context",
-             "position": "leading", "label": "X"},
+             "position": "leading"},
         ],
         "div_concat": {"A28": ["28,977a", "28,977b"]},
     })
@@ -747,7 +773,7 @@ def test_div_concat_member_colliding_with_div_map_target_is_a_hard_error():
         "series": "A",
         "div_map": [
             {"n": "9", "target": "28,977a", "role": "context",
-             "position": "leading", "label": "X"},
+             "position": "leading"},
         ],
         "div_concat": {"A28": ["28,977a", "28,977b"]},
     })

@@ -137,11 +137,11 @@ citation:
     B20: 3
   # n="7,8" -> B7 leading context ("with its own attribution" — its own
   # first sentence names Plato/Sextus/etc.); n="8schol" -> B8 trailing
-  # context, heading "Scholion" (design memo §2.4 points 3-4). Neither is a
+  # context (design memo §2.4 points 3-4). Neither is a
   # citable column ("DK 28 B7,8" / "B8schol" are not real citations).
   div_map:
-    - { n: "7,8", target: B7, role: context, position: leading, label: "Alternate source (Plato, Sophist, and related witnesses)" }
-    - { n: "8schol", target: B8, role: context, position: trailing, label: Scholion }
+    - { n: "7,8", target: B7, role: context, position: leading }
+    - { n: "8schol", target: B8, role: context, position: trailing }
   # B22-B24: entirely `rend="small"` testimonia-style entries with no
   # letter-spacing at all (a lexicographer's/biographer's report ABOUT
   # Parmenides with no macroscopically quotable span — the same verified

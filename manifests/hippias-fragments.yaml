@@ -262,7 +262,8 @@ english:
   # context-english span covering the same material -- labeled a summary
   # rather than suppressed (stage1_freeman_english.py gate 5; see
   # EnglishChunk.summary).
-  summary_labels: [B2, B3, B4, B5, B9, B10, B12, B17]
+  summary_suppressed: [B3]
+  summary_labels: [B2, B4, B5, B9, B10, B12, B17]
 
 sources:
   tlg_dir_env: "TLG_DIR"

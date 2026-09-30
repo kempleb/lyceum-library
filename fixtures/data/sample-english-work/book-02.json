@@ -1,0 +1,29 @@
+{
+  "book": 2,
+  "segments": [
+    {
+      "id": "2:2.1",
+      "column": "2.1",
+      "greek": [
+        { "n": 1, "text": "The second essay begins with another invented remark about test data and its uses.", "tokens": [] }
+      ],
+      "english": null
+    },
+    {
+      "id": "2:2.2",
+      "column": "2.2",
+      "greek": [
+        { "n": 1, "text": "Here a made-up argument claims that a page with one language needs only one column.", "tokens": [] }
+      ],
+      "english": null
+    },
+    {
+      "id": "2:2.3",
+      "column": "2.3",
+      "greek": [
+        { "n": 1, "text": "The last invented passage ends the second essay and the whole fixture.", "tokens": [] }
+      ],
+      "english": null
+    }
+  ]
+}

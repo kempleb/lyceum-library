@@ -10,7 +10,11 @@
     "emphasis": [
      "This Pausanias, according to Aristippus and Satyrus, was his bosom-friend, to whom he dedicated his poem On Nature thus:",
      "Give ear, Pausanias, thou son of Anchitus the wise!"
-    ]
+    ],
+    "trim": {
+     "start": "This Pausanias, according to Aristippus and Satyrus",
+     "end": "thou son of Anchitus the wise!"
+    }
    }
   ]
  },
@@ -24,7 +28,16 @@
     "translation_credit": "Lamb, 1925",
     "emphasis": [
      "Then just help me to reckon up the results we get from our admissions for you know they say: That which seemeth well, ’tis well twice and also thrice to tell, and to examine too."
-    ]
+    ],
+    "trim": {
+     "start": "Then just help me to reckon up"
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "Help me then to draw out the conclusion",
+      "end": "twice and thrice over, as they say."
+     }
+    }
    }
   ]
  },
@@ -38,12 +51,28 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "And thou shalt learn all the drugs that are a defence to ward off ills and old age, since for thee alone shall I accomplish all this. Thou shalt arrest the violence of the unwearied winds that arise and sweep the earth, laying waste the cornfields with their blasts; and again, if thou so will, thou shalt call back winds in requital. Thou shalt make after the dark rain a seasonable drought for men, and again after the summer drought thou shalt cause tree-nourishing streams to pour from the sky. Thou shalt bring back from Hades a dead man’s strength."
-    ]
+    ],
+    "trim": {
+     "start": "Nay more: he contends that Empedocles"
+    }
    }
   ]
  },
  "1:B112": {
   "context_spans": [
+   {
+    "source_author": "Diogenes Laertius",
+    "source_work": "Lives of Eminent Philosophers",
+    "locus": "8.54",
+    "status": "translated",
+    "translation_credit": "Hicks, 1925",
+    "emphasis": [
+     "That he belonged to Agrigentum in Sicily he himself testifies at the beginning of his Purifications: My friends, who dwell in the great city sloping down to yellow Acragas, hard by the citadel."
+    ],
+    "trim": {
+     "end": "hard by the citadel."
+    }
+   },
    {
     "source_author": "Diogenes Laertius",
     "source_work": "Lives of Eminent Philosophers",
@@ -63,7 +92,11 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "Before now I was born a boy and a maid, a bush and a bird, and a dumb fish leaping out of the sea."
-    ]
+    ],
+    "trim": {
+     "start": "At any rate he says: Before now",
+     "end": "a dumb fish leaping out of the sea."
+    }
    }
   ]
  },
@@ -77,7 +110,10 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "They also had a son Telauges, who succeeded his father and, according to some, was Empedocles’ instructor. At all events Hippobotus makes Empedocles say: Telauges, famed Son of Theano and Pythagoras."
-    ]
+    ],
+    "trim": {
+     "end": "Son of Theano and Pythagoras."
+    }
    }
   ]
  },
@@ -91,7 +127,11 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "Moreover he wrote an epigram upon him: The physician Pausanias, rightly so named, son of Anchitus, descendant of Asclepius, was born and bred at Gela. Many a wight pining in fell torments did he bring back from Persephone’s inmost shrine."
-    ]
+    ],
+    "trim": {
+     "start": "Moreover he wrote an epigram upon him:",
+     "end": "from Persephone’s inmost shrine."
+    }
    }
   ]
  },
@@ -105,7 +145,674 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "“Acron the eminent physician of Agrigentum, son of Acros, is buried beneath the steep eminence of his most eminent native city?” Others give as the second line: Is laid in an exalted tomb on a most exalted peak. Some attribute this couplet to Simonides."
-    ]
+    ],
+    "trim": {
+     "start": "“Acron the eminent physician"
+    }
+   }
+  ]
+ },
+ "1:B13": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "1.18",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles says that there",
+     "end": "anything superabundant."
+    }
+   }
+  ]
+ },
+ "1:B6": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "1.3",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Mark the four roots",
+     "end": "the mortal fount."
+    }
+   }
+  ]
+ },
+ "1:B11": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Adversus Colotem",
+    "locus": "1113c",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "Fools, and of little thought, we well may deem Those, who so silly are as to esteem That what ne’er was may now engendered be, And that what is may perish utterly."
+    ],
+    "trim": {
+     "start": "And it seems to me, indeed, that Empedocles",
+     "end": "that is, reduction to nothing."
+    }
+   }
+  ]
+ },
+ "1:B15": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Adversus Colotem",
+    "locus": "1113d",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "No prudent man can e’er into his mind Admit that, whilst men living here on earth (Which only life they call) both fortunes find, They being have, but that before the birth They nothing were, nor shall be when once dead."
+    ],
+    "trim": {
+     "start": "the following verses might give",
+     "end": "or that are already dead."
+    }
+   }
+  ]
+ },
+ "1:B17": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Amatorius",
+    "locus": "756d",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "But when you hear Empedocles thus saying",
+     "end": "apprehended only by opinion and belief;"
+    }
+   }
+  ]
+ },
+ "1:B18": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Iside et Osiride",
+    "locus": "370d",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1936",
+    "emphasis": [
+     "friendliness"
+    ],
+    "trim": {
+     "start": "Empedocles calls the beneficent principle",
+     "end": "“sedate of countenance”;"
+    }
+   }
+  ]
+ },
+ "1:B19": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Primo Frigido",
+    "locus": "952b",
+    "status": "translated",
+    "translation_credit": "Helmbold, 1957",
+    "emphasis": [
+     "Tenacious Love."
+    ],
+    "trim": {
+     "start": "To sum up: fire is",
+     "end": "Water “Tenacious Love.”"
+    }
+   }
+  ]
+ },
+ "1:B24": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Defectu Oraculorum",
+    "locus": "418c",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1936",
+    "emphasis": [
+     "Putting the heads of myths together, Bringing no single path to perfection"
+    ],
+    "trim": {
+     "start": "But that I may not seem to be doing",
+     "end": "the proper conclusion"
+    }
+   }
+  ]
+ },
+ "1:B27": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Facie in Orbe Lunae",
+    "locus": "926e-926f",
+    "status": "translated",
+    "translation_credit": "Cherniss, 1957",
+    "emphasis": [
+     "The sun’s bright aspect is not there descried, No, nor the shaggy might of earth, nor sea"
+    ],
+    "trim": {
+     "start": "So look out and reflect, good sir, lest",
+     "omit": [
+      [
+       "in rearranging and removing",
+       "a dissolution of the cosmos and"
+      ],
+      [
+       "not accepting combination",
+       "when mind or soul is wanting."
+      ]
+     ],
+     "end": "as Empedocles says and Parmenides and Hesiod"
+    }
+   }
+  ]
+ },
+ "1:B35": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Convivales",
+    "locus": "677d",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "But Socicles the poet",
+     "end": "well tempered,"
+    }
+   }
+  ]
+ },
+ "1:B40": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Facie in Orbe Lunae",
+    "locus": "920c-920d",
+    "status": "translated",
+    "translation_credit": "Cherniss, 1957",
+    "emphasis": [
+     "The sun keen-shafted and the gentle moon"
+    ],
+    "trim": {
+     "start": "as Empedocles too somewhere",
+     "end": "cheerfulness and harmlessness"
+    }
+   }
+  ]
+ },
+ "1:B42": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Facie in Orbe Lunae",
+    "locus": "929c-929e",
+    "status": "translated",
+    "translation_credit": "Cherniss, 1957",
+    "emphasis": [
+     "His beams she put to flight",
+     "From heaven above as far as to the earth, Whereof such breadth as had the bright-eyed moon She cast in shade"
+    ],
+    "trim": {
+     "start": "‘standing in a straight line",
+     "omit": [
+      [
+       "As for the explanation of Posidonius",
+       "filled with sunshine by the rays."
+      ],
+      [
+       "and the impact of missiles",
+       "after a ricochet is weaker,"
+      ]
+     ],
+     "end": "slackens its force."
+    }
+   }
+  ]
+ },
+ "1:B44": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Pythiae Oraculis",
+    "locus": "400b",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1936",
+    "emphasis": [
+     "Back to the heavens again sends his beams with countenance fearless."
+    ],
+    "trim": {
+     "start": "But you Stoics ridicule Empedocles",
+     "end": "with countenance fearless."
+    }
+   }
+  ]
+ },
+ "1:B48": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Platonicae",
+    "locus": "1006e-1006f",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "the earth makes night by intercepting light"
+    ],
+    "trim": {
+     "start": "For the gnomons of dials",
+     "end": "by intercepting light."
+    }
+   }
+  ]
+ },
+ "1:B49": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Convivales",
+    "locus": "720e",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "blind and solitary Night"
+    ],
+    "trim": {
+     "start": "for the air of the",
+     "end": "which it makes in the eyes."
+    }
+   }
+  ]
+ },
+ "1:B60": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Adversus Colotem",
+    "locus": "1123b",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "with winding feet and undivided hands"
+    ],
+    "trim": {
+     "start": "These, and many other illusions",
+     "end": "faced like man,”"
+    }
+   }
+  ]
+ },
+ "1:B74": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Convivales",
+    "locus": "685f",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "Leading the foolish race of fruitful fish."
+    ],
+    "trim": {
+     "start": "And beside, there are no land animals",
+     "end": "fruitful fish."
+    }
+   }
+  ]
+ },
+ "1:B76": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Convivales",
+    "locus": "618b",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "The oysters, murets of the sea, and shell-fish every one, With massy coat, the tortoise eke, with crust as hard as stone, And vaulted back, which archwise he aloft doth hollow rear, Show all that heavy earth they do above their bodies bear;"
+    ],
+    "trim": {
+     "start": "Nay, you see even the Deity himself",
+     "end": "above their bodies bear;"
+    }
+   }
+  ]
+ },
+ "1:B80": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Convivales",
+    "locus": "683d-683f",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "Why pomegranates so late do grow, And apples bear a lovely show (ὑπέρφλοια);"
+    ],
+    "trim": {
+     "start": "This discourse we liked indifferently well.",
+     "omit": [
+      [
+       "until the air begins to wax colder;",
+       "soonest in the shade."
+      ],
+      [
+       "since it is not his custom",
+       "and the liver full of blood."
+      ],
+      [
+       "In this sense, Antimachus",
+       "surnamed Φλοῖος."
+      ]
+     ],
+     "end": "philosophers call it ὑπέρφλοιον."
+    }
+   }
+  ]
+ },
+ "1:B81": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Naturales",
+    "locus": "912b-912c",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "When in vine wood the water putrefies, It turns to wine, while under bark it lies."
+    ],
+    "trim": {
+     "start": "Moreover, that rain-water is easily alterable",
+     "end": "while under bark it lies."
+    }
+   }
+  ]
+ },
+ "1:B83": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Fortuna",
+    "locus": "98d",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1928",
+    "emphasis": [
+     "But as for hedgehogs Growing upon their backs sharp darts of spines stand bristling"
+    ],
+    "trim": {
+     "start": "For some are armed with horns",
+     "end": "sharp darts of spines stand bristling"
+    }
+   }
+  ]
+ },
+ "1:B89": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Naturales",
+    "locus": "916d",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "that effluvia proceed from all things whatever"
+    ],
+    "trim": {
+     "start": "Let us consider what Empedocles says",
+     "end": "and they wear continually;"
+    }
+   }
+  ]
+ },
+ "1:B94": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Naturales",
+    "locus": "919d",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "A river in the bottom seems By shade of color black; The like is seen in caves and holes, By depth, where light they lack."
+    ],
+    "trim": {
+     "start": "How cometh it that water, seeming white aloft",
+     "end": "where light they lack."
+    }
+   }
+  ]
+ },
+ "1:B101": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Curiositate",
+    "locus": "520e",
+    "head": "PLUT. de curios. 11 p. 520 E",
+    "status": "translated",
+    "translation_credit": "Helmbold, 1939",
+    "emphasis": [
+     "With nostrils tracking down the paths of beasts"
+    ],
+    "trim": {
+     "start": "And as hunters do not allow young hounds",
+     "end": "tracking down the paths of beasts;"
+    }
+   },
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Naturales",
+    "locus": "917e",
+    "head": "Quaest. nat. 23 p. 917 E",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "with noses find the steps of all wild beasts"
+    ],
+    "trim": {
+     "start": "Whether the dogs, as Empedocles says",
+     "end": "at winding them?"
+    }
+   }
+  ]
+ },
+ "1:B115": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Exilio",
+    "locus": "607d",
+    "head": "PLUT. de exil. 17 p. 607 C",
+    "status": "translated",
+    "translation_credit": "De Lacy and Einarson, 1959",
+    "emphasis": [
+     "A law there is, an oracle of Doom, Of old enacted by the assembled gods, That if a Daemon—such as live for ages—Defile himself with foul and sinful murder, He must for seasons thrice ten thousand roam Far from the Blest: such is the path I tread, I too a wanderer and exile from heaven"
+    ],
+    "trim": {
+     "start": "Empedocles, however, when beginning",
+     "omit": [
+      [
+       "“For,” he says, “no commingling",
+       "But it is truest to say that"
+      ]
+     ],
+     "end": "driven forth by divine decrees and laws;"
+    }
+   },
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Iside et Osiride",
+    "locus": "361c",
+    "head": "PLUT. de Isid. 361 c",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1936",
+    "emphasis": [
+     "Might of the Heavens chases them forth to the realm of the Ocean; Ocean spews them out on the soil of the Earth, and Earth drives them Straight to the rays of the tireless Sun, who consigns them to Heaven’s Whirlings; thus one from another receives them, but ever with loathing"
+    ],
+    "trim": {
+     "start": "Empedocles says also that the demigods",
+     "end": "in accord with Nature."
+    }
+   }
+  ]
+ },
+ "1:B116": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Convivales",
+    "locus": "745c",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "Intolerable Necessity abhors."
+    ],
+    "trim": {
+     "start": "but Plato is absurd",
+     "end": "Intolerable Necessity abhors."
+    }
+   }
+  ]
+ },
+ "1:B119": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Exilio",
+    "locus": "607e",
+    "status": "translated",
+    "translation_credit": "De Lacy and Einarson, 1959",
+    "emphasis": [
+     "What honour and what high felicity"
+    ],
+    "trim": {
+     "start": "and then, as on an island buffeted",
+     "omit": [
+      [
+       "not leaving Sardis for Athens",
+       "Lemnos or Scyros, but"
+      ]
+     ],
+     "end": "it is resentful and feels strange,"
+    }
+   }
+  ]
+ },
+ "1:B122": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Tranquillitate Animi",
+    "locus": "474b-474c",
+    "status": "translated",
+    "translation_credit": "Helmbold, 1939",
+    "emphasis": [
+     "Chthonia was there and far-seeing Heliopê, And bloody Deris, grave-eyed Harmonia, Callisto, Aeschra, Thoösa, and Denaea, Lovely Nemertes, dark-eyed Asapheia."
+    ],
+    "trim": {
+     "start": "but rather, as Empedocles affirms",
+     "end": "deals with both conditions."
+    }
+   }
+  ]
+ },
+ "1:B126": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Esu Carnium",
+    "locus": "998c",
+    "status": "translated",
+    "translation_credit": "Helmbold, 1957",
+    "emphasis": [
+     "Clothing souls with unfamiliar coat of flesh"
+    ],
+    "trim": {
+     "start": "Nature changes everything and assigns new dwellings",
+     "end": "Clothing souls with unfamiliar coat of flesh;"
+    }
+   }
+  ]
+ },
+ "1:B144": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Cohibenda Ira",
+    "locus": "464b",
+    "status": "translated",
+    "translation_credit": "Helmbold, 1939",
+    "emphasis": [
+     "Fast from evil"
+    ],
+    "trim": {
+     "start": "I have been wont to regard as great and divine",
+     "end": "“Fast from evil,”"
+    }
+   }
+  ]
+ },
+ "1:B148": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Convivales",
+    "locus": "683e",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "the mortal-encompassing earth",
+     "cloud-gathering",
+     "full of blood"
+    ],
+    "trim": {
+     "start": "since it is not his custom",
+     "end": "the liver full of blood."
+    }
+   }
+  ]
+ },
+ "1:B151": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Amatorius",
+    "locus": "756e",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "the Giver of Life"
+    ],
+    "trim": {
+     "start": "Therefore Empedocles gives her",
+     "end": "very aptly and pertinently."
+    }
+   }
+  ]
+ },
+ "1:B154": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Esu Carnium",
+    "locus": "993c-994a",
+    "status": "translated",
+    "translation_credit": "Helmbold, 1957",
+    "emphasis": [
+     "Dividing day and night; he brought them back Again and crowned them with the fruitful hours All wreathed with bloom, while violence",
+     "had been done to earth"
+    ],
+    "trim": {
+     "start": "Or would everyone declare",
+     "end": "you who have such a superfluity of necessities?"
+    }
    }
   ]
  }

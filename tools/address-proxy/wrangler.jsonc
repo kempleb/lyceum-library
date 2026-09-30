@@ -1,0 +1,19 @@
+{
+  // Throwaway Pages project for the address test (see README.md). Not the
+  // real site's config. John's choice, 2026-09-30: it runs in the Lyceum
+  // Institute account, in front of the test copy (lyceum-library-staging),
+  // because a Pages project can only forward this way to a Worker in its own
+  // account and the test copy serves its own texts. It is a separate project
+  // from Brian's live `lyceum-library` and is deleted after the checks.
+  // Docs: Pages accepts `services` (service bindings) in this file; it is the
+  // source of truth for the project once deployed, and the binding takes
+  // effect on the next deploy. Wrangler rejects `account_id` in a Pages
+  // config (seen 2026-09-30), so the account comes from the command line:
+  // CLOUDFLARE_ACCOUNT_ID=570b13129baea40d581ac89859a9c8aa (see README.md).
+  "name": "lyceum-proxy-test",
+  "pages_build_output_dir": "./public",
+  "compatibility_date": "2026-09-01",
+  "services": [
+    { "binding": "LIBRARY", "service": "lyceum-library-staging" }
+  ]
+}

@@ -99,7 +99,7 @@ export interface Work {
   // the author's bare display name ('Plato') back when this registry carried
   // a single author; every work now names its author by id, not by label.
   author: string;
-  language: 'grc' | 'lat';
+  language: 'grc' | 'lat' | 'en';
   workType: 'continuous' | 'fragments' | 'verse' | 'letters';
   books: number;
   bookLabels: string[];   // per-book display labels (Arabic for a bookless work)
@@ -107,11 +107,12 @@ export interface Work {
   // The noun for one division of this work, when it isn't a "book" -- e.g.
   // Seneca's Epistulae Morales ('letter') or De Providentia/De Constantia
   // Sapientis ('chapter', single dialogues stored as PHI chapters, not real
-  // books). Default (omitted) = 'book'. Drives both the reader's "Book"/
+  // books), or an English-only work whose divisions are essays ('essay').
+  // Default (omitted) = 'book'. Drives both the reader's "Book"/
   // "Letter"/"Chapter" chrome (ReaderShell.astro) and the URL division id
   // (divisionId below) from the one field, so the two can't disagree.
   // Ruling: John, 2026-09-12.
-  divisionNoun?: 'letter' | 'chapter';
+  divisionNoun?: 'letter' | 'chapter' | 'essay';
   greekEdition: string;
   // The print edition the TLG text was digitised from, in two lengths: `short`
   // for the reader's bilingual strip, `full` for the Greek-only strip and the
@@ -395,10 +396,12 @@ export function bookLabel(work: Work, n: number): string {
 
 // Human-readable name for a work's source language, derived from the
 // registry's `language` field (never from the author or title) — 'grc' works
-// are TLG-sourced Greek, 'lat' works are PHI-sourced Latin.
+// are TLG-sourced Greek, 'lat' works are PHI-sourced Latin, 'en' works have
+// English as their only text.
 export const LANGUAGE_LABEL: Record<Work['language'], string> = {
   grc: 'Greek',
   lat: 'Latin',
+  en: 'English',
 };
 
 export function languageLabel(work: Work): string {

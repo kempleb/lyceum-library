@@ -13,7 +13,7 @@ export interface Author {
   id: string;            // URL slug, kebab-case, e.g. 'marcus-aurelius'
   name: string;           // 'Marcus Aurelius'
   nativeName: string;     // 'Μᾶρκος Αὐρήλιος'
-  languages: ('grc' | 'lat')[];
+  languages: ('grc' | 'lat' | 'en')[];
   period: AuthorPeriod;
   schools: string[];      // e.g. ['stoic']
   floruit: string;        // display string, e.g. 'AD 121–180'

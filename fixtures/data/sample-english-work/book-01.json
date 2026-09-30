@@ -1,0 +1,29 @@
+{
+  "book": 1,
+  "segments": [
+    {
+      "id": "1:1.1",
+      "column": "1.1",
+      "greek": [
+        { "n": 1, "text": "The invented author opens by asking what a fixture is for. A fixture holds a place until real text arrives.", "tokens": [] }
+      ],
+      "english": null
+    },
+    {
+      "id": "1:1.2",
+      "column": "1.2",
+      "greek": [
+        { "n": 1, "text": "This second passage is also invented. It exists so that the page shows more than one citation.", "tokens": [] }
+      ],
+      "english": null
+    },
+    {
+      "id": "1:1.3",
+      "column": "1.3",
+      "greek": [
+        { "n": 1, "text": "A third invented passage closes the first essay. Nothing here comes from any real work.", "tokens": [] }
+      ],
+      "english": null
+    }
+  ]
+}

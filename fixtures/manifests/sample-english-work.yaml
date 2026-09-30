@@ -1,0 +1,22 @@
+registry:
+  id: sample-english-work
+  title: Sample English Work
+  abbr: SEW.
+  author: sample-english-author
+  language: en
+  workType: continuous
+  books: 2
+  bookLabels:
+    - '1'
+    - '2'
+  greekEdition: Fixture English edition
+  greekSource:
+    short: Fixture
+    full: Fixture English edition, full citation.
+  translations: []
+  citation:
+    scheme: book-section
+    hideLineNumbers: true
+    copyAbbr: SEW.
+  divisionNoun: essay
+  blurb: A fixture work for exercising English-language works before real content lands.

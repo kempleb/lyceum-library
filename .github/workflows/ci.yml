@@ -171,7 +171,8 @@ jobs:
           uv run --python 3.9 python -m reader_pipeline.validate_contracts \
             --schemas ../schemas \
             --snapshot ../fixtures/taxonomy.json \
-            --manifest ../fixtures/data/sample-work/manifest.json
+            --manifest ../fixtures/data/sample-work/manifest.json \
+            --manifest ../fixtures/data/sample-english-work/manifest.json
 
       # The old exit-5 ("no tests collected") tolerance dated from before the
       # pipeline test suite existed. It's gone now: 1776 real tests do exist

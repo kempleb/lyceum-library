@@ -25,7 +25,7 @@ def _stage1(manifest):
     # is rewritten below only when this work declares english.secondary.
     for scratch in ("ross_chunks.json", "third_chunks.json", "third_footnotes.json",
                     "overlays.json", "paratext.json", "context_english.json",
-                    "citation_expansion.json"):
+                    "citation_expansion.json", "citation_heads.json", "dk_fills.json"):
         (BUILD_DIR / "stage1" / scratch).unlink(missing_ok=True)
 
     # Source-passage English (docs/source-passage-english-scoping.md): an
@@ -52,6 +52,14 @@ def _stage1(manifest):
     from . import stage1_citation_expansion
 
     stage1_citation_expansion.run(manifest, spine)
+
+    # Filled DK abbreviations (John's ruling, 2026-09-29): a DK "FIRST ...
+    # LAST" whose full text DK prints elsewhere gets the words between, from
+    # sources/dk-abbreviations/fills.json. A work with no entry there is
+    # unaffected (no scratch file, no `fills` key on any line).
+    from . import stage1_dk_fills
+
+    stage1_dk_fills.run(manifest, spine)
 
     # Section-scheme works can opt into a parallel Perseus Stephanus TEI pass.
     # Others remain Greek-only, with stale English scratch removed.

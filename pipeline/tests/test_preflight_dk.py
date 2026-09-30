@@ -674,24 +674,19 @@ def test_verse_line_gate_does_not_run_for_a_lineless_dk_work():
     assert problems == []
 
 
-def test_bounded_stopword_exemption_survives_a_div_map_label_prefix(tmp_path, monkeypatch):
-    # Parmenides B7's real shape: a div_map merge block's synthetic
-    # "[Label] " prefix precedes the decided run; without stripping the
-    # prefix before re-deriving runs, the label's trailing "] " fuses with
-    # the run into a combined string the decision file can't match (a false
-    # positive against a correctly decided run).
+def test_bounded_stopword_exemption_survives_a_div_map_merge(tmp_path, monkeypatch):
+    # Parmenides B7's context line starts with the source's decided run.
     _stage_decisions(tmp_path, monkeypatch, "HERFIX", {"PLATO Soph. 237 A vgl. 258D": "citation"})
     manifest = WorkManifest(work_id="HERFIX", path=Path("x.yaml"),
                             data=_manifest_data({"lines": True, "div_map": [
                                 {"n": "7,8", "target": "B7", "role": "context",
-                                 "position": "leading",
-                                 "label": "Alternate source (Plato, Sophist)"},
+                                 "position": "leading"},
                             ]}))
     loaded = {"book-01.json": _book([
         _seg("B7", [
             {"role": "context", "n": -1,
-             "text": "[Alternate source (Plato, Sophist)] PLATO Soph. 237 A vgl. 258D λόγος",
-             "tokens": [{"t": "λόγος", "o": 64, "k": "lo/gos"}]},
+             "text": "PLATO Soph. 237 A vgl. 258D λόγος",
+             "tokens": [{"t": "λόγος", "o": 28, "k": "lo/gos"}]},
             {"role": "text", "n": 1, "text": "λόγος",
              "tokens": [{"t": "λόγος", "o": 0, "k": "lo/gos"}]},
         ]),
@@ -699,33 +694,6 @@ def test_bounded_stopword_exemption_survives_a_div_map_label_prefix(tmp_path, mo
     problems: list = []
     _validate_dk_work(manifest, loaded, problems, VERSE_SCHEME)
     assert problems == []
-
-
-def test_div_map_label_strip_only_matches_the_manifest_declared_label(tmp_path, monkeypatch):
-    # Sol review nit (b): the strip must be an EXACT match against this
-    # work's own declared citation.div_map labels, not a generic "any
-    # leading [...]" regex -- a genuine DK apparatus bracket that ISN'T a
-    # div_map label (e.g. a bracketed cross-reference) must NOT be stripped,
-    # so a real undecided "vgl" inside it is still caught.
-    manifest = WorkManifest(work_id="HERFIX", path=Path("x.yaml"),
-                            data=_manifest_data({"lines": True, "div_map": [
-                                {"n": "7,8", "target": "B7", "role": "context",
-                                 "position": "leading", "label": "Alternate source"},
-                            ]}))
-    loaded = {"book-01.json": _book([
-        _seg("B9", [
-            # A DIFFERENT bracketed prefix ("[vgl. B 13]") that is NOT the
-            # declared div_map label ("Alternate source") -- must survive
-            # the strip and still trip the bounded-stopword gate.
-            {"role": "text", "n": 1,
-             "text": "[vgl. B 13] λόγος",
-             "tokens": [{"t": "λόγος", "o": 12, "k": "lo/gos"}]},
-        ]),
-    ])}
-    problems: list = []
-    _validate_dk_work(manifest, loaded, problems, VERSE_SCHEME)
-    messages = [m for _w, _f, m in problems]
-    assert any("vgl" in m for m in messages), messages
 
 
 # --- _dk_expected_all_context_columns: manifest-derived expected set -------

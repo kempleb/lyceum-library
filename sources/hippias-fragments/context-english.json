@@ -1,0 +1,36 @@
+{
+ "1:B3": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Numa",
+    "locus": "1",
+    "status": "translated",
+    "translation_credit": "Perrin, 1914",
+    "emphasis": [
+     "the names of victors in the Olympic games",
+     "the list"
+    ],
+    "trim": {
+     "start": "Chronology, however, is hard to fix",
+     "end": "authoritative basis for his work."
+    }
+   }
+  ]
+ },
+ "1:B11": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Lycurgus",
+    "locus": "23",
+    "status": "translated",
+    "translation_credit": "Perrin, 1914",
+    "trim": {
+     "start": "Hippias the Sophist says",
+     "end": "took part in many campaigns,"
+    }
+   }
+  ]
+ }
+}

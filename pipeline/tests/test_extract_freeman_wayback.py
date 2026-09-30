@@ -51,6 +51,30 @@ def test_page_marker_paragraph_is_skipped_not_a_header():
     assert headers == []
 
 
+def test_paragraph_continues_label_after_page_break_is_dropped():
+    # Real app26.htm shape (Empedocles B122 across p. 66).
+    html = _wrap(
+        "<p>1. Beauty and Ugliness, the</p>"
+        '<p><a name="page_66"><font size="1" color="GREEN">p. 66</font></a></p>'
+        '<p><span class="contnote"><font size="-2" color="GREEN">'
+        "[paragraph continues]</font></span> Speed-Nymph and the Nymph.</p>"
+    )
+    cols, _ = _mod.parse_chapter(html)
+    assert cols["B1"]["text"] == "Beauty and Ugliness, the Speed-Nymph and the Nymph."
+
+
+def test_no_committed_source_store_carries_paragraph_continues():
+    """sacred-texts' page-break label is never shipped English (it leaked
+    into three Freeman stores until 2026-09-29)."""
+    root = Path(__file__).resolve().parents[2]
+    hits = [
+        str(p.relative_to(root))
+        for p in sorted((root / "sources").rglob("*.json"))
+        if "[paragraph continues]" in p.read_text(encoding="utf-8")
+    ]
+    assert hits == []
+
+
 def test_footnote_call_anchor_digit_is_not_emitted_into_entry_text():
     html = _wrap(
         "<p>1. Words before "

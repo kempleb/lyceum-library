@@ -467,7 +467,7 @@ def emit_books(spine, tokens_doc, english, range_map, out_dir: Path, ross=None,
                is_freeman: bool = False, display_order: list[str] | None = None,
                context_english=None, citation_expansion=None,
                whole_column_verbatim=None, section_paragraph_columns=None,
-               fragment_kinds=None) -> list[dict]:
+               fragment_kinds=None, citation_heads=None, dk_fills=None) -> list[dict]:
     turn_flows = turn_flows or {}
     tokens_by_id = {s["id"]: s for s in tokens_doc["segments"]}
     english_by_id = {c["id"]: c for c in english["chunks"]}
@@ -476,6 +476,8 @@ def emit_books(spine, tokens_doc, english, range_map, out_dir: Path, ross=None,
     overlays = overlays or {}
     context_english = context_english or {}
     citation_expansion = citation_expansion or {}
+    citation_heads = citation_heads or {}
+    dk_fills = dk_fills or {}
     whole_column_verbatim = whole_column_verbatim or {}
     section_paragraph_columns = section_paragraph_columns or set()
     fragment_kinds = fragment_kinds or {}
@@ -672,6 +674,13 @@ def emit_books(spine, tokens_doc, english, range_map, out_dir: Path, ross=None,
                         # (byte-identical by construction — see
                         # stage1_latin._transposition_seam_note).
                         **({"seamNote": note} if (note := line.get("seam_note")) else {}),
+                        # Filled DK abbreviations (stage1_dk_fills.py, John's
+                        # ruling 2026-09-29): [{start, end, text, kind,
+                        # abbrev}], each span the "..." of a DK "FIRST ...
+                        # LAST" whose full text DK prints elsewhere. Present
+                        # only on such a line; `text` itself is unchanged.
+                        **({"fills": _checked_fills(line["text"], fl)}
+                           if (fl := dk_fills.get(seg["id"], {}).get(str(idx))) else {}),
                     }
                     for idx, line in enumerate(seg["lines"])
                 ],
@@ -777,6 +786,8 @@ def emit_books(spine, tokens_doc, english, range_map, out_dir: Path, ross=None,
                     if (ec := citation_expansion.get(seg["id"]))
                     else {}
                 ),
+                **({"citationHeads": citation_heads[seg["id"]]}
+                   if seg["id"] in citation_heads else {}),
             }
         )
     stats = []
@@ -820,6 +831,15 @@ def emit_books(spine, tokens_doc, english, range_map, out_dir: Path, ross=None,
             }
         )
     return stats
+
+
+def _checked_fills(text: str, fills: list[dict]) -> list[dict]:
+    """A line's DK fills, after checking each still spans a "..." of `text`
+    (stage1_dk_fills computed them against the same spine)."""
+    for f in fills:
+        if text[f["start"]:f["end"]] != "...":
+            raise ValueError(f"dk fill at {f['start']}-{f['end']} no longer spans '...' in {text[:60]!r}")
+    return fills
 
 
 def _dk_page_letter(col: str, scheme) -> tuple[int, str | None]:
@@ -1097,6 +1117,17 @@ def run(manifest: Manifest) -> Path:
     # (stage1_citation_expansion.run) -- every other work has no
     # build/stage1/citation_expansion.json (cleared per-work by __main__.py's
     # `_stage1`, same posture as context_english.json) and emits nothing.
+    citation_heads_path = BUILD_DIR / "stage1" / "citation_heads.json"
+    citation_heads = (json.loads(citation_heads_path.read_text(encoding="utf-8"))
+                      if manifest.data.get("citation", {}).get("expand_citations")
+                      and citation_heads_path.exists() else {})
+    # Filled DK abbreviations (stage1_dk_fills.py): present only for a work
+    # with entries in sources/dk-abbreviations/fills.json; cleared per-work by
+    # __main__.py's `_stage1`, and ignored if another work's stage1 left it.
+    dk_fills_path = BUILD_DIR / "stage1" / "dk_fills.json"
+    dk_fills_doc = (json.loads(dk_fills_path.read_text(encoding="utf-8"))
+                    if dk_fills_path.exists() else {})
+    dk_fills = dk_fills_doc.get("fills", {}) if dk_fills_doc.get("work") == manifest.work_id else {}
     citation_expansion_path = BUILD_DIR / "stage1" / "citation_expansion.json"
     citation_expansion = (
         json.loads(citation_expansion_path.read_text(encoding="utf-8"))
@@ -1256,7 +1287,8 @@ def run(manifest: Manifest) -> Path:
     book_stats = emit_books(spine, tokens_doc, english, range_map, out_dir, ross,
                             third, overlays, turn_flows, sch, is_freeman, display_order,
                             context_english, citation_expansion, whole_column_verbatim,
-                            section_paragraph_columns, fragment_kinds)
+                            section_paragraph_columns, fragment_kinds, citation_heads,
+                            dk_fills)
     analyses_stats = emit_analyses(out_dir)
 
     # Per-book ordered chapter list for navigation (Work → Book → Chapter).

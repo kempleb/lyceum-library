@@ -6,7 +6,15 @@
     "source_work": "Lives of Eminent Philosophers",
     "locus": "9.50-56",
     "status": "translated",
-    "translation_credit": "Hicks, 1925"
+    "translation_credit": "Hicks, 1925",
+    "trim": {
+     "omit": [
+      [
+       "There is an epigram of my own on him as follows:",
+       "not so Hell below."
+      ]
+     ]
+    }
    }
   ]
  },
@@ -21,17 +29,31 @@
     "emphasis": [
      "Hence the road I have taken is one entirely opposite to theirs: I admit that I am a sophist and that I educate men;",
      "And yet many long years have I now been in the profession, for many in total number are those that I have lived: not one of you all, but in age I might be his father."
-    ]
+    ],
+    "trim": {
+     "start": "Hence the road I have taken is one entirely opposite",
+     "end": "in age I might be his father.",
+     "omit": [
+      [
+       "and I consider this precaution",
+       "admitting that I am a sophist."
+      ]
+     ]
+    }
    },
    {
     "source_author": "Plato",
     "source_work": "Protagoras",
-    "locus": "318a",
+    "locus": "318a-318b",
     "status": "translated",
     "translation_credit": "Lamb, 1924",
     "emphasis": [
-     "Young man, you will gain this by coming to my classes, that on the day when you join them you will go home a better man, and on the day after it will be the same; every day"
-    ]
+     "Young man, you will gain this by coming to my classes, that on the day when you join them you will go home a better man, and on the day after it will be the same; every day you will constantly improve more and more."
+    ],
+    "trim": {
+     "start": "Young man, you will gain this",
+     "end": "you will constantly improve more and more."
+    }
    },
    {
     "source_author": "Plato",
@@ -44,17 +66,67 @@
      "they bring them back against their will and force them into arts, teaching them arithmetic and astronomy and geometry and music (and here he glanced at Hippias); whereas, if he applies to me, he will learn precisely and solely that for which he has come. That learning consists of good judgement in his own affairs, showing how best to order his own home; and in the affairs of his city,",
      "showing how he may have most influence on public affairs both in speech and in action.",
      "for you appear to be speaking of the civic science, and undertaking to make men good citizens. That, Socrates, he replied, is exactly the purport of what I profess."
-    ]
+    ],
+    "trim": {
+     "start": "The generality of them maltreat the young",
+     "end": "is exactly the purport of what I profess.",
+     "omit": [
+      [
+       "I wonder, I said, whether I follow what you are saying;",
+       "I wonder, I said, whether I follow what you are saying;"
+      ]
+     ]
+    }
    },
    {
     "source_author": "Plato",
     "source_work": "Protagoras",
-    "locus": "349a",
+    "locus": "348e-349a",
     "status": "translated",
     "translation_credit": "Lamb, 1924",
     "emphasis": [
      "publicly proclaimed to all the Greeks with the title of sophist, and have appointed yourself preceptor of culture and virtue, and are the first who has ever demanded a regular fee for such work."
-    ]
+    ],
+    "trim": {
+     "start": "you have had yourself",
+     "end": "demanded a regular fee for such work."
+    }
+   }
+  ]
+ },
+ "1:A6": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Protagoras",
+    "locus": "328b-328c",
+    "status": "translated",
+    "translation_credit": "Lamb, 1924",
+    "emphasis": [
+     "For this reason I have arranged my charges on a particular plan: when anyone has had lessons from me, if he likes he pays the sum that I ask; if not, he goes to a temple, states on oath the value he sets on what he has learnt, and disburses that amount."
+    ],
+    "trim": {
+     "start": "For this reason I have arranged my charges",
+     "end": "and disburses that amount."
+    }
+   }
+  ]
+ },
+ "1:A7": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Protagoras",
+    "locus": "329b",
+    "status": "translated",
+    "translation_credit": "Lamb, 1924",
+    "emphasis": [
+     "But Protagoras here, while able to deliver, as events have shown, a long and excellent speech, is also able when questioned to reply briefly, and after asking a question to await and accept the answer—accomplishments that few can claim."
+    ],
+    "trim": {
+     "start": "But Protagoras here, while able to deliver",
+     "end": "accomplishments that few can claim."
+    }
    }
   ]
  },
@@ -69,7 +141,17 @@
     "emphasis": [
      "for I know of one man, Protagoras, who amassed more money by his craft than Pheidias—so famous for the noble works he produced—or any ten other sculptors.",
      "while for more than forty years all Greece failed to notice that Protagoras was corrupting his classes and sending his pupils away in a worse state than when he took charge of them! For I believe he died about seventy years old, forty of which he spent in the practice of his art; Soc. and he retains undiminished to this day the high reputation he has enjoyed all that time"
-    ]
+    ],
+    "trim": {
+     "start": "for I know of one man, Protagoras",
+     "end": "the high reputation he has enjoyed all that time",
+     "omit": [
+      [
+       "And yet how surprising that menders",
+       "would quickly starve them to death,"
+      ]
+     ]
+    }
    }
   ]
  },
@@ -82,9 +164,12 @@
     "status": "translated",
     "translation_credit": "Fowler, 1926",
     "emphasis": [
-     "but once, when I went to Sicily,",
-     "although Protagoras was staying there and had a great reputation and was the older, I, who was much younger,"
-    ]
+     "but once, when I went to Sicily, although Protagoras was staying there and had a great reputation and was the older, I, who was much younger"
+    ],
+    "trim": {
+     "start": "but once, when I went to Sicily,",
+     "end": "I, who was much younger"
+    }
    }
   ]
  },
@@ -99,6 +184,32 @@
     "emphasis": [
      "as Protagoras said with his doctrine",
      "that man is the measure of all things—that things are to me such as they seem to me, and to you such as they seem to you"
+    ],
+    "trim": {
+     "start": "as Protagoras said with his doctrine",
+     "end": "and to you such as they seem to you"
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "as Protagoras tells us",
+      "end": "that they are to you as they appear to you."
+     }
+    }
+   }
+  ]
+ },
+ "1:A17": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "1046b29-1047a8",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "There are some who say, as the Megaric school does, that a thing 'can' act only when it is acting, and when it is not acting it 'cannot' act, e.g. that he who is not building cannot build, but only he who is building, when he is building; and so in all other cases. It is not hard to see the absurdities that attend this view.",
+     "For it is clear that on this view a man will not be a builder unless he is building (for to be a builder is to be able to build), and so with the other arts.",
+     "If, then, it is impossible to have such arts if one has not at some time learnt and acquired them, and it is then impossible not to have them if one has not sometime lost them (either by forgetfulness or by some accident or by time; for it cannot be by the destruction of the object, for that lasts for ever), a man will not have the art when he has ceased to use it, and yet he may immediately build again; how then will he have got the art? And similarly with regard to lifeless things; nothing will be either cold or hot or sweet or perceptible at all if people are not perceiving it; so that the upholders of this view will have to maintain the doctrine of Protagoras. But, indeed, nothing will even have perception if it is not perceiving, i.e. exercising its perception."
     ]
    }
   ]
@@ -113,6 +224,44 @@
     "translation_credit": "Lamb, 1924",
     "emphasis": [
      "For, to be plain with you, this argument, though I have heard it from many people on various occasions, never fails to set me wondering—you know the followers of Protagoras made great use of it, as did others even before his time, but to me it always seems to have a wonderful way of upsetting not merely other views but itself also"
+    ],
+    "trim": {
+     "start": "For, to be plain with you, this argument",
+     "end": "not merely other views but itself also"
+    }
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "1007b18-1007b25",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "Again, if all contradictory statements are true of the same subject at the same time, evidently all things will be one. For the same thing will be a trireme, a wall, and a man, if of everything it is possible either to affirm or to deny anything (and this premiss must be accepted by those who share the views of Protagoras). For if any one thinks that the man is not a trireme, evidently he is not a trireme; so that he also is a trireme, if, as they say, contradictory statements are both true."
+    ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "1062b13-1062b19",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "he said that man is the measure of all things, meaning simply that that which seems to each man also assuredly is. If this is so, it follows that the same thing both is and is not, and is bad and good, and that the contents of all other opposite statements are true, because often a particular thing appears beautiful to some and the contrary of beautiful to others, and that which appears to each man is the measure."
+    ]
+   }
+  ]
+ },
+ "1:A21": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Rhetoric",
+    "locus": "1402a24-1402a28",
+    "status": "translated",
+    "translation_credit": "Freese, 1926",
+    "emphasis": [
+     "And this is what making the worse appear the better argument means. Wherefore men were justly disgusted with the promise of Protagoras; for it is a lie, not a real but an apparent probability, not found in any art except Rhetoric and Sophistic."
     ]
    }
   ]
@@ -124,19 +273,58 @@
     "source_work": "Theaetetus",
     "locus": "166d",
     "status": "translated",
-    "translation_credit": "Fowler, 1921"
+    "translation_credit": "Fowler, 1921",
+    "trim": {
+     "start": "For I maintain that the truth is as I have written"
+    }
    },
    {
     "source_author": "Plato",
     "source_work": "Theaetetus",
-    "locus": "167b-167d",
+    "locus": "167a-167d",
     "status": "translated",
     "translation_credit": "Fowler, 1921",
     "emphasis": [
-     "thinks thoughts akin to that condition, is made by a good condition of soul to think correspondingly good thoughts; and some men, through inexperience, call these appearances true, whereas I call them better than the others, but in no wise truer. And the wise, my dear Socrates, I do not by any means call tadpoles when they have to do with the human body, I call them physicians, and when they have to do with plants, husbandmen; for I assert that these latter, when plants are sickly, instil into them good and healthy sensations,",
+     "But I believe that a man who, on account of a bad condition of soul, thinks thoughts akin to that condition, is made by a good condition of soul to think correspondingly good thoughts; and some men, through inexperience, call these appearances true, whereas I call them better than the others, but in no wise truer. And the wise",
+     "when they have to do with the human body, I call them physicians, and when they have to do with plants, husbandmen; for I assert that these latter, when plants are sickly, instil into them good and healthy sensations,",
      "and true ones instead of bad sensations, and that the wise and good orators make the good, instead of the evil, seem to be right to their states. For I claim that whatever seems right and honorable to a state is really right and honorable to it, so long as it believes it to be so; but the wise man causes the good, instead of that which is evil to them in each instance, to be and seem right and honorable. And on the same principle the teacher who is able to train his pupils in this manner is not only wise but is also",
-     "entitled to receive high pay from them when their education is finished. And in this sense it is true that some men are wiser than others, and that no one thinks falsely, and that you, whether you will or no, must endure to be a measure. Upon these positions my doctrine stands firm;"
-    ]
+     "entitled to receive high pay from them when their education is finished. And in this sense it is true that some men are wiser than others, and that no one thinks falsely, and that you, whether you will or no, must endure to be a measure. Upon these positions my doctrine stands firm"
+    ],
+    "trim": {
+     "start": "But I believe that a man who, on account of a bad condition of soul,",
+     "end": "my doctrine stands firm",
+     "omit": [
+      [
+       ", my dear Socrates, I do not by any means call tadpoles",
+       ", my dear Socrates, I do not by any means call tadpoles"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "1:A22": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Protagoras",
+    "locus": "333d-334a",
+    "status": "translated",
+    "translation_credit": "Lamb, 1924",
+    "emphasis": [
+     "Then, I asked, are those things good which are profitable to men? Oh yes, to be sure, he replied, and also when they are not profitable to men I call them good.",
+     "Do you mean, Protagoras, I asked, things that are profitable to no human being, or things not profitable in any way at all? Can you call such things as these good? By no means, he replied; but I know a number of things that are unprofitable to men, namely, foods, drinks, drugs, and countless others, and some that are profitable; some that are neither one nor the other to men, but are one or the other to horses"
+    ],
+    "trim": {
+     "start": "Then, I asked, are those things good",
+     "omit": [
+      [
+       "Here Protagoras seemed to me",
+       "went gently with my questions. Soc."
+      ]
+     ],
+     "end": "but are one or the other to horses"
+    }
    }
   ]
  },
@@ -150,8 +338,54 @@
     "translation_credit": "Fowler, 1921",
     "emphasis": [
      "Excellent boys and old men, there you sit together declaiming to the people, and you bring in the gods, the question of whose",
-     "existence or non-existence I exclude from oral and written discussion,"
-    ]
+     "existence or non-existence I exclude from oral and written discussion"
+    ],
+    "trim": {
+     "start": "Excellent boys and old men",
+     "end": "from oral and written discussion"
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "Good people, young and old",
+      "end": "I banish from writing and speech"
+     }
+    }
+   }
+  ]
+ },
+ "1:A24": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Cratylus",
+    "locus": "391b-391c",
+    "status": "translated",
+    "translation_credit": "Fowler, 1926",
+    "trim": {
+     "start": "They are the sophists",
+     "end": "as if it were of any value."
+    },
+    "alt_trims": {
+     "jowett": "drop"
+    }
+   }
+  ]
+ },
+ "1:A25": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Protagoras",
+    "locus": "338e-339a",
+    "status": "translated",
+    "translation_credit": "Lamb, 1924",
+    "emphasis": [
+     "I consider, Socrates, that the greatest part of a man’s education is to be skilled in the matter of verses; that is, to be able to apprehend, in the utterances of the poets, what has been rightly and what wrongly composed, and to know how to distinguish them and account for them when questioned."
+    ],
+    "trim": {
+     "start": "I consider, Socrates, that the greatest part",
+     "end": "account for them when questioned."
+    }
    }
   ]
  },
@@ -170,7 +404,66 @@
      "by the power of their words, and new things old and old things the reverse, and who invented conciseness of speech and measureless length on all subjects? And once when Prodicus heard these inventions, he laughed, and said that he alone had discovered the art of proper speech, that discourses should be neither long nor short, but of reasonable length. Phaedrus. O Prodicus! How clever! Socrates. And shall we not mention Hippias, our friend from Elis? I think he would agree with him. Phaedrus. Oh yes.",
      "Socrates. And what shall we say of Polus and his shrines of learned speech, such as duplication and sententiousness and figurativeness, and what of the names with which Licymnius presented him to effect beautiful diction? Phaedrus. Were there not some similar inventions of Protagoras, Socrates? Socrates. Yes, my boy, correctness of diction, and many other fine things. For tearful speeches, to arouse pity for old age and poverty, I think the precepts of the mighty Chalcedonian hold the palm, and he is also a genius,",
      "as he said, at rousing large companies to wrath, and soothing them again by his charms when they are angry, and most powerful in devising and abolishing calumnies on any grounds whatsoever. But all seem to be in agreement concerning the conclusion of discourses, which some call recapitulation, while others give it some other name."
+    ],
+    "trim": {
+     "start": "You mean that there must be an introduction first",
+     "end": "while others give it some other name."
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "There is the exordium",
+      "end": "though they do not all agree to use the same word."
+     }
+    }
+   }
+  ]
+ },
+ "1:A27": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Rhetoric",
+    "locus": "1407b6-1407b8",
+    "status": "translated",
+    "translation_credit": "Freese, 1926",
+    "emphasis": [
+     "The fourth rule consists in keeping the genders distinct—masculine, feminine, and neuter, as laid down by Protagoras"
+    ],
+    "trim": {
+     "end": "as laid down by Protagoras"
+    }
+   }
+  ]
+ },
+ "1:A29": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Poetics",
+    "locus": "1456b15-1456b18",
+    "status": "translated",
+    "translation_credit": "Fyfe, 1932",
+    "emphasis": [
+     "For who could suppose that there is any fault in the passage which Protagoras censures, because Homer, intending to utter a prayer, gives a command when he says, Sing, goddess, the wrath? To order something to be done or not is, he points out, a command."
     ]
+   }
+  ]
+ },
+ "1:A10": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Pericles",
+    "locus": "36",
+    "status": "translated",
+    "translation_credit": "Perrin, 1916",
+    "emphasis": [
+     "in the strictest sense"
+    ],
+    "trim": {
+     "start": "a certain athlete had hit Epitimus",
+     "end": "responsible for the disaster."
+    }
    }
   ]
  }

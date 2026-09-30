@@ -63,6 +63,16 @@ finds no `alt.jowett` data for them and they simply don't appear in
 `sources/jowett-plato/jowett-stephanus.clean.json`. Crito, Euthyphro, and Ion
 DO have Jowett-aligned turns in `plato-reader`'s build and are included.
 
+## Corrections (`corrections.json`)
+
+Where the Perseus TEI drops words the printed Loeb has, `corrections.json`
+restores them: each entry names a store key, an anchor already in that
+entry's text, the words to insert just before it, and the printed page they
+come from. The resolver (`stage1_context_english._load_plato`) applies them
+at build time; the store file itself is never edited. An anchor that is not
+in its entry exactly once fails the build. One entry so far: Cratylus 391b-c
+(Fowler, Loeb vol. VI, 1926, p. 33), needed for Protagoras testimonia A24.
+
 ## Extending further
 
 Vendoring a 19th (or 25th) dialogue is: (1) copy its

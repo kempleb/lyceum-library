@@ -6,7 +6,140 @@
     "source_work": "Lives of Eminent Philosophers",
     "locus": "2.3",
     "status": "translated",
-    "translation_credit": "Hicks, 1925"
+    "translation_credit": "Hicks, 1925",
+    "trim": {
+     "end": "the nephew of the rhetorician, who was a historian."
+    }
+   }
+  ]
+ },
+ "1:A4": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "984a5-984a6",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "Anaximenes and Diogenes make air prior to water, and the most primary of the simple bodies"
+    ],
+    "trim": {
+     "end": "the most primary of the simple bodies"
+    }
+   }
+  ]
+ },
+ "1:A14": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.14",
+    "head": "14, 3 (D. 344)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Anaximenes, that they are",
+     "end": "resembling pictures."
+    }
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "Meteorology",
+    "locus": "354a28-354a32",
+    "status": "translated",
+    "translation_credit": "Webster, 1923",
+    "emphasis": [
+     "many of the ancient meteorologists. They believed that the sun did not pass below the earth, but round its northern part, and that it was the height of this which obscured the sun and caused night."
+    ]
+   }
+  ]
+ },
+ "1:A20": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On the Heavens",
+    "locus": "294b13-294b21",
+    "status": "translated",
+    "translation_credit": "Stocks, 1922",
+    "emphasis": [
+     "Anaximenes and Anaxagoras and Democritus give the flatness of the earth as the cause of its staying still. Thus, they say, it does not cut, but covers like a lid, the air beneath it. This seems to be the way of flat-shaped bodies: for even the wind can scarcely move them because of their power of resistance. The same immobility, they say, is produced by the flatness of the surface which the earth presents to the air which underlies it; while the air, not having room enough to change its place because it is underneath the earth, stays there in a mass, like the water in the case of the water-clock."
+    ]
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.10",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Anaximenes, that it hath",
+     "end": "shape of a table."
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.15",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "is borne upon"
+    ],
+    "trim": {
+     "start": "Anaximenes, that the earth",
+     "end": "presseth upon it."
+    }
+   }
+  ]
+ },
+ "1:A21": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Meteorology",
+    "locus": "365b6-365b12",
+    "status": "translated",
+    "translation_credit": "Webster, 1923",
+    "emphasis": [
+     "Anaximenes says that the earth breaks up when it grows wet or dry, and earthquakes are due to the fall of these masses as they break away. Hence earthquakes take place in times of drought and again of heavy rain, since, as we have explained, the earth grows dry in time of drought and breaks up, whereas the rain makes it sodden and destroys its cohesion."
+    ]
+   }
+  ]
+ },
+ "1:A18": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.5",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Anaximenes thinks the bow",
+     "end": "beyond the superficies."
+    }
+   }
+  ]
+ },
+ "1:A15": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.22",
+    "head": "22, 1 (D. 352)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "resembles a leaf"
+    ],
+    "trim": {
+     "start": "Anaximenes affirms that in",
+     "end": "resembles a leaf."
+    }
    }
   ]
  }

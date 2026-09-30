@@ -1,0 +1,38 @@
+{
+ "1:B2a": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.22",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "resembles a leaf"
+    ],
+    "trim": {
+     "start": "Anaximenes affirms that in",
+     "end": "resembles a leaf."
+    }
+   }
+  ]
+ },
+ "1:B1": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Primo Frigido",
+    "locus": "947f-948a",
+    "status": "translated",
+    "translation_credit": "Helmbold, 1957",
+    "emphasis": [
+     "distention"
+    ],
+    "trim": {
+     "start": "Or are we, as old Anaximenes maintained",
+     "end": "that is propelled forward and makes contact."
+    }
+   }
+  ]
+ }
+}

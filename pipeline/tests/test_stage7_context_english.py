@@ -142,3 +142,26 @@ def test_mechanism_absent_vs_present_but_undeclared_is_byte_identical(tmp_path):
     absent_raw = (absent_dir / "book-01.json").read_text(encoding="utf-8")
     present_raw = (present_dir / "book-01.json").read_text(encoding="utf-8")
     assert absent_raw == present_raw
+
+
+def test_citation_locations_are_additive_and_empty_lists_are_significant(tmp_path):
+    english = {"chunks": []}
+    baseline = tmp_path / "before"
+    baseline.mkdir()
+    emit_books(_spine(), _tokens_doc(), english, chapter_ranges(_spine(), []), baseline)
+    out = tmp_path / "after"
+    out.mkdir()
+    heads = {"1:A1": [{"lineIndex": 0, "line": 1, "start": 0, "end": 7,
+                         "text": "context", "expanded": []}], "1:A2": []}
+    emit_books(_spine(), _tokens_doc(), english, chapter_ranges(_spine(), []),
+               out, citation_heads=heads)
+    before = json.loads((baseline / 'book-01.json').read_text())
+    after = json.loads((out / 'book-01.json').read_text())
+    for segment in after['segments']:
+        assert segment.pop('citationHeads') == heads[segment['id']]
+    assert after == before
+    unchanged = tmp_path / 'unchanged'
+    unchanged.mkdir()
+    emit_books(_spine(), _tokens_doc(), english, chapter_ranges(_spine(), []),
+               unchanged, citation_heads={})
+    assert (baseline / 'book-01.json').read_bytes() == (unchanged / 'book-01.json').read_bytes()

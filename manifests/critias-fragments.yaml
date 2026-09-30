@@ -551,8 +551,8 @@ english:
   # than labeled (stage1_freeman_english.py gate 5; the Greek renders alone
   # beside the source passage). B10/B30/B35/B38/B41/B43 are précis with no
   # such coverage -- labeled a summary instead (see EnglishChunk.summary).
-  summary_suppressed: [B75]
-  summary_labels: [B10, B30, B35, B38, B41, B43]
+  summary_suppressed: [B75, B35]
+  summary_labels: [B10, B30, B38, B41, B43]
 
 sources:
   tlg_dir_env: "TLG_DIR"

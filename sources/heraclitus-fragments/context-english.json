@@ -9,8 +9,22 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "He seems by some accounts to have been the first to study astronomy",
-     "It was this which gained for him the admiration of Xenophanes and Herodotus and the notice of Heraclitus and Democritus."
-    ]
+     "It was this which gained for him",
+     "the notice of Heraclitus and Democritus."
+    ],
+    "trim": {
+     "start": "He seems by some accounts to have been the first to study astronomy",
+     "omit": [
+      [
+       ", the first to predict eclipses",
+       "History of Astronomy."
+      ],
+      [
+       "the admiration of Xenophanes and Herodotus and",
+       "the admiration of Xenophanes and Herodotus and"
+      ]
+     ]
+    }
    }
   ]
  },
@@ -24,7 +38,11 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "In Priene lived Bias, son of Teutames, a man of more consideration than any."
-    ]
+    ],
+    "trim": {
+     "start": "“In Priene lived Bias",
+     "end": "a man of more consideration than any.”"
+    }
    }
   ]
  },
@@ -38,7 +56,29 @@
     "translation_credit": "Fowler, 1926",
     "emphasis": [
      "the most beautiful of monkeys is ugly compared with the race of man"
-    ]
+    ],
+    "trim": {
+     "start": "the most beautiful of monkeys",
+     "end": "compared with the race of man"
+    }
+   }
+  ]
+ },
+ "1:B83": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Hippias Major",
+    "locus": "289b",
+    "status": "translated",
+    "translation_credit": "Fowler, 1926",
+    "emphasis": [
+     "the wisest of men, if compared with a god, will appear a monkey, both in wisdom and in beauty and in everything else"
+    ],
+    "trim": {
+     "start": "the wisest of men, if compared with a god",
+     "end": "and in everything else"
+    }
    }
   ]
  },
@@ -52,7 +92,11 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "The Ephesians would do well to end their lives, every grown man of them, and leave the city to beardless boys, for that they have driven out Hermodorus, the worthiest man among them, saying, ‘We will have none who is worthiest among us; or if there be any such, let him go elsewhere and consort with others."
-    ]
+    ],
+    "trim": {
+     "start": "The Ephesians would do well",
+     "end": "let him go elsewhere and consort with others."
+    }
    }
   ]
  },
@@ -66,7 +110,329 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "Pythagoras, son of Mnesarchus, practised inquiry beyond all other men, and in this selection of his writings made himself a wisdom of his own, showing much learning but poor workmanship."
+    ],
+    "trim": {
+     "start": "“Pythagoras, son of Mnesarchus",
+     "end": "showing much learning but poor workmanship.”"
+    }
+   }
+  ]
+ },
+ "1:B3": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.21",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "no broader than a man’s foot"
+    ],
+    "trim": {
+     "start": "Heraclitus, that it is",
+     "end": "a man’s foot."
+    }
+   }
+  ]
+ },
+ "1:B76": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De E apud Delphos",
+    "locus": "392c",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1936",
+    "trim": {
+     "start": "the death of heat is birth for steam",
+     "end": "the death of steam is birth for water"
+    },
+    "emphasis": [
+     "the death of heat is birth for steam, and the death of steam is birth for water"
     ]
+   }
+  ]
+ },
+ "1:B85": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Coriolanus",
+    "locus": "22",
+    "status": "translated",
+    "translation_credit": "Perrin, 1916",
+    "emphasis": [
+     "With anger it is hard to fight; for whatsoe’er it wishes, that it buys, even at the cost of life."
+    ],
+    "trim": {
+     "start": "“With anger it is hard",
+     "end": "even at the cost of life.”"
+    }
+   }
+  ]
+ },
+ "1:B86": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Coriolanus",
+    "locus": "38",
+    "status": "translated",
+    "translation_credit": "Perrin, 1916",
+    "emphasis": [
+     "escape our knowledge through incredulity"
+    ],
+    "trim": {
+     "start": "But most of the Deity’s powers",
+     "end": "through incredulity.”"
+    }
+   }
+  ]
+ },
+ "1:B88": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Consolatio ad Apollonium",
+    "locus": "106e",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1928",
+    "emphasis": [
+     "Living and dead are potentially the same thing, and so too waking and sleeping, and young and old; for the latter revert to the former, and the former in turn to the latter."
+    ],
+    "trim": {
+     "start": "“Living and dead are potentially",
+     "end": "the former in turn to the latter.”"
+    }
+   }
+  ]
+ },
+ "1:B89": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Superstitione",
+    "locus": "166c",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1928",
+    "emphasis": [
+     "people awake enjoy one world in common",
+     "of his own"
+    ],
+    "trim": {
+     "start": "Heracleitus says that people awake",
+     "end": "each roams about in a world of his own."
+    }
+   }
+  ]
+ },
+ "1:B90": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De E apud Delphos",
+    "locus": "388e",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1936",
+    "emphasis": [
+     "and exchanges fire for all and all for fire, as gold for goods and goods for gold"
+    ],
+    "trim": {
+     "start": "‘and exchanges fire for all",
+     "end": "goods for gold,’"
+    }
+   }
+  ]
+ },
+ "1:B92": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Pythiae Oraculis",
+    "locus": "397a",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1936",
+    "emphasis": [
+     "the Sibyl ‘with frenzied lips,’",
+     "uttering words mirthless, unembellished, unperfumed",
+     "through the god"
+    ],
+    "trim": {
+     "start": "Do you not see,",
+     "omit": [
+      [
+       "” he continued, “",
+       "” he continued, “"
+      ]
+     ],
+     "end": "through the god.’"
+    }
+   }
+  ]
+ },
+ "1:B93": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Pythiae Oraculis",
+    "locus": "404d",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1936",
+    "emphasis": [
+     "the Lord whose prophetic shrine is at Delphi neither tells nor conceals, but indicates"
+    ],
+    "trim": {
+     "start": "the Lord whose prophetic shrine",
+     "end": "but indicates."
+    }
+   }
+  ]
+ },
+ "1:B94": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Exilio",
+    "locus": "604a",
+    "status": "translated",
+    "translation_credit": "De Lacy and Einarson, 1959",
+    "emphasis": [
+     "the Sun will not transgress his bounds",
+     "else the Erinyes, ministers of Justice, will find him out."
+    ],
+    "trim": {
+     "start": "for “the Sun will not transgress",
+     "end": "will find him out.”"
+    }
+   }
+  ]
+ },
+ "1:B95": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Convivales",
+    "locus": "644f",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "It is good to conceal a man’s folly"
+    ],
+    "trim": {
+     "start": "It is good to conceal a man’s folly",
+     "end": "over a glass of wine,"
+    }
+   }
+  ]
+ },
+ "1:B97": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "An Seni Respublica Gerenda Sit",
+    "locus": "787c",
+    "status": "translated",
+    "translation_credit": "Fowler, 1936",
+    "emphasis": [
+     "for dogs do indeed bark at whom they do not know"
+    ],
+    "trim": {
+     "start": "“for dogs do indeed bark",
+     "end": "at whom they do not know,”"
+    }
+   }
+  ]
+ },
+ "1:B98": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Facie in Orbe Lunae",
+    "locus": "943e",
+    "status": "translated",
+    "translation_credit": "Cherniss, 1957",
+    "emphasis": [
+     "Souls employ the sense of smell in Hades."
+    ],
+    "trim": {
+     "start": "“Souls employ the sense of smell",
+     "end": "in Hades.”"
+    }
+   }
+  ]
+ },
+ "1:B99": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Fortuna",
+    "locus": "98c",
+    "head": "vgl. de fort. 3. p. 98 C",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1928",
+    "emphasis": [
+     "if the sun did not exist, and we, for all the other stars, should be passing our life in a continual night"
+    ],
+    "trim": {
+     "start": "if the sun did not exist",
+     "end": "as Heracleitus affirms"
+    }
+   }
+  ]
+ },
+ "1:B100": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Platonicae",
+    "locus": "1007d-1007e",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "seasons, which (according to Heraclitus) produce all things"
+    ],
+    "trim": {
+     "start": "whereof since the sun is prefect",
+     "end": "produce all things,"
+    }
+   }
+  ]
+ },
+ "1:B101": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Adversus Colotem",
+    "locus": "1118c",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "I have been seeking myself."
+    ],
+    "trim": {
+     "start": "I have been seeking myself.",
+     "end": "I have been seeking myself."
+    }
+   }
+  ]
+ },
+ "1:B106": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Camillus",
+    "locus": "19",
+    "status": "translated",
+    "translation_credit": "Perrin, 1914",
+    "emphasis": [
+     "Hesiod",
+     "the nature of every day is one and the same"
+    ],
+    "trim": {
+     "start": "Now concerning dies nefasti",
+     "end": "fully discussed elsewhere."
+    }
    }
   ]
  }

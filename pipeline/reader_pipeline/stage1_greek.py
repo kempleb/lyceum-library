@@ -1902,7 +1902,6 @@ def _parse_fragments(tree, sch, manifest: Manifest, xml_path=None) -> tuple[list
         target = e.get("target")
         role = e.get("role")
         position = e.get("position")
-        label = e.get("label")
         if role != "context":
             raise ValueError(
                 f"{manifest.work_id}: citation.div_map entry n={entry_n!r} "
@@ -1917,10 +1916,10 @@ def _parse_fragments(tree, sch, manifest: Manifest, xml_path=None) -> tuple[list
                 f"must declare position: leading|trailing (which side of "
                 f"the target column's own content this merge renders on)"
             )
-        if not target or not label:
+        if not target:
             raise ValueError(
                 f"{manifest.work_id}: citation.div_map entry n={entry_n!r} "
-                f"must declare both target and label"
+                f"must declare target"
             )
         key = (target, position)
         if key in merge_targets_by_position:
@@ -1934,7 +1933,7 @@ def _parse_fragments(tree, sch, manifest: Manifest, xml_path=None) -> tuple[list
             # A manifest-authoring duplicate (Sol review blocker): two
             # citation.div_map entries for the SAME source div @n would
             # otherwise silently overwrite -- the first entry's target/
-            # position/label vanish with no error, exactly the kind of
+            # position vanish with no error, exactly the kind of
             # invisible-loss bug the div-accounting gates elsewhere in this
             # function exist to prevent (mirrors the lettered_fragments
             # duplicate-declaration check).
@@ -2221,7 +2220,7 @@ def _parse_fragments(tree, sch, manifest: Manifest, xml_path=None) -> tuple[list
 
     flat: list[dict] = []
     seen_ns: set[str] = set()
-    # target_column -> {"leading"|"trailing": {"label": str, "text": str}}
+    # target_column -> {"leading"|"trailing": {"text": str}}
     # (text already German-stripped -- see the merge-collection pass below;
     # the ordinary-column loop that consumes these must NOT re-run
     # apply_context_language over already-stripped text).
@@ -2248,14 +2247,14 @@ def _parse_fragments(tree, sch, manifest: Manifest, xml_path=None) -> tuple[list
             )
         seen_ns.add(n)
         entry = div_map[n]
-        target, position, label = entry["target"], entry["position"], entry["label"]
+        target, position = entry["target"], entry["position"]
         raw_text = _line_text(div)
         stripped = dk_lang.apply_context_language(
             raw_text, decisions,
             where=f"{manifest.work_id} div n={n!r} (div_map -> {target})",
             used=used_decisions,
         )
-        merges.setdefault(target, {})[position] = {"label": label, "text": stripped}
+        merges.setdefault(target, {})[position] = {"text": stripped}
 
     # Pass 1.5: pre-scan every declared div_concat source div's <p> children,
     # over the whole document, before Pass 2 walks it in order. Unlike
@@ -2393,18 +2392,15 @@ def _parse_fragments(tree, sch, manifest: Manifest, xml_path=None) -> tuple[list
         # Each entry: {"role", "text", "cite_n" (int|None), "pre_stripped"
         # (bool -- a div_map merge's text was already German-stripped at
         # collection time above; re-running apply_context_language on it a
-        # second time would misinterpret this block's own synthetic
-        # "[Label] " prefix's balanced brackets as part of the ORIGINAL
-        # export text and, worse, re-derive `used_decisions` off already-
-        # substituted text -- harmless in practice since the strip is
-        # idempotent, but skipped outright for clarity).
+        # second time would re-derive `used_decisions` from already-stripped
+        # text).
         blocks: list[dict] = []
 
         lead = merges.get(column, {}).get("leading")
         if lead:
             blocks.append({
                 "role": "context", "cite_n": None, "pre_stripped": True,
-                "text": f"[{lead['label']}] {lead['text']}",
+                "text": lead["text"],
             })
 
         if is_verse and column in prose_columns:
@@ -2583,7 +2579,7 @@ def _parse_fragments(tree, sch, manifest: Manifest, xml_path=None) -> tuple[list
         if trail:
             blocks.append({
                 "role": "context", "cite_n": None, "pre_stripped": True,
-                "text": f"[{trail['label']}] {trail['text']}",
+                "text": trail["text"],
             })
 
         has_text_block = any(b["role"] == "text" for b in blocks)

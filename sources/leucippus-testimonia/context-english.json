@@ -23,5 +23,264 @@
     ]
    }
   ]
+ },
+ "1:A6": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "985b4-985b20",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "Leucippus and his associate Democritus say that the full and the empty are the elements, calling the one being and the other non-being-the full and solid being being, the empty non-being (whence they say being no more is than non-being, because the solid no more is than the empty); and they make these the material causes of things. And as those who make the underlying substance one generate all other things by its modifications, supposing the rare and the dense to be the sources of the modifications, in the same way these philosophers say the differences in the elements are the causes of all other qualities. These differences, they say, are three-shape and order and position. For they say the real is differentiated only by 'rhythm and 'inter-contact' and 'turning'; and of these rhythm is shape, inter-contact is order, and turning is position; for A differs from N in shape, AN from NA in order, M from W in position. The question of movement-whence or how it is to belong to things-these thinkers, like the others, lazily neglected."
+    ]
+   }
+  ]
+ },
+ "1:A7": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "324b35-325a5",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "The most systematic and consistent theory, however, and one that applied to all bodies, was advanced by Leucippus and Democritus: and, in maintaining it, they took as their starting-point what naturally comes first.",
+     "For some of the older philosophers thought that 'what is' must of necessity be 'one' and immovable. The void, they argue, 'is not': but unless there is a void with a separate being of its own, 'what is' cannot be moved-nor again can it be 'many', since there is nothing to keep things apart."
+    ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "325a23-325b11",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "Leucippus, however, thought he had a theory which harmonized with sense-perception and would not abolish either coming-to-be and passing-away or motion and the multiplicity of things. He made these concessions to the facts of perception: on the other hand, he conceded to the Monists that there could be no motion without a void. The result is a theory which he states as follows: 'The void is a \"not being\", and no part of \"what is\" is a \"not-being\"; for what \"is\" in the strict sense of the term is an absolute plenum. This plenum, however, is not \"one\": on the contrary, it is a many\" infinite in number and invisible owing to the minuteness of their bulk. The \"many\" move in the void (for there is a void): and by coming together they produce \"coming to-be\", while by separating they produce \"passing-away\". Moreover, they act and suffer action wherever they chance to be in contact (for there they are not \"one\"), and they generate by being put together and becoming intertwined. From the genuinely-one, on the other hand, there never could have come-to-be a multiplicity, nor from the genuinely-many a \"one\": that is impossible. But' (just as Empedocles and some of the other philosophers say that things suffer action through their pores, so) 'all \"alteration\" and all \"passion\" take place in the way that has been explained: breaking-up (i.e.",
+     "passing-away) is effected by means of the void, and so too is growth-solids creeping in to fill the void places.' Empedocles too is practically bound to adopt the same theory as Leucippus. For he must say that there are certain solids which, however, are indivisible-unless there are continuous pores all through the body. But this last alternative is impossible: for then there will be nothing solid in the body (nothing beside the pores) but all of it will be void. It is necessary, therefore, for his 'contiguous discretes' to be indivisible, while the intervals between them-which he calls 'pores'-must be void. But this is precisely Leucippus' theory of action and passion."
+    ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "325b24-325b33",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "like those which Plato has set forth in the Timaeus.",
+     "For although both Plato and Leucippus postulate elementary constituents that are indivisible and distinctively characterized by figures, there is this great difference between the two theories: the 'indivisibles' of Leucippus (i) are solids, while those of Plato are planes, and (ii) are characterized by an infinite variety of figures, while the characterizing figures employed by Plato are limited in number. Thus the 'comings-to-be' and the 'dissociations' result from the 'indivisibles' (a) according to Leucippus through the void and through contact (for it is at the point of contact that each of the composite bodies is divisible), but (b) according to Plato in virtue of contact alone, since he denies there is a void."
+    ]
+   }
+  ]
+ },
+ "1:A9": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "314a21-314a24",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "Democritus and Leucippus say that there are indivisible bodies, infinite both in number and in the varieties of their shapes, of which everything else is composed-the compounds differing one from another according to the shapes, 'positions', and 'groupings' of their constituents."
+    ],
+    "trim": {
+     "start": "Democritus and Leucippus say that there are indivisible bodies",
+     "end": "'groupings' of their constituents."
+    }
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "315b6-315b15",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "Democritus and Leucippus, however, postulate the 'figures', and make 'alteration' and coming-to-be result from them. They explain coming-to-be and passing-away by their 'dissociation' and 'association', but 'alteration' by their 'grouping' and 'Position'. And since they thought that the 'truth lay in the appearance, and the appearances are conflicting and infinitely many, they made the 'figures' infinite in number. Hence-owing to the changes of the compound-the same thing seems different and conflicting to different people: it is 'transposed' by a small additional ingredient, and appears utterly other by the 'transposition' of a single constituent. For Tragedy and Comedy are both composed of the same letters."
+    ]
+   }
+  ]
+ },
+ "1:A15": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On the Heavens",
+    "locus": "303a3-303a16",
+    "status": "translated",
+    "translation_credit": "Stocks, 1922",
+    "emphasis": [
+     "There is, further, another view-that of Leucippus and Democritus of Abdera-the implications of which are also unacceptable. The primary masses, according to them, are infinite in number and indivisible in mass: one cannot turn into many nor many into one; and all things are generated by their combination and involution. Now this view in a sense makes things out to be numbers or composed of numbers. The exposition is not clear, but this is its real meaning. And further, they say that since the atomic bodies differ in shape, and there is an infinity of shapes, there is an infinity of simple bodies. But they have never explained in detail the shapes of the various elements, except so far to allot the sphere to fire. Air, water, and the rest they distinguished by the relative size of the atom, assuming that the atomic substance was a sort of master-seed for each and every element."
+    ]
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "1.18",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Leucippus, Democritus,",
+     "omit": [
+      [
+       "Demetrius,",
+       "Metrodorus,"
+      ]
+     ],
+     "end": "infinite in magnitude."
+    }
+   }
+  ]
+ },
+ "1:A16": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On the Heavens",
+    "locus": "300b8-300b11",
+    "status": "translated",
+    "translation_credit": "Stocks, 1922",
+    "emphasis": [
+     "Hence Leucippus and Democritus, who say that the primary bodies are in perpetual movement in the void or infinite, may be asked to explain the manner of their motion and the kind of movement which is natural to them."
+    ]
+   }
+  ]
+ },
+ "1:A18": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "1071b31-1071b34",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "This is why some suppose eternal actuality-e.g. Leucippus and Plato; for they say there is always movement. But why and what this movement is they do not say, nor, if the world moves in this way or that, do they tell us the cause of its doing so."
+    ]
+   }
+  ]
+ },
+ "1:A19": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On the Heavens",
+    "locus": "275b29-276a1",
+    "status": "translated",
+    "translation_credit": "Stocks, 1922",
+    "emphasis": [
+     "If the whole is not continuous, but exists, as Democritus and Leucippus think, in the form of parts separated by void, there must necessarily be one movement of all the multitude.",
+     "They are distinguished, we are told, from one another by their figures; but their nature is one, like many pieces of gold separated from one another."
+    ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "213a27-213b22",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "But people really mean that there is an empty interval in which there is no sensible body. They hold that everything which is is body and say that what has nothing in it at all is void (so what is full of air is void). It is not then the existence of air that needs to be proved, but the non-existence of an interval, different from the bodies, either separable or actual-an interval which divides the whole body so as to break its continuity, as Democritus and Leucippus hold, and many other physicists-or even perhaps as something which is outside the whole body, which remains continuous.",
+     "These people, then, have not reached even the threshold of the problem, but rather those who say that the void exists.",
+     "They argue, for one thing, that change in place (i.e. locomotion and increase) would not be.",
+     "This argument, then, is one way in which they show that there is a void.",
+     "They reason from the fact that some things are observed to contract and be compressed",
+     "increase, too, is thought to take place always by means of void",
+     "A proof of this they find also in what happens to ashes, which absorb as much water as the empty vessel."
+    ],
+    "trim": {
+     "omit": [
+      [
+       "For it is maintained that motion would seem not to exist",
+       "but void is not among the things that exist."
+      ],
+      [
+       ", as people say that a cask will hold the wine",
+       "contracts into the voids present in it."
+      ],
+      [
+       ", for nutriment is body",
+       "it is impossible for two bodies to be together."
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "1:A28": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "De Anima",
+    "locus": "403b31-404a16",
+    "status": "translated",
+    "translation_credit": "Smith, 1931",
+    "emphasis": [
+     "Democritus to say that soul is a sort of fire or hot substance; his 'forms' or atoms are infinite in number; those which are spherical he calls fire and soul, and compares them to the motes in the air which we see in shafts of light coming through windows; the mixture of seeds of all sorts he calls the elements of the whole of Nature (Leucippus gives a similar account); the spherical atoms are identified with soul because atoms of that shape are most adapted to permeate everywhere, and to set all the others moving by being themselves in movement. This implies the view that soul is identical with what produces movement in animals. That is why, further, they regard respiration as the characteristic mark of life; as the environment compresses the bodies of animals, and tends to extrude those atoms which impart movement to them, because they themselves are never at rest, there must be a reinforcement of these by similar atoms coming in from without in the act of respiration; for they prevent the extrusion of those which are already within by counteracting the compressing and consolidating force of the environment; and animals continue to live only so long as they are able to maintain this resistance."
+    ]
+   }
+  ]
+ },
+ "1:A26": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.10",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Leucippus, of a drum.",
+     "end": "Leucippus, of a drum."
+    }
+   }
+  ]
+ },
+ "1:A27": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.12",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Leucippus affirms that the",
+     "end": "opposite are enfired."
+    }
+   }
+  ]
+ },
+ "1:A35": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.4",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Leucippus and Zeno say,",
+     "end": "fragment of the soul."
+    }
+   }
+  ]
+ },
+ "1:A36": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.7",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Leucippus gives the reason",
+     "end": "he is silent."
+    }
+   }
+  ]
  }
 }

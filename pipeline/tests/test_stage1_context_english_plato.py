@@ -83,9 +83,11 @@ def test_resolves_single_letter_locus(tmp_path):
     assert "sectionLoci" not in span
 
 
-def test_resolves_multi_letter_range_across_a_page_boundary(tmp_path):
+def test_plato_range_is_one_passage_without_section_division(tmp_path):
     # docs/plato-locus-resolver-design.md's own page-crossing example: a
-    # range need not stay on one Stephanus page.
+    # range need not stay on one Stephanus page. Owner ruling, 2026-09-27:
+    # "don't divide up the plato into stephanus sections" -- the range is
+    # one continuous passage, joined with a space, and emits no sectionLoci.
     _write_plato_store(tmp_path, {
         "hippias-minor:363c": "for he has told us...",
         "hippias-minor:363d": "which I prepared for exhibition...",
@@ -100,13 +102,11 @@ def test_resolves_multi_letter_range_across_a_page_boundary(tmp_path):
     resolved = json.loads(out_path.read_text(encoding="utf-8"))
     span = resolved["1:A8"][0]
     assert span["text"] == (
-        "for he has told us...\n\nwhich I prepared for exhibition...\n\n"
+        "for he has told us... which I prepared for exhibition... "
         "You are in a state of blessedness..."
     )
-    # Bare Stephanus tokens, never the dialogue-slug-prefixed store key
-    # (docs/plato-locus-resolver-design.md SS5: "Keep it that way --
-    # '315c-315e', not 'protagoras.315c-315e'").
-    assert span["sectionLoci"] == ["363c", "363d", "364a"]
+    assert "\n\n" not in span["text"]
+    assert "sectionLoci" not in span
 
 
 def test_discontinuous_loci_in_one_column_are_two_spans(tmp_path):
@@ -216,6 +216,11 @@ def _run_against_real_sources(work_id: str) -> dict:
     )
     manifest = _manifest(work_id)
     spine = _spine([seg_id.split(":", 1)[1] for seg_id in declared])
+    # The Greek is not in the repository: stand in one line per column that
+    # prints the headings its spans name, so the `head` check passes.
+    for seg in spine["segments"]:
+        seg["lines"] = [{"n": 1, "text": " ".join(
+            s["head"] for s in declared[seg["id"]]["context_spans"] if "head" in s)}]
     out_path = sce.run(manifest, spine)
     return json.loads(out_path.read_text(encoding="utf-8"))
 
@@ -228,23 +233,30 @@ def test_real_hippias_testimonia_A4_resolves_apology_19e(monkeypatch):
     assert span["sourceWork"] == "Apology"
     assert span["locus"] == "19e"
     assert "sectionLoci" not in span
-    assert span["text"].startswith(
-        "people and that I make money by it, that is not true either."
+    # Trimmed to the sentence DK quotes (owner ruling, 2026-09-27).
+    assert span["text"] == (
+        "…Although this also seems to me to be a fine thing, if one might be "
+        "able to teach people, as Gorgias of Leontini and Prodicus of Ceos and "
+        "Hippias of Elis are.…"
     )
-    assert "Gorgias of Leontini and Prodicus of Ceos and Hippias of Elis" in span["text"]
 
 
-def test_real_hippias_testimonia_A6_resolves_hippias_major_281a(monkeypatch):
+def test_real_hippias_testimonia_A6_resolves_hippias_major_281a_to_281b(monkeypatch):
     monkeypatch.setattr(sce, "SOURCES_DIR", REAL_SOURCES_DIR)
     monkeypatch.setattr(sce, "BUILD_DIR", REAL_SOURCES_DIR.parent / "pipeline" / "build" / "_test_tmp")
     resolved = _run_against_real_sources("hippias-testimonia")
     span = resolved["1:A6"][0]
     assert span["sourceWork"] == "Hippias Major"
-    assert span["locus"] == "281a"
+    # DK's quote runs on into 281b (owner ruling, 2026-09-27: extend English
+    # that falls short of DK's words), so the locus widens by one letter.
+    assert span["locus"] == "281a-281b"
     assert "sectionLoci" not in span
     assert span["text"].startswith(
         "Soc. Hippias, beautiful and wise, what a long time it is since you "
         "have put in at the port of Athens!"
+    )
+    assert span["text"].endswith(
+        "since you ask me, I do not often come to this neighborhood.…"
     )
 
 
@@ -255,12 +267,87 @@ def test_real_hippias_testimonia_A8_resolves_hippias_minor_363c_to_364a(monkeypa
     span = resolved["1:A8"][0]
     assert span["sourceWork"] == "Hippias Minor"
     assert span["locus"] == "363c-364a"
-    assert span["sectionLoci"] == ["363c", "363d", "364a"]
-    assert "Naturally, Socrates, I am in this state" in span["text"]
+    assert "sectionLoci" not in span
+    # DK's "..." drops Socrates' reply, and DK resumes at ἐξ οὗ γὰρ ἦργμαι,
+    # so Hippias' "Naturally, Socrates, I am in this state" goes too; his
+    # speaker label stays.
+    assert "…Hipp. …for since I began to contend" in span["text"]
+    assert "Naturally, Socrates" not in span["text"]
+    assert "You are in a state of blessedness" not in span["text"]
+    assert span["text"].startswith("…Why, Eudicus, it would be strange conduct")
     assert span["text"].endswith(
-        "Your reputation will be a monument of wisdom for the city of Elis "
-        "and your parents."
+        "I never yet met anyone better than myself in anything.…"
     )
+
+
+# --- Perseus corrections: words the TEI drops, restored from the Loeb ------
+
+def _write_corrections(tmp_path, entries: list[dict]) -> None:
+    p = tmp_path / "perseus-plato" / "corrections.json"
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(entries), encoding="utf-8")
+
+
+def test_correction_inserts_words_before_its_anchor(tmp_path):
+    _write_plato_store(tmp_path, {
+        "cratylus:391b": "They are the sophists,",
+        "cratylus:391c": "of Protagoras altogether, as if it were of any value.",
+    })
+    _write_corrections(tmp_path, [{
+        "key": "cratylus:391c", "before": "of Protagoras altogether,",
+        "insert": "from whom ... who reject the Truth ", "source": "Loeb p. 33",
+    }])
+    span = sce._resolve_span(_manifest("protagoras-testimonia"), "1:A24",
+                             _plato_span("Cratylus", "391b-391c"))
+    assert span["text"] == (
+        "They are the sophists, from whom ... who reject the Truth "
+        "of Protagoras altogether, as if it were of any value."
+    )
+
+
+def test_correction_whose_anchor_is_missing_is_fatal(tmp_path):
+    _write_plato_store(tmp_path, {"cratylus:391c": "of Protagoras wholly,"})
+    _write_corrections(tmp_path, [{
+        "key": "cratylus:391c", "before": "of Protagoras altogether,",
+        "insert": "x ", "source": "Loeb p. 33",
+    }])
+    with pytest.raises(ValueError, match="occurs 0 times"):
+        sce._resolve_span(_manifest("protagoras-testimonia"), "1:A24",
+                          _plato_span("Cratylus", "391c"))
+
+
+def test_correction_naming_a_key_the_store_lacks_is_fatal(tmp_path):
+    _write_plato_store(tmp_path, {"cratylus:391b": "They are the sophists,"})
+    _write_corrections(tmp_path, [{
+        "key": "cratylus:391c", "before": "of", "insert": "x ", "source": "p",
+    }])
+    with pytest.raises(ValueError, match="not in plato-stephanus"):
+        sce._resolve_span(_manifest("protagoras-testimonia"), "1:A24",
+                          _plato_span("Cratylus", "391b"))
+
+
+def test_real_protagoras_testimonia_A24_restores_fowlers_391c(monkeypatch):
+    monkeypatch.setattr(sce, "SOURCES_DIR", REAL_SOURCES_DIR)
+    monkeypatch.setattr(sce, "BUILD_DIR", REAL_SOURCES_DIR.parent / "pipeline" / "build" / "_test_tmp")
+    resolved = _run_against_real_sources("protagoras-testimonia")
+    (span,) = resolved["1:A24"]
+    assert span["sourceWork"] == "Cratylus"
+    assert span["locus"] == "391b-391c"
+    assert span["translationCredit"] == "Fowler, 1926"
+    # DK prints εἰσὶ δὲ οὗτοι οἱ σοφισταί ... ὥς του ἄξια; the middle is the
+    # Loeb page's words that the Perseus TEI drops (corrections.json).
+    assert span["text"] == (
+        "…They are the sophists, from whom your brother Callias got his "
+        "reputation for wisdom by paying them a good deal of money. But since "
+        "you have not the control of your inheritance, you ought to beg and "
+        "beseech your brother to teach you the correctness which he learned "
+        "of Protagoras about such matters. Hermogenes. It would be an absurd "
+        "request for me, Socrates, if I, who reject the Truth of Protagoras "
+        "altogether, should desire what is said in such a Truth, as if it "
+        "were of any value.…"
+    )
+    # Jowett's store has no Hermogenes reply here, so he is not offered.
+    assert "alts" not in span
 
 
 # --- Integration: every hand-authored Plato locus in the repo -------------
@@ -271,6 +358,10 @@ def test_real_hippias_testimonia_A8_resolves_hippias_minor_363c_to_364a(monkeypa
 PLATO_SIDECAR_WORKS = [
     "hippias-testimonia", "prodicus-testimonia", "gorgias-testimonia",
     "critias-testimonia", "protagoras-testimonia", "philolaus-testimonia",
+    # Columns given Plato English on 2026-09-27 (DK heads that had none).
+    "anaxagoras-testimonia", "critias-fragments", "gorgias-fragments",
+    "heraclitus-fragments", "parmenides-testimonia", "philolaus-fragments",
+    "protagoras-fragments", "zeno-testimonia",
 ]
 
 
@@ -289,13 +380,12 @@ def test_every_authored_plato_locus_resolves_to_real_text(work_id, monkeypatch):
     for seg_id, span in plato:
         assert span["text"].strip(), f"{work_id} {seg_id} {span['locus']} empty"
         assert span["translationCredit"]
-        # A range must mark each letter it emitted; a single letter must not
-        # (docs/plato-locus-resolver-design.md SS3(a)).
-        if "-" in span["locus"]:
-            assert span["sectionLoci"][0] == span["locus"].split("-")[0]
-            assert span["sectionLoci"][-1] == span["locus"].split("-")[1]
-        else:
-            assert "sectionLoci" not in span
+        # No Stephanus division, range or not (owner ruling, 2026-09-27),
+        # and an alternate is one section under the span's own locus.
+        assert "sectionLoci" not in span
+        assert "\n\n" not in span["text"]
+        for alt in span.get("alts", []):
+            assert [s["locus"] for s in alt["sections"]] == [span["locus"]]
 
 
 def test_critias_A3_carries_timaeus_three_discontinuous_loci(monkeypatch):
@@ -306,7 +396,7 @@ def test_critias_A3_carries_timaeus_three_discontinuous_loci(monkeypatch):
     spans = _run_against_real_sources("critias-testimonia")["1:A3"]
     assert [s["locus"] for s in spans] == ["20a", "20d-20e", "21a-21b"]
     assert "he is no novice in any of the subjects" in spans[0]["text"]
-    assert spans[1]["text"].startswith("Critias here mentioned to us a story")
+    assert spans[1]["text"].startswith("…Listen then, Socrates, to a tale")
     assert "close upon ninety years of age" in spans[2]["text"]
 
 
@@ -318,12 +408,11 @@ def test_prodicus_A2_pins_the_end_of_DKs_open_ended_ff(monkeypatch):
     monkeypatch.setattr(sce, "BUILD_DIR", REAL_SOURCES_DIR.parent / "pipeline" / "build" / "_test_tmp")
     span = _run_against_real_sources("prodicus-testimonia")["1:A2"][0]
     assert span["locus"] == "315c-316a"
-    assert span["sectionLoci"] == ["315c", "315d", "315e", "316a"]
-    assert "Tantalus also did I there behold" in span["text"]
-    assert span["text"].rstrip().endswith(
-        "So, when we had entered, after some more little delays over certain "
-        "points we had to examine, we went up to Protagoras,"
-    )
+    assert "sectionLoci" not in span
+    assert span["text"].startswith("…Nay more, Tantalus also did I there behold.")
+    # DK skips Agathon and the Adeimantuses without a mark; so does the English.
+    assert "Agathon" not in span["text"]
+    assert span["text"].endswith("which made the talk indistinct.…")
 
 
 # --- Item 82: per-passage translation picker -- Jowett `alts` -------------
@@ -398,15 +487,14 @@ def test_full_jowett_coverage_all_sections_carry_text(tmp_path):
         "translationCredit": (
             "Benjamin Jowett, The Dialogues of Plato, 3rd ed., Oxford, 1892"
         ),
+        # One section under the span's locus: no Stephanus division.
         "sections": [
-            {"locus": "363c", "text": "Jowett c."},
-            {"locus": "363d", "text": "Jowett d."},
-            {"locus": "364a", "text": "Jowett a."},
+            {"locus": "363c-364a", "text": "Jowett c. Jowett d. Jowett a."},
         ],
     }]
 
 
-def test_partial_jowett_coverage_gap_sections_omit_text_key(tmp_path):
+def test_partial_jowett_coverage_joins_the_sections_that_have_text(tmp_path):
     _write_plato_store(tmp_path, {
         "hippias-minor:363c": "Primary c.",
         "hippias-minor:363d": "Primary d.",
@@ -424,11 +512,9 @@ def test_partial_jowett_coverage_gap_sections_omit_text_key(tmp_path):
     })
     out_path = sce.run(manifest, spine)
     span = json.loads(out_path.read_text(encoding="utf-8"))["1:A8"][0]
-    sections = span["alts"][0]["sections"]
-    assert [s["locus"] for s in sections] == ["363c", "363d", "364a"]
-    assert sections[0]["text"] == "Jowett c."
-    assert "text" not in sections[1]
-    assert sections[2]["text"] == "Jowett a."
+    assert span["alts"][0]["sections"] == [
+        {"locus": "363c-364a", "text": "Jowett c. Jowett a."},
+    ]
 
 
 def test_zero_jowett_coverage_omits_alts_key_entirely(tmp_path):
@@ -444,10 +530,10 @@ def test_zero_jowett_coverage_omits_alts_key_entirely(tmp_path):
     assert "alts" not in span
 
 
-def test_jowett_multi_locus_ordering_matches_section_loci(tmp_path):
+def test_jowett_multi_locus_text_follows_the_span_order(tmp_path):
     # Deliberately write the Jowett store with keys in a DIFFERENT order
-    # than the span's own loci, and confirm `sections` still follows
-    # sectionLoci order, not store insertion order.
+    # than the span's own loci, and confirm the joined text still follows
+    # the span's locus order, not store insertion order.
     _write_plato_store(tmp_path, {
         "hippias-minor:363c": "Primary c.",
         "hippias-minor:363d": "Primary d.",
@@ -465,9 +551,9 @@ def test_jowett_multi_locus_ordering_matches_section_loci(tmp_path):
     })
     out_path = sce.run(manifest, spine)
     span = json.loads(out_path.read_text(encoding="utf-8"))["1:A8"][0]
-    assert span["sectionLoci"] == ["363c", "363d", "364a"]
-    assert [s["locus"] for s in span["alts"][0]["sections"]] == [
-        "363c", "363d", "364a",
+    assert "sectionLoci" not in span
+    assert span["alts"][0]["sections"] == [
+        {"locus": "363c-364a", "text": "Jowett c. Jowett d. Jowett a."},
     ]
 
 

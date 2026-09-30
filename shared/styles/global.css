@@ -1278,6 +1278,77 @@ body {
   background: color-mix(in srgb, var(--accent) 4%, transparent);
   border-radius: 0 4px 4px 0;
 }
+/* ── DK source rows (John, 2026-09-27; Reader.svelte's dkGridFor): the Both
+   view, plus item 85's columns in single-language views. Built on the row grid above; these rules differ from item 85's
+   rows only where the heading row needs them to:
+   - the heading row carries no card: the English citation is a plain line
+     beside the Greek heading, with the passage's picker at its right end;
+   - the first passage row follows the heading row with no gap and no top
+     inset, so the first English line starts level with the first Greek line;
+   - source-passage section rows (.dk-context-rows): both cells start at the
+     same edge (the English cell keeps no top inset of its own), and the two
+     section labels share one line box, so each section's label and first
+     line start level on both sides; item 85's own section rows keep their
+     spacing;
+   - an unsplit passage row keeps the ordinary cards inside the cell, so the
+     cell itself carries no inset, and the first card opens flush. */
+.frag-row-split.dk-source-grid > .frag-row.dk-head-row > .greek-col,
+.frag-row-split.dk-source-grid > .frag-row.dk-head-row > .english-col,
+.frag-row-split.dk-source-grid > .frag-row.dk-body-first > .greek-col,
+.frag-row-split.dk-source-grid > .frag-row.dk-body-first > .english-col {
+  margin-top: 0;
+}
+.frag-row-split.dk-source-grid > .frag-row.dk-head-row > .english-col.english-col,
+.frag-row-split.dk-source-grid > .frag-row.dk-body-whole > .english-col.english-col {
+  padding: 0;
+}
+.frag-row-split.dk-source-grid > .frag-row.dk-body-first > .english-col {
+  padding-top: 0;
+}
+.reader-body.view-both .frag-row-split.dk-source-grid.dk-context-rows > .frag-row > .english-col {
+  padding-top: 0;
+}
+.reader-body.view-both .dk-context-rows .greek-context-section-marker {
+  margin-top: 0;
+}
+.reader-body.view-both .dk-context-rows .greek-context-section-marker,
+.reader-body.view-both .dk-context-rows .context-english-section-marker {
+  line-height: 1.5;
+}
+/* Item 85's columns keep these rows in English-only view, where each English
+   cell is its own card (above): the heading row's citation stays outside it. */
+.reader-body.view-english .frag-row-split.dk-source-grid > .frag-row.dk-head-row > .english-col {
+  border-left: 0;
+  background: none;
+}
+.dk-source-grid .english-col > .context-english:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+/* A section row's source-passage English: the spanning card behind the rows
+   draws the border and tint, so this wrapper (kept for its data-eng-credit)
+   draws none of its own. */
+.context-english.context-english-row {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+.dk-head-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+.dk-head-line > .expanded-citation {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.dk-head-line > .context-english-alt-toggle {
+  flex: none;
+  margin: 0 0 0 auto;
+  white-space: nowrap;
+}
 .context-english-text {
   font-family: var(--font-english);
   font-size: 0.95em;
@@ -1373,6 +1444,30 @@ body {
   color: var(--text-light);
 }
 
+/* A later source-passage span's own picker, floated at the right end of its
+   first paragraph's own first line instead of opening a block-level line
+   above it (John, 2026-09-27, Sol review finding -- Reader.svelte's
+   contextEnglishSpan doc has the full case: only ONE span per DK heading
+   can move its picker up to the shared heading line, so a further
+   alt-bearing span -- prodicus-testimonia A17, gorgias-testimonia A20/A28 --
+   keeps its own). A float adds no height of its own before the paragraph
+   text starts, which is the point: the owner's rule is that an English
+   passage's first line sits level with its own first Greek line, and this
+   family of spans has no row-level machinery to enforce that -- only
+   "don't add a line" does. */
+.context-english-alt-toggle-float {
+  float: right;
+  margin: 0.1rem 0 0.3rem 0.75rem;
+}
+/* Establishes a new block-formatting context so a floated toggle (above)
+   is always contained within ITS OWN span's card -- never bleeding past
+   this div's own bottom edge into the next source-passage span's card,
+   whatever the relative heights of the toggle and the paragraph next to
+   it happen to be. */
+.context-english-float-contain {
+  overflow: hidden;
+}
+
 /* Per-passage translation picker (item 84, REVIEW-CHECKLIST): the same
    plain-text toggle register as .context-english-alt-toggle above,
    generalized to any ordinary fragment/testimonium segment whose WORK
@@ -1431,6 +1526,18 @@ body {
   font-size: 0.78rem;
   color: var(--text-light);
   margin: 0.35rem 0 0;
+}
+/* In Both view the source head and its English expansion start at the same
+   grid-row edge; this shift puts the citation's baseline on the Greek
+   head's. The offset grows with the reader's Greek size, so it is a linear
+   fit, measured in the browser (2026-09-26): baselines within 1px at every
+   --fs-greek from 0.85rem to 1.45rem. Re-measure if either font changes. */
+@media (min-width: 681px) {
+  .reader-body.view-both .expanded-citation,
+  .reader-body.view-both .dk-head-line > .context-english-alt-toggle {
+    margin-top: 0;
+    transform: translateY(calc(var(--fs-greek) * 0.31 - 0.279rem));
+  }
 }
 /* Verbatim entries print the head exactly as DK printed it -- no italics of
    its own; italics come strictly from a `direct` entry's `work.italic` (see
@@ -1491,6 +1598,10 @@ body {
    displayed as "venivnt" (caught by John 2026-07-23, De Fato vs Diogenes).
    Disable just that feature; the emitted data always held the correct u. */
 [lang="la"] { font-feature-settings: "locl" 0; }  /* inherits; descendants with their own feature settings (e.g. smcp sigla) keep them */
+/* An English-only work (`lang="en"` on its text elements): the English stack in
+   place of the Greek one. Scoped to the text elements -- every page is
+   <html lang="en">, so a bare [lang="en"] would restyle all Greek. */
+.greek-col[lang="en"], .line-text[lang="en"] { --font-greek: var(--font-english); }
 
 .english-col {
   font-family: var(--font-english);
@@ -1594,6 +1705,25 @@ body {
 /* Keyboard focus (roving tabindex): a clear ring so the focused token is
    obvious. Not on :hover (pointer users don't need it). */
 .tok:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; background: var(--greek-hover); }
+
+/* DK cross-reference link (John, 2026-09-27 ruling — shared/lib/dk-
+   crossrefs.ts): a fragment/testimonium reference DK itself brackets in
+   its apparatus, e.g. "[B 10]" or "[31 B 17]" -- only the reference's own
+   printed characters link; the brackets stay plain text either side. Same
+   quiet inline-citation treatment as the footnote text's glossary cross-
+   reference link (.footnote-text a.gloss-ref) rather than a button/chip;
+   no hover popup (not asked for), readable in both themes since it rides
+   the shared --accent token. */
+.dk-crossref { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); }
+.dk-crossref:hover { border-bottom-color: var(--accent); }
+/* Filled DK abbreviation (John, 2026-09-29; shared/lib/dk-fills.ts): the
+   words DK leaves out of "FIRST ... LAST", supplied from its full text --
+   lighter than the words around them, dotted underline, hover note. */
+.dk-fill {
+  color: color-mix(in srgb, currentColor 62%, var(--col-bg));
+  border-bottom: 1px dotted currentColor;
+  cursor: help;
+}
 
 /* A Greek line that begins a new chapter but continues text from the previous
    line (the chapter cut fell mid-line). Indent the text to signal continuation
@@ -2850,6 +2980,55 @@ body {
 .fn-marker:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-radius: 2px; }
 
 .footnote-popup { width: min(440px, calc(100vw - 2rem)); }
+
+/* ── DK edition-reference notes (dk-edition-notes.ts) ───────────────── */
+/* A bracket citing another edition, replaced in the Greek by its note
+   number. The marker is a real <button> styled like .fn-marker; the <sup>
+   carries no size or offset of its own, so the line box does not grow.
+   user-select: none keeps the number out of copied Greek. */
+/* Glues the marker to the word (or link) it follows, on the .fn-anchor
+   pattern above: the marker <button> is an atomic inline box, and engines
+   may take a line-break opportunity at its edge even with no space there
+   (WKWebView especially), orphaning the number onto the next line, away
+   from the word it marks. */
+.dk-note-anchor { white-space: nowrap; }
+.dk-note { font-size: 1em; vertical-align: baseline; line-height: 0; user-select: none; -webkit-user-select: none; }
+.dk-note-mark {
+  display: inline;
+  background: none;
+  border: 0;
+  appearance: none;
+  font-family: var(--font-ui);
+  font-size: 0.62em;
+  font-weight: 600;
+  vertical-align: super;
+  line-height: 0;
+  color: var(--accent);
+  cursor: pointer;
+  padding: 0.5em 0.35em;
+  margin: -0.5em -0.3em;
+}
+.dk-note-mark:hover, .dk-note-mark[aria-expanded="true"] { text-decoration: underline; }
+.dk-note-mark:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-radius: 2px; }
+.dk-note-pop { overflow-y: auto; padding: 0.6rem 0.85rem; }
+.dk-note-pop:focus { outline: none; }
+.dk-note-pop:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.dk-note-text { margin: 0; font-family: var(--font-greek); font-size: 0.95rem; line-height: 1.45; color: var(--text); overflow-wrap: anywhere; }
+/* Print-only: the column's notes by number (the pop-ups cannot open on paper). */
+.dk-note-list { display: none; }
+@media print {
+  .dk-note-mark { color: inherit; cursor: auto; }
+  .dk-note-pop { display: none; }
+  .dk-note-list {
+    display: block;
+    margin: 0.35rem 0 0;
+    padding-left: 1.8em;
+    font-family: var(--font-greek);
+    font-size: 0.78em;
+    line-height: 1.35;
+    color: #1d1b16;
+  }
+}
 .footnote-num {
   font-family: var(--font-ui);
   font-size: 0.78rem;

@@ -6,7 +6,78 @@
     "source_work": "Lives of Eminent Philosophers",
     "locus": "8.51-77",
     "status": "translated",
-    "translation_credit": "Hicks, 1925"
+    "translation_credit": "Hicks, 1925",
+    "trim": {
+     "omit": [
+      [
+       "There is an epigram of my own on him in my Pammetros",
+       "how was it that his tomb was shown still in Megara?"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "1:A4": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "De Anima",
+    "locus": "405b1-405b5",
+    "status": "translated",
+    "translation_credit": "Smith, 1931",
+    "emphasis": [
+     "of More superficial writers, some, e.g. Hippo, have pronounced it to be water; they seem to have argued from the fact that the seed of all animals is fluid, for Hippo tries to refute those who say that the soul is blood, on the ground that the seed,",
+     "is not blood."
+    ],
+    "trim": {
+     "start": "of More superficial writers"
+    }
+   }
+  ]
+ },
+ "1:A6": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "984a11-984a13",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "Anaxagoras of Clazomenae, who, though older than Empedocles, was later in his philosophical activity, says the principles are infinite in number"
+    ],
+    "trim": {
+     "end": "says the principles are infinite in number"
+    }
+   }
+  ]
+ },
+ "1:A22": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Poetics",
+    "locus": "1447b17-1447b19",
+    "status": "translated",
+    "translation_credit": "Fyfe, 1932",
+    "emphasis": [
+     "Homer and Empedocles have nothing in common except the metre, so that it would be proper to call the one a poet and the other not a poet but a scientist."
+    ]
+   }
+  ]
+ },
+ "1:A28": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "984a8-984a11",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "and Empedocles says it of the four elements (adding a fourth-earth-to those which have been named); for these, he says, always remain and do not come to be, except that they come to be more or fewer, being aggregated into one and segregated out of one."
+    ]
    }
   ]
  },
@@ -23,6 +94,159 @@
      "become friends and marry and have children and bring them up; and another says there are two, wet and dry or hot and cold, which he settles together and unites in marriage. And the Eleatic sect in our region, beginning with Xenophanes and even earlier, have their story that all things, as they are called, are really one. Then some Ionian and later some Sicilian Muses reflected",
      "that it was safest to combine the two tales and to say that being is many and one, and is (or are) held together by enmity and friendship. Str. For the more strenuous Muses say it is always simultaneously coming together and separating; but the gentler ones relaxed the strictness of the doctrine of perpetual strife; they say that the all is sometimes one and friendly, under the influence of Aphrodite,",
      "and sometimes many and at variance with itself by reason of some sort of strife."
+    ],
+    "trim": {
+     "start": "Every one of them seems to tell us a story",
+     "end": "by reason of some sort of strife."
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "As if we had been children",
+      "end": "by reason of a principle of strife."
+     }
+    }
+   }
+  ]
+ },
+ "1:A36": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "330b19-330b21",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "some advocate four from the start, e.g. Empedocles: yet he too draws them together so as to reduce them to the two, for he opposes all the others to Fire."
+    ]
+   }
+  ]
+ },
+ "1:A37": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "985a21-985b3",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "And Empedocles, though he uses the causes to a greater extent than this, neither does so sufficiently nor attains consistency in their use. At least, in many cases he makes love segregate things, and strife aggregate them. For whenever the universe is dissolved into its elements by strife, fire is aggregated into one, and so is each of the other elements; but whenever again under the influence of love they come together into one, the parts must again be segregated out of each element.",
+     "Empedocles, then, in contrast with his precessors, was the first to introduce the dividing of this cause, not positing one source of movement, but different and contrary sources.",
+     "Again, he was the first to speak of four material elements; yet he does not use four, but treats them as two only; he treats fire by itself, and its opposite-earth, air, and water-as one kind of thing. We may learn this by study of his verses."
+    ]
+   }
+  ]
+ },
+ "1:A38": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "252a7-252a9",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "as would seem to be the view of Empedocles when he says that the constitution of the world is of necessity such that Love and Strife alternately predominate and cause motion, while in the intermediate period of time there is a state of rest."
+    ],
+    "trim": {
+     "start": "as would seem to be the view of Empedocles"
+    }
+   }
+  ]
+ },
+ "1:A39": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "984b32-985a10",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "but since the contraries of the various forms of good were also perceived to be present in nature-not only order and the beautiful, but also disorder and the ugly, and bad things in greater number than good, and ignoble things than beautiful-therefore another thinker introduced friendship and strife, each of the two the cause of one of these two sets of qualities. For if we were to follow out the view of Empedocles, and interpret it according to its meaning and not to its lisping expression, we should find that friendship is the cause of good things, and strife of bad. Therefore, if we said that Empedocles in a sense both mentions, and is the first to mention, the bad and the good as principles, we should perhaps be right, since the cause of all goods is the good itself."
+    ]
+   }
+  ]
+ },
+ "1:A40": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "333b19-333b22",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "whereas he assigns the whole credit to the 'mingling'.",
+     "And yet the 'elements' at all events are 'dissociated' not by Strife, but by Love: since the 'elements' are by nature prior to the Deity, and they too are Deities."
+    ]
+   }
+  ]
+ },
+ "1:A42": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On the Heavens",
+    "locus": "301a14-301a20",
+    "status": "translated",
+    "translation_credit": "Stocks, 1922",
+    "emphasis": [
+     "But there is no sense in starting generation from an original state in which bodies are separated and in movement. Hence Empedocles begins after the process ruled by Love: for he could not have constructed the heaven by building it up out of bodies in separation, making them to combine by the power of Love, since our world has its constituent elements in separation, and therefore presupposes a previous state of unity and combination."
+    ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "334a5-334a7",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "With such statements, too, he combines the assertion that the Order of the World is the same now, in the reign of Strife, as it was formerly in the reign of Love."
+    ]
+   }
+  ]
+ },
+ "1:A43": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "334a26-334a31",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "how is the manner of their coming-to-be to be conceived by those who maintain a theory like that of Empedocles? They must conceive it as composition-just as a wall comes-to-be out of bricks and stones: and the 'Mixture', of which they speak, will be composed of the 'elements', these being preserved in it unaltered but with their small particles juxtaposed each to each. That will be the manner, presumably, in which flesh and every other compound results from the 'elements'."
+    ]
+   }
+  ]
+ },
+ "1:A43a": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On the Heavens",
+    "locus": "305a1-305a4",
+    "status": "translated",
+    "translation_credit": "Stocks, 1922",
+    "emphasis": [
+     "Suppose, on the other hand, that the analysis stops somewhere. Then the body at which it stops will be either atomic or, as Empedocles seems to have intended, a divisible body which will yet never be divided."
+    ]
+   }
+  ]
+ },
+ "1:A46": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "187a20-187a26",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "The second set assert that the contrarieties are contained in the one and emerge from it by segregation, for example Anaximander and also all those who assert that 'what is' is one and many, like Empedocles and Anaxagoras; for they too produce other things from their mixture by segregation. These differ, however, from each other in that the former imagines a cycle of such changes, the latter a single series. Anaxagoras again made both his 'homceomerous' substances and his contraries infinite in multitude, whereas Empedocles posits",
+     "the so-called elements."
     ]
    }
   ]
@@ -38,7 +262,125 @@
     "emphasis": [
      "Fire and water and earth and air, they say, all exist by nature and chance, and none of them by art; and by means of these, which are wholly inanimate, the bodies which come next—those, namely, of the earth, sun, moon and stars—have been brought into existence. It is by chance all these elements move, by the interplay of their respective forces, and according as they meet together and combine fittingly,—hot with cold, dry with moist,",
      "soft with hard, and all such necessary mixtures as result from the chance combination of these opposites,—in this way and by those means they have brought into being the whole Heaven and all that is in the Heaven, and all animals, too, and plants—after that all the seasons had arisen from these elements; and all this, as they assert, not owing to reason, nor to any god or art, but owing, as we have said, to nature and chance."
+    ],
+    "trim": {
+     "start": "Fire and water and earth and air, they say",
+     "end": "owing, as we have said, to nature and chance."
+    }
+   }
+  ]
+ },
+ "1:A52": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "1000b18-1000b20",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "for he does not make some things perishable and others imperishable, but makes all perishable except the elements."
     ]
+   }
+  ]
+ },
+ "1:A57": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "De Anima",
+    "locus": "418b20-418b26",
+    "status": "translated",
+    "translation_credit": "Smith, 1931",
+    "emphasis": [
+     "Empedocles (and with him all others who used the same forms of expression) was wrong in speaking of light as 'travelling' or being at a given moment between the earth and its envelope, its movement being unobservable by us;",
+     "if the distance traversed were short, the movement might have been unobservable, but where the distance is from extreme East to extreme West, the draught upon our powers of belief is too great."
+    ]
+   }
+  ]
+ },
+ "1:A63": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Meteorology",
+    "locus": "369b12-369b14",
+    "status": "translated",
+    "translation_credit": "Webster, 1923",
+    "emphasis": [
+     "there are some who maintain that there is actually fire in the clouds. Empedocles says that it consists of some of the sun's rays which are intercepted"
+    ],
+    "trim": {
+     "start": "there are some who maintain",
+     "end": "which are intercepted"
+    }
+   }
+  ]
+ },
+ "1:A67": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On the Heavens",
+    "locus": "295a13-295a21",
+    "status": "translated",
+    "translation_credit": "Stocks, 1922",
+    "emphasis": [
+     "This is thought by all those who try to generate the heavens to explain why the earth came together at the centre. They then seek a reason for its staying there; and some say, in the manner explained, that the reason is its size and flatness, others, with Empedocles, that the motion of the heavens, moving about it at a higher speed, prevents movement of the earth, as the water in a cup, when the cup is given a circular motion, though it is often underneath the bronze, is for this same reason prevented from moving with the downward movement which is natural to it."
+    ]
+   }
+  ]
+ },
+ "1:A70": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "De Anima",
+    "locus": "415b28-416a2",
+    "status": "translated",
+    "translation_credit": "Smith, 1931",
+    "emphasis": [
+     "Empedocles is wrong in adding that growth in plants is to be explained, the downward rooting by the natural tendency of earth to travel downwards, and the upward branching by the similar natural tendency of fire to travel upwards."
+    ]
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.26",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles, that the first",
+     "end": "receive their nutriment."
+    }
+   },
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Convivales",
+    "locus": "688a",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Now Nature is preserved in plants",
+     "end": "most agreeable to their nature."
+    }
+   }
+  ]
+ },
+ "1:A73": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Youth, Old Age, Life and Death, and Respiration",
+    "locus": "477a32-477b2",
+    "status": "translated",
+    "translation_credit": "G. R. T. Ross, 1908",
+    "emphasis": [
+     "Empedocles is then in error when he says that those animals which have the most warmth and fire live in the water to counterbalance the excess of heat in their constitution"
+    ],
+    "trim": {
+     "end": "the excess of heat in their constitution"
+    }
    }
   ]
  },
@@ -52,7 +394,212 @@
     "translation_credit": "Fowler, 1914",
     "emphasis": [
      "When I was young, Cebes, I was tremendously eager for the kind of wisdom which they call investigation of nature. I thought it was a glorious thing to know the causes of everything, why each thing comes into being and why it perishes and why it exists;",
-     "and I was always unsettling myself with such questions as these: Do heat and cold, by a sort of fermentation, bring about the organization of animals, as some people say? Is it the blood, or air, or fire by which we think? Or is it none of these, and does the brain furnish the sensations of hearing and sight and smell"
+     "and I was always unsettling myself with such questions as these: Do heat and cold, by a sort of fermentation, bring about the organization of animals, as some people say? Is it the blood, or air, or fire by which we think? Or is it none of these, and does the brain"
+    ],
+    "trim": {
+     "start": "When I was young, Cebes",
+     "end": "Or is it none of these, and does the brain"
+    }
+   }
+  ]
+ },
+ "1:A78": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Parts of Animals",
+    "locus": "642a17-642a22",
+    "status": "translated",
+    "translation_credit": "Ogle, 1912",
+    "emphasis": [
+     "For primary cause constitutes the nature of an animal much more than does its matter. There are indeed passages in which even Empedocles hits upon this, and following the guidance of fact, finds himself constrained to speak of the ratio (ὁ λόγος) as constituting the essence and real nature of things. Such, for instance, is the case when he explains what is a bone. For he does not merely describe its material, and say it is this one element, or those two or three elements, or a compound of all the elements, but states the ratio (ὁ λόγος) of their combination."
+    ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "De Anima",
+    "locus": "408a13-408a23",
+    "status": "translated",
+    "translation_credit": "Smith, 1931",
+    "emphasis": [
+     "It is equally absurd to identify the soul with the ratio of the mixture; for the mixture which makes flesh has a different ratio between the elements from that which makes bone. The consequence of this view will therefore be that distributed throughout the whole body there will be many souls, since every one of the bodily parts is a different mixture of the elements, and the ratio of mixture is in each case a harmony, i.e. a soul.",
+     "From Empedocles at any rate we might demand an answer to the following question for he says that each of the parts of the body is what it is in virtue of a ratio between the elements: is the soul identical with this ratio, or is it not rather something over and above this which is formed in the parts? Is love the cause of any and every mixture, or only of those that are in the right ratio? Is love this ratio itself, or is love something over and above this?"
+    ]
+   },
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Naturales",
+    "locus": "917a",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Some are of Empedocles’s opinion",
+     "end": "the churning of milk;"
+    }
+   }
+  ]
+ },
+ "1:A81": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Generation of Animals",
+    "locus": "764a1-764a15",
+    "status": "translated",
+    "translation_credit": "Platt, 1910",
+    "emphasis": [
+     "Others, as Empedocles, say that the differentiation takes place in the uterus; for he says that if the uterus is hot or cold what enters it becomes male or female, the cause of the heat or cold being the flow of the catamenia, according as it is colder or hotter, more ‘antique’ or more ‘recent’.",
+     "This",
+     "for certainly Empedocles has made a rather light-hearted assumption in thinking that the difference between them is due only to cold and heat, when he saw that there was a great difference in the whole of the sexual parts, the difference in fact between the male pudenda and the uterus."
+    ],
+    "trim": {
+     "omit": [
+      [
+       "Democritus of Abdera also says that the differentiation",
+       "by which male and female differ from one another."
+      ]
+     ]
+    }
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "Generation of Animals",
+    "locus": "765a8-765a10",
+    "status": "translated",
+    "translation_credit": "Platt, 1910",
+    "emphasis": [
+     "we must confront",
+     "the theory of Empedocles, which accounts for the difference between male and female by the heat and cold of the uterus."
+    ]
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.7",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles affirms, that heat",
+     "end": "northern parts thereof."
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.8",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles believes that monsters",
+     "end": "monstrous conceptions."
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.10",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles affirms, that the",
+     "end": "two or three infants."
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.11",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles says, that the",
+     "end": "heat contained in the same."
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.12",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles, that a woman’s",
+     "end": "gave their similitudes."
+    }
+   }
+  ]
+ },
+ "1:A82": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Generation of Animals",
+    "locus": "747a24-747a34",
+    "status": "translated",
+    "translation_credit": "Platt, 1910",
+    "emphasis": [
+     "but the whole of the mule kind is sterile. The reason has not been rightly given by Empedocles and Democritus, of whom the former expresses himself obscurely, the latter more intelligibly. For they offer their demonstration in the case of all these animals alike which unite against their affinities.",
+     "Empedocles assigns as his reason"
+    ],
+    "trim": {
+     "start": "but the whole of the mule kind is sterile.",
+     "omit": [
+      [
+       "Democritus says that the genital passages of mules",
+       "all others that unite in this manner ought to be barren."
+      ]
+     ],
+     "end": "Empedocles assigns as his reason"
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.14",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles, the matrix of",
+     "end": "capacity to receive it."
+    }
+   }
+  ]
+ },
+ "1:A87": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "324b26-324b35",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "Some philosophers think that the 'last' agent-the 'agent' in the strictest sense-enters in through certain pores, and so the patient suffers action. It is in this way, they assert, that we see and hear and exercise all our other senses. Moreover, according to them, things are seen through air and water and other transparent bodies, because such bodies possess pores, invisible indeed owing to their minuteness, but close-set and arranged in rows: and the more transparent the body, the more frequent and serial they suppose its pores to be. Such was the theory which some philosophers (induding Empedocles) advanced in regard to the structure of certain bodies. They do not restrict it to the bodies which act and suffer action: but 'combination' too, they say, takes place 'only between bodies whose pores are in reciprocal symmetry'."
+    ]
+   }
+  ]
+ },
+ "1:A91": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Sense and Sensibilia",
+    "locus": "437b9-437b14",
+    "status": "translated",
+    "translation_credit": "Beare, 1908",
+    "emphasis": [
+     "But, in fact, the eye sees itself in the above phenomenon merely as it does so in ordinary optical reflexion.",
+     "If the visual organ proper really were fire, which is the doctrine of Empedocles, a doctrine taught also in the Timaeus, and if vision were the result of light issuing from the eye as from a lantern, why should the eye not have had the power of seeing even in the dark?"
+    ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "Generation of Animals",
+    "locus": "779b15-779b20",
+    "status": "translated",
+    "translation_credit": "Platt, 1910",
+    "emphasis": [
+     "To suppose that the blue are fiery, as Empedocles says, while the dark have more water than fire in them, and that this is why the former, the blue, have not keen sight by day, viz. owing to deficiency of water in their composition, and the latter are in like condition by night, viz. owing to deficiency of fire — this is not well said if indeed we are to assume sight to be connected with water, not fire, in all cases."
     ]
    }
   ]
@@ -68,7 +615,439 @@
     "emphasis": [
      "Then would you like me to answer you in the manner of Gorgias, which you would find easiest to follow? Men. I should like that, of course. Soc. Do not both of you say there are certain effluences of existent things, as Empedocles held? Men. Certainly. Soc. And passages into which and through which the effluences pass? Men. To be sure. Soc. And some of the effluences fit into various passages,",
      "while some are too small or too large? Men. That is so. Soc. And further, there is what you call sight? Men. Yes. Soc. So now conceive my meaning, as Pindar says: color is an effluence of figures, commensurate with sight and sensible."
-    ]
+    ],
+    "trim": {
+     "start": "Then would you like me to answer you in the manner of Gorgias",
+     "end": "commensurate with sight and sensible."
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "Would you like me to answer you after the manner of Gorgias",
+      "end": "palpable to sense."
+     }
+    }
+   }
+  ]
+ },
+ "1:A94": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Sense and Sensibilia",
+    "locus": "441a3-441a6",
+    "status": "translated",
+    "translation_credit": "Beare, 1908",
+    "emphasis": [
+     "Taste is a modification of Touch.",
+     "Now the natural substance water per se tends to be tasteless. But",
+     "either (a) we must suppose that water contains in itself",
+     "the various kinds of savour, already formed, though in amounts so small as to be imperceptible, which is the doctrine of Empedocles"
+    ],
+    "trim": {
+     "start": "Taste is a modification of Touch.",
+     "end": "which is the doctrine of Empedocles"
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "4.17",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles, that scents insert",
+     "end": "defluxion of rheum."
+    }
+   }
+  ]
+ },
+ "1:A33": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "1.3",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "Mark the four roots of all created things:—Bright shining Jove, Juno that giveth life, Pluto beneath the earth, and Nestis who Doth with her tears supply the mortal fount.",
+     "Juno that gives life",
+     "by Pluto",
+     "by Nestis and the fountain of all mortals"
+    ],
+    "trim": {
+     "start": "Empedocles the Agrigentine,",
+     "end": "seed and water."
+    }
+   }
+  ]
+ },
+ "1:A35": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.7",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles, that the places",
+     "end": "respective stations."
+    }
+   }
+  ]
+ },
+ "1:A47": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "1.5",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles’s opinion is,",
+     "end": "is idle matter."
+    }
+   }
+  ]
+ },
+ "1:A49": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.6",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles determines, that the",
+     "end": "condensed from the remainders."
+    }
+   }
+  ]
+ },
+ "1:A51": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.11",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles, that the heaven",
+     "end": "of air and fire."
+    }
+   }
+  ]
+ },
+ "1:A53": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.13",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles, that they are",
+     "end": "separated one from another."
+    }
+   }
+  ]
+ },
+ "1:A54": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.13",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles, that the fixed",
+     "end": "planets are loosened."
+    }
+   }
+  ]
+ },
+ "1:A58": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.8",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles, that the air",
+     "end": "received its inclination."
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.23",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles, that the sun",
+     "end": "two circular tropics."
+    }
+   }
+  ]
+ },
+ "1:A61": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.31",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles affirms, that the",
+     "end": "remoteness from the earth."
+    }
+   }
+  ]
+ },
+ "1:A65": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.8",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles and the Stoics",
+     "end": "it falling downwards."
+    }
+   }
+  ]
+ },
+ "1:A74": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "4.22",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles thinks, that the",
+     "end": "running of water."
+    }
+   }
+  ]
+ },
+ "1:A75": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.18",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles says, that when",
+     "end": "it is begotten."
+    }
+   }
+  ]
+ },
+ "1:A77": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.27",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles believes, that animals",
+     "end": "a mere infancy."
+    }
+   }
+  ]
+ },
+ "1:A83": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.21",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles believes, that the",
+     "end": "nine and fortieth."
+    }
+   }
+  ]
+ },
+ "1:A85": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.24",
+    "head": "AËT. V 24, 2 (D. 435)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles, that a moderate",
+     "end": "blood causeth death."
+    }
+   }
+  ]
+ },
+ "1:A93": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "4.16",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles says that hearing",
+     "end": "beat upon by the air."
+    }
+   }
+  ]
+ },
+ "1:A97": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "4.5",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles, in the mass",
+     "end": "of the blood."
+    }
+   }
+  ]
+ },
+ "1:A50": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.1",
+    "head": "1, 4 (D. 328)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles, that the circle",
+     "end": "bound of the world."
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.10",
+    "head": "10, 2 (D. 339)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles, that those that",
+     "end": "the winter solstice."
+    }
+   }
+  ]
+ },
+ "1:A60": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.27",
+    "head": "AËT. II 27, 3 (D. 358)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Empedocles, that the figure",
+     "end": "resembles a quoit."
+    }
+   },
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Facie in Orbe Lunae",
+    "locus": "922c",
+    "head": "PLUT. de fac. in orbe lun. 5, 6 p. 922c",
+    "status": "translated",
+    "translation_credit": "Cherniss, 1957",
+    "trim": {
+     "start": "Why, they are vexed by Empedocles",
+     "end": "encompassed by the sphere of fire;"
+    }
+   }
+  ]
+ },
+ "1:A3": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Iside et Osiride",
+    "locus": "383d",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1936",
+    "trim": {
+     "start": "At any rate, they say that Acron",
+     "end": "the lighting of a fire beside the sick,"
+    }
+   }
+  ]
+ },
+ "1:A14": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Curiositate",
+    "locus": "515c",
+    "head": "PLUTARCH de curios. 1 p. 515 c",
+    "status": "translated",
+    "translation_credit": "Helmbold, 1939",
+    "trim": {
+     "start": "And Empedocles, the natural philosopher",
+     "end": "shut plague out of his country."
+    }
+   }
+  ]
+ },
+ "1:A45": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Animae Procreatione in Timaeo",
+    "locus": "1026b",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "This necessity is by most men called",
+     "end": "friendship and discord,"
+    }
+   }
+  ]
+ },
+ "1:A69": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Primo Frigido",
+    "locus": "953e",
+    "status": "translated",
+    "translation_credit": "Helmbold, 1957",
+    "trim": {
+     "start": "As for these features that are visible",
+     "end": "the fire that burns in the depths of the earth;"
+    }
    }
   ]
  }

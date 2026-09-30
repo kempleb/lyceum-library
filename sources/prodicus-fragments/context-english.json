@@ -1,4 +1,22 @@
 {
+ "1:B4": {
+  "context_spans": [
+   {
+    "source_author": "Galen",
+    "source_work": "On the Natural Faculties",
+    "locus": "2.9",
+    "status": "translated",
+    "translation_credit": "Brock, 1916",
+    "emphasis": [
+     "Prodicus also, when in his book “On the Nature of Man” he gives the name “phlegm” (from the verb πεφλέχθαι) to that element in the humours which has been burned or, as it were, over-roasted, while using a different terminology, still keeps to the fact just as the others do; this man’s innovations in nomenclature have also been amply done justice to by Plato. Thus, the white-coloured substance which everyone else calls phlegm, and which Prodicus calls blenna [mucus], is the well-known cold, moist humour which collects mostly in old people and in those who have been chilled in some way, and not even a lunatic could say that this was anything else than cold and moist."
+    ],
+    "trim": {
+     "start": "Prodicus also, when in his book",
+     "end": "anything else than cold and moist."
+    }
+   }
+  ]
+ },
  "1:B6": {
   "context_spans": [
    {
@@ -9,8 +27,33 @@
     "translation_credit": "Lamb, 1924",
     "emphasis": [
      "They are the persons, Crito, whom Prodicus described as the border-ground between philosopher and politician, yet they fancy that they are the wisest of all mankind,",
-     "since they regard themselves as moderately versed in philosophy, and moderately too in politics, on quite reasonable grounds:"
-    ]
+     "since they regard themselves as moderately versed in philosophy, and moderately too in politics"
+    ],
+    "trim": {
+     "start": "They are the persons, Crito, whom Prodicus described",
+     "end": "and moderately too in politics",
+     "omit": [
+      [
+       "and that they not merely are",
+       "cut off short by Euthydemus and his set."
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "1:B10": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Tuenda Sanitate Praecepta",
+    "locus": "126d",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1928",
+    "trim": {
+     "start": "Prodicus seems to have put",
+     "end": "fire is the best of sauces;"
+    }
    }
   ]
  }

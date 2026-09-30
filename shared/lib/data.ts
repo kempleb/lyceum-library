@@ -141,6 +141,24 @@ export interface GreekLine {
   // pipeline/reader_pipeline/stage1_latin._transposition_seam_note. Absent
   // for every other line.
   seamNote?: string;
+  // dk only (John's ruling, 2026-09-29; pipeline/reader_pipeline/
+  // stage1_dk_fills.py): where DK prints a quotation as "FIRST ... LAST"
+  // and gives the full text elsewhere, the words between, spanning the
+  // "..." in `text` (which itself is unchanged). Rendered by
+  // shared/lib/dk-fills.ts. Absent on every other line.
+  fills?: DkFill[];
+}
+
+// One filled DK abbreviation on a Greek line (see GreekLine.fills).
+export interface DkFill {
+  // The "..." in the line's `text`, [start, end).
+  start: number;
+  end: number;
+  // DK's own words between FIRST and LAST; verse lines joined with " / ".
+  text: string;
+  kind: 'verse' | 'prose';
+  // DK's printed "FIRST ... LAST", for the hover note.
+  abbrev: string;
 }
 
 // A per-passage translation credit: the translator, edition and (where the
@@ -351,6 +369,10 @@ export interface ContextEnglishSpan {
   sourceWork: string;
   locus: string;
   status: 'translated' | 'desert';
+  // The exact printed text of the citation heading this span translates
+  // (a CitationHead's `text`). Present where author/work order alone would
+  // bind the span to the wrong heading; see dk-layout.ts.
+  headText?: string;
   translationCredit?: string;
   text?: string;
   // One source-section locus per paragraph in `text` (in order), present
@@ -426,7 +448,20 @@ export interface ExpandedCitationEntry {
   note?: string;
 }
 
+/** Exact DK citation range in the emitted Greek line; UTF-16 offsets. */
+export interface CitationHead {
+  lineIndex: number;
+  line: number;
+  start: number;
+  end: number;
+  text: string;
+  /** Greek-side heading when it differs from the printed text (no dash; full citation on a column's first continuation head). */
+  display?: string;
+  expanded: ExpandedCitationEntry[];
+}
+
 export interface Segment {
+  citationHeads?: CitationHead[];
   id: string;
   column: string;
   greek: GreekLine[];

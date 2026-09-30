@@ -23,7 +23,7 @@
     "id": { "type": "string", "minLength": 1 },
     "author": { "type": "string", "minLength": 1 },
     "title": { "type": "string", "minLength": 1 },
-    "language": { "enum": ["grc", "lat"] },
+    "language": { "enum": ["grc", "lat", "en"] },
     "route": {
       "type": "string",
       "pattern": "^/[^/]+/[^/]+$",
@@ -119,13 +119,16 @@
     "edition": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["language", "edition", "source", "license"],
+      "required": ["language", "edition", "license"],
       "properties": {
-        "language": { "enum": ["grc", "lat"] },
+        "language": { "enum": ["grc", "lat", "en"] },
         "edition": { "type": "string", "minLength": 1 },
         "source": { "$ref": "#/$defs/editionSource" },
         "license": { "$ref": "#/$defs/license" }
-      }
+      },
+      "if": { "properties": { "language": { "const": "en" } }, "required": ["language"] },
+      "then": {},
+      "else": { "required": ["source"] }
     },
     "translation": {
       "type": "object",

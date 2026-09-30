@@ -187,7 +187,8 @@ english:
   # précis of a reporting source, with no translated context-english span
   # covering the same material -- labeled a summary rather than suppressed
   # (stage1_freeman_english.py gate 5; see EnglishChunk.summary).
-  summary_labels: [B15, B19]
+  summary_suppressed: [B15]
+  summary_labels: [B19]
 
 sources:
   tlg_dir_env: "TLG_DIR"

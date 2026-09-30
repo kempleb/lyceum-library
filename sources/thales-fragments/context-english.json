@@ -9,7 +9,11 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "But according to others he wrote nothing but two treatises, one On the Solstice and one On the Equinox, regarding all other matters as incognizable."
-    ]
+    ],
+    "trim": {
+     "start": "But according to others he wrote nothing but two treatises",
+     "end": "regarding all other matters as incognizable."
+    }
    }
   ]
  }

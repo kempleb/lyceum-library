@@ -1,4 +1,61 @@
 {
+ "1:B1": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Theaetetus",
+    "locus": "151e-152c",
+    "status": "translated",
+    "translation_credit": "Fowler, 1921",
+    "emphasis": [
+     "And, indeed, if I may venture to say so, it is not a bad description of knowledge that you have given, but one which Protagoras also used to give. Only, he has said the same thing in a different way. For he says somewhere that man is the measure of all things, of the existence of the things that are and the non-existence of the things that are not. You have read that, I suppose? THEAET. Yes, I have read it often. SOC. Well, is not this about what he means, that individual things are for me such as they appear to me, and for you in turn such as they appear to you —you and I being man?",
+     "Is it not true that sometimes, when the same wind blows, one of us feels cold, and the other does not? or one feels slightly and the other exceedingly cold? THEAET. Certainly. SOC. Then in that case, shall we say that the wind is in itself cold or not cold or shall we accept Protagoras’s saying that it is cold for him who feels cold and not for him who does not? THEAET. Apparently we shall accept that. SOC. Then it also seems cold, or not, to each of the two? THEAET. Yes. SOC. But seems denotes perceiving? THEAET. It does. SOC. Then seeming and perception are the same thing in matters of warmth and everything of that sort. For as each person perceives things, such they are to each person."
+    ],
+    "trim": {
+     "start": "And, indeed, if I may venture to say so",
+     "omit": [
+      [
+       "THEAET. Yes, that is what he says.",
+       "so let us follow after him."
+      ]
+     ],
+     "end": "such they are to each person."
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "Well, you have delivered yourself of a very important doctrine",
+      "omit": [
+       [
+        "Yes, he says so.",
+        "Let us try to understand him:"
+       ]
+      ],
+      "end": "to each one such as he perceives them?"
+     }
+    }
+   },
+   {
+    "source_author": "Plato",
+    "source_work": "Theaetetus",
+    "locus": "161c-161d",
+    "status": "translated",
+    "translation_credit": "Fowler, 1921",
+    "emphasis": [
+     "In general I like his doctrine that what appears to each one is to him, but I am amazed by the beginning of his book. I don’t see why he does not say in the beginning of his Truth that a pig or a dog-faced baboon or some still stranger creature of those that have sensations is the measure of all things. Then he might have begun to speak to us very imposingly and condescendingly, showing that while we were honoring him like a god for his wisdom, he was after all no better in intellect than any other man, or, for that matter, than a tadpole."
+    ],
+    "trim": {
+     "start": "In general I like his doctrine",
+     "end": "or, for that matter, than a tadpole."
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "I am charmed with his doctrine",
+      "end": "not to speak of his fellow-men"
+     }
+    }
+   }
+  ]
+ },
  "1:B6a": {
   "context_spans": [
    {
@@ -9,7 +66,48 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "Protagoras was the first to maintain that there are two sides to every question, opposed to each other"
-    ]
+    ],
+    "trim": {
+     "end": "opposed to each other"
+    }
+   }
+  ]
+ },
+ "1:B8": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Sophist",
+    "locus": "232d-232e",
+    "status": "translated",
+    "translation_credit": "Fowler, 1921",
+    "emphasis": [
+     "However in all arts jointly and severally what the professional ought to answer to every opponent is written down somewhere and published that he who will may learn. Theaet. You seem to refer to the text-books of Protagoras on wrestling and the other arts."
+    ],
+    "trim": {
+     "start": "However in all arts jointly and severally",
+     "end": "on wrestling and the other arts."
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "In all and every art",
+      "end": "about wrestling and the other arts?"
+     }
+    }
+   },
+   {
+    "source_author": "Plato",
+    "source_work": "Sophist",
+    "locus": "233a",
+    "status": "translated",
+    "translation_credit": "Fowler, 1921",
+    "emphasis": [
+     "How, then, can one who is himself ignorant say anything worth while in arguing with one who knows? Theaet. He cannot at all."
+    ],
+    "trim": {
+     "start": "How, then, can one who is himself ignorant",
+     "end": "He cannot at all."
+    }
    }
   ]
  }

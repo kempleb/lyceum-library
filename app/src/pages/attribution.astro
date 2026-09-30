@@ -497,7 +497,7 @@ const jsonLd = {
       H. S. Long's Oxford Classical Text, all listed below.
     </p>
     <ul>
-      {WORKS.filter((w) => isBuilt(w.id)).map((w) => (
+      {WORKS.filter((w) => isBuilt(w.id) && w.language !== 'en').map((w) => (
         <li><strong>{w.title}</strong> — {w.greekSource.full}</li>
       ))}
     </ul>

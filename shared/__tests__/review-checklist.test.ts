@@ -196,14 +196,14 @@ describe('parseChecklist against the real REVIEW-CHECKLIST.md', () => {
   const real = readFileSync(join(REPO_ROOT, 'REVIEW-CHECKLIST.md'), 'utf8');
   const items = parseChecklist(real) as ChecklistItem[];
 
-  it('finds 106 active items, 28 completed, 9 retired (current file shape)', () => {
-    expect(items.filter((i) => i.section === 'active')).toHaveLength(106);
-    expect(items.filter((i) => i.section === 'completed')).toHaveLength(28);
+  it('finds 129 active items, 30 completed, 9 retired (current file shape)', () => {
+    expect(items.filter((i) => i.section === 'active')).toHaveLength(129);
+    expect(items.filter((i) => i.section === 'completed')).toHaveLength(30);
     expect(items.filter((i) => i.section === 'retired')).toHaveLength(9);
   });
 
-  it('numbers active items 1..106 in order with no gaps', () => {
+  it('numbers active items 1..129 in order with no gaps', () => {
     const nums = items.filter((i) => i.section === 'active').map((i) => i.num);
-    expect(nums).toEqual(Array.from({ length: 106 }, (_, i) => i + 1));
+    expect(nums).toEqual(Array.from({ length: 129 }, (_, i) => i + 1));
   });
 });

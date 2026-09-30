@@ -20,7 +20,219 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "Diodorus of Ephesus, when writing of Anaximander, declares that Empedocles emulated him, displaying theatrical arrogance and wearing stately robes."
+    ],
+    "trim": {
+     "end": "displaying theatrical arrogance and wearing stately robes."
+    }
+   }
+  ]
+ },
+ "1:A9": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "187a20-187a23",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "The second set assert that the contrarieties are contained in the one and emerge from it by segregation, for example Anaximander and also all those who assert that 'what is' is one and many, like Empedocles and Anaxagoras; for they too produce other things from their mixture by segregation."
     ]
+   }
+  ]
+ },
+ "1:A15": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "203b6-203b26",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "Everything is either a source or derived from a source. But there cannot be a source of the infinite or limitless, for that would be a limit of it. Further, as it is a beginning, it is both uncreatable and indestructible. For there must be a point at which what has come to be reaches completion, and also a termination of all passing away. That is why, as we say, there is no principle of this, but it is this which is held to be the principle of other things, and to encompass all and to steer all, as those assert who do not recognize, alongside the infinite, other causes, such as Mind or Friendship. Further they identify it with the Divine, for it is 'deathless and imperishable' as Anaximander says, with the majority of the physicists.",
+     "Belief in the existence of the infinite comes mainly from five considerations:",
+     "(1) From the nature of time-for it is infinite. (2) From the division of magnitudes-for the mathematicians also use the notion of the infinite.",
+     "(3) If coming to be and passing away do not give out, it is only because that from which things come to be is infinite.",
+     "(4) Because the limited always finds its limit in something, so that there must be no limit, if everything is always limited by something different from itself.",
+     "(5) Most of all, a reason which is peculiarly appropriate and presents the difficulty that is felt by everybody-not only number but also mathematical magnitudes and what is outside the heaven are supposed to be infinite because they never give out in our thought.",
+     "The last fact (that what is outside is infinite) leads people to suppose that body also is infinite, and that there is an infinite number of worlds."
+    ]
+   }
+  ]
+ },
+ "1:A26": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On the Heavens",
+    "locus": "295b11-295b16",
+    "status": "translated",
+    "translation_credit": "Stocks, 1922",
+    "emphasis": [
+     "but there are some, Anaximander, for instance, among the ancients, who say that the earth keeps its place because of its indifference. Motion upward and downward and sideways were all, they thought, equally inappropriate to that which is set at the centre and indifferently related to every extreme point; and to move in contrary directions at the same time was impossible: so it must needs remain still."
+    ]
+   }
+  ]
+ },
+ "1:A27": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Meteorology",
+    "locus": "353b6-353b11",
+    "status": "translated",
+    "translation_credit": "Webster, 1923",
+    "emphasis": [
+     "At first, they say, the earth was surrounded by moisture. Then the sun began to dry it up, part of it evaporated and is the cause of winds and the turnings back of the sun and the moon, while the remainder forms the sea. So the sea is being dried up and is growing less, and will end by being some day entirely dried up."
+    ]
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.16",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Anaximander affirms that the",
+     "end": "altered its quality."
+    }
+   }
+  ]
+ },
+ "1:A21": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.20",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "chariot-wheel",
+     "a hole in a pipe"
+    ],
+    "trim": {
+     "start": "Anaximander says, that the",
+     "end": "and this is the sun."
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.21",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Anaximander says, that the",
+     "end": "larger than the earth."
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.24",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Anaximander, that the sun",
+     "end": "hindered from expiration."
+    }
+   }
+  ]
+ },
+ "1:A23": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.3",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Anaximander affirms that all",
+     "end": "a resplendent flame."
+    }
+   }
+  ]
+ },
+ "1:A24": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.7",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Anaximander believes that wind",
+     "end": "moist subtle parts of it."
+    }
+   }
+  ]
+ },
+ "1:A25": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.10",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "stony pillar"
+    ],
+    "trim": {
+     "start": "Anaximander, that it resembles",
+     "end": "stony pillar."
+    }
+   }
+  ]
+ },
+ "1:A30": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.19",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "in bark",
+     "thorny bark"
+    ],
+    "trim": {
+     "start": "Anaximander’s opinion is, that",
+     "end": "a short space of time."
+    }
+   }
+  ]
+ },
+ "1:A18": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.15",
+    "head": "15, 6 (D. 345)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Anaximander, Metrodorus of Chios,",
+     "end": "stars and planets."
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.16",
+    "head": "16, 5 (D. 345)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Anaximander, that they are",
+     "end": "they are placed."
+    }
    }
   ]
  }

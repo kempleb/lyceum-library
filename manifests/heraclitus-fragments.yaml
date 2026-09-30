@@ -380,8 +380,8 @@ english:
   # (stage1_freeman_english.py gate 5; the Greek renders alone beside the
   # source passage). B69/B83 are précis with no such coverage -- labeled a
   # summary instead (see EnglishChunk.summary).
-  summary_suppressed: [B38, B82]
-  summary_labels: [B69, B83]
+  summary_suppressed: [B38, B82, B83]
+  summary_labels: [B69]
   secondary:
     id: burnet
     name: "John Burnet, Early Greek Philosophy, 3rd ed. (A. & C. Black, 1920)"

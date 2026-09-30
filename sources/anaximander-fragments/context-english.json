@@ -1,0 +1,20 @@
+{
+ "1:B5": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.10",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "stony pillar"
+    ],
+    "trim": {
+     "start": "Anaximander, that it resembles",
+     "end": "stony pillar."
+    }
+   }
+  ]
+ }
+}

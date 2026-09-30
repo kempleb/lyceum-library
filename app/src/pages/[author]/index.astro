@@ -227,11 +227,15 @@ const languageLabel = author.languages.includes('lat') && author.languages.inclu
   : author.languages.includes('lat') ? 'Latin' : 'Greek';
 
 // ── SEO ─────────────────────────────────────────────────────────────────────
-const pageTitle = `${author.name} — Works in ${languageLabel} & English`
+// An author with no Greek or Latin work has no parallel text or lexicon to describe.
+const englishOnlyAuthor = author.languages.length > 0 && !author.languages.some((l) => l === 'grc' || l === 'lat');
+const pageTitle = (englishOnlyAuthor
+  ? `${author.name} — Works in English`
+  : `${author.name} — Works in ${languageLabel} & English`)
   + (lyceumChrome ? ` — ${siteName}` : '');
 const metaDescription =
   `${author.name} (${author.floruit}): ${author.blurb} ${works.length} work${works.length === 1 ? '' : 's'}` +
-  ` with the original ${languageLabel} and English translation where available.`;
+  (englishOnlyAuthor ? '.' : ` with the original ${languageLabel} and English translation where available.`);
 const canonical = Astro.site ? new URL(`${base}/${authorId}/`, Astro.site).href : undefined;
 const ogImage = Astro.site ? new URL(`${base}/og-default.png`, Astro.site).href : undefined;
 const jsonLd = {
@@ -313,7 +317,7 @@ const breadcrumbLd = Astro.site
     <div class="lyc-chrome">
       <LyceumBand siteName={siteName} searchHref={`${base}/search`}>
         <a class="tool" href={`${base}/catalog/`}>Catalog</a>
-        <a class="tool" href={`${base}/lemma/grc/`}>Lexica</a>
+        {!englishOnlyAuthor && <a class="tool" href={`${base}/lemma/grc/`}>Lexica</a>}
         <ThemeToggle />
         <a class="tool tool-signin" href="https://lyceum.institute">Sign in</a>
       </LyceumBand>
@@ -323,7 +327,7 @@ const breadcrumbLd = Astro.site
     <Breadcrumb authorId={author.id} authors={authorOptions} client:load />
     <nav class="header-actions" aria-label="Navigation">
       <a href={`${base}/authors`} class="search-link">All authors</a>
-      <a href={`${base}/lemma/grc/`} class="search-link">Lexicon</a>
+      {!englishOnlyAuthor && <a href={`${base}/lemma/grc/`} class="search-link">Lexicon</a>}
       <a href={`${base}/search`} class="search-link">Search</a>
       <ThemeToggle />
     </nav>

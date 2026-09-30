@@ -1275,3 +1275,37 @@ describe.skipIf(!existsSync(DIST_DIR))('navigation cross-check against real buil
     },
   );
 });
+
+// English-language works: the emitter maps `en` through, adds no dictionary
+// lookup, and lets an English edition (which has no TLG/PHI ids) carry its
+// name as the partner-manifest source text.
+describe('English-language work (fixtures/data/sample-english-work)', () => {
+  const WORK_DIR = join(REPO_ROOT, 'fixtures', 'data', 'sample-english-work');
+  const ENGLISH_MANIFEST = JSON.parse(readFileSync(join(WORK_DIR, 'manifest.json'), 'utf8'));
+  const ENGLISH_WORK = {
+    id: 'sample-english-work',
+    title: 'Sample English Work',
+    author: 'sample-english-author',
+    language: 'en',
+    translations: [],
+  };
+  const ENGLISH_AUTHOR = { id: 'sample-english-author', name: 'Sample English Author', floruit: 'Fixture' };
+
+  it('maps language en, emits no lexicon apparatus item, and gives the edition a source', () => {
+    // The fixture's own corpus_version ('fixture') is not a pipeline stamp,
+    // which the emitter requires; give it a real-shaped one for this check.
+    const stamped = { ...ENGLISH_MANIFEST, corpus_version: 'c5b8ecf-2026-09-01' };
+    const out = toLyceumManifest(stamped, ENGLISH_WORK, ENGLISH_AUTHOR);
+    expect(out.language).toBe('en');
+    expect(out.latin_title).toBeUndefined();
+    expect(out.apparatus.some((item: { id: string }) => item.id === 'lexicon')).toBe(false);
+    expect(out.editions).toHaveLength(1);
+    expect(out.editions[0].source).toBe('Fixture');
+    expectValid(out);
+  });
+
+  it('offers only the original language mode', () => {
+    const nav = buildNavigation(ENGLISH_MANIFEST, ENGLISH_WORK, WORK_DIR);
+    expect(nav.language_modes).toEqual(['original']);
+  });
+});

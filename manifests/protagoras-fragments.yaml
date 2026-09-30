@@ -251,8 +251,8 @@ english:
   # (stage1_freeman_english.py gate 5; the Greek renders alone beside the
   # source passage). B5/B6/B8 are précis with no such coverage -- labeled a
   # summary instead (see EnglishChunk.summary).
-  summary_suppressed: [B6a]
-  summary_labels: [B5, B6, B8]
+  summary_suppressed: [B6a, B8]
+  summary_labels: [B5, B6]
 
 # Digest fingerprint of the observed dk column spine (20 columns: B1-B10,
 # B6a, B6b, B8a-B8h; no gaps) — stage2 recomputes and compares it.

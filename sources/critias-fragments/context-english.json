@@ -1,4 +1,22 @@
 {
+ "1:B41a": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Charmides",
+    "locus": "161b",
+    "status": "translated",
+    "translation_credit": "Lamb, 1927",
+    "emphasis": [
+     "I remembered just now what I once heard someone say, that temperance might be doing one’s own business."
+    ],
+    "trim": {
+     "start": "I remembered just now",
+     "end": "doing one’s own business."
+    }
+   }
+  ]
+ },
  "1:B75": {
   "context_spans": [
    {
@@ -9,7 +27,113 @@
     "translation_credit": "Shorey, 1930-1937 (per owner's pre-1940 ruling, 2026-07-28)",
     "emphasis": [
      "It was excellently spoken of you, sons of the man we know, in the beginning of the elegy which the admirer of Glaucon wrote when you distinguished yourselves in the battle of Megara —Sons of Ariston, whose race from a glorious sire is god-like."
-    ]
+    ],
+    "trim": {
+     "start": "It was excellently spoken of you",
+     "end": "from a glorious sire is god-like."
+    }
+   }
+  ]
+ },
+ "1:B25": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "1.6",
+    "head": "I 6, 7 (D. 294)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Thus Euripides:",
+     "end": "wise Creator, Time."
+    }
+   }
+  ]
+ },
+ "1:B35": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. Λυκιουργεῖς",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "trim": {
+     "omit": [
+      [
+       "Demosthenes in Against Timotheos.",
+       "were so called."
+      ]
+     ],
+     "end": "Constitution of the Lakedaimonians."
+    }
+   }
+  ]
+ },
+ "1:B5": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Alcibiades",
+    "locus": "33",
+    "status": "translated",
+    "translation_credit": "Perrin, 1916",
+    "emphasis": [
+     "Mine was the motion that brought thee back; I made it in public; Words and writing were mine; this the task I performed; Signet and seal of words that were mine give warrant as follows."
+    ],
+    "trim": {
+     "start": "Now the decree for his recall",
+     "end": "give warrant as follows.”"
+    }
+   }
+  ]
+ },
+ "1:B8": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Cimon",
+    "locus": "10",
+    "status": "translated",
+    "translation_credit": "Perrin, 1914",
+    "emphasis": [
+     "the wealth of the Scopadae, the great-mindedness of Cimon, and the victories of Arcesilaus of Lacedaemon"
+    ],
+    "trim": {
+     "start": "And Critias, one of the thirty tyrants",
+     "end": "Arcesilaus of Lacedaemon.”"
+    }
+   }
+  ]
+ },
+ "1:B34": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Lycurgus",
+    "locus": "9",
+    "status": "translated",
+    "translation_credit": "Perrin, 1914",
+    "trim": {
+     "start": "In this way it came about",
+     "end": "reached the mouth of the drinker."
+    }
+   }
+  ]
+ },
+ "1:B52": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Cimon",
+    "locus": "16",
+    "status": "translated",
+    "translation_credit": "Perrin, 1914",
+    "trim": {
+     "start": "But Ephialtes opposed the project",
+     "end": "with many hoplites."
+    }
    }
   ]
  }

@@ -760,7 +760,13 @@ describe('Reader.svelte DK inline "(NN)" section-marker split (thales/testimonia
     expect(container.querySelectorAll('.frag-flow').length).toBe(1);
     expect(container.querySelectorAll('.greek-context-section-marker').length).toBe(0);
     const flow = container.querySelector('.frag-flow');
+    // The bracket is its whole line, so it stays in the text rather than
+    // becoming a note (John, 2026-09-28; dk-edition-notes.ts's
+    // `isWholeLine` exception) -- no other Greek on the line means the
+    // bracket IS the citation, not an interruption of it.
     expect(flow?.textContent?.trim()).toBe('[Neue Jahrb. Suppl. 14 (1848) ed. A. Jahn]');
+    expect(flow?.querySelector('.dk-note-mark')).toBeNull();
+    expect(container.querySelector('#col-A10 .dk-note-list')).toBeNull();
     expect(flow?.id).toBe('LA10');
   });
 

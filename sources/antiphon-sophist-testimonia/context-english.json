@@ -9,7 +9,30 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "He was sharply criticized, according to Aristotle in his third book On Poetry, by a certain Antilochus of Lemnos, and by Antiphon the soothsayer"
-    ]
+    ],
+    "trim": {
+     "start": "He was sharply criticized, according to Aristotle",
+     "end": "by Antiphon the soothsayer"
+    }
+   }
+  ]
+ },
+ "1:A6": {
+  "context_spans": [
+   {
+    "source_author": "pseudo-Plutarch",
+    "source_work": "Vitae Decem Oratorum",
+    "locus": "833c-833d",
+    "status": "translated",
+    "translation_credit": "Fowler, 1936",
+    "emphasis": [
+     "a method of curing distress",
+     "On Poets"
+    ],
+    "trim": {
+     "start": "And he is said to have written tragedies",
+     "end": "the book On Poets by Glaucus of Rhegium."
+    }
    }
   ]
  }

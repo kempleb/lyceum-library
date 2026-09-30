@@ -9,7 +9,60 @@
     "translation_credit": "Lamb, 1925",
     "emphasis": [
      "Parmenides says of Birth that she invented Love before all other gods."
-    ]
+    ],
+    "trim": {
+     "start": "Parmenides says of Birth"
+    }
+   },
+   {
+    "source_author": "Plutarch",
+    "source_work": "Amatorius",
+    "locus": "756e",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "Of all the Gods that rule above, She first brought forth the mighty Love."
+    ],
+    "trim": {
+     "start": "Therefore Parmenides asserts Love",
+     "end": "the mighty Love."
+    }
+   }
+  ]
+ },
+ "1:B14": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Adversus Colotem",
+    "locus": "1116a",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "A torch which round the earth by night Does bear about a borrowed light,"
+    ],
+    "trim": {
+     "start": "For neither does he who says that a red-hot iron",
+     "end": "the nature of the moon."
+    }
+   }
+  ]
+ },
+ "1:B15": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Facie in Orbe Lunae",
+    "locus": "929a",
+    "status": "translated",
+    "translation_credit": "Cherniss, 1957",
+    "emphasis": [
+     "Fixing her glance forever on the sun."
+    ],
+    "trim": {
+     "start": "of all the host in heaven",
+     "end": "forever on the sun.’"
+    }
    }
   ]
  }

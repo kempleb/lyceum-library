@@ -1,5 +1,5 @@
 {
- "_about": "John Boyer's rulings on DK dash heads that rule E (2026-09-24) cannot settle from the print: {work: {column: ruling}}. `head` is the whole printed dash head, matched exactly (whitespace aside). A reading ruling carries `reading`: {author, work} as citation-dictionary.json keys plus the locus and any apparatus, or null while the ruling is pending (the head then stays verbatim, flagged by `pending`, default awaiting-adjudication). A correction (`type`: correction) fixes a DK misprint: `printed` is the misprint as the head prints it, `reading` the corrected citation, `readerNote` the note the reader shows after it (DRAFT copy until John approves it). `note` records the ruling and is never shown. The stage fails the build if a ruling's head is no longer in the text, or the citation above it names another author and work.",
+ "_about": "John Boyer's rulings on DK dash heads that rule E (2026-09-24) cannot settle from the print: {work: {column: ruling}}. `head` is the whole printed dash head, matched exactly (whitespace aside). A reading ruling carries `reading`: {author, work} as citation-dictionary.json keys plus the locus and any apparatus, or null while the ruling is pending (the head then stays verbatim, flagged by `pending`, default awaiting-adjudication). A correction (`type`: correction) fixes a DK misprint: `printed` is the misprint as the head prints it, `reading` the corrected citation, `readerNote` the note the reader shows after it (DRAFT copy until John approves it). A note (`type`: note) leaves the head's reading as rule E gives it and adds only its `readerNote` (DRAFT copy until John approves it; Gorgias B26, 2026-09-29). `note` records the ruling and is never shown. The stage fails the build if a ruling's head is no longer in the text, or no source of the run above it (the last explicit head and the sources named since) is that author and work.",
  "_as_printed": {
   "CLEM Strom.": "John, 2026-09-24: Clement's Stromateis keeps DK's own section numbers. The TLG's Stromateis numbers some of these sections one or two apart; the dash check (pipeline/tests/test_dash_citations_verified.py) accepts such a near miss in the same book, and nothing else."
  },
@@ -14,9 +14,8 @@
   },
   "B69": {
    "head": "—",
-   "reading": null,
-   "pending": "awaiting-print-check",
-   "note": "Default pending John's check, 2026-09-24 (lexicon headword check): rule E reads Harpocration s.v. the word DK prints after the dash, but that word is no entry of the TLG Harpocration (1389.001); the only entry sharing its first letters, p. 70, 9, is the same word in another case. Stays as printed until John checks the print."
+   "reading": {"author": "HARPOCR", "work": "DEFAULT", "locus": "s.v. βαλβίς"},
+   "note": "John, 2026-09-27: DK's printed form; Harpocration's entry (TLG 1389.001 p. 70, 9) is headed Βαλβῖσιν"
   },
   "B91": {
    "head": "—",
@@ -29,6 +28,41 @@
    "reading": null,
    "pending": "awaiting-print-check",
    "note": "Default pending John's check, 2026-09-24 (review item 8): rule E reads POLL. VI 183; the TLG Pollux (0542.001) check finds the one-word gloss there only as strongly as at II 231 and VI 180 (one word probe each). Stays as printed until John checks the print."
+  },
+  "B20": {
+   "head": "—",
+   "reading": {"author": "HARPOCR", "work": "DEFAULT", "locus": "s.v. ἐπαλλάξεις"},
+   "note": "TLG lookup, 2026-09-27, per John's ruling of the same day (option 3). B19 above cites Harpocration and Bekker's Anecdota (Lex. VI). The TLG Harpocration (1389.001) has the entry with DK's gloss and Antiphon's Aletheia I at p. 119, 14 Dindorf; the TLG Synagoge (4289.005, the text of Bekker's Lex. VI) has no such entry."
+  },
+  "B21": {
+   "head": "—",
+   "reading": {"author": "HARPOCR", "work": "DEFAULT", "locus": "s.v. ὀριγνηθῆναι"},
+   "note": "TLG lookup, 2026-09-27, per John's ruling of the same day (option 3). The TLG Harpocration (1389.001) has the entry with DK's gloss and Antiphon's Aletheia I at p. 225, 12 Dindorf; the TLG Synagoge (4289.005) has no such entry. Photius and the Suda carry the gloss without Antiphon's name."
+  },
+  "B23": {
+   "head": "—",
+   "reading": {"author": "HARPOCR", "work": "DEFAULT", "locus": "s.v. διάστασις"},
+   "note": "TLG lookup, 2026-09-27, per John's ruling of the same day (option 3). The TLG Harpocration (1389.001) has the entry with DK's quotation and gloss (Aletheia II) at p. 91, 13 Dindorf. Rule E alone left it as printed: DK's raised dot after the headword is the Greek ano teleia, which the headword reader does not take as the gloss break."
+  },
+  "B46": {
+   "head": "—",
+   "reading": {"author": "HARPOCR", "work": "DEFAULT", "locus": "s.v. Μακροκέφαλοι"},
+   "note": "TLG lookup, 2026-09-27, per John's ruling of the same day (option 3). The TLG Harpocration (1389.001) has the entry with Antiphon's De concordia and DK's gloss at p. 197, 10 Dindorf. Rule E alone left it as printed (the ano teleia after the headword, as B23)."
+  },
+  "B70": {
+   "head": "—",
+   "reading": {"author": "HARPOCR", "work": "DEFAULT", "locus": "s.v. εὐηνιώτατα"},
+   "note": "TLG lookup, 2026-09-27, per John's ruling of the same day (option 3). B69 above cites Harpocration's run and, mid-passage, the Etymologicum Genuinum. The TLG Harpocration (1389.001) has the entry with Antiphon's De concordia and DK's gloss at p. 139, 20 Dindorf; the Etymologicum Magnum's entry (390, 57 Kallierges) glosses the word otherwise and names no Antiphon, and the TLG has no Genuinum for epsilon."
+  },
+  "B71": {
+   "head": "—",
+   "reading": {"author": "HARPOCR", "work": "DEFAULT", "locus": "s.v. φηλώματα"},
+   "note": "TLG lookup, 2026-09-27, per John's ruling of the same day (option 3). The TLG Harpocration (1389.001) has the entry with Antiphon's De concordia and DK's gloss at p. 300, 8 Dindorf. Photius and the Suda carry the gloss with Antiphon but without the work."
+  },
+  "B105": {
+   "head": "— —",
+   "reading": {"author": "POLL", "work": "DEFAULT", "locus": "IV 9"},
+   "note": "TLG lookup, 2026-09-27, per John's ruling of the same day (option 3). The TLG Pollux (0542.001) has the word with Antiphon's name at IV 9, the section B104 above cites; the dashes before it stay as printed (the chain was lost at B100), so rule E alone could not reach it."
   }
  },
  "critias-fragments": {
@@ -40,11 +74,20 @@
   }
  },
  "democritus-fragments": {
+  "B122a": {
+   "head": "—",
+   "reading": {"author": "ETYM", "work": "GEN.", "locus": "s.v. γυνή"},
+   "note": "TLG lookup, 2026-09-27, per John's ruling of the same day (option 3); placed by elimination. B122 above cites the Etymologicum Genuinum and Bekker's Anecdota (Lex. VI). The TLG Synagoge (4289.005, the text of Lex. VI) has no such entry; the TLG has the Genuinum only for alpha to beta and lambda, but the Etymologicum Gudianum's additions (4098.003, p. 326, 25 de Stefani) carry DK's gloss with Democritus' name."
+  },
+  "B123": {
+   "head": "—",
+   "reading": {"author": "ETYM", "work": "GEN.", "locus": "s.v. δείκελον"},
+   "note": "TLG lookup, 2026-09-27, per John's ruling of the same day (option 3); placed by elimination, as B122a. The TLG Synagoge (4289.005) has no such entry and the TLG has no Genuinum for delta; the Etymologicum Magnum (260, 40 Kallierges), drawn from the Genuinum, has DK's gloss word for word with Democritus' name."
+  },
   "B132": {
    "head": "—",
-   "reading": null,
-   "pending": "awaiting-print-check",
-   "note": "Default pending John's check, 2026-09-24 (lexicon headword check): rule E reads Hesychius s.v. the word DK prints after the dash, but neither Hesychius text in the TLG (4085.002 Latte, .003 Schmidt) has it as an entry or anywhere in its text. Stays as printed until John checks the print."
+   "reading": {"author": "HESYCH", "work": "DEFAULT", "locus": "s.v. ἀσκαληνές"},
+   "note": "John, 2026-09-27: Latte's headword; TLG Hesychius α 7691 has the gloss ἰσόπλευρον, παρὰ Δημοκρίτῳ"
   },
   "B164": {
    "head": "—VII 116",
@@ -107,6 +150,14 @@
    "note": "Default pending John's check, 2026-09-24 (review item 8): rule E reads AËT. II 24, 7; the TLG Placita (0094.003) check finds the passage's words as often in book II chapter 25 as in chapter 24 (2 word probes each). Stays as printed until John checks the print."
   }
  },
+ "gorgias-fragments": {
+  "B26": {
+   "head": "—in Hes. Opp. 758",
+   "type": "note",
+   "readerNote": "758 is the old line number (Gaisford); modern editions (West, Pertusi) number these lines 760–764.",
+   "note": "John, 2026-09-29: DK's 758 stays, with a reader note (wording approved by John, 2026-09-29). The TLG has the scholion, signed PROCL., in Gaisford's scholia on the Works and Days (5025.002) at 758; West and Pertusi print these lines as 760-764, and Pertusi's apparatus cites DK 82 B 26 there."
+  }
+ },
  "heraclitus-fragments": {
   "B87": {
    "head": "—de aud. 7 p. 41 A",
@@ -144,6 +195,12 @@
   }
  },
  "thales-testimonia": {
+  "A11a": {
+   "head": "HIMER. 30 Cod. Neap. [Schenkl Herm. 46, 1911, 420]",
+   "type": "note",
+   "readerNote": "In Colonna's edition (Rome, 1951) this is oration 28, To Athenaeus the Count.",
+   "note": "John, 2026-09-29: DK's 30 stays, with a reader note (wording approved by John, 2026-09-29). The TLG (A. Colonna, Himerii declamationes et orationes, Rome 1951; 2051.001, oration 28 'In Athenaeum comitem', pp. 128-130) has this passage in oration 28, Εἰς Ἀθήναιον κόμητα; Colonna's oration 30 is a different speech."
+  },
   "A17b": {
    "head": "—II 27, 5 (D. 358) Θ.",
    "type": "correction",

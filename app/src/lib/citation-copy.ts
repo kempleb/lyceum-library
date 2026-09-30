@@ -46,9 +46,9 @@ export function citeDescriptorFor(work: string): string {
 // it. Mirrors ReaderShell.astro's own `bookNoun` (used for the book-window
 // prev/next aria-labels) and shared/lib/works.ts's `divisionId` (the URL) —
 // all three read the same field, so none of them can disagree.
-export function tocGroupNoun(work: string): 'Letter' | 'Chapter' | 'Book' {
+export function tocGroupNoun(work: string): 'Letter' | 'Chapter' | 'Essay' | 'Book' {
   const noun = getWork(work)?.divisionNoun ?? 'book';
-  return (noun.charAt(0).toUpperCase() + noun.slice(1)) as 'Letter' | 'Chapter' | 'Book';
+  return (noun.charAt(0).toUpperCase() + noun.slice(1)) as 'Letter' | 'Chapter' | 'Essay' | 'Book';
 }
 
 // The drawer's per-row unit count ("21 pp.") is meaningless for

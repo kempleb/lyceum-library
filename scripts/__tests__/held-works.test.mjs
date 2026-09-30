@@ -40,14 +40,13 @@ function writeFixtureCorpus(root, name, { hold, workIds }) {
   writeFileSync(join(dir, 'registry.yaml'), `${registryLines.join('\n')}\n`);
 }
 
-test('listHeldCorpora: the real repo lists plato (held) and not aristotle (unheld)', async () => {
-  const held = await listHeldCorpora(REPO_ROOT);
-  const names = held.map((h) => h.corpus);
-  assert.ok(names.includes('plato'), `expected plato among held corpora, got ${names.join(', ')}`);
+// Real-repo claims. Plato was held from 2026-09-23 until John lifted the hold
+// on 2026-09-30; neither mounted corpus is held now. The hold mechanism
+// itself is covered by the temporary-corpus tests in this file.
+test('listHeldCorpora: the real repo lists neither plato nor aristotle (both unheld)', async () => {
+  const names = (await listHeldCorpora(REPO_ROOT)).map((h) => h.corpus);
+  assert.ok(!names.includes('plato'), 'the plato hold was lifted 2026-09-30');
   assert.ok(!names.includes('aristotle'), 'aristotle has no hold flag and must not be reported as held');
-  const plato = held.find((h) => h.corpus === 'plato');
-  assert.ok(plato.workIds.includes('Euthyphro'), 'plato registry.yaml declares Euthyphro');
-  assert.ok(plato.workIds.length >= 36, `expected at least 36 Plato works, got ${plato.workIds.length}`);
 });
 
 test('listHeldCorpora: no corpora/ directory returns an empty list', async () => {
@@ -129,14 +128,12 @@ test('findHeldWorksInDist: an unheld corpus\'s work present in dist is never rep
   });
 });
 
-test('findHeldWorksInDist: against the real repo, a dist with a Plato work directory is caught', async () => {
+test('findHeldWorksInDist: against the real repo, a dist with a Plato work directory is not flagged', async () => {
   await withTmpDir(async (root) => {
     const dist = join(root, 'dist');
     mkdirSync(join(dist, 'Euthyphro'), { recursive: true });
     const findings = await findHeldWorksInDist(dist, { root: REPO_ROOT });
-    const euthyphro = findings.find((f) => f.workId === 'Euthyphro');
-    assert.ok(euthyphro, 'expected the real plato registry to catch a mounted Euthyphro directory');
-    assert.equal(euthyphro.corpus, 'plato');
+    assert.equal(findings.find((f) => f.workId === 'Euthyphro'), undefined, 'plato is no longer held');
   });
 });
 

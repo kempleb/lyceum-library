@@ -20,7 +20,10 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "Anaximenes, the son of Eurystratus, a native of Miletus, was a pupil of Anaximander. According to some, he was also a pupil of Parmenides."
-    ]
+    ],
+    "trim": {
+     "end": "he was also a pupil of Parmenides."
+    }
    }
   ]
  },
@@ -34,7 +37,22 @@
     "translation_credit": "Fowler, 1921",
     "emphasis": [
      "Parmenides seems to me to be, in Homer’s words, one to be venerated and also awful. For I met him when I was very young and he was very old, and he appeared to me to possess an absolutely noble depth of mind."
-    ]
+    ],
+    "trim": {
+     "start": "Parmenides seems to me to be, in Homer’s words"
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "Parmenides, venerable and awful",
+      "end": "a glorious depth of mind.",
+      "omit": [
+       [
+        "--him I should be ashamed",
+        "in a spirit unworthy of him."
+       ]
+      ]
+     }
+    }
    },
    {
     "source_author": "Plato",
@@ -44,7 +62,17 @@
     "translation_credit": "Fowler, 1921",
     "emphasis": [
      "the method of questions? I was present once when Parmenides employed the latter method and carried on a splendid discussion. I was a young man then, and he was very old."
-    ]
+    ],
+    "trim": {
+     "start": "the method of questions?",
+     "end": "he was very old."
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "the method of question and answer.",
+      "end": "far advanced in years."
+     }
+    }
    },
    {
     "source_author": "Diogenes Laertius",
@@ -55,7 +83,48 @@
     "emphasis": [
      "Zeno was a citizen of Elea. Apollodorus in his Chronology says that he was the son of Teleutagoras by birth, but of Parmenides by adoption, while Parmenides was the son of Pyres.",
      "Zeno, then, was all through a pupil of Parmenides and his bosom friend."
-    ]
+    ],
+    "trim": {
+     "end": "a pupil of Parmenides and his bosom friend.",
+     "omit": [
+      [
+       "Of Zeno and Melissus Timon speaks thus:",
+       "More skilled than many a one, and matched by few."
+      ]
+     ]
+    }
+   },
+   {
+    "source_author": "Plato",
+    "source_work": "Parmenides",
+    "locus": "127a-127c",
+    "status": "translated",
+    "translation_credit": "Fowler, 1926",
+    "emphasis": [
+     "Antiphon, then, said that Pythodorus told him that Zeno and Parmenides once came to the Great Panathenaea; that Parmenides was already quite elderly, about sixty-five years old, very white-haired, and of handsome and noble countenance; Zeno was at that time about forty years of age; he was tall and good-looking, and there was a story that Parmenides had been in love with him. He said that they lodged with Pythodorus outside of the wall, in Cerameicus, and that Socrates and many others with him went there because they wanted to hear Zeno’s writings, which had been brought to Athens for the first time by them. Socrates was then very young."
+    ],
+    "trim": {
+     "start": "Antiphon, then, said that Pythodorus told him",
+     "end": "Socrates was then very young."
+    }
+   }
+  ]
+ },
+ "1:A6": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "986b22",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "for Parmenides is said to have been his pupil"
+    ],
+    "trim": {
+     "start": "for Parmenides is said to have been his pupil",
+     "end": "for Parmenides is said to have been his pupil"
+    }
    }
   ]
  },
@@ -69,7 +138,10 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "Theophrastus affirms that he was an admirer of Parmenides and imitated him in his verses, for Parmenides too had published his treatise On Nature in verse."
-    ]
+    ],
+    "trim": {
+     "start": "Theophrastus affirms that he was an admirer of Parmenides"
+    }
    }
   ]
  },
@@ -83,6 +155,79 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "Others wrote no more than one treatise each, as Melissus, Parmenides, Anaxagoras."
+    ],
+    "trim": {
+     "start": "Others wrote no more than one treatise each",
+     "end": "Melissus, Parmenides, Anaxagoras."
+    }
+   }
+  ]
+ },
+ "1:A24": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "986b18-987a2",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "Parmenides seems to fasten on that which is one in definition",
+     "but Parmenides seems in places to speak with more insight. For, claiming that, besides the existent, nothing non-existent exists, he thinks that of necessity one thing exists, viz. the existent and nothing else",
+     "but being forced to follow the observed facts, and supposing the existence of that which is one in definition, but more than one according to our sensations, he now posits two causes and two principles, calling them hot and cold, i.e. fire and earth; and of these he ranges the hot with the existent, and the other with the non-existent."
+    ],
+    "trim": {
+     "start": "Parmenides seems to fasten on that which is one in definition",
+     "omit": [
+      [
+       ", Melissus on that which is one in matter",
+       "Xenophanes and Melissus;"
+      ],
+      [
+       "(on this we have spoken more clearly in our work on nature),",
+       "(on this we have spoken more clearly in our work on nature),"
+      ]
+     ]
+    }
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "1010a1-1010a3",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "while they were inquiring into the truth of that which is, they thought, 'that which is' was identical with the sensible world"
+    ],
+    "trim": {
+     "start": "while they were inquiring into the truth",
+     "end": "was identical with the sensible world"
+    }
+   }
+  ]
+ },
+ "1:A25": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On the Heavens",
+    "locus": "298b14-298b24",
+    "status": "translated",
+    "translation_credit": "Stocks, 1922",
+    "emphasis": [
+     "Some removed generation and destruction from the world altogether. Nothing that is, they said, is generated or destroyed, and our conviction to the contrary is an illusion. So maintained the school of Melissus and Parmenides. But however excellent their theories may otherwise be, anyhow they cannot be held to speak as students of nature. There may be things not subject to generation or any kind of movement, but if so they belong to another and a higher inquiry than the study of nature. They, however, had no idea of any form of being other than the substance of things perceived; and when they saw, what no one previously had seen, that there could be no knowledge or wisdom without some such unchanging entities, they naturally transferred what was true of them to things perceived."
+    ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "325a13-325a19",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "Reasoning in this way, therefore, they were led to transcend sense-perception, and to disregard it on the ground that 'one ought to follow the argument': and so they assert that the universe is 'one' and immovable. Some of them add that it is 'infinite', since the limit (if it had one) would be a limit against the void.",
+     "There were, then, certain thinkers who, for the reasons we have stated, enunciated views of this kind as their theory of 'The Truth'",
+     "Moreover, although these opinions appear to follow logically in a dialectical discussion, yet to believe them seems next door to madness when one considers the facts."
     ]
    }
   ]
@@ -97,6 +242,48 @@
     "translation_credit": "Fowler, 1921",
     "emphasis": [
      "but if we find that the partisans of the whole seem to have truer doctrines, we will take refuge with them from those who would move what is motionless."
+    ],
+    "trim": {
+     "start": "but if we find that the partisans of the whole"
+    }
+   }
+  ]
+ },
+ "1:A27": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "207a9-207a17",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "For thus we define the whole-that from which nothing is wanting, as a whole man or a whole box. What is true of each particular is true of the whole as such-the whole is that of which nothing is outside. On the other hand that from which something is absent and outside, however small that may be, is not 'all'. 'Whole' and 'complete' are either quite identical or closely akin. Nothing is complete (teleion) which has no end (telos); and the end is a limit.",
+     "Hence Parmenides must be thought to have spoken better than Melissus. The latter says that the whole is infinite, but the former describes it as limited, 'equally balanced from the middle'."
+    ]
+   }
+  ]
+ },
+ "1:A35": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "330b13-330b15",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "those who postulate two from the start-as Parmenides postulated Fire and Earth-make the intermediates (e.g. Air and Water) blends of these."
+    ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "336a3-336a6",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "For 'since' (as they say) 'it is the nature of the hot to dissociate, of the cold to bring together, and of each remaining contrary either to act or to suffer action', it is out of such materials and by their agency (so they maintain) that everything else comes-to-be and passes-away."
     ]
    }
   ]
@@ -111,7 +298,186 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "Further, we are told that he was the first to call the heaven the universe and the earth spherical, though Theophrastus says it was Parmenides, and Zeno that it was Hesiod."
+    ],
+    "trim": {
+     "start": "Further, we are told that he was the first to call the heaven the universe"
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.15",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Parmenides and Democritus, that",
+     "end": "cannot be removed."
+    }
+   }
+  ]
+ },
+ "1:A52": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Parts of Animals",
+    "locus": "648a25-648a31",
+    "status": "translated",
+    "translation_credit": "Ogle, 1912",
+    "emphasis": [
+     "For some maintain that water animals are hotter than such as live on land, asserting that their natural heat counterbalances the coldness of their medium; and again, that bloodless animals are hotter than those with blood, and females than males. Parmenides, for instance, and some others declare that women are hotter than men, and that it is the warmth and abundance of their blood which causes their menstrual flow, while Empedocles maintains the opposite opinion."
     ]
+   }
+  ]
+ },
+ "1:A32": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "1.25",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Parmenides and Democritus, that",
+     "end": "architect of the world."
+    }
+   }
+  ]
+ },
+ "1:A43a": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.1",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Parmenides, that the mixture",
+     "end": "resembles milk."
+    }
+   }
+  ]
+ },
+ "1:A44a": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.11",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Parmenides was the first",
+     "end": "or temperate) zones."
+    }
+   }
+  ]
+ },
+ "1:A53": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.7",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Parmenides is of opinion",
+     "end": "rare and fine."
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.7",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Anaxagoras and Parmenides, that",
+     "end": "females are generated."
+    }
+   }
+  ]
+ },
+ "1:A54": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.11",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Parmenides, that when the",
+     "end": "similitude of the mother."
+    }
+   }
+  ]
+ },
+ "1:A45": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "4.5",
+    "head": "5, 5 (D. 391)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Parmenides, in the whole breast;",
+     "end": "Parmenides, in the whole breast;"
+    }
+   }
+  ]
+ },
+ "1:A15": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quomodo Adulescens Poetas Audire Debeat",
+    "locus": "16c",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1927",
+    "trim": {
+     "start": "The verses of Empedocles and of Parmenides",
+     "end": "plodding along in prose."
+    }
+   }
+  ]
+ },
+ "1:A16": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Recta Ratione Audiendi",
+    "locus": "45a-45b",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1927",
+    "trim": {
+     "start": "One might find fault with Archilochus",
+     "end": "Sophocles for his unevenness;"
+    }
+   }
+  ]
+ },
+ "1:A34": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Adversus Colotem",
+    "locus": "1114d-1114e",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "One certain truth and sincere knowledge is",
+     "The other does on men’s opinions rest, Which breed no true belief within our breast"
+    ],
+    "trim": {
+     "start": "But, on the contrary, he takes away neither",
+     "end": "changes, passions, and inequalities."
+    }
    }
   ]
  }

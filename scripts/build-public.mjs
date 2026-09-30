@@ -482,6 +482,9 @@ if (!finalReleaseCheck.ok) {
 console.log('\nChecking link integrity of the built site');
 run('node', [join(ROOT, 'scripts', 'check-links.mjs'), join(ROOT, 'app', 'dist', 'client')]);
 
+console.log('\nChecking DK page structure');
+run('node', [join(ROOT, 'scripts', 'check-dk-structure.mjs'), DIST_DIR]);
+
 // Address-stability gate (scripts/check-addresses.mjs): readers bookmark and
 // cite our pages, so a page address that existed in the last public release
 // must never quietly disappear from this one. New addresses are fine. Runs

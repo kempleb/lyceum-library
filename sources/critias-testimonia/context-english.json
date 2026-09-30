@@ -9,17 +9,24 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "Plato was the son of Ariston and a citizen of Athens. His mother was Perictione (or Potone), who traced back her descent to Solon. For Solon had a brother, Dropides; he was the father of Critias, who was the father of Callaeschrus, who was the father of Critias, one of the Thirty, as well as of Glaucon, who was the father of Charmides and Perictione. Thus Plato, the son of this Perictione and Ariston, was in the sixth generation from Solon."
-    ]
+    ],
+    "trim": {
+     "end": "was in the sixth generation from Solon."
+    }
    },
    {
     "source_author": "Plato",
     "source_work": "Charmides",
-    "locus": "154b",
+    "locus": "154a-154b",
     "status": "translated",
     "translation_credit": "Lamb, 1927",
     "emphasis": [
-     "our uncle Glaucon, and my cousin."
-    ]
+     "Charmides, son of our uncle Glaucon, and my cousin."
+    ],
+    "trim": {
+     "start": "Charmides, son of",
+     "end": "our uncle Glaucon, and my cousin."
+    }
    },
    {
     "source_author": "Plato",
@@ -29,7 +36,11 @@
     "translation_credit": "Lamb, 1927",
     "emphasis": [
      "For your father’s house, which comes from Critias, son of Dropides, has been celebrated by Anacreon and Solon and many other poets, so that it is famed by tradition among us"
-    ]
+    ],
+    "trim": {
+     "start": "For your father’s house, which comes from Critias",
+     "end": "famed by tradition among us"
+    }
    }
   ]
  },
@@ -43,7 +54,11 @@
     "translation_credit": "Bury, 1929",
     "emphasis": [
      "As to Critias, all of us here know that he is no novice in any of the subjects we are discussing."
-    ]
+    ],
+    "trim": {
+     "start": "As to Critias, all of us here know",
+     "end": "any of the subjects we are discussing."
+    }
    },
    {
     "source_author": "Plato",
@@ -54,7 +69,11 @@
     "emphasis": [
      "Listen then, Socrates, to a tale which, though passing strange, is yet wholly true, as Solon,",
      "the wisest of the Seven, once upon a time declared. Now Solon—as indeed he often says himself in his poems—was a relative and very dear friend of our great-grandfather Dropides; Crit. and Dropides told our grandfather Critias as the old man himself, in turn, related to us—that the exploits of this city in olden days, the record of which had perished through time and the destruction of its inhabitants, were great and marvellous"
-    ]
+    ],
+    "trim": {
+     "start": "Listen then, Socrates, to a tale",
+     "end": "were great and marvellous"
+    }
    },
    {
     "source_author": "Plato",
@@ -65,7 +84,68 @@
     "emphasis": [
      "I will tell you: it is an old tale, and I heard it from a man not young. For indeed at that time, as he said himself,",
      "Critias was already close upon ninety years of age, while I was somewhere about ten"
+    ],
+    "trim": {
+     "start": "I will tell you: it is an old tale",
+     "end": "while I was somewhere about ten"
+    }
+   }
+  ]
+ },
+ "1:A8": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Rhetoric",
+    "locus": "1375b31-1375b34",
+    "status": "translated",
+    "translation_credit": "Freese, 1926",
+    "emphasis": [
+     "Cleophon also made use of the elegiacs of Solon against Critias, to prove that his family had long been notorious for licentiousness, otherwise Solon would never have written: Bid me the fair-haired Critias listen to his father."
     ]
+   }
+  ]
+ },
+ "1:A14": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Rhetoric",
+    "locus": "1416b26-1416b29",
+    "status": "translated",
+    "translation_credit": "Freese, 1926",
+    "emphasis": [
+     "most people have no need of narrative—for instance, if you wish to praise Achilles; for everybody knows what he did, and it is only necessary to make use of it. But if you wish to praise Critias, narrative is necessary, for not many people know what he did"
+    ]
+   }
+  ]
+ },
+ "1:A23": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "De Anima",
+    "locus": "405b5-405b7",
+    "status": "translated",
+    "translation_credit": "Smith, 1931",
+    "emphasis": [
+     "Another group (Critias, for example) did hold it to be blood; they take perception to be the most characteristic attribute of soul, and hold that perceptiveness is due to the nature of blood."
+    ]
+   }
+  ]
+ },
+ "1:A16": {
+  "context_spans": [
+   {
+    "source_author": "pseudo-Plutarch",
+    "source_work": "Vitae Decem Oratorum",
+    "locus": "832d-832e",
+    "status": "translated",
+    "translation_credit": "Fowler, 1936",
+    "trim": {
+     "start": "Yet all those whom we are able to record",
+     "end": "Critias, Lysias, and Archinus."
+    }
    }
   ]
  }

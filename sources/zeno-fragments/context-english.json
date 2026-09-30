@@ -10,7 +10,16 @@
     "emphasis": [
      "Furthermore, they find Xenophanes, Zeno of Elea, and Democritus to be sceptics",
      "and Zeno because he would destroy motion, saying, “A moving body moves neither where it is nor where it is not”"
-    ]
+    ],
+    "trim": {
+     "omit": [
+      [
+       "Xenophanes because he says,",
+       "nor e’er shall know;"
+      ]
+     ],
+     "end": "nor where it is not”"
+    }
    }
   ]
  }

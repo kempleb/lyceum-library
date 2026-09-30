@@ -2462,6 +2462,59 @@ dialogue.
 
 ---
 
+## Aristotle, source-passage English (19 works)
+(`sources/aristotle-english/`, docs/aristotle-context-english-design.md)
+
+Column English for Aristotle quotations inside DK context lines. Vendored
+from the sibling `aristotle-reader` public build (commit
+`691d2e0c752367812c97fe727d2f881f048ed706`): `manifests/<Abbr>-public.yaml`
+where that file exists, otherwise `manifests/<Abbr>.yaml`. The mounted copy
+under this repo's `build/dist` is not the source: `build:public` deletes it
+before source-passage English is resolved.
+
+| Work | Abbr | Keys | Translator | Id | Licence |
+|---|---|---:|---|---|---|
+| Metaphysics | Meta | 239 | W. D. Ross (Oxford, 1924) | `ross` | `public-domain-us` |
+| Physics | Phys | 175 | R. P. Hardie and R. K. Gaye (Oxford, 1930) | `hardie` | `public-domain-us` |
+| On Generation and Corruption | GC | 51 | H. H. Joachim (Oxford, 1922) | `joachim` | `public-domain-us` |
+| On the Heavens | Cael | 95 | J. L. Stocks (Oxford, 1922) | `stocks` | `public-domain-us` |
+| Meteorology | Mete | 108 | E. W. Webster (Oxford, 1923) | `webster` | `public-domain-us` |
+| Rhetoric | Rhet | 135 | J. H. Freese (Loeb, 1926) | `freese` | `public-domain-us` |
+| Generation of Animals | GA | 154 | Arthur Platt (Oxford, 1910) | `platt` | `public-domain-us` |
+| Parts of Animals | PA | 121 | William Ogle (Oxford, 1912) | `ogle` | `public-domain-us` |
+| Sense and Sensibilia | Sens | 28 | J. I. Beare (Oxford, 1908) | `beare` | `public-domain-us` |
+| Nicomachean Ethics | EN | 183 | H. Rackham (Loeb, 1926) | `rackham` | `public-domain-us` |
+| On Youth, Old Age, Life and Death, and Respiration | Juv | 27 | G. R. T. Ross (Oxford, 1908) | `ross` | `public-domain-us` |
+| Sophistical Refutations | SE | 42 | W. A. Pickard-Cambridge (Oxford, 1928) | `pickard` | `public-domain-us` |
+| History of Animals | HA | 304 | D'Arcy Wentworth Thompson (Oxford, 1910) | `thompson` | `public-domain-us` |
+| Topics | Top | 135 | W. A. Pickard-Cambridge (Oxford, 1928) | `pickard` | `public-domain-us` |
+| Politics | Pol | 189 | Benjamin Jowett (Oxford, 1885) | `jowett` | `public-domain-us` |
+| De Mirabilibus Auscultationibus | Mirab | 36 | L. D. Dowdall (Oxford, 1909) | `dowdall` | `public-domain-us` |
+| De Lineis Insecabilibus | Lin | 10 | H. H. Joachim (Oxford, 1908) | `joachim` | `public-domain-us` |
+| De Anima | DA | 69 | J. A. Smith (Oxford, 1931) | `smith` | `unverified` |
+| Poetics | Poet | 32 | W. H. Fyfe (Loeb, 1932) | `fyfe` | `unverified` |
+
+De Anima (Smith) and Poetics (Fyfe) are not claimed public domain; in use by
+the owner's ruling of 2026-09-22 (and 2026-09-25 for vendoring here). No
+manifest above declares a licence field; the extractor accepts that silence
+as the table's status and refuses a declared licence that differs. Parts of
+Animals: `english.primary.name` in `manifests/PA.yaml` says 1882, while
+`work.english_translation` and the built manifest say 1912; the id is `ogle`
+either way, and the store is the built columns.
+
+| | |
+|---|---|
+| Keys | 2,133 across the 19 works above |
+| Source | Sibling `aristotle-reader` commit `691d2e0c752367812c97fe727d2f881f048ed706`, `build/dist/<Abbr>/book-NN.json` (read-only) |
+| Extractor | `pipeline/tools/extract_aristotle_english.py` |
+| Store | `sources/aristotle-english/aristotle-english.clean.json` — `"<Abbr>:<book>:<column>"` → `{"lines": [<int>, ...], "text": "..."}` |
+| Resolver | `stage1_context_english.py`'s `_resolve_aristotle` / `_ARISTOTLE_WORKS` — column plus one neighbouring column each side, then trimmed to the sentences that hold the span's emphasis. History of Animals, De Mirabilibus Auscultationibus, and De Lineis Insecabilibus are also registered under `pseudo-Aristotle` (same store and credit) |
+| SHA-256 (aristotle-english.clean.json) | `2c7386caca87793f39277f0b15e2460cd0e6a2aa1bf4ae5c9ea2c225e38f8ef7` |
+
+Restated for the hash gate: `sources/aristotle-english/aristotle-english.clean.json` (SHA-256 `2c7386caca87793f39277f0b15e2460cd0e6a2aa1bf4ae5c9ea2c225e38f8ef7`).
+
+---
+
 ## Epicurus — Cyril Bailey, *Epicurus: The Extant Remains* (1926)
 
 ### PRIMARY — Cyril Bailey, *Epicurus: The Extant Remains* (Oxford: Clarendon
@@ -2662,3 +2715,148 @@ against the archive.org OCR found no other difference in the English that
 was not an OCR fault.
 
 **Not yet wired in.** `manifests/gorgias-fragments.yaml` is untouched.
+
+---
+
+## Galen, source-passage English — A. J. Brock, *On the Natural Faculties* (1916)
+
+### COLUMN SOURCE (DK columns `anaxagoras-testimonia` A104, `prodicus-fragments` B4) — A. J. Brock, *Galen: On the Natural Faculties* (Loeb Classical Library, 1916)
+
+**Public domain in the US by publication date** (1916). Licence string
+`Public Domain`. Full provenance and extraction steps in
+`brock-galen/README.md`.
+
+| | |
+|---|---|
+| Translator | Arthur John Brock, M.D. (1879–1947) |
+| Publisher | London: William Heinemann; New York: G. P. Putnam's Sons |
+| Publication year | 1916 (title page MCMXVI) |
+| Licence | `Public Domain` |
+| Working text | Project Gutenberg eBook #43383, HTML (SHA-256 `5995719c0ba2c269ccec823acc996077c0c2bd9e298c422061b468e8722ad008`), fetched 2026-09-27; not vendored |
+| Greek | Brock's facing Greek is not used; the Greek is DK's |
+| File | `brock-galen/brock-natural-faculties.clean.json` — `"<book>.<chapter>"` → chapter text, keys `2.8`, `2.9` (the only chapters DK cites) |
+| SHA-256 | `brock-galen/SHA256SUMS` |
+| Resolver | `stage1_context_english.py`'s `_resolve_galen`, source pair ("Galen", "On the Natural Faculties"), credit "Brock, 1916" |
+
+---
+
+## Aëtius, source-passage English — W. W. Goodwin (ed.), pseudo-Plutarch, *Placita philosophorum* (1874)
+
+### COLUMN SOURCE (Aëtius passages in the DK works) — *Of Those Sentiments concerning Nature with which Philosophers were Delighted*, in *Plutarch's Morals*, vol. III, "translated from the Greek by several hands", corrected and revised by William W. Goodwin (Boston: Little, Brown, 1874)
+
+**Public domain in the US by publication date** (printed 1874; copyright
+entered 1870). Licence string `Public Domain`. Used only for the Aëtius
+passages an audit found Goodwin's text to match DK's Greek (owner's ruling,
+John, 2026-09-27: "Only the 132 matches"). Full provenance, the OCR method
+and the words not settled beyond doubt are in `goodwin-placita/README.md`.
+
+| | |
+|---|---|
+| Translators | "Several hands" (the 1684–94 English Morals), corrected and revised by William Watson Goodwin (1831–1912) |
+| Publisher | Boston: Little, Brown, and Company (Cambridge: Press of John Wilson and Son) |
+| Publication year | 1874 printing (title page); copyright entered 1870 |
+| Licence | `Public Domain` |
+| Scan | archive.org `plutarchsmoralst03plutuoft` (PDF SHA-256 `f25244c5bccc7e7bc1bc755f7107994b9ec9ce9e33416e6a6ee57060238b923b`; `_djvu.txt` SHA-256 `13438008b241f87bfc58d26c7aa2cd532c824db2768403238bd1bbac1c8c1327`), printed pp. 104–193; not vendored |
+| Text method | Our OCR of the page images, archive.org's OCR, and the 1909 Crowell reprint (tie-breaker only), then 156 checks against the page images |
+| File | `goodwin-placita/goodwin-placita.clean.json` — `"<book>.<chapter>"` in Goodwin's numbering → chapter text, 77 chapters, 15,873 words |
+| SHA-256 | `goodwin-placita/SHA256SUMS` |
+| Numbering | Diels's, except Book V chapters 23 and 24, which Goodwin prints in reverse order; the resolver maps a Diels locus 5.23 ↔ 5.24 |
+| Resolver | `stage1_context_english.py`'s `_resolve_aetius`, source pair ("Aëtius", "Placita"), credit "Goodwin, 1874" (draft, pending John's approval) |
+
+---
+
+## Plutarch, *Moralia*, source-passage English — W. W. Goodwin (ed.), *Plutarch's Morals* (1874)
+
+### COLUMN SOURCE (Plutarch passages in the DK works) — *Plutarch's Morals*, 5 vols, "translated from the Greek by several hands", corrected and revised by William W. Goodwin (Boston: Little, Brown, 1874)
+
+**Public domain in the US by publication date** (every volume printed 1874;
+copyright entered 1870). Licence string `Public Domain`. Used only for the
+Plutarch passages an audit found Goodwin's text to match DK's Greek. Full
+provenance, the essay-by-essay volumes and the corrections are in
+`goodwin-morals/README.md`.
+
+| | |
+|---|---|
+| Translators | "Several hands" (the 1684–94 English Morals), corrected and revised by William Watson Goodwin (1831–1912) |
+| Publisher | Boston: Little, Brown, and Company (Cambridge: Press of John Wilson and Son) |
+| Publication year | 1874 printing, all five volumes (title pages); copyright entered 1870 |
+| Licence | `Public Domain` |
+| Working text | Perseus `canonical-greekLit` Goodwin TEI files (commit `bcc5df0602f3b3fe6fefe1e1d575602a25ab1db6`), checked word by word against archive.org's OCR of `plutarchsmoralst01plutuoft` … `plutarchsmoralst05plutuoft`, with page-image checks; not vendored |
+| File | `goodwin-morals/goodwin-morals.clean.json` — essay (DK's Latin title) → chapter → `{steph, text}`; 41 essays, 123 chapters, 63,137 words |
+| SHA-256 | `goodwin-morals/SHA256SUMS` |
+| Locus | Stephanus page and letter ("929b") or a range ("683d-683f"); each chapter carries the Stephanus range it covers |
+| Resolver | `stage1_context_english.py`'s `_resolve_moralia("goodwin-morals", …)`, source pairs ("Plutarch", <essay>) for the seven essays no usable Loeb covers (since 2026-09-29 the Loeb serves the rest; this store is unchanged), credit "Goodwin, 1874" (draft, pending John's approval) |
+
+---
+
+## Plutarch, *Lives*, source-passage English — Bernadotte Perrin, Loeb Classical Library (1914–1920)
+
+### COLUMN SOURCE (Plutarch passages in the DK works) — *Plutarch's Lives*, with an English translation by Bernadotte Perrin, vols. I–IV (1914, 1914, 1916, 1916) and IX (1920)
+
+**Public domain in the US by publication date** (first printed 1914, 1916,
+1920). Licence string `Public Domain`. Used only for the passages an audit
+found Perrin's text to match DK's Greek. Full provenance and the corrections
+are in `perrin-lives/README.md`.
+
+| | |
+|---|---|
+| Translator | Bernadotte Perrin (1847–1920) |
+| Publisher | London: William Heinemann (Loeb Classical Library) |
+| Publication years | vol. I (Lycurgus, Numa, Solon) and II (Camillus, Cimon) 1914; III (Pericles, Nicias) and IV (Alcibiades, Coriolanus, Lysander) 1916; IX (Antony) 1920 |
+| Licence | `Public Domain` |
+| Working text | Perseus `canonical-greekLit` `perseus-eng2` TEI files (commit `bcc5df0602f3b3fe6fefe1e1d575602a25ab1db6`), checked word by word against archive.org's OCR of reprints of the same volumes; the Loeb's British spellings restored where Perseus changed them; not vendored |
+| File | `perrin-lives/perrin-lives.clean.json` — Life (DK's Latin title) → Loeb chapter → text; 11 Lives, 23 chapters, 9,862 words |
+| SHA-256 | `perrin-lives/SHA256SUMS` |
+| Locus | Loeb chapter ("16") or a range ("26-28") |
+| Resolver | `stage1_context_english.py`'s `_resolve_perrin_life`, source pairs ("Plutarch", <Life>), credit "Perrin, 1914" / "Perrin, 1916" / "Perrin, 1920" by volume (draft, pending John's approval) |
+
+---
+
+## Plutarch, *Moralia*, source-passage English — Loeb Classical Library (1927–1959)
+
+### COLUMN SOURCE (Plutarch passages in the DK works) — *Plutarch's Moralia*, with an English translation by F. C. Babbitt (vols. I–V), W. C. Helmbold (VI; XII except *De facie*), P. H. De Lacy and B. Einarson (VII), H. N. Fowler (X), H. Cherniss (XII, *De facie*)
+
+Licence string `Public Domain`: vols. I (1927) and II (1928) by publication
+date; vols. III (1931), IV, V, X (1936), VI (1939), XII (1957) and VII (1959)
+on no renewal found, by John's ruling of 2026-09-29 (review item 118; the
+fourth exception in CLAUDE.md). Replaces Goodwin's English wherever one of
+these volumes covers the essay. Full provenance, the essay-by-essay volumes
+and the corrections are in `loeb-moralia/README.md`.
+
+| | |
+|---|---|
+| Translators | Frank Cole Babbitt, William C. Helmbold, Phillip H. De Lacy and Benedict Einarson, Harold North Fowler, Harold Cherniss |
+| Publisher | Cambridge, Mass.: Harvard University Press; London: William Heinemann (Loeb Classical Library) |
+| Publication years | I 1927; II 1928; III 1931; IV, V, X 1936; VI 1939; XII 1957; VII 1959 (first printings; the volumes were reprinted, not revised) |
+| Licence | `Public Domain` |
+| Working text | Perseus `canonical-greekLit` `perseus-eng3` TEI files (commit `bcc5df0602f3b3fe6fefe1e1d575602a25ab1db6`) for 31 essays; LacusCurtius (Thayer) for *De exilio* and *De vitioso pudore*; archive.org's OCR of vol. VII for *De genio Socratis* 13; every chapter checked word by word against archive.org's OCR of its volume, and against LacusCurtius where Thayer has the essay; not vendored |
+| File | `loeb-moralia/loeb-moralia.clean.json` — essay (DK's Latin title) → Loeb chapter → `{steph, text}`; 34 essays, 57 chapters, 33,475 words |
+| SHA-256 | `loeb-moralia/SHA256SUMS` |
+| Locus | Stephanus page and letter ("929b") or a range ("683d-683f"); each chapter carries the Stephanus range of the same chapter in Goodwin's store |
+| Resolver | `stage1_context_english.py`'s `_resolve_moralia("loeb-moralia", …)`, source pairs ("Plutarch", <essay>) and ("pseudo-Plutarch", "Vitae Decem Oratorum"), credit by translator and volume: "Babbitt, 1927" / "Babbitt, 1928" / "Babbitt, 1931" / "Babbitt, 1936" / "Helmbold, 1939" / "De Lacy and Einarson, 1959" / "Fowler, 1936" / "Cherniss, 1957" / "Helmbold, 1957" (draft, pending John's approval) |
+
+---
+
+## Harpocration, source-passage English — Harpokration On Line (DC3, 2015–2016)
+
+### COLUMN SOURCE (Harpocration passages in the DK works) — Harpokration On Line, a collaborative English translation of Harpocration's *Lexicon of the Ten Orators* (Duke Collaboratory for Classics Computing)
+
+**Licensed CC BY 4.0, not public domain.** Licence string `CC BY 4.0`. The
+site footer: "By contributing a translation you agree to licensing your
+translation under a Creative Commons Attribution 4.0 International License";
+each translation carries the CC BY 4.0 link. Used only for the 32 passages an
+audit found to match DK's Greek. Licence statements, the attribution wording
+the licence needs, per-entry translators and the method are in
+`harpokration-online/README.md`.
+
+| | |
+|---|---|
+| Translators | Joshua D. Sosin, John-Paul Smith-MacDonald, Mackenzie Zalin (28 entries); with Matthew Farmer (2); Stelios Chronopoulos (1, a revision) |
+| Publisher | Duke Collaboratory for Classics Computing, https://dcthree.github.io/harpokration/ |
+| Dates | 2015–2016 (data CSV timestamps) |
+| Licence | `CC BY 4.0` — https://creativecommons.org/licenses/by/4.0/ |
+| Working text | The site page (SHA-256 `8efd1435ddac3f7c384236e37e216b8288f91bbeaee4b149c516f4e7086e354f`) and https://github.com/dcthree/harpokration-data `Harpokration CITE Translation.csv` (SHA-256 `478c7b5e5fb1e1275463412e946c535741ba0776ca0b689a750071c14b15eb41`), fetched 2026-09-27, agreeing word for word; not vendored |
+| Greek | HOL translates TLG's Dindorf (1853); HOL's Greek is not used; the Greek is DK's |
+| File | `harpokration-online/harpokration-online.clean.json` — `entries` (HOL headword → English, 31 entries) and `dk_spellings` (DK spelling → HOL headword) |
+| SHA-256 | `harpokration-online/SHA256SUMS` |
+| Resolver | `stage1_context_english.py`'s `_resolve_harpocration`, source pair ("Harpocration", "Lexicon in Decem Oratores"), locus `s.v. <headword>`, credit "Harpokration On Line (CC BY 4.0)" (draft, pending John's approval) |

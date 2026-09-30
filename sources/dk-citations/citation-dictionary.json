@@ -35,12 +35,12 @@
     },
     "coverage": {
       "total_parseable_heads": 1974,
-      "mapped_to_dictionary_author": 1331,
+      "mapped_to_dictionary_author": 1330,
       "dash_continuation_resolved_by_rules": 574,
       "dash_misparse_tokens_resolved_by_rules": 28,
       "unmappable_apparatus_artifacts": 41,
       "named_work_occ": 1301,
-      "generic_or_opaque_work_occ": 30,
+      "generic_or_opaque_work_occ": 29,
       "pct_heads_covered_incl_dash": 97.9,
       "pct_heads_covered_dictionary_only": 67.4
     },
@@ -68,6 +68,9 @@
       "Vesp."
     ],
     "ambiguous_variants": {
+      "DIOGENES": {
+        "book-chapter": "DIOG_LAERT"
+      },
       "HEROD.": {
         "book-chapter": "HERODOT",
         "greek-title": "HEROD_GRAMM"
@@ -79,10 +82,15 @@
     },
     "work_fields": {
       "column_letters": "true: the locus may end in Stephanus/Casaubon column letters ('1113 AB') although the template is not stephanus / moralia / bekker / book-page-col",
-      "volume_by_part": "[[part, first page, last page, volume], ...]: an edition in volumes that each start at p. 1. A volume numeral the head prints wins; else a locus opening with a listed part whose page lies in it gets that volume, printed first ('I, Lex. VI p. 418, 6'); else the head stays as printed",
+      "volume_by_part": "[[part, first page, last page, volume, [other printed forms]?], ...]: an edition in volumes that each start at p. 1. A locus opening with a listed part (in any case, or one of its other printed forms) whose page lies in it gets that volume, printed first, with the part as listed ('I, Lex. VI p. 418, 6'); else a volume numeral the head prints; else the head stays as printed",
+      "numbered": "true: the key is a number that names the work (an orator's speech, 'ISOCR. XV 235'); numbers after a dash that open with it name the work too",
+      "edition_note": "printed after the locus as apparatus: the editor whose pages the locus gives ('Bekk.' for Bekker's Anecdota Graeca, John's ruling 2026-09-29)",
+      "on_passage_above": "{'<author key>:<title>': work key}: DK's 'z. d. St.' (zu der Stelle, on this passage) names the commentator's work on the passage cited above; the stage takes the first head above that is no commentary and, when its work is listed, prints that commentary's title, the marker left out of the locus. Nothing listed: the head keeps its placeholder, marker and all",
       "locus_prefix": "printed before the locus (the lexicon a head names in its author slot)",
       "locus_as_printed": "true: the locus is everything the head prints after the title, untrimmed; a 'bei <author> ...' note (the text that preserves the passage) is apparatus and the locus is then empty",
       "editor_apparatus": "true: the locus is only the numbers (codex, saying, book); the editor or edition DK names with it ('ed. Sternbach', 'Sternb.', a bracket) is apparatus, as printed",
+      "bare_title": "the title to print instead when the head resolves to no locus at all (a bare abbreviation with nothing after it): lets `title` stay empty for a work cited by its own name, not an author's (the Suda), without leaving a dangling 'Author,' when there is no locus to follow it",
+      "flags": "per-work flags, added after the author's (DEMETR. 'de poem.': 'uncertain')",
       "variants_need_work (author level)": "these variants name the author only when one of his titles follows them"
     },
     "unmappable_artifacts": [
@@ -134,7 +142,8 @@
       "canonical_author": "Aëtius",
       "variants": [
         "AËT.",
-        "AËt."
+        "AËt.",
+        "A o ET."
       ],
       "works": {
         "DEFAULT": {
@@ -175,7 +184,9 @@
       "canonical_author": "Simplicius",
       "variants": [
         "SIMPL.",
-        "SIMPLIC."
+        "SIMPLIC.",
+        "SIbmPL.",
+        "Simpl."
       ],
       "works": {
         "Phys.": {
@@ -208,17 +219,66 @@
         "DEFAULT": {
           "title": "(commentary on Aristotle)",
           "title_italic": false,
-          "locus_template": "page-line"
+          "locus_template": "page-line",
+          "on_passage_above": {
+            "ARISTOT:Physica": "Phys.",
+            "ARISTOT:De Caelo": "de caelo",
+            "ARISTOT:De Anima": "de anima"
+          }
+        },
+        "Cat.": {
+          "title": "in Aristotelis Categorias",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Heraclitus A22."
+        },
+        "d. cael.": {
+          "title": "in Aristotelis De Caelo",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Parmenides B1."
+        },
+        "de anima": {
+          "title": "in Aristotelis De Anima",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Empedocles B108 'SIMPL. z. d. St. 202, 30' on De anima 427a 24; TLG 4013.005, CAG XI (the TLG marks it '[Sp.?]', perhaps Priscian of Lydia; DK gives it to Simplicius)."
+        },
+        "z. d. St.": {
+          "title": "(commentary on Aristotle)",
+          "title_italic": false,
+          "locus_template": "page-line",
+          "locus_includes_work": true,
+          "on_passage_above": {
+            "ARISTOT:Physica": "Phys.",
+            "ARISTOT:De Caelo": "de caelo",
+            "ARISTOT:De Anima": "de anima"
+          }
+        },
+        "dazu": {
+          "title": "(commentary on Aristotle)",
+          "title_italic": false,
+          "locus_template": "page-line",
+          "locus_includes_work": true,
+          "on_passage_above": {
+            "ARISTOT:Physica": "Phys.",
+            "ARISTOT:De Caelo": "de caelo",
+            "ARISTOT:De Anima": "de anima"
+          }
         }
       },
       "flags": [
         "title-is-commentary"
+      ],
+      "variants_need_work": [
+        "Simpl."
       ]
     },
     "CLEM": {
       "canonical_author": "Clement of Alexandria",
       "variants": [
-        "CLEM."
+        "CLEM.",
+        "CLEM. AL."
       ],
       "works": {
         "Strom.": {
@@ -324,6 +384,18 @@
           "title": "Adversus Mathematicos",
           "title_italic": true,
           "locus_template": "book-para"
+        },
+        "Pyrrh. h.": {
+          "title": "Pyrrhoniae Hypotyposes",
+          "title_italic": true,
+          "locus_template": "book-para",
+          "notes": "Democritus A134, Protagoras A14; was given Adversus Mathematicos."
+        },
+        "Pyrrh. hypot.": {
+          "title": "Pyrrhoniae Hypotyposes",
+          "title_italic": true,
+          "locus_template": "book-para",
+          "notes": "Anaxagoras A97."
         }
       },
       "flags": []
@@ -345,6 +417,12 @@
           "title": "De Oratore",
           "title_italic": true,
           "locus_template": "book-para"
+        },
+        "d. orat.": {
+          "title": "De Oratore",
+          "title_italic": true,
+          "locus_template": "book-para",
+          "notes": "Anaxagoras A15 'CIC. d. orat. III 138' = De or. 3.138 (Pericles taught by Anaxagoras); the head was cut after 'd.' (2026-09-26)."
         },
         "de fin.": {
           "title": "De Finibus",
@@ -416,6 +494,48 @@
           "title": "Epistulae ad Quintum Fratrem",
           "title_italic": true,
           "locus_template": "opaque"
+        },
+        "d. n. deor.": {
+          "title": "De Natura Deorum",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Prodicus B5."
+        },
+        "d. nat. d.": {
+          "title": "De Natura Deorum",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Anaximander A17."
+        },
+        "d. deor. n.": {
+          "title": "De Natura Deorum",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Thales A23."
+        },
+        "de deor. nat.": {
+          "title": "De Natura Deorum",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Democritus A74."
+        },
+        "de rp.": {
+          "title": "De Re Publica",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Empedocles B135."
+        },
+        "de oratore": {
+          "title": "De Oratore",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Empedocles A25."
+        },
+        "de inv.": {
+          "title": "De Inventione",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Gorgias A26."
         }
       },
       "flags": []
@@ -495,6 +615,24 @@
           "title": "(commentary of Proclus)",
           "title_italic": false,
           "locus_template": "page-line"
+        },
+        "Vit. Hom.": {
+          "title": "Vita Homeri",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Gorgias B25 (Chrestomathia)."
+        },
+        "Zu Hesiod. Opp.": {
+          "title": "in Hesiodi Opera et Dies",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Xenophanes A22."
+        },
+        "in Hes. Opp.": {
+          "title": "in Hesiodi Opera et Dies",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Gorgias B26 '—in Hes. Opp. 758' after 'PROCL. Vit. Hom.' (the title of 'Zu Hesiod. Opp.')."
         }
       },
       "flags": [
@@ -506,7 +644,8 @@
       "variants": [
         "HIPPOL.",
         "HIPPOLYT.",
-        "Hipp."
+        "Hipp.",
+        "HIPP."
       ],
       "works": {
         "Ref.": {
@@ -531,7 +670,8 @@
         "diels-doxographi"
       ],
       "variants_need_work": [
-        "Hipp."
+        "Hipp.",
+        "HIPP."
       ]
     },
     "HIPP_SHARED": {
@@ -575,6 +715,41 @@
           "title": "Epistulae",
           "title_italic": true,
           "locus_template": "opaque"
+        },
+        "V. soph.": {
+          "title": "Vitae Sophistarum",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Book + chapter (+ section), or Kayser page."
+        },
+        "Vit. sophist.": {
+          "title": "Vitae Sophistarum",
+          "title_italic": true,
+          "locus_template": "opaque"
+        },
+        "V. S.": {
+          "title": "Vitae Sophistarum",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Gorgias A1, A1a, A24, B5b."
+        },
+        "V. Apoll.": {
+          "title": "Vita Apollonii",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Anaxagoras A6, Democritus A19, Empedocles A14."
+        },
+        "V. Apoll. Tyan.": {
+          "title": "Vita Apollonii",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Zeno A9."
+        },
+        "V. Ap.": {
+          "title": "Vita Apollonii",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Empedocles A18."
         }
       },
       "flags": []
@@ -629,6 +804,32 @@
           "title_italic": true,
           "locus_template": "opaque",
           "notes": "'ap. Stob.' = apud Stobaeum; secondary transmission."
+        },
+        "V. P.": {
+          "title": "Vita Pythagorae",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Pythagoras 8, 13, 16."
+        },
+        "V. Pyth.": {
+          "title": "Vita Pythagorae",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Pythagoras 8a, 9; Empedocles B129."
+        },
+        "de Styge": {
+          "title": "De Styge",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Empedocles B105 'de Styge ap. Stob. Ecl. I 49, 53'."
+        },
+        "ἀπὸ τοῦ α τῆς Φιλολόγου ἀκροάσεως": {
+          "title": "Φιλόλογος ἀκρόασις",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Protagoras B2; Eusebius, P. E. X 3 (TLG 2018.001) quotes book I.",
+          "locus_as_printed": true,
+          "locus_prefix": "I"
         }
       },
       "flags": []
@@ -711,6 +912,93 @@
           "title_italic": true,
           "locus_template": "opaque",
           "notes": "Truncated head 'in Hipp. ...'; work completed from printed line."
+        },
+        "de elem. sec. Hipp.": {
+          "title": "De Elementis ex Hippocrate",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus A49, Heraclitus A5: 'sec. Hipp.' (secundum Hippocratem) is the title's."
+        },
+        "ad Hippocr. Epid. VI": {
+          "title": "in Hippocratis Epidemiarum librum VI",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Empedocles B67 'ad Hippocr. Epid. VI 48 [XVII A p. 1002 K]', as 'in Epid. VI'."
+        },
+        "de usu partt.": {
+          "title": "De Usu Partium",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus B34."
+        },
+        "comment. in Hippocr. de offic.": {
+          "title": "in Hippocratis De Officina Medici",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Critias B39."
+        },
+        "in Hipp. de med. off.": {
+          "title": "in Hippocratis De Officina Medici",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Antiphon B1, B2."
+        },
+        "in Hipp. d. nat. h.": {
+          "title": "in Hippocratis De Natura Hominis",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Anaximenes A22."
+        },
+        "in Hipp. de nat. h.": {
+          "title": "in Hippocratis De Natura Hominis",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Empedocles A43."
+        },
+        "in Hippocr. d. nat. hom.": {
+          "title": "in Hippocratis De Natura Hominis",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Xenophanes A36."
+        },
+        "d. natur. facult.": {
+          "title": "De Naturalibus Facultatibus",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Anaxagoras A104, as 'de virt. physic.'."
+        },
+        "Meth. med.": {
+          "title": "De Methodo Medendi",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Empedocles A3."
+        },
+        "de medic. empir.": {
+          "title": "De Medicina Empirica",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus B125: Schöne's Greek fragment (Berl. Sitz. Ber. 1901), as printed.",
+          "locus_as_printed": true
+        },
+        "de differ. puls.": {
+          "title": "De Differentia Pulsuum",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus B126 '—de differ. puls. I 25 [VIII 551 K]' after 'GALEN. de medic. empir.' (Kühn VIII 551)."
+        },
+        "VIII 931": {
+          "title": "De Dignoscendis Pulsibus",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus A46; TLG 0057.060, Kühn VIII 931.",
+          "locus_includes_work": true
+        },
+        "CMG V 9, 1,": {
+          "title": "in Hippocratis De Natura Hominis",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Melissus A6 'GAL. CMG V 9, 1, 17, 16'; TLG 0057.085, Kühn XV 29.",
+          "locus_includes_work": true
         }
       },
       "flags": []
@@ -748,6 +1036,24 @@
           "title_italic": true,
           "locus_template": "book-section",
           "notes": "2026-09-24: 'AEL. V. H. VIII 19' (Anaxagoras A24) etc. = Varia Historia, book + chapter; before this key the DEFAULT printed 'V. H.' in the locus."
+        },
+        "Var. hist.": {
+          "title": "Varia Historia",
+          "title_italic": true,
+          "locus_template": "book-section",
+          "notes": "Anaxagoras A21."
+        },
+        "Nat. anim.": {
+          "title": "De Natura Animalium",
+          "title_italic": true,
+          "locus_template": "book-section",
+          "notes": "Empedocles B61."
+        },
+        "Hist. an.": {
+          "title": "De Natura Animalium",
+          "title_italic": true,
+          "locus_template": "book-section",
+          "notes": "Empedocles A66 'AELIAN. Hist. an. IX 64'."
         }
       },
       "flags": []
@@ -756,14 +1062,16 @@
       "canonical_author": "Suda",
       "variants": [
         "SUID.",
-        "SUIDAS"
+        "SUIDAS",
+        "SUID:"
       ],
       "works": {
         "DEFAULT": {
-          "title": "Lexicon (Suda)",
+          "title": "",
           "title_italic": true,
           "locus_template": "opaque",
-          "notes": "Cited by lemma (s.v.); no numeric locus in bare heads."
+          "notes": "The Suda is cited by its own name, not an author's; title left empty so the printed form is 'Suda, s.v. <word>', matching how Hesychius/Harpocration cite their (real, separately-named) lexica. `bare_title` covers the headword-less heads (italic, as Hesychius' 'Lexicon' is).",
+          "bare_title": "Lexicon"
         }
       },
       "flags": [
@@ -791,14 +1099,15 @@
     "HESYCH": {
       "canonical_author": "Hesychius",
       "variants": [
-        "HESYCH."
+        "HESYCH.",
+        "HES."
       ],
       "works": {
         "DEFAULT": {
           "title": "Lexicon",
           "title_italic": true,
           "locus_template": "opaque",
-          "notes": "Cited by lemma (s.v.)."
+          "notes": "Cited by lemma (s.v.). 2026-09-27: 'HES.' (Antiphon B43, mid-line after HARPOCR.'s own 'ἄβιος' entry, printing a second lemma 'ἄβιος' of his own) is DK's short form of 'HESYCH.', not a separate abbreviation."
         }
       },
       "flags": [
@@ -817,6 +1126,18 @@
           "title_italic": true,
           "locus_template": "opaque",
           "notes": "Also Bibliotheca ('Bibl. cod. NNN') where the head names it."
+        },
+        "Bibl.": {
+          "title": "Bibliotheca",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Parmenides A4 'PHOT. Bibl. c. 249 p. 439a 36': codex + Bekker page; was given the Lexicon's title."
+        },
+        "Lex.": {
+          "title": "Lexicon",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus B144a 'PHOTIUS Lex. A S. 106, 23 Reitzenst.'."
         }
       },
       "flags": [
@@ -879,7 +1200,8 @@
       "variants": [
         "ARISTOT.",
         "ARIST.",
-        "ARISTOTELES"
+        "ARISTOTELES",
+        "ARISTOT,"
       ],
       "works": {
         "DEFAULT": {
@@ -1009,6 +1331,18 @@
           "title_italic": true,
           "locus_template": "bekker"
         },
+        "de part. an.": {
+          "title": "De Partibus Animalium",
+          "title_italic": true,
+          "locus_template": "bekker",
+          "notes": "Empedocles A78 'ARISTOT. de part. an. Α 1. 642a 17' = PA I 1, 642a17 (fell to the unspecified-work default)."
+        },
+        "d. gen. et corr.": {
+          "title": "De Generatione et Corruptione",
+          "title_italic": true,
+          "locus_template": "bekker",
+          "notes": "Empedocles A42, a title continuing ARISTOT. inside the passage: 'd. gen. et corr. B 7. 334a 5' = GC II 7, 334a5."
+        },
         "de respir.": {
           "title": "De Respiratione",
           "title_italic": true,
@@ -1023,6 +1357,25 @@
           "title": "Ethica",
           "title_italic": true,
           "locus_template": "bekker"
+        },
+        "Hist. anim.": {
+          "title": "Historia Animalium",
+          "title_italic": true,
+          "locus_template": "bekker",
+          "notes": "Democritus B126."
+        },
+        "q. f. de Melisso Xenophane Gorgia": {
+          "title": "De Melisso Xenophane Gorgia",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Melissus A5: 'q. f.' (quae fertur), the treatise under Aristotle's name."
+        },
+        "B 26. 1400b": {
+          "title": "Rhetorica",
+          "title_italic": true,
+          "locus_template": "bekker",
+          "notes": "Xenophanes A13 'ARIST. B 26. 1400b 5'; TLG 0086.038, Bekker 1400b.",
+          "locus_includes_work": true
         }
       },
       "flags": []
@@ -1192,6 +1545,12 @@
           "title_italic": true,
           "locus_template": "stephanus",
           "notes": "Hippias A10 '—Hipp min. 364c' (DK prints no period after 'Hipp'); Hippias Minor, St. I 363A-376C."
+        },
+        "Hipp. m.": {
+          "title": "Hippias Maior",
+          "title_italic": true,
+          "locus_template": "stephanus",
+          "notes": "Anaxagoras A13."
         }
       },
       "flags": []
@@ -1541,6 +1900,120 @@
           "title_italic": true,
           "locus_template": "section",
           "notes": "Democritus B159 '—fragm. de libid. et aegr. 2': the fragment 'Utrum animae an corporis sit libido et aegritudo' (Moralia fr., TLG 0007.143), cited by section."
+        },
+        "Sol.": {
+          "title": "Solon",
+          "title_italic": true,
+          "locus_template": "vita",
+          "notes": "Thales A8, A11."
+        },
+        "Alex. fort.": {
+          "title": "De Alexandri Magni Fortuna aut Virtute",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Pythagoras 18."
+        },
+        "Coni. praec.": {
+          "title": "Coniugalia Praecepta",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Gorgias B8a."
+        },
+        "Conv. VII sap.": {
+          "title": "Septem Sapientium Convivium",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Thales A21."
+        },
+        "Quaest. Rom.": {
+          "title": "Quaestiones Romanae",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Empedocles A60."
+        },
+        "Reg. apophth.": {
+          "title": "Regum et Imperatorum Apophthegmata",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Xenophanes A11."
+        },
+        "Symp.": {
+          "title": "Quaestiones Convivales",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Anaximander A30, as 'Sympos.'."
+        },
+        "d. fac. in orb. lun.": {
+          "title": "De Facie in Orbe Lunae",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Democritus A89a."
+        },
+        "d. prim. frig.": {
+          "title": "De Primo Frigido",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Empedocles A69."
+        },
+        "def. orac.": {
+          "title": "De Defectu Oraculorum",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Heraclitus A19."
+        },
+        "Animine an corp. aff.": {
+          "title": "Animine an Corporis Affectiones Sint Peiores",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Democritus B149."
+        },
+        "de Isid.": {
+          "title": "De Iside et Osiride",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Empedocles B115."
+        },
+        "de Is. et Os.": {
+          "title": "De Iside et Osiride",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Empedocles B18, A3."
+        },
+        "de Is. et Osir.": {
+          "title": "De Iside et Osiride",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Philolaus A14."
+        },
+        "quom. ad. poet. aud.": {
+          "title": "Quomodo Adulescens Poetas Audire Debeat",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Empedocles A25."
+        },
+        "quomodo adul. poet. aud. deb.": {
+          "title": "Quomodo Adulescens Poetas Audire Debeat",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Parmenides A15."
+        },
+        "aud. poet.": {
+          "title": "Quomodo Adulescens Poetas Audire Debeat",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Xenophanes B34."
+        },
+        "de an. procr.": {
+          "title": "De Animae Procreatione in Timaeo",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Empedocles A45."
+        },
+        "de genio Socr.": {
+          "title": "De Genio Socratis",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Philolaus A4a."
         }
       },
       "flags": [
@@ -1600,6 +2073,30 @@
           "title": "De Igne",
           "title_italic": true,
           "locus_template": "section"
+        },
+        "d. ign.": {
+          "title": "De Igne",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Democritus A73."
+        },
+        "fr.": {
+          "title": "Fragmenta",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus A155b 'THEOPHRAST. fr. 171, 12 W.' (Wimmer)."
+        },
+        "de odor.": {
+          "title": "De Odoribus",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Democritus A133 '—de odor. 64' after THEOPHR. d. c. pl."
+        },
+        "de vertig.": {
+          "title": "De Vertigine",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Heraclitus B125 '—de vertig. 9' after 'THEOPHR. Metaphys.'."
         }
       },
       "flags": [
@@ -1622,7 +2119,7 @@
           "title_italic": true,
           "locus_template": "page-line"
         },
-        "in Metaphys. A": {
+        "in Metaphys.": {
           "title": "in Aristotelis Metaphysica",
           "title_italic": true,
           "locus_template": "page-line"
@@ -1638,6 +2135,59 @@
           "title_italic": true,
           "locus_template": "page-line",
           "notes": "Bruns."
+        },
+        "Top.": {
+          "title": "in Aristotelis Topica",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Democritus A117."
+        },
+        "in meteor.": {
+          "title": "in Aristotelis Meteorologica",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Anaxagoras A90."
+        },
+        "zu Arist. Meteor.": {
+          "title": "in Aristotelis Meteorologica",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Democritus A92."
+        },
+        "de fato": {
+          "title": "De Fato",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Anaxagoras A66."
+        },
+        "de sensu": {
+          "title": "in Aristotelis De Sensu",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Leucippus A29."
+        },
+        "in Metaph. z. d. St.": {
+          "title": "in Aristotelis Metaphysica",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Leucippus A6."
+        },
+        "q. f. problem.": {
+          "title": "Problemata",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Empedocles B101: 'q. f.' (quae fertur), the Problemata under his name."
+        },
+        "z. d. St.": {
+          "title": "(commentary of Alexander)",
+          "title_italic": false,
+          "locus_template": "page-line",
+          "locus_includes_work": true,
+          "on_passage_above": {
+            "ARISTOT:Meteorologica": "in meteor.",
+            "ARISTOT:De Sensu": "de sensu",
+            "ARISTOT:Topica": "Top."
+          }
         }
       },
       "flags": [
@@ -1672,6 +2222,44 @@
           "title_italic": true,
           "locus_template": "page-line",
           "notes": "Vitelli."
+        },
+        "Phys.": {
+          "title": "in Aristotelis Physica",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Xenophanes A29, Zeno A21."
+        },
+        "in Phys.": {
+          "title": "in Aristotelis Physica",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Parmenides A21."
+        },
+        "de an. prooem.": {
+          "title": "in Aristotelis De Anima",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Critias A23: the preface, CAG page."
+        },
+        "z. d. St.": {
+          "title": "(commentary of Philoponus)",
+          "title_italic": false,
+          "locus_template": "page-line",
+          "locus_includes_work": true,
+          "on_passage_above": {
+            "ARISTOT:De Anima": "de anima",
+            "ARISTOT:De Generatione et Corruptione": "de gen. et corr."
+          }
+        },
+        "ad h. c.": {
+          "title": "(commentary of Philoponus)",
+          "title_italic": false,
+          "locus_template": "page-line",
+          "locus_includes_work": true,
+          "on_passage_above": {
+            "ARISTOT:De Anima": "de anima",
+            "ARISTOT:De Generatione et Corruptione": "de gen. et corr."
+          }
         }
       },
       "flags": [
@@ -1694,6 +2282,12 @@
           "title": "Orationes",
           "title_italic": true,
           "locus_template": "opaque"
+        },
+        "Phys.": {
+          "title": "in Aristotelis Physica Paraphrasis",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Antiphon B13."
         }
       },
       "flags": []
@@ -1725,6 +2319,39 @@
           "title": "De Arte Sacra",
           "title_italic": true,
           "locus_template": "opaque"
+        },
+        "IN PLAT. Gorg.": {
+          "title": "in Platonis Gorgiam",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Gorgias A10, B2."
+        },
+        "in Plat. Phileb.2": {
+          "title": "in Platonis Philebum",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus B142: the export fuses a note figure to the title ('Phileb.2')."
+        },
+        "de arte sacra": {
+          "title": "De Arte Sacra",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Melissus A13."
+        },
+        "de arte sacr.": {
+          "title": "De Arte Sacra",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Xenophanes A36."
+        },
+        "z. d. St.": {
+          "title": "(commentary of Olympiodorus)",
+          "title_italic": false,
+          "locus_template": "page-line",
+          "locus_includes_work": true,
+          "on_passage_above": {
+            "PLATO:Gorgias": "IN PLAT. Gorg."
+          }
         }
       },
       "flags": [
@@ -1775,6 +2402,14 @@
           "title_italic": true,
           "locus_template": "opaque",
           "notes": "Fr. numbers; witness usually Simplicius."
+        },
+        "bei Simpl. Phys.": {
+          "title": "",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Parmenides B7.",
+          "locus_includes_work": true,
+          "locus_as_printed": true
         }
       },
       "flags": []
@@ -1799,7 +2434,8 @@
       "variants": [
         "IAMBL.",
         "IAMBLICH.",
-        "IAMBLICHUS"
+        "IAMBLICHUS",
+        "Iambl."
       ],
       "works": {
         "DEFAULT": {
@@ -1828,6 +2464,42 @@
           "title": "in Nicomachi Arithmeticam",
           "title_italic": true,
           "locus_template": "page-line"
+        },
+        "V. P.": {
+          "title": "De Vita Pythagorica",
+          "title_italic": true,
+          "locus_template": "section"
+        },
+        "V. Pyth.": {
+          "title": "De Vita Pythagorica",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Empedocles A15, B135; Parmenides A4."
+        },
+        "V. Pythag.": {
+          "title": "De Vita Pythagorica",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Thales A11."
+        },
+        "Protr.": {
+          "title": "Protrepticus",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Anaxagoras A48."
+        },
+        "Ep.": {
+          "title": "Epistulae",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Antiphon B44a 'IAMBL. Ep. Περὶ ὁμονοίας [Stob. II 33, 15]'.",
+          "locus_as_printed": true
+        },
+        "in Nicom.": {
+          "title": "in Nicomachi Arithmeticam",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Philolaus A24 'in Nicom. 118, 23 Pist.'."
         }
       },
       "flags": []
@@ -1877,6 +2549,18 @@
           "title": "De Lapidum Virtutibus",
           "title_italic": true,
           "locus_template": "section"
+        },
+        "d. omnif. doctr.": {
+          "title": "De Omnifaria Doctrina",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Anaxagoras A101a."
+        },
+        "de lapid.": {
+          "title": "De Lapidum Virtutibus",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Empedocles A89."
         }
       },
       "flags": []
@@ -1892,6 +2576,18 @@
           "title_italic": true,
           "locus_template": "opaque",
           "notes": "'ad c. aur.' = in Aurea Carmina Pythagorae."
+        },
+        "ad c. aur.": {
+          "title": "in Aureum Carmen (Commentarius)",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Empedocles B121, B158."
+        },
+        "in Pyth. c. aur.": {
+          "title": "in Aureum Carmen (Commentarius)",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus B142 'HIEROCL. in Pyth. c. aur. 25' (as 'ad c. aur.')."
         }
       },
       "flags": []
@@ -1961,6 +2657,12 @@
           "title": "in Aphorismos Hippocratis",
           "title_italic": true,
           "locus_template": "opaque"
+        },
+        "in Aphorism. Hippocr.": {
+          "title": "in Aphorismos Hippocratis",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus B307."
         }
       },
       "flags": [
@@ -1984,6 +2686,12 @@
           "title": "Chronica",
           "title_italic": true,
           "locus_template": "opaque"
+        },
+        "P. E.": {
+          "title": "Praeparatio Evangelica",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Anaximander A4, Empedocles A8, Protagoras B4."
         }
       },
       "flags": []
@@ -2058,6 +2766,18 @@
           "title": "De Anima",
           "title_italic": true,
           "locus_template": "section"
+        },
+        "ad nat.": {
+          "title": "Ad Nationes",
+          "title_italic": true,
+          "locus_template": "book-section",
+          "notes": "Democritus A74."
+        },
+        "de an.": {
+          "title": "De Anima",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Democritus A160."
         }
       },
       "flags": []
@@ -2073,6 +2793,24 @@
           "title_italic": true,
           "locus_template": "book-chapter-section",
           "notes": "'Inst. div.' = Divinae Institutiones."
+        },
+        "Inst. div.": {
+          "title": "Divinae Institutiones",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Democritus A70, Empedocles A24."
+        },
+        "de opif.": {
+          "title": "De Opificio Dei",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Parmenides A54 'LACTANT. de opif. 12, 12' (was given the Institutiones)."
+        },
+        "de opif. dei": {
+          "title": "De Opificio Dei",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Empedocles A51."
         }
       },
       "flags": []
@@ -2112,13 +2850,15 @@
     "ATHANASIUS": {
       "canonical_author": "Athanasius (rhetor)",
       "variants": [
+        "ATHANASIUS Alexandr.",
         "ATHANASIUS"
       ],
       "works": {
         "DEFAULT": {
-          "title": "(Prolegomena to Hermogenes)",
-          "title_italic": false,
-          "locus_template": "opaque"
+          "title": "Prolegomena in Hermogenis Librum περὶ στάσεων",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Gorgias B5a 'ATHANASIUS Alexandr. Rhet. Gr. XIV, 180, 9 Rabe'; TLG 4238.001, Rabe p. 180."
         }
       },
       "flags": [
@@ -2152,6 +2892,12 @@
           "title_italic": true,
           "locus_template": "book-para",
           "notes": "'c. Cels.' = Contra Celsum."
+        },
+        "c. Celsum": {
+          "title": "Contra Celsum",
+          "title_italic": true,
+          "locus_template": "book-para",
+          "notes": "Empedocles B137 'ORIG. c. Celsum v 49' (the title fell into the locus)."
         }
       },
       "flags": []
@@ -2215,6 +2961,17 @@
           "title": "Naturalis Historia",
           "title_italic": true,
           "locus_template": "book-para"
+        },
+        "N. HIST.": {
+          "title": "Naturalis Historia",
+          "title_italic": true,
+          "locus_template": "book-para"
+        },
+        "H. N.": {
+          "title": "Naturalis Historia",
+          "title_italic": true,
+          "locus_template": "book-para",
+          "notes": "Heraclitus A3a 'PLIN. H. n. XXXIV 21' (lower-case 'n.'; match_work casefolds)."
         }
       },
       "flags": []
@@ -2264,6 +3021,18 @@
           "title": "Epistulae Morales",
           "title_italic": true,
           "locus_template": "section"
+        },
+        "Nat. qu.": {
+          "title": "Naturales Quaestiones",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Also 'Nat. Qu.' (the match ignores case)."
+        },
+        "Nat. quaest.": {
+          "title": "Naturales Quaestiones",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Also 'Nat. Quaest.'."
         }
       },
       "flags": [
@@ -2329,6 +3098,12 @@
           "title": "Noctes Atticae",
           "title_italic": true,
           "locus_template": "book-chapter-section"
+        },
+        "N. A.": {
+          "title": "Noctes Atticae",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Xenophanes B13 'GELLIUS N. A. III 11'."
         }
       },
       "flags": []
@@ -2363,6 +3138,24 @@
           "title": "Commentarii in Somnium Scipionis (lib. I)",
           "title_italic": true,
           "locus_template": "book-chapter-section"
+        },
+        "S. Sc.": {
+          "title": "Commentarii in Somnium Scipionis",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Parmenides A45."
+        },
+        "S. Scip.": {
+          "title": "Commentarii in Somnium Scipionis",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Heraclitus A15, Philolaus A23, Xenophanes A50."
+        },
+        "Sat.": {
+          "title": "Saturnalia",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Empedocles B90."
         }
       },
       "flags": []
@@ -2399,6 +3192,12 @@
           "title_italic": true,
           "locus_template": "section",
           "notes": "2026-09-24: Protagoras A4 'APUL. Flor. 18' = Apuleius, Florida 18 (the Protagoras-Euathlus story); A4 was fatal without this key."
+        },
+        "Apol.": {
+          "title": "Apologia",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Democritus B300 12 'APUL. Apol. 27'."
         }
       },
       "flags": []
@@ -2414,6 +3213,24 @@
           "title_italic": false,
           "locus_template": "opaque",
           "notes": "'Sat.' = Saturae Menippeae."
+        },
+        "de r. rust.": {
+          "title": "De Re Rustica",
+          "title_italic": true,
+          "locus_template": "book-chapter-section",
+          "notes": "Democritus B26f."
+        },
+        "Sat.": {
+          "title": "Saturae Menippeae",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus A161 'VARRO Sat. Cycnus'."
+        },
+        "Eumenid. sat.": {
+          "title": "Saturae Menippeae (Eumenides)",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Empedocles A72."
         }
       },
       "flags": [
@@ -2509,7 +3326,9 @@
       "canonical_author": "Mallius Theodorus",
       "variants": [
         "MALL.",
-        "MALLIUS"
+        "MALLIUS",
+        "MALL. THEODOR.",
+        "MALLIUS THEODOR."
       ],
       "works": {
         "DEFAULT": {
@@ -2517,6 +3336,12 @@
           "title_italic": true,
           "locus_template": "book-page-line",
           "notes": "Keil Gramm. Lat."
+        },
+        "de metr.": {
+          "title": "De Metris",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Keil, Grammatici Latini VI page, line."
         }
       },
       "flags": [
@@ -2642,6 +3467,30 @@
           "title": "Busiris",
           "title_italic": true,
           "locus_template": "section"
+        },
+        "XV": {
+          "title": "Antidosis",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Anaxagoras A15 'ISOCR. XV 235'.",
+          "locus_includes_work": true,
+          "numbered": true
+        },
+        "15,": {
+          "title": "Antidosis",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Gorgias A18 'ISOCR. 15, 155f.', Gorgias B1 '15, 268'.",
+          "locus_includes_work": true,
+          "numbered": true
+        },
+        "10,": {
+          "title": "Helenae Encomium",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Gorgias B1 'ISOCR. 10, 3'.",
+          "locus_includes_work": true,
+          "numbered": true
         }
       },
       "flags": []
@@ -2656,6 +3505,14 @@
           "title": "(oration of Andocides)",
           "title_italic": false,
           "locus_template": "book-section"
+        },
+        "I": {
+          "title": "De Mysteriis",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Critias A5 'ANDOC. I 47'.",
+          "locus_includes_work": true,
+          "numbered": true
         }
       },
       "flags": []
@@ -2717,10 +3574,10 @@
       ],
       "works": {
         "DEFAULT": {
-          "title": "(rhetorical treatise)",
+          "title": "Διαίρεσις τῶν ἐπιδεικτικῶν",
           "title_italic": false,
           "locus_template": "book-chapter-section",
-          "notes": "Menander Rhetor, Peri epideiktikon."
+          "notes": "Empedocles A23 'MENANDER I 2, 2', 'Ebenda 5, 2'; TLG 2586.001, Spengel pp. 333, 337."
         }
       },
       "flags": [
@@ -2818,6 +3675,12 @@
           "title_italic": true,
           "locus_template": "opaque",
           "editor_apparatus": true
+        },
+        "ecl.": {
+          "title": "Ecloga",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Hippias B10 'PHRYNICH. ecl. 312 Lob.': Lobeck's Phrynichi Eclogae (1820); was given the Praeparatio's title."
         }
       },
       "flags": []
@@ -2863,10 +3726,11 @@
       ],
       "works": {
         "Rhet.": {
-          "title": "(Prolegomena in Aristidem / Rhetorica)",
+          "title": "Διαίρεσις ζητημάτων",
           "title_italic": false,
           "locus_template": "opaque",
-          "notes": "Walz Rhet. Gr."
+          "notes": "Gorgias B31 'SOPAT. Rhet. gr. VIII 23 W.'; TLG 2031.001, Walz VIII p. 23 (Rhetores Graeci, kept in the locus).",
+          "locus_includes_work": true
         }
       },
       "flags": [
@@ -2883,6 +3747,12 @@
           "title": "Ars Rhetorica",
           "title_italic": true,
           "locus_template": "book-section"
+        },
+        "Ars rhet.": {
+          "title": "Ars Rhetorica",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Critias B46."
         }
       },
       "flags": []
@@ -2909,9 +3779,10 @@
       ],
       "works": {
         "DEFAULT": {
-          "title": "(oration of Himerius)",
-          "title_italic": false,
-          "locus_template": "opaque"
+          "title": "Declamationes et Orationes",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Thales A11a; TLG 2051.001, Colonna's oration 28."
         },
         "Ecl.": {
           "title": "Eclogae",
@@ -2969,6 +3840,12 @@
           "title": "Pro Lapsu inter Salutandum",
           "title_italic": true,
           "locus_template": "section"
+        },
+        "V. hist.": {
+          "title": "Verae Historiae",
+          "title_italic": true,
+          "locus_template": "book-section",
+          "notes": "Antiphon A7."
         }
       },
       "flags": []
@@ -2989,6 +3866,12 @@
           "title": "Allegoriae Homericae",
           "title_italic": true,
           "locus_template": "section"
+        },
+        "Alleg. Hom.": {
+          "title": "Allegoriae Homericae",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Xenophanes B31."
         }
       },
       "flags": [
@@ -3018,7 +3901,8 @@
         "Ep.": {
           "title": "Epistulae",
           "title_italic": true,
-          "locus_template": "opaque"
+          "locus_template": "opaque",
+          "locus_as_printed": true
         }
       },
       "flags": []
@@ -3042,7 +3926,8 @@
       "variants": [
         "ACHILL. Is",
         "ACHILL. Is.",
-        "ACHILL. IS."
+        "ACHILL. IS.",
+        "ACHILL. Isag."
       ],
       "works": {
         "DEFAULT": {
@@ -3106,7 +3991,8 @@
       "canonical_author": "Theologumena Arithmeticae",
       "variants": [
         "THEOL. Arithm.",
-        "THEOLOG."
+        "THEOLOG.",
+        "THEOLOG. Arithm."
       ],
       "works": {
         "DEFAULT": {
@@ -3129,6 +4015,12 @@
           "title_italic": true,
           "locus_template": "page-line",
           "notes": "Heiberg."
+        },
+        "DEFAULT": {
+          "title": "De Decade",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Parmenides A44 'ANATOL. p. 30 Heib.' (Heiberg's pages, as 'de decade p. 35 Heiberg', Philolaus B20)."
         }
       },
       "flags": []
@@ -3159,6 +4051,13 @@
           "title_italic": true,
           "locus_template": "opaque",
           "notes": "Papyrus (Blass); fragmentary."
+        },
+        "Ars astron.": {
+          "title": "Ars Astronomica",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus B14; 'coll.' (column) + Blass page, as printed.",
+          "locus_as_printed": true
         }
       },
       "flags": [
@@ -3195,6 +4094,13 @@
           "title_italic": false,
           "locus_template": "opaque",
           "notes": "'Apparit.' = Phaseis (De Apparitionibus)."
+        },
+        "Apparit.": {
+          "title": "Phaseis",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus B14 'PTOLEM. Apparit. epileg. ebenda p. 275, 1': the epilogue of the Phaseis (Φάσεις ἀπλανῶν ἀστέρων), Heiberg's page, as printed.",
+          "locus_as_printed": true
         }
       },
       "flags": []
@@ -3206,10 +4112,18 @@
       ],
       "works": {
         "DEFAULT": {
-          "title": "(apud Theonem astr.)",
+          "title": "Περὶ τοῦ ἀτράκτου καὶ τῶν σφονδύλων τῶν ἐν τῇ Πολιτείᾳ παρὰ Πλάτωνι λεγομένων",
           "title_italic": false,
-          "locus_template": "page-line",
-          "notes": "Cited via Theon."
+          "locus_template": "opaque",
+          "notes": "Thales A17; Theon names the book at p. 198 Hiller."
+        },
+        "ap. Theon.": {
+          "title": "Περὶ τοῦ ἀτράκτου καὶ τῶν σφονδύλων τῶν ἐν τῇ Πολιτείᾳ παρὰ Πλάτωνι λεγομένων",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Thales A17 'DERCYLLIDES ap. Theon. astr. 198, 14 H.'.",
+          "locus_includes_work": true,
+          "locus_as_printed": true
         }
       },
       "flags": [
@@ -3233,7 +4147,8 @@
     "HIPPOCR": {
       "canonical_author": "Hippocrates (corpus)",
       "variants": [
-        "HIPPOCR."
+        "HIPPOCR.",
+        "HIPP."
       ],
       "works": {
         "DEFAULT": {
@@ -3251,9 +4166,24 @@
           "title": "De Prisca Medicina (De Vetere Medicina)",
           "title_italic": true,
           "locus_template": "section"
+        },
+        "de nat. hom.": {
+          "title": "De Natura Hominis",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Melissus A6 'HIPP. de nat. hom. 1 [VI 34 L.]'."
+        },
+        "de nat. inf.": {
+          "title": "De Natura Pueri",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Democritus A151 'HIPPOCR. de nat. inf. 31 (VII 540 L.)': Littré VII, the chapter on mules (Περὶ φύσιος παιδίου, De natura pueri)."
         }
       },
-      "flags": []
+      "flags": [],
+      "variants_need_work": [
+        "HIPP."
+      ]
     },
     "SORAN": {
       "canonical_author": "Soranus",
@@ -3274,7 +4204,8 @@
     "RUFUS": {
       "canonical_author": "Rufus of Ephesus",
       "variants": [
-        "RUFUS"
+        "RUFUS",
+        "RUFUS Ephes."
       ],
       "works": {
         "DEFAULT": {
@@ -3282,6 +4213,12 @@
           "title_italic": true,
           "locus_template": "page-line",
           "notes": "Daremberg."
+        },
+        "d. nom. part. hom.": {
+          "title": "De Nominatione Partium Hominis",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Daremberg page."
         }
       },
       "flags": []
@@ -3327,6 +4264,12 @@
           "title_italic": true,
           "locus_template": "opaque",
           "notes": "2026-09-24: Empedocles A98 'CAELIUS AUREL. Morb. chron. I 5 p. 25 Sich.' = Caelius Aurelianus, De morbis chronicis (Tardae passiones) I 5, page 25 of Sichard's edition (Basel 1529). Replaces the census key 'AURE' (the truncated 'AUREL.'), which matched no printed head and made A98 fatal."
+        },
+        "Acut. morb.": {
+          "title": "De Morbis Acutis",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus A28 'CAELIUS AUREL. Acut. morb. II 37' (Celerum Passionum), beside his 'Morb. chron.'."
         }
       },
       "flags": []
@@ -3410,7 +4353,18 @@
           "title_italic": true,
           "locus_template": "page-line",
           "notes": "Bekker, Anecdota Graeca; DK names the volume itself here ('I 337, 13').",
-          "volume_by_part": []
+          "volume_by_part": [
+            [
+              "Lex. VI",
+              319,
+              476,
+              "I",
+              [
+                "VI"
+              ]
+            ]
+          ],
+          "edition_note": "Bekk."
         },
         "Lex.": {
           "title": "Anecdota Graeca",
@@ -3425,7 +4379,8 @@
               476,
               "I"
             ]
-          ]
+          ],
+          "edition_note": "Bekk."
         },
         "Antiattic.": {
           "title": "Anecdota Graeca",
@@ -3440,7 +4395,8 @@
               116,
               "I"
             ]
-          ]
+          ],
+          "edition_note": "Bekk."
         }
       },
       "flags": [
@@ -3468,7 +4424,8 @@
               116,
               "I"
             ]
-          ]
+          ],
+          "edition_note": "Bekk."
         },
         "An.": {
           "title": "Anecdota Graeca",
@@ -3483,7 +4440,8 @@
               116,
               "I"
             ]
-          ]
+          ],
+          "edition_note": "Bekk."
         }
       },
       "flags": [
@@ -3608,6 +4566,12 @@
           "title_italic": false,
           "locus_template": "opaque",
           "notes": "Scholia cited by the passage of Apollonium Rhodium they gloss (+ editor page)."
+        },
+        "Rhod.": {
+          "title": "Scholia in Apollonium Rhodium",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Democritus B14 'RHOD. B 1098', A99 'Rhod. IV 269f. Wendel'."
         }
       },
       "flags": [
@@ -3754,6 +4718,12 @@
           "title_italic": false,
           "locus_template": "opaque",
           "notes": "Scholia cited by the passage of Hippocratem they gloss (+ editor page)."
+        },
+        "ad Epid.": {
+          "title": "Epidemiae",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Xenophanes B45."
         }
       },
       "flags": [
@@ -3794,6 +4764,29 @@
         "scholia"
       ]
     },
+    "SCHOL_IAMBL": {
+      "canonical_author": "Scholia in Iamblichum",
+      "variants": [
+        "SCHOL. IAMBLICH."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Scholia in Iamblichum",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Scholia cited by the passage of Iamblichum they gloss (+ editor page)."
+        },
+        "V. P.": {
+          "title": "De Vita Pythagorica",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Nauck's page."
+        }
+      },
+      "flags": [
+        "scholia"
+      ]
+    },
     "SCHOL_BARE": {
       "canonical_author": "Scholia",
       "variants": [
@@ -3820,6 +4813,12 @@
           "title": "Scholia in Euclidem",
           "title_italic": true,
           "locus_template": "opaque"
+        },
+        "ad DIONYS. Thrac.": {
+          "title": "Scholia in Dionysium Thracem",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "Empedocles A25."
         }
       },
       "flags": [
@@ -3829,6 +4828,7 @@
     "GREGOR": {
       "canonical_author": "Gregory of Corinth",
       "variants": [
+        "GREGOR. CORINTH.",
         "GREGOR."
       ],
       "works": {
@@ -3836,6 +4836,12 @@
           "title": "(ad Hermogenem)",
           "title_italic": false,
           "locus_template": "opaque"
+        },
+        "Zu HERMOG.": {
+          "title": "in Hermogenem",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Critias B16; his commentary on Hermogenes."
         }
       },
       "flags": [
@@ -3858,6 +4864,26 @@
       "flags": [
         "anonymous"
       ]
+    },
+    "ZOSIM": {
+      "canonical_author": "Zosimus",
+      "variants": [
+        "ZOSIM."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Zosimus)",
+          "title_italic": false,
+          "locus_template": "opaque"
+        },
+        "V. Isocr.": {
+          "title": "Vita Isocratis",
+          "title_italic": true,
+          "locus_template": "page-line",
+          "notes": "2026-09-27: Hippias A3 'ZOSIM. V. Isocr. p. 253, 4 Westerm.', mid-line after HARPOCR.'s own sentence, printing its own quotation of the same family detail ('γυναῖκα δ' ἠγάγετο Πλαθάνην ...'). Zosimus (of Ascalon/Gaza)'s Life of Isocrates, Westermann's Βιογράφοι (Vitarum Scriptorum Graecorum Reliquiae, 1845) page, line."
+        }
+      },
+      "flags": []
     },
     "TZETZ": {
       "canonical_author": "John Tzetzes",
@@ -3892,6 +4918,24 @@
           "title_italic": false,
           "locus_template": "opaque",
           "notes": "2026-09-24: Democritus B5 'TZETZES Schol. z. Hesiod (Gaisford Poet. gr. min. III 58)' = Tzetzes' scholia on Hesiod as printed in Gaisford, Poetae minores Graeci III (scholia ad Hesiodum). DK names no poem, so neither does the title."
+        },
+        "ad Dion. Perieg.": {
+          "title": "Scholia in Dionysium Periegetam",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Xenophanes B41."
+        },
+        "Chil.": {
+          "title": "Chiliades",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Leucippus A5."
+        },
+        "Exeg. Iliad.": {
+          "title": "Exegesis in Iliadem",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Empedocles A66."
         }
       },
       "flags": []
@@ -3932,6 +4976,12 @@
           "title": "Commentarii ad Homerum",
           "title_italic": true,
           "locus_template": "opaque"
+        },
+        "Z. DIONYS. Per.": {
+          "title": "Commentarii in Dionysium Periegetam",
+          "title_italic": false,
+          "locus_template": "section",
+          "notes": "Hippias B8 'EUSTATH. Z. DIONYS. Per. 270': on the verse of Dionysius Periegetes (was split into two heads, the second read as Dionysius of Halicarnassus)."
         }
       },
       "flags": [
@@ -3948,6 +4998,12 @@
           "title": "Ars Rhetorica",
           "title_italic": true,
           "locus_template": "opaque"
+        },
+        "Ars rhet.": {
+          "title": "Ars Rhetorica",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Critias B49."
         }
       },
       "flags": [
@@ -4029,10 +5085,28 @@
           "title_italic": true,
           "locus_template": "section"
         },
+        "d. Lys.": {
+          "title": "De Lysia",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Gorgias A4 'vgl. DIONYS. d. Lys. 3' = Lys. 3 (Gorgias' style); the head was cut after 'd.' (2026-09-26)."
+        },
         "de comp. verb.": {
           "title": "De Compositione Verborum",
           "title_italic": true,
           "locus_template": "section"
+        },
+        "Halic. Isocr.": {
+          "title": "De Isocrate",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Prodicus A7 'DIONYS. Halic. Isocr. 1'."
+        },
+        "Isae.": {
+          "title": "De Isaeo",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Gorgias A32."
         }
       },
       "flags": [
@@ -4045,16 +5119,23 @@
         "DEMETR."
       ],
       "works": {
+        "DEFAULT": {
+          "title": "De Elocutione",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Bare DEMETR. + section number = De elocutione (On Style); Heraclitus A4 'DEMETR. 192'."
+        },
         "de poem.": {
           "title": "De Poematis",
           "title_italic": true,
           "locus_template": "opaque",
-          "notes": "Philodemus' work / Herculanean; Demetrius Laco. Flagged: attribution uncertain."
+          "notes": "Philodemus' work / Herculanean; Demetrius Laco. Flagged: attribution uncertain.",
+          "flags": [
+            "uncertain"
+          ]
         }
       },
-      "flags": [
-        "uncertain"
-      ]
+      "flags": []
     },
     "PHILO": {
       "canonical_author": "Philo of Alexandria",
@@ -4076,6 +5157,30 @@
           "title": "De Providentia",
           "title_italic": true,
           "locus_template": "book-para"
+        },
+        "d. opif.": {
+          "title": "De Opificio Mundi",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Philolaus B20."
+        },
+        "quod omn. prob. lib.": {
+          "title": "Quod Omnis Probus Liber Sit",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Zeno A18."
+        },
+        "de aetern. mundi": {
+          "title": "De Aeternitate Mundi",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Empedocles B12."
+        },
+        "de vita contempl.": {
+          "title": "De Vita Contemplativa",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus A15 '—de vita contempl. p. 473 M. (VI 49 C.—W.)' after 'PHILO de prov.' (Mangey's page, Cohn-Wendland's volume)."
         }
       },
       "flags": []
@@ -4127,6 +5232,37 @@
           "title_italic": true,
           "locus_template": "opaque",
           "notes": "Democritus B144 '—de music. Δ 31 p. 108, 29 Kemke' (after PHILODEM. de ira): Philodemus, De musica IV, Kemke's edition (1884)."
+        },
+        "de poëm.": {
+          "title": "De Poematis",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Antiphon B93."
+        },
+        "de adulat.": {
+          "title": "De Adulatione",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus B153."
+        },
+        "schol. Zenon. de lib. dic.": {
+          "title": "De Libertate Dicendi",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus A34: from Zeno's lectures (ἐκ τῶν Ζήνωνος σχολῶν); the locus ('VH1 V 2 fr. 20') as printed.",
+          "locus_as_printed": true
+        },
+        "de piet.": {
+          "title": "De Pietate",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus A75."
+        },
+        "de pietate": {
+          "title": "De Pietate",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Empedocles A33."
         }
       },
       "flags": []
@@ -4147,6 +5283,12 @@
           "title": "Ad Se Ipsum (Meditationes)",
           "title_italic": true,
           "locus_template": "book-section"
+        },
+        "DEFAULT": {
+          "title": "Ad Se Ipsum (Meditationes)",
+          "title_italic": true,
+          "locus_template": "book-section",
+          "notes": "Heraclitus B76 'MARC. IV 46' (the passage B71 cites as 'MARC. ANTON. IV 46')."
         }
       },
       "flags": []
@@ -4155,7 +5297,8 @@
       "canonical_author": "John Lydus",
       "variants": [
         "IOANN. LYD.",
-        "JOH."
+        "JOH.",
+        "JOH. LYDUS"
       ],
       "works": {
         "de mens.": {
@@ -4238,10 +5381,17 @@
       ],
       "works": {
         "DEFAULT": {
-          "title": "(Chronica / FGrHist 244)",
+          "title": "Chronica",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Gorgias A10; D.L. VIII 58 names the Chronica (FGrHist 244 F 33)."
+        },
+        "Περὶ θεῶν": {
+          "title": "Περὶ θεῶν",
           "title_italic": false,
           "locus_template": "opaque",
-          "notes": "Apollodorus of Athens, chronographer."
+          "notes": "Empedocles B41 'APOLLODOROS Περὶ θεῶν bei Macrob. Sat. I 17, 46'.",
+          "locus_as_printed": true
         }
       },
       "flags": []
@@ -4249,7 +5399,7 @@
     "DIOGENES_OIN": {
       "canonical_author": "Diogenes of Oenoanda",
       "variants": [
-        "DIOGENES"
+        "DIOGENES v. Oinoanda"
       ],
       "works": {
         "DEFAULT": {
@@ -4294,6 +5444,13 @@
           "title": "(fragmenta)",
           "title_italic": false,
           "locus_template": "opaque"
+        },
+        "Περὶ φιλοσοφίας": {
+          "title": "Περὶ φιλοσοφίας",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Xenophanes A49 'ARISTOCLES Περὶ φιλοσοφίας η [EUS. XIV 17, 1]'.",
+          "locus_as_printed": true
         }
       },
       "flags": [
@@ -4310,6 +5467,13 @@
           "title": "(divinatory treatise)",
           "title_italic": false,
           "locus_template": "opaque"
+        },
+        "Περὶ παλμῶν": {
+          "title": "Περὶ παλμῶν",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Antiphon B81a 'MELAMPUS Περὶ παλμῶν 18. 19 [Diels Beitr. z. Zuckungsl. I, Abh. d. Berl. Ak. 1907]'.",
+          "locus_as_printed": true
         }
       },
       "flags": [
@@ -4327,6 +5491,12 @@
           "title_italic": true,
           "locus_template": "opaque",
           "notes": "The medical doxography (P. Lond. 137) associated with Menon, pupil of Aristotle."
+        },
+        "Anonymi Londin.": {
+          "title": "Anonymus Londinensis (Iatrica)",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Philolaus A27, A28; the bracket (Suppl. Arist. III 1) stays in the locus."
         }
       },
       "flags": []
@@ -4338,10 +5508,10 @@
       ],
       "works": {
         "DEFAULT": {
-          "title": "(fragmenta)",
+          "title": "Περὶ βλασφημιῶν καὶ πόθεν ἑκάστη",
           "title_italic": false,
           "locus_template": "opaque",
-          "notes": "Miller Mélanges."
+          "notes": "Parmenides B24 'SUETONIUS (Miller Mél. 417)'; TLG 1760.001, section 4."
         }
       },
       "flags": []
@@ -4384,8 +5554,6 @@
       "variants": [
         "PAP.",
         "PAPYR.",
-        "OXYRH.",
-        "HIBEH",
         "VOLL."
       ],
       "works": {
@@ -4424,7 +5592,7 @@
       ]
     },
     "EXC": {
-      "canonical_author": "Excerpta",
+      "canonical_author": null,
       "variants": [
         "EXC."
       ],
@@ -4434,6 +5602,12 @@
           "title_italic": false,
           "locus_template": "opaque",
           "notes": "'EXC. ASTRON.' = astronomical excerpts; 'EXC. VINDOB.' = Excerpta Vindobonensia."
+        },
+        "ASTRON.": {
+          "title": "Excerpta Astronomica",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Anaxagoras A87 'EXC. ASTRON. cod. Vatic. 381 [ed. Maass Aratea p. 143]': astronomical excerpts in cod. Vat. gr. 381, printed by E. Maass, Aratea (1892) p. 143."
         },
         "VINDOB.": {
           "title": "Excerpta Vindobonensia",
@@ -4446,16 +5620,16 @@
       ]
     },
     "EPIGR": {
-      "canonical_author": "Epigrammata (Anthologia)",
+      "canonical_author": null,
       "variants": [
         "EPIGR."
       ],
       "works": {
         "DEFAULT": {
-          "title": "(epigram)",
-          "title_italic": false,
+          "title": "Epigrammata Graeca",
+          "title_italic": true,
           "locus_template": "opaque",
-          "notes": "Kaibel Epigrammata Graeca."
+          "notes": "Gorgias A8 'EPIGR. 875a p. 534 Kaibel': G. Kaibel, Epigrammata Graeca ex lapidibus conlecta (Berlin 1878), no. 875a, p. 534 (was the placeholder '(epigram)')."
         }
       },
       "flags": [
@@ -4545,6 +5719,30 @@
           "title_italic": true,
           "locus_template": "bekker",
           "notes": "Bk 9/10 regarded spurious."
+        },
+        "de plantis": {
+          "title": "De Plantis",
+          "title_italic": true,
+          "locus_template": "bekker",
+          "notes": "Anaxagoras A117."
+        },
+        "de plant.": {
+          "title": "De Plantis",
+          "title_italic": true,
+          "locus_template": "bekker",
+          "notes": "Empedocles A70."
+        },
+        "de spiritu": {
+          "title": "De Spiritu",
+          "title_italic": true,
+          "locus_template": "bekker",
+          "notes": "Empedocles A78."
+        },
+        "de Melisso Xenophane Gorgia": {
+          "title": "De Melisso Xenophane Gorgia",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Xenophanes A28, the title in full."
         }
       },
       "flags": [
@@ -4575,6 +5773,24 @@
           "title_italic": true,
           "locus_template": "opaque",
           "notes": "'Vit. X orat.' = Vitae Decem Oratorum."
+        },
+        "Cons. ad Apoll.": {
+          "title": "Consolatio ad Apollonium",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Protagoras B9 '[PLUT.] Cons. ad Apoll.'."
+        },
+        "Stromat.": {
+          "title": "Stromateis",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Empedocles A30 '[PLUT.] Stromat. ap. Eus. P. E. I 8, 10'."
+        },
+        "V. X orat.": {
+          "title": "Vitae Decem Oratorum",
+          "title_italic": true,
+          "locus_template": "moralia",
+          "notes": "Critias A16 '[Plut.] V. X orat. 1, 1 p. 832 DE'."
         }
       },
       "flags": [
@@ -4586,7 +5802,9 @@
       "canonical_author": "pseudo-Galen",
       "variants": [
         "[GALEN.]",
-        "[GALEN]"
+        "[GALEN]",
+        "GAL.",
+        "[GALEN]."
       ],
       "works": {
         "DEFAULT": {
@@ -4600,11 +5818,26 @@
           "title_italic": true,
           "locus_template": "opaque",
           "notes": "'[GALEN]. d. defin. med.' = pseudo-Galen, Definitiones Medicae (Kühn vol/page); distinct from the bare Historia Philosopha DEFAULT."
+        },
+        "Hist. philos.": {
+          "title": "Historia Philosopha",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Leucippus A5."
+        },
+        "Hist. phil.": {
+          "title": "Historia Philosopha",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Xenophanes A35."
         }
       },
       "flags": [
         "pseudo",
         "diels-doxographi"
+      ],
+      "variants_need_work": [
+        "GAL."
       ]
     },
     "PS_PLATO": {
@@ -4685,6 +5918,14 @@
           "title": "(spurious oration in the Demosthenic corpus)",
           "title_italic": false,
           "locus_template": "book-section"
+        },
+        "58,": {
+          "title": "In Theocrinem",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Critias A6 '[DEMOSTH.] 58, 67'.",
+          "locus_includes_work": true,
+          "numbered": true
         }
       },
       "flags": [
@@ -4714,10 +5955,11 @@
       ],
       "works": {
         "DEFAULT": {
-          "title": "Lexicon (Suda)",
+          "title": "",
           "title_italic": true,
           "locus_template": "opaque",
-          "notes": "Bracketed = editorial supplement."
+          "notes": "Bracketed = editorial supplement; same non-repeating title as SUID.",
+          "bare_title": "Lexicon"
         }
       },
       "flags": [
@@ -4783,10 +6025,10 @@
       ],
       "works": {
         "DEFAULT": {
-          "title": "(Isagoge in Aratum)",
-          "title_italic": false,
+          "title": "Prolegomena in Aratum",
+          "title_italic": true,
           "locus_template": "opaque",
-          "notes": "ed. Treu; astronomical."
+          "notes": "Parmenides A40; TLG 4161.006 (e cod. Paris. suppl. gr. 607A), section 14."
         }
       },
       "flags": [
@@ -4825,6 +6067,271 @@
       },
       "flags": [
         "scholia"
+      ]
+    },
+    "PAP_HERC": {
+      "canonical_author": null,
+      "variants": [
+        "PAP. HERC.",
+        "PAP. HERCUL.",
+        "VOLL. HERC."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Herculaneum Papyrus",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Pythagoras 13, Leucippus B1a (P. Herc. 1788); Empedocles B142 'VOLL. HERC. N. 1012' (Volumina Herculanensia)."
+        }
+      },
+      "flags": [
+        "edition-keyed"
+      ]
+    },
+    "PAP_OXY": {
+      "canonical_author": null,
+      "variants": [
+        "OXYRH.",
+        "OXYRH. PAP.",
+        "PAP. OXYRH."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Oxyrhynchus Papyrus",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Antiphon B44 'OXYRH. PAP. XI n. 1364', Empedocles B109a 'PAP. OXYRH. 1609 XIII 94', Xenophanes B21a 'OXYRH. 1087, 40'."
+        }
+      },
+      "flags": [
+        "edition-keyed"
+      ]
+    },
+    "PAP_HIBEH": {
+      "canonical_author": null,
+      "variants": [
+        "HIBEH PAPYR."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Hibeh Papyrus",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Democritus A99a."
+        }
+      },
+      "flags": [
+        "edition-keyed"
+      ]
+    },
+    "PAP_LOND": {
+      "canonical_author": null,
+      "variants": [
+        "PAPYR. LONDIN."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "London Papyrus",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Democritus B300 20: P. Lond. 121 (PGM VII)."
+        }
+      },
+      "flags": [
+        "edition-keyed"
+      ]
+    },
+    "PAP_LUGD": {
+      "canonical_author": null,
+      "variants": [
+        "PAPYR. MAGIC. LUGD."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Leiden Magical Papyrus",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Democritus B300 21: P. Lugd. Bat. J 384 (PGM XII)."
+        }
+      },
+      "flags": [
+        "edition-keyed"
+      ]
+    },
+    "PAP_PETROP": {
+      "canonical_author": null,
+      "variants": [
+        "PAPYR. PETROPOL."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "St Petersburg Papyrus",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Hippias B19 (Jernstedt)."
+        }
+      },
+      "flags": [
+        "edition-keyed"
+      ]
+    },
+    "LYSIAS": {
+      "canonical_author": "Lysias",
+      "variants": [
+        "LYS."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Orationes",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Critias A11 'LYS. 12, 43': speech + section."
+        }
+      },
+      "flags": []
+    },
+    "DIONYS_ALEX": {
+      "canonical_author": "Dionysius of Alexandria",
+      "variants": [
+        "DIONYSIOS,",
+        "DIONYS."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "De Natura",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus B118 'DIONYSIOS, bei Eus. P. E. XIV 27, 4', A43 'DIONYS. bei Eus. P. E. XIV 23, 2. 3': the bishop's De natura, which Eusebius quotes (P. E. XIV 23-27); the 'bei' note is apparatus, as Herodian's.",
+          "locus_as_printed": true
+        },
+        "bei Eus. P. E.": {
+          "title": "De Natura",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "locus_includes_work": true,
+          "locus_as_printed": true
+        }
+      },
+      "flags": [],
+      "variants_need_work": [
+        "DIONYS."
+      ]
+    },
+    "VIT_HOMERI": {
+      "canonical_author": null,
+      "variants": [
+        "VIT. HOMERI"
+      ],
+      "works": {
+        "Rom.": {
+          "title": "Vita Homeri Romana",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Hippias B18 'VIT. HOMERI Rom. p. 30, 27 Wil.'."
+        }
+      },
+      "flags": []
+    },
+    "CLAUD_MAM": {
+      "canonical_author": "Claudianus Mamertus",
+      "variants": [
+        "CLAUD. MAM."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "De Statu Animae",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Philolaus B22 'CLAUD. MAM. II 3 p. 105, 5 Engelbr.'."
+        }
+      },
+      "flags": []
+    },
+    "BOETH": {
+      "canonical_author": "Boethius",
+      "variants": [
+        "BOËTHIUS"
+      ],
+      "works": {
+        "Inst. mus.": {
+          "title": "De Institutione Musica",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Philolaus A26 'BOËTHIUS Inst. mus. III 5 p. 276, 15 Friedl.'."
+        }
+      },
+      "flags": []
+    },
+    "AEL_PROMOT": {
+      "canonical_author": "Aelius Promotus",
+      "variants": [
+        "AEL. PROMOT."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "(work of Aelius Promotus)",
+          "title_italic": false,
+          "locus_template": "opaque",
+          "notes": "Chapter after cod. Marc. 295; no title printed."
+        }
+      },
+      "flags": []
+    },
+    "PHILO_BYBL": {
+      "canonical_author": "Philo of Byblos",
+      "variants": [
+        "PHILO BYBL."
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Historia Phoenicia",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Democritus B300 16 'PHILO BYBL. b. Eus. P. E. I 10, 53': the Phoenician History, which Eusebius quotes (P. E. I 9-10); the locus is Eusebius', as printed.",
+          "locus_as_printed": true
+        }
+      },
+      "flags": []
+    },
+    "ORIBAS": {
+      "canonical_author": "Oribasius",
+      "variants": [
+        "ORIBASIUS"
+      ],
+      "works": {
+        "DEFAULT": {
+          "title": "Collectiones Medicae",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Empedocles A83."
+        },
+        "aus Athenaios": {
+          "title": "Collectiones Medicae",
+          "title_italic": true,
+          "locus_template": "opaque",
+          "notes": "Empedocles A83.",
+          "locus_includes_work": true,
+          "locus_as_printed": true
+        }
+      },
+      "flags": []
+    },
+    "APOLLON_PARADOX": {
+      "canonical_author": "Apollonius Paradoxographus",
+      "variants": [
+        "APOLLON."
+      ],
+      "works": {
+        "mir.": {
+          "title": "Historiae Mirabiles",
+          "title_italic": true,
+          "locus_template": "section",
+          "notes": "Pythagoras 7 'APOLLON. mir. 6'."
+        }
+      },
+      "flags": [],
+      "variants_need_work": [
+        "APOLLON."
       ]
     }
   }

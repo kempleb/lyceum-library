@@ -8,6 +8,8 @@ import {
   healGreekPrintHyphens,
   peelSourceHeadPrefix,
   buildProseFlow,
+  createMarkerSequenceAcceptor,
+  isMarkerPosition,
   scanSectionMarkers,
   singlePureContextRun,
 } from '../lib/prose-flow';
@@ -651,6 +653,17 @@ describe('buildProseFlow — marker-split gating (fix round finding 1) and empty
 // marker; (b) position — a marker must sit at a line start or after
 // sentence-final punctuation, not fused mid-sentence onto a word.
 describe('buildProseFlow — marker sequence + position validation (re-review finding 1)', () => {
+  it('accepts closing marks after punctuation and keeps a bare closing bracket boundary', () => {
+    for (const before of ['.) ', '.]” ', '.»\' ', '] ']) {
+      const text = `${before}(8) λόγος`;
+      expect(isMarkerPosition(text, text.indexOf('(8)'))).toBe(true);
+    }
+    for (const before of ['λόγος) ', 'λόγος']) {
+      const text = `${before}(8) λόγος`;
+      expect(isMarkerPosition(text, text.indexOf('(8)'))).toBe(false);
+    }
+  });
+
   it('a cross-reference "(23)" mid-sentence in section 22 does not split; the genuine "(23)" later (after sentence-final punctuation) does', () => {
     const lines = [
       line(1, 'context', '(22) Ἦν τοίνυν ὁ Θαλῆς, ὡς ἐν (23) ἄλλῳ τόπῳ λέγεται, σοφός.'),
@@ -672,30 +685,48 @@ describe('buildProseFlow — marker sequence + position validation (re-review fi
     expect(text23).not.toContain('(23)');
   });
 
-  it('an out-of-sequence "(30)" while 24 is still expected does not split; the same number later, in order, does', () => {
+  it('a stray "(15)" before the first declared marker stays literal; its later occurrence splits', () => {
+    const accepts = createMarkerSequenceAcceptor(new Set([12, 15]));
+    expect([accepts(15), accepts(12), accepts(15), accepts(12), accepts(15)]).toEqual([
+      false, true, true, false, false,
+    ]);
     const lines = [
       line(
         1,
         'context',
-        '(22) Ἦν τοίνυν. (23) μετὰ δὲ. (30) ἔπειτα δὲ πρῶτον. (24) εἶτα δὲ. (30) τέλος δὲ.',
+        '(15) πρότερον. (12) Ἦν τοίνυν. (15) τέλος δὲ.',
       ),
     ];
-    const items = buildProseFlow(lines, { sectionMarkerNumbers: new Set([22, 23, 24, 30]) });
+    const items = buildProseFlow(lines, { sectionMarkerNumbers: new Set([12, 15]) });
     const flows = items.filter((i) => i.kind === 'flow');
     expect(flows.map((f) => (f.kind === 'flow' ? f.sectionMarker : undefined))).toEqual([
-      '22', '23', '24', '30',
+      undefined, '12', '15',
     ]);
-    if (flows[1]!.kind !== 'flow' || flows[3]!.kind !== 'flow') throw new Error('unreachable');
-    const text23 = flows[1]!.runs.map((r) => r.line.text).join(' ');
-    // The out-of-sequence "(30)" (24 was still expected) stays literal
-    // inside section 23's paragraph rather than opening its own section.
-    expect(text23).toContain('(30)');
-    expect(text23).toContain('ἔπειτα δὲ πρῶτον.');
-    const text30 = flows[3]!.runs.map((r) => r.line.text).join(' ');
-    expect(text30).toContain('τέλος δὲ.');
-    // The genuine, in-sequence "(30)" is stripped to the marker, not left
-    // as literal text.
-    expect(text30).not.toContain('(30)');
+    if (flows[2]!.kind !== 'flow') throw new Error('unreachable');
+    expect(items.map((i) => i.kind === 'source-head' ? i.line.text : i.runs.map((r) => r.line.text).join(' ')).join(' ')).toContain('(15) πρότερον.');
+    expect(flows[2]!.runs.map((r) => r.line.text).join(' ')).toContain('τέλος δὲ.');
+  });
+
+  it('Heraclitus A1 shape: closing punctuation before (8), then missing (13) and (14)', () => {
+    const lines = [
+      line(1, 'context', '(7) λόγος ἀσύγκριτον.) (8) ἄλλος λόγος. (9) ἔπειτα.'),
+      line(2, 'context', '(12) πάλιν. '),
+      line(3, 'context', '(15) λοιπὸν. (16) καὶ τέλος. (17) τελευτᾷ.'),
+    ];
+    const items = buildProseFlow(lines, { sectionMarkerNumbers: new Set([7, 8, 9, 12, 13, 14, 15, 16, 17]) });
+    expect(items.filter((i) => i.kind === 'flow').map((i) => i.kind === 'flow' ? i.sectionMarker : undefined)).toEqual([
+      '7', '8', '9', '12', '15', '16', '17',
+    ]);
+  });
+
+  it('keeps a mid-sentence marker literal after an accepted marker', () => {
+    const items = buildProseFlow([
+      line(1, 'context', '(12) λόγος καὶ (15) μέσος. (15) τέλος.'),
+    ], { sectionMarkerNumbers: new Set([12, 13, 14, 15]) });
+    const flows = items.filter((i) => i.kind === 'flow');
+    expect(flows.map((i) => i.kind === 'flow' ? i.sectionMarker : undefined)).toEqual(['12', '15']);
+    if (flows[0]!.kind !== 'flow') throw new Error('unreachable');
+    expect(flows[0]!.runs.map((r) => r.line.text).join(' ')).toContain('(15) μέσος.');
   });
 });
 

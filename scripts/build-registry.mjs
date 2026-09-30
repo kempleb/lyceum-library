@@ -234,16 +234,22 @@ async function loadAuthorWorkGroups(yaml, aristotleWorkIds, platoWorkIds) {
 }
 
 async function loadFixtureSource(yaml) {
-  const workPath = join(FIXTURE_MANIFESTS, 'sample-work.yaml');
   const authorsPath = join(FIXTURE_MANIFESTS, 'authors.yaml');
-  const workDoc = yaml.load(readFileSync(workPath, 'utf8'));
-  if (!workDoc || !workDoc.registry) throw new Error(`build-registry: ${workPath} has no registry: block.`);
-  assertNoRoute(workDoc.registry, workPath);
   const authorsDoc = yaml.load(readFileSync(authorsPath, 'utf8'));
   if (!Array.isArray(authorsDoc?.authors) || authorsDoc.authors.length === 0) {
     throw new Error(`build-registry: ${authorsPath} has no authors[].`);
   }
-  return { work: workDoc.registry, author: authorsDoc.authors[0] };
+  if (!Array.isArray(authorsDoc.work_order) || authorsDoc.work_order.length === 0) {
+    throw new Error(`build-registry: ${authorsPath} has no work_order[].`);
+  }
+  const works = authorsDoc.work_order.map((id) => {
+    const workPath = join(FIXTURE_MANIFESTS, `${id}.yaml`);
+    const workDoc = yaml.load(readFileSync(workPath, 'utf8'));
+    if (!workDoc || !workDoc.registry) throw new Error(`build-registry: ${workPath} has no registry: block.`);
+    assertNoRoute(workDoc.registry, workPath);
+    return workDoc.registry;
+  });
+  return { works, authors: authorsDoc.authors };
 }
 
 function loadTaxonomy() {
@@ -295,7 +301,7 @@ async function main() {
   const workCorpus = Object.fromEntries(
     sources.flatMap((source) => source.works.map((work) => [work.id, source.corpusId])),
   );
-  const { work: fixtureWork, author: fixtureAuthor } = await loadFixtureSource(yaml);
+  const { works: fixtureWorks, authors: fixtureAuthors } = await loadFixtureSource(yaml);
   const { authorPeriodOrder, periodLabel, schoolLabel, startHere } = loadTaxonomy();
   const aristotleSource = sources.find((source) => source.corpusId === 'aristotle');
   const platoSource = sources.find((source) => source.corpusId === 'plato');
@@ -310,18 +316,18 @@ async function main() {
     '// Run `node scripts/build-registry.mjs` (Lyceum P2, docs/p2-plan.md §2) to\n' +
     '// regenerate, from: manifests/*.yaml, corpora/aristotle/{registry,authors,groups}.yaml,\n' +
     '// corpora/plato/{registry,authors,groups}.yaml,\n' +
-    '// fixtures/manifests/{sample-work,authors}.yaml, and fixtures/taxonomy.json\'s\n' +
+    '// fixtures/manifests/{<work_order ids>,authors}.yaml, and fixtures/taxonomy.json\'s\n' +
     '// `taxonomy`/`start_here`. Gitignored.\n\n';
 
   const out =
     banner +
     renderExport('CORPUS_WORKS', corpusWorks) +
     '\n' +
-    renderExport('FIXTURE_WORKS', [fixtureWork]) +
+    renderExport('FIXTURE_WORKS', fixtureWorks) +
     '\n' +
     renderExport('CORPUS_AUTHORS', corpusAuthors) +
     '\n' +
-    renderExport('FIXTURE_AUTHORS', [fixtureAuthor]) +
+    renderExport('FIXTURE_AUTHORS', fixtureAuthors) +
     '\n' +
     renderExport('AUTHOR_PERIOD_ORDER_DATA', authorPeriodOrder) +
     '\n' +
@@ -341,7 +347,7 @@ async function main() {
   writeFileSync(OUT_PATH, out);
   console.log(
     `Wrote ${OUT_PATH.replace(ROOT + '/', '')}: ${corpusWorks.length} corpus works, ` +
-      `${corpusAuthors.length} corpus authors, 1 fixture work, 1 fixture author, ` +
+      `${corpusAuthors.length} corpus authors, ${fixtureWorks.length} fixture works, ${fixtureAuthors.length} fixture authors, ` +
       `${(authorWorkGroups.aristotle ?? []).length} aristotle CATEGORIES groups, ` +
       `${(authorWorkGroups.plato ?? []).length} plato tetralogy groups.`,
   );

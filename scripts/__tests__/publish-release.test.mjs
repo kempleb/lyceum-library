@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { performance } from 'node:perf_hooks';
 
 import { SPAWN_OPTIONS, buildCheckCommand, buildCopyCommands, decide, isValidVersion, parseArgs, parseCombined } from '../publish-release.mjs';
+import { listHeldCorpora } from '../lib/held-works.mjs';
 
 test('uses a child-process buffer large enough for a full release check', () => {
   // A 2026-09-22 real release check failed with "spawnSync rclone ENOBUFS" at the 1 MiB default.
@@ -161,25 +162,31 @@ test('publishes safely with the local rclone backend', { skip: !rcloneAvailable 
 });
 
 // docs/todo/plato-mount.md, GPT-6 Sol code review item 1 (BLOCKER): a dist
-// carrying a held corpus's work (Plato is held via corpora/plato/mount.yaml
+// carrying a held corpus's work (a corpora/<name>/mount.yaml with
 // hold: true -- see scripts/lib/held-works.mjs) must never be published, not
 // even with READER_INCLUDE_HELD=1 (that override is for a local held-on test
 // BUILD only; publishing requires lifting the hold in mount.yaml itself).
 // This refusal fires before the rclone check runs, so it needs no rclone
-// binary and no bucket/config fixture.
-test('refuses to publish a dist that carries a held corpus\'s work, even with READER_INCLUDE_HELD=1', () => {
+// binary and no bucket/config fixture. It runs against this repo's real
+// corpora/, so it needs a corpus that is actually held: Plato was until
+// John lifted his hold (2026-09-30); with none held it is skipped, and
+// held-works.test.mjs still covers the check itself.
+const [heldCorpus] = await listHeldCorpora();
+test('refuses to publish a dist that carries a held corpus\'s work, even with READER_INCLUDE_HELD=1', {
+  skip: !heldCorpus && 'no corpus in corpora/ is held today',
+}, () => {
   const temp = mkdtempSync(join(tmpdir(), 'publish-release-held-'));
   try {
     const dist = join(temp, 'dist');
     mkdirSync(dist);
-    // 'Euthyphro' is a real corpora/plato/registry.yaml work id -- the same
-    // directory name mount-corpus.mjs would copy it under in build/dist.
-    writeFakeDist(dist, [['Euthyphro/manifest.json', '{}\n']]);
+    // A real work id of the held corpus -- the same directory name
+    // mount-corpus.mjs would copy it under in build/dist.
+    writeFakeDist(dist, [[`${heldCorpus.workIds[0]}/manifest.json`, '{}\n']]);
 
     const withoutOverride = runPublish({ dist, bucket: join(temp, 'bucket'), config: join(temp, 'rclone.conf') });
     assert.notEqual(withoutOverride.status, 0);
     assert.match(withoutOverride.stderr, /held/i);
-    assert.match(withoutOverride.stderr, /plato/);
+    assert.match(withoutOverride.stderr, new RegExp(heldCorpus.corpus));
 
     const withOverride = runPublish({
       dist,
@@ -189,7 +196,7 @@ test('refuses to publish a dist that carries a held corpus\'s work, even with RE
     });
     assert.notEqual(withOverride.status, 0, 'READER_INCLUDE_HELD=1 must not let publish-release.mjs bypass the hold');
     assert.match(withOverride.stderr, /held/i);
-    assert.match(withOverride.stderr, /plato/);
+    assert.match(withOverride.stderr, new RegExp(heldCorpus.corpus));
   } finally {
     rmSync(temp, { recursive: true, force: true });
   }

@@ -295,6 +295,23 @@ _LEGACY_C1_TRANSLATION = str.maketrans({
 _TEXT_BOUNDARY_TAGS = {"br", "div", "p", "table", "td", "th", "tr"}
 
 
+def _strip_continuation_notes(el) -> None:
+    """Remove sacred-texts' `<span class="contnote">[paragraph continues]
+    </span>` label in place, keeping its tail. The site prints it at the
+    head of a paragraph that a page break split mid-sentence; it is page
+    markup, not Freeman's words, and leaked into Empedocles B122,
+    Philolaus B13 and Democritus B266 before this strip existed."""
+    for span in el.xpath('.//span[@class="contnote"]'):
+        parent = span.getparent()
+        prev = span.getprevious()
+        if span.tail:
+            if prev is not None:
+                prev.tail = (prev.tail or "") + span.tail
+            else:
+                parent.text = (parent.text or "") + span.tail
+        parent.remove(span)
+
+
 def _strip_footnote_call_anchors(el) -> None:
     """Remove `<a href="#fn_N">...</a>` footnote-call markers (the
     superscript digit sacred-texts prints to point at its own endnotes) in
@@ -354,7 +371,9 @@ def _plain_text(el) -> str:
     """Flattened text content, collapsed whitespace, HTML entities already
     resolved by lxml. Footnote-call anchors are stripped first (see
     `_strip_footnote_call_anchors`) so their superscript digit never
-    reaches the stored prose."""
+    reaches the stored prose. Continuation labels go the same way (see
+    `_strip_continuation_notes`)."""
+    _strip_continuation_notes(el)
     _strip_footnote_call_anchors(el)
     pieces: list[str] = []
 

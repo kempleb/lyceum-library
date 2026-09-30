@@ -13,7 +13,7 @@ import Breadcrumb from './Breadcrumb.svelte';
 import CommandPalette from '@shared/components/CommandPalette.svelte';
 import {
   AUTHENTICITY_LABEL, getWork, bookLabel, isBookless, workPath, visibleTranslations,
-  furtherReading, inPrintHref, workLanding, resourcesFor, freemanApparatusCredit,
+  furtherReading, inPrintHref, workLanding, resourcesFor, freemanApparatusCredit, LANGUAGE_LABEL,
 } from '@shared/lib/works';
 import { getAuthor } from '@shared/lib/authors';
 import { schemeFor, unitNounFor, pageEntriesFor } from '@shared/lib/citation';
@@ -235,12 +235,18 @@ const readHref = (q = '') => `${base}${workPath(workId, 1)}${q}`;
 // ── SEO ─────────────────────────────────────────────────────────────────────
 // Language wording + BCP-47 tag for the page metadata, keyed off work.language
 // rather than hardcoded to Greek — this work may be a Latin (PHI) text.
-const sourceLangWord = work.language === 'lat' ? 'Latin' : 'Greek';
-const sourceLangTag = work.language === 'lat' ? 'la' : 'grc';
-const pageTitle = `${work.title} — ${authorName}, in ${sourceLangWord} & English`
+// A work whose only language is English has no parallel text, translator
+// or dictionary to describe.
+const englishOnly = work.language === 'en';
+const sourceLangWord = LANGUAGE_LABEL[work.language];
+const sourceLangTag = work.language === 'lat' ? 'la' : work.language === 'en' ? 'en' : 'grc';
+const pageTitle = (englishOnly
+  ? `${work.title} — ${authorName}`
+  : `${work.title} — ${authorName}, in ${sourceLangWord} & English`)
   + (lyceumChrome ? ` — ${siteName}` : '');
-const metaDescription =
-  `${work.title} by ${authorName}: the original ${sourceLangWord} (${work.greekSource.short})` +
+const metaDescription = englishOnly
+  ? `${work.title} by ${authorName}. ${work.blurb}`
+  : `${work.title} by ${authorName}: the original ${sourceLangWord} (${work.greekSource.short})` +
   ` with English translation` +
   (metaTranslatorNames.length ? ` (${metaTranslatorNames.join(', ')})` : '') +
   `, table of contents, morphology, and ${citeWord} citation. ${work.blurb}`;
@@ -258,7 +264,7 @@ const jsonLd = {
   ...(metaTranslatorNames.length
     ? { translator: metaTranslatorNames.map((name) => ({ '@type': 'Person', name })) }
     : {}),
-  inLanguage: [sourceLangTag, 'en'],
+  inLanguage: englishOnly ? ['en'] : [sourceLangTag, 'en'],
   ...(canonical ? { url: canonical } : {}),
   numberOfPages: totalChapters,
   isPartOf: { '@type': 'CreativeWorkSeries', name: `The Works of ${authorName}` },
@@ -371,7 +377,7 @@ const breadcrumbLd = Astro.site
     <div class="lyc-chrome">
       <LyceumBand siteName={siteName} searchHref={`${base}/search`}>
         <a class="tool" href={`${base}/catalog/`}>Catalog</a>
-        <a class="tool" href={`${base}/lemma/${work.language}/`}>Lexica</a>
+        {!englishOnly && <a class="tool" href={`${base}/lemma/${work.language}/`}>Lexica</a>}
         <ThemeToggle />
         <a class="tool tool-signin" href="https://lyceum.institute">Sign in</a>
       </LyceumBand>
@@ -381,7 +387,7 @@ const breadcrumbLd = Astro.site
     <Breadcrumb authorId={work.author} authors={authorOptions} workId={workId} works={workOptions} client:load />
     <nav class="header-actions" aria-label="Navigation">
       <a href={`${base}/`} class="search-link">All works</a>
-      <a href={`${base}/lemma/${work.language}/`} class="search-link">Lexicon</a>
+      {!englishOnly && <a href={`${base}/lemma/${work.language}/`} class="search-link">Lexicon</a>}
       <a href={`${base}/search`} class="search-link">Search</a>
       <ThemeToggle />
     </nav>
@@ -413,13 +419,9 @@ const breadcrumbLd = Astro.site
       </p>
     )}
     <p class="lp-desc">
-      This edition presents the original {sourceLangWord} ({work.greekSource.short}) side by
-      side with {translatorNames.length > 1 ? 'English translations' : 'an English translation'}
-      {translatorNames.length
+      {!englishOnly && `This edition presents the original ${sourceLangWord} (${work.greekSource.short}) side by side with ${translatorNames.length > 1 ? 'English translations' : 'an English translation'}${translatorNames.length
         ? ` (${translatorNames.join(', ')}${work.alsoCredits ? `; ${work.alsoCredits}` : ''})`
-        : ''} —
-      with click-to-parse morphology, dictionary entries, and exact
-      {' ' + citeWord} citation.
+        : ''} — with click-to-parse morphology, dictionary entries, and exact ${citeWord} citation.`}
       {(() => {
         // verse-line (Lucretius): drop the count entirely rather than show
         // "0 lines" when the manifest doesn't have it yet (see
@@ -452,7 +454,7 @@ const breadcrumbLd = Astro.site
       )}
       <a class="lp-btn resume-btn" id="lp-resume" href="#" hidden
          data-work={workId} data-books={work.books}>Resume</a>
-      <a class="lp-btn" href={readHref('?view=greek')}>{sourceLangWord} only</a>
+      {!englishOnly && <a class="lp-btn" href={readHref('?view=greek')}>{sourceLangWord} only</a>}
       {editions.length > 1 && <a class="lp-btn" href={readHref('?trans=compare')}>Compare translations</a>}
     </div>
 
@@ -530,11 +532,13 @@ const breadcrumbLd = Astro.site
       </>
     )}
 
-    <h2 class="lp-h">{sourceLangWord} text &amp; translations</h2>
+    <h2 class="lp-h">{englishOnly ? 'English text' : <>{sourceLangWord} text &amp; translations</>}</h2>
     <p class="credits">
       <strong>{sourceLangWord}:</strong> {work.greekSource.full}<br />
+      {!englishOnly && <>
       <strong>{translatorNames.length > 1 ? 'Translations' : 'Translation'}:</strong>
       {' '}{editions.map((t) => t.name).join('; ')}.<br />
+      </>}
       Full source and licence details are on the
       <a href={`${base}/attribution`}>Texts &amp; Licences</a> page.
     </p>

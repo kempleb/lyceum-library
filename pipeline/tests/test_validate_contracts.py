@@ -18,6 +18,7 @@ from reader_pipeline.validate_contracts import (
 ROOT = Path(__file__).resolve().parents[2]
 SCHEMAS = load_schemas(ROOT / "schemas")
 SAMPLE_MANIFEST = ROOT / "fixtures" / "data" / "sample-work" / "manifest.json"
+ENGLISH_MANIFEST = ROOT / "fixtures" / "data" / "sample-english-work" / "manifest.json"
 SNAPSHOT = ROOT / "fixtures" / "taxonomy.json"
 
 
@@ -31,6 +32,20 @@ def test_valid_manifest_fixture_passes_and_unverified_is_only_a_warning():
     assert unverified_license_warnings(manifest) == [
         "/editions/0/license/status"
     ]
+
+
+def test_english_manifest_fixture_passes_without_an_edition_source():
+    manifest = _json(ENGLISH_MANIFEST)
+    assert manifest["language"] == "en"
+    assert "source" not in manifest["editions"][0]
+    assert validation_errors(manifest, SCHEMAS["manifest"]) == []
+
+
+def test_greek_edition_without_source_still_fails():
+    manifest = copy.deepcopy(_json(SAMPLE_MANIFEST))
+    del manifest["editions"][0]["source"]
+    errors = validation_errors(manifest, SCHEMAS["manifest"])
+    assert any("'source' is a required property" in message for _, message in errors)
 
 
 @pytest.mark.parametrize(

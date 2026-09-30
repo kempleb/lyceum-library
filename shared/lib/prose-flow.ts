@@ -303,7 +303,7 @@ function sliceLineFrom(line: GreekLine, text: string, fromOffset: number): Greek
 }
 
 /** Slice a line's text/tokens to the char range [start, end) — both ends bounded. */
-function sliceLineRange(line: GreekLine, start: number, end: number): GreekLine {
+export function sliceLineRange(line: GreekLine, start: number, end: number): GreekLine {
   const text = line.text.slice(start, end);
   const tokens: Token[] = (line.tokens ?? [])
     .filter((t) => t.o >= start && t.o < end)
@@ -344,11 +344,10 @@ function sliceLineRange(line: GreekLine, start: number, end: number): GreekLine 
  * positived on an ordinary cross-reference sharing a declared section
  * number (e.g. "(23)" cited in passing while section 22 is the running
  * paragraph). Two further gates, both required:
- *  (a) Sequence — accepted markers must consume the declared numbers in
+ *  (a) Sequence — accepted markers must consume declared numbers in
  *      ascending order. The first accepted marker must equal the smallest
- *      number in the set; each subsequent one must equal the smallest
- *      remaining number greater than the last accepted marker. A set
- *      member seen out of that order is left as literal text.
+ *      number in the set; later markers may skip missing numbers, but may
+ *      never repeat or move backwards.
  *  (b) Position — a marker must sit at the start of its line/run, or be
  *      immediately preceded (skipping intervening whitespace) by
  *      sentence-final punctuation, matching DK's own print convention
@@ -358,12 +357,16 @@ function sliceLineRange(line: GreekLine, start: number, end: number): GreekLine 
 const SECTION_MARKER_RE = /\((\d+)\)/g;
 
 /** DK sentence-final punctuation that may precede a genuine "(NN)" marker. */
-const MARKER_BOUNDARY_PUNCT = new Set(['.', '·', '·', ';', ']']);
+const MARKER_BOUNDARY_PUNCT = new Set(['.', '·', '·', ';', ';', ']']);
+const MARKER_CLOSING_PUNCT = new Set([')', ']', '’', '”', '»', "'", '"']);
 
 /** True when `matchStart` sits at the line's start, or after sentence-final punctuation. */
 export function isMarkerPosition(text: string, matchStart: number): boolean {
   let i = matchStart;
   while (i > 0 && /\s/.test(text[i - 1]!)) i--;
+  // A bare closing square bracket has always counted as a boundary.
+  if (i > 0 && text[i - 1] === ']') return true;
+  while (i > 0 && MARKER_CLOSING_PUNCT.has(text[i - 1]!)) i--;
   if (i === 0) return true;
   return MARKER_BOUNDARY_PUNCT.has(text[i - 1]!);
 }
@@ -374,24 +377,25 @@ export function isMarkerPosition(text: string, matchStart: number): boolean {
  * used to split on EVERY "(N)" in its text, with none of the Greek side's
  * validation — a stray mid-text citation like "(12)" split a paragraph the
  * Greek never did. This is the sequence half of that validation (set
- * membership + ascending-by-1 consumption, exactly `splitContextMarkerGroups`'
+ * membership + ascending consumption, exactly `splitContextMarkerGroups`'
  * rule above), factored out so both the Greek context-scan and the English
- * scan (Reader.svelte's `splitSegment`) accept the same marker under the
- * same rule rather than reimplementing it. Returns a stateful acceptor: call
+ * scan (Reader.svelte's `splitSegment`) originally shared the same rule.
+ * `scanSectionMarkers` now keeps its own complete-chain selection, while
+ * this acceptor lets the Greek skip declared numbers absent from its text.
+ * Returns a stateful acceptor: call
  * it once per candidate match, in document order, only for matches that
  * already passed `isMarkerPosition` (the position half, checked by the
  * caller since it needs the caller's own text/matchStart).
  */
 export function createMarkerSequenceAcceptor(
   markerNumbers: ReadonlySet<number>,
+  allowLeadingGap = false,
 ): (value: number) => boolean {
   const sortedMarkers = Array.from(markerNumbers).sort((a, b) => a - b);
   let lastAccepted: number | undefined;
   return (value: number): boolean => {
     if (!markerNumbers.has(value)) return false;
-    const expected =
-      lastAccepted === undefined ? sortedMarkers[0] : sortedMarkers.find((n) => n > lastAccepted!);
-    if (expected === undefined || value !== expected) return false;
+    if (lastAccepted === undefined ? (!allowLeadingGap && value !== sortedMarkers[0]) : value <= lastAccepted) return false;
     lastAccepted = value;
     return true;
   };
@@ -400,9 +404,10 @@ export function createMarkerSequenceAcceptor(
 /**
  * Scan `text` for "(N)" markers validated by membership + ascending-run
  * discipline — the English-side counterpart to `splitContextMarkerGroups`'s
- * Greek scan, sharing its sequence rule via `createMarkerSequenceAcceptor`
- * rather than duplicating it. Returns accepted matches in document order; a
- * stray out-of-sequence "(NN)" (a footnote or cross-reference sharing no
+ * Greek scan. This scan still looks for each declared number in turn; the
+ * Greek acceptor can skip numbers absent from the Greek text. Returns
+ * accepted matches in document order; a stray out-of-sequence "(NN)"
+ * (a footnote or cross-reference sharing no
  * relation to the declared run) is simply absent from the result, left for
  * the caller to render as plain text.
  *
@@ -488,6 +493,7 @@ function splitContextMarkerGroups(
   lines: readonly GreekLine[],
   markerNumbers: ReadonlySet<number> | undefined,
   scanTextLines = false,
+  allowLeadingGap = false,
 ): { lines: GreekLine[]; marker?: string }[] {
   const groups: { lines: GreekLine[]; marker?: string }[] = [{ lines: [] }];
   if (!markerNumbers || markerNumbers.size === 0) {
@@ -498,8 +504,22 @@ function splitContextMarkerGroups(
   }
   // Persists across every context line in this body: markers are consumed
   // in one ascending sequence over the whole run, not per-line.
-  const acceptMarker = createMarkerSequenceAcceptor(markerNumbers);
+  const acceptMarker = createMarkerSequenceAcceptor(markerNumbers, allowLeadingGap);
+  // The located layout also covers source catalogues whose section labels
+  // interrupt lists, not sentences (Democritus A33). Prefer sentence
+  // boundaries using the same complete-chain selector as English, but keep
+  // a declared label when the print only supplies a non-boundary occurrence.
+  // Missing printed labels remain missing for C4 to report.
+  const scanText = lines.map(l => l.role === 'context' || (scanTextLines && l.role === 'text')
+    ? l.text : ' '.repeat(l.text.length)).join('\n');
+  const present = new Set([...scanText.matchAll(/\((\d+)\)/g)]
+    .map(m => Number(m[1])).filter(n => markerNumbers.has(n)));
+  const selected = allowLeadingGap
+    ? new Set(scanSectionMarkers(scanText, present).map(m => m.index)) : undefined;
+  let lineOffset = 0;
   for (const line of lines) {
+    const base = lineOffset;
+    lineOffset += line.text.length + 1;
     // Ordinarily only a role='context' (quoting frame) line is scanned for
     // "(NN)" markers — a citable role='text' line is the quotation itself
     // and (for every pre-existing caller) never carries the convention.
@@ -528,9 +548,9 @@ function splitContextMarkerGroups(
       // Not at a valid boundary (line start / sentence-final punctuation) —
       // an ordinary cross-reference, not a genuine DK marker; leave as
       // literal text so a later, properly-positioned occurrence can match.
-      if (!isMarkerPosition(text, matchStart)) continue;
+      if (selected ? !selected.has(base + matchStart) : !isMarkerPosition(text, matchStart)) continue;
       // Not one of the declared section numbers, or out of the ascending
-      // sequence (not the next expected number) — a stray set-member
+      // sequence (not greater than the last accepted number) — a stray set-member
       // integer that is not this convention's marker; leave as literal text;
       // cursor stays put so it's swept up by the next real split's `pre`
       // slice (or the final untouched push if none follows).
@@ -652,6 +672,8 @@ export type ProseFlowItem =
 
 export type BuildProseFlowOpts = {
   incipit?: boolean;
+  /** Pipeline locations supplied: body text must never be peeled again. */
+  sourceHeadsProvided?: boolean;
   /**
    * When true, a sole pure-Latin context run peels as source-head (verse-frame
    * streaks above lineated quote lines — those lines carry the column anchors).
@@ -708,7 +730,7 @@ export function buildProseFlow(
   // numeral folded into the head. Only the group PRECEDING the first marker
   // (or the whole run, when there are no markers at all) can ever carry a
   // real source-citation head — every later group opens with body text.
-  const rawGroups = splitContextMarkerGroups(lines, opts.sectionMarkerNumbers, opts.markerScanIncludesText);
+  const rawGroups = splitContextMarkerGroups(lines, opts.sectionMarkerNumbers, opts.markerScanIncludesText, opts.sourceHeadsProvided);
   const items: ProseFlowItem[] = [];
 
   let start = 0;
@@ -726,7 +748,7 @@ export function buildProseFlow(
   // this one.
   const hasBodyElsewhere = rawGroups.length > 1;
   const first = firstGroupLines[0];
-  if (first && first.role === 'context') {
+  if (!opts.sourceHeadsProvided && first && first.role === 'context') {
     if (isSourceHeadOnlyText(first.text)) {
       if (firstGroupLines.length > 1 || hasBodyElsewhere || peelSole) {
         items.push({ kind: 'source-head', line: first });

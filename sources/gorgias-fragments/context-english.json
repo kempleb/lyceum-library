@@ -12,8 +12,54 @@
      "to recollect and tell me what account Gorgias gives of virtue!",
      "Then would you like me to answer you in the manner of Gorgias, which you would find easiest to follow? Men. I should like that, of course. Soc. Do not both of you say there are certain effluences of existent things, as Empedocles held? Men. Certainly. Soc. And passages into which and through which the effluences pass? Men. To be sure. Soc. And some of the effluences fit into various passages,",
      "while some are too small or too large? Men. That is so. Soc. And further, there is what you call sight? Men. Yes. Soc. So now conceive my meaning, as Pindar says: color is an effluence of figures, commensurate with sight and sensible. Men. Your answer, Socrates, seems to me excellently put. Soc. Yes, for I expect you find its terms familiar; and at the same time I fancy you observe that it enables you to tell what sound and smell are, and numerous other",
-     "things of the kind. Men. Certainly. Soc. It is an answer in the high poetic style, Meno, and so more agreeable to you than that about figure."
-    ]
+     "things of the kind. Men. Certainly. Soc. It is an answer in the high poetic style, Meno"
+    ],
+    "trim": {
+     "start": "Men. And what do you say of color, Socrates?",
+     "end": "It is an answer in the high poetic style, Meno",
+     "omit": [
+      [
+       "Men. When you have answered my question",
+       "You must certainly indulge me. Soc."
+      ]
+     ]
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "And now, Socrates, what is colour?",
+      "end": "The answer, Meno, was in the orthodox solemn vein",
+      "omit": [
+       [
+        "When you have told me what I ask",
+        "Please do."
+       ]
+      ]
+     }
+    }
+   }
+  ]
+ },
+ "1:B14": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Phaedrus",
+    "locus": "261b-261c",
+    "status": "translated",
+    "translation_credit": "Fowler, 1914",
+    "emphasis": [
+     "but the art of speaking and writing is exercised chiefly in lawsuits, and that of speaking also in public assemblies; and I never heard of any further uses. Socrates. Then you have heard only of the treatises on rhetoric by Nestor and Odysseus, which they wrote when they had nothing to do at Troy, and you have not heard of that by Palamedes? Phaedrus. Nor of Nestor’s either, unless you are disguising Gorgias under the name of Nestor and Thrasymachus or Theodorus under that of Odysseus."
+    ],
+    "trim": {
+     "start": "but the art of speaking and writing is exercised chiefly",
+     "end": "Theodorus under that of Odysseus."
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "I should say rather that I have heard the art confined",
+      "end": "and Thrasymachus or Theodorus your Odysseus."
+     }
+    }
    }
   ]
  },
@@ -28,7 +74,106 @@
     "emphasis": [
      "First of all, if you take the virtue of a man, it is easily stated that a man’s virtue is this—that he be competent to manage the affairs of his city, and to manage them so as to benefit his friends and harm his enemies, and to take care to avoid suffering harm himself. Or take a woman’s virtue: there is no difficulty in describing it as the duty of ordering the house well, looking after the property indoors, and obeying her husband. And the child has another virtue—one for the female, and one for the male; and there is another for elderly men—one, if you like, for freemen,",
      "and yet another for slaves. Men. And there are very many other virtues besides, so that one cannot be at a loss to explain what virtue is; for it is according to each activity and age that every one of us, in whatever we do, has his virtue; and the same, I take it, Socrates, will hold also of vice."
-    ]
+    ],
+    "trim": {
+     "start": "First of all, if you take the virtue of a man",
+     "end": "will hold also of vice."
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "Let us take first the virtue of a man",
+      "end": "the same may be said of vice, Socrates (Compare Arist. Pol.)."
+     }
+    }
+   }
+  ]
+ },
+ "1:B8a": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Coniugalia Praecepta",
+    "locus": "144b-144c",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1928",
+    "trim": {
+     "start": "When the orator Gorgias read",
+     "end": "jealousy on the wife’s part towards the girl."
+    }
+   }
+  ]
+ },
+ "1:B20": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Cimon",
+    "locus": "10",
+    "status": "translated",
+    "translation_credit": "Perrin, 1914",
+    "emphasis": [
+     "that Cimon made money that he might spend it, and spent it that he might be honoured for it"
+    ],
+    "trim": {
+     "start": "Gorgias the Leontine says",
+     "end": "honoured for it."
+    }
+   }
+  ]
+ },
+ "1:B21": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Adulatore et Amico",
+    "locus": "64c",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1927",
+    "emphasis": [
+     "expect his friend to support him in honest projects, and yet himself serve the other in many also that are dishonest"
+    ],
+    "trim": {
+     "start": "For a friend will not, as Gorgias",
+     "end": "in many also that are dishonest,"
+    }
+   }
+  ]
+ },
+ "1:B23": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Gloria Atheniensium",
+    "locus": "348c",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1936",
+    "emphasis": [
+     "tragedy",
+     "deception",
+     "he who deceives is more honest than he who does not deceive, and he who is deceived is wiser than he who is not deceived"
+    ],
+    "trim": {
+     "start": "But tragedy blossomed forth",
+     "end": "the delights of language."
+    }
+   }
+  ]
+ },
+ "1:B24": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Convivales",
+    "locus": "715e",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "full of Mars"
+    ],
+    "trim": {
+     "start": "though Gorgias thought",
+     "end": "was full of Mars"
+    }
    }
   ]
  }

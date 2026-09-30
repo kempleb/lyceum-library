@@ -9,7 +9,17 @@
     "translation_credit": "Lamb, 1925",
     "emphasis": [
      "if Gorgias chanced to be skilled in the same art as his brother Herodicus, what should we be justified in calling him?"
-    ]
+    ],
+    "trim": {
+     "start": "if Gorgias chanced",
+     "end": "what should we be justified in calling him?"
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "If Gorgias had the skill",
+      "end": "If Gorgias had the skill of his brother Herodicus, what ought we to call him?"
+     }
+    }
    }
   ]
  },
@@ -24,7 +34,17 @@
     "emphasis": [
      "he was also a physician and an excellent orator: at all events Gorgias of Leontini, a man pre-eminent in oratory and the author of a treatise on the art, had been his pupil.",
      "Satyrus quotes this same Gorgias as saying that he himself was present when Empedocles performed magical feats."
-    ]
+    ],
+    "trim": {
+     "start": "he was also a physician",
+     "end": "when Empedocles performed magical feats.",
+     "omit": [
+      [
+       "Of Gorgias Apollodorus says in his Chronology",
+       "that he lived to be one hundred and nine."
+      ]
+     ]
+    }
    }
   ]
  },
@@ -38,7 +58,11 @@
     "translation_credit": "Fowler, 1914",
     "emphasis": [
      "Although this also seems to me to be a fine thing, if one might be able to teach people, as Gorgias of Leontini and Prodicus of Ceos and Hippias of Elis are."
-    ]
+    ],
+    "trim": {
+     "start": "Although this also seems to me to be a fine thing",
+     "end": "Prodicus of Ceos and Hippias of Elis are."
+    }
    }
   ]
  },
@@ -54,6 +78,26 @@
      "Meno, of old the Thessalians were famous and admired among the Greeks for their riding and",
      "their riches; but now they have a name, I believe, for wisdom also, especially your friend Aristippus’s people, the Larisaeans. For this you have to thank Gorgias: for when he came to that city he made the leading men of the Aleuadae—among them your lover Aristippus—and the Thessalians generally enamored of wisdom. Nay more, he has given you the regular habit of answering any chance question in a fearless, magnificent manner, as befits those who know:",
      "for he sets the example of offering himself to be questioned by any Greek who chooses, and on any point one likes, and he has an answer for everybody."
+    ],
+    "trim": {
+     "start": "Meno, of old the Thessalians were famous",
+     "end": "and he has an answer for everybody."
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "O Meno, there was a time",
+      "end": "any Hellene who likes may ask him anything."
+     }
+    }
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "Politics",
+    "locus": "1275b26-1275b30",
+    "status": "translated",
+    "translation_credit": "Jowett, 1885",
+    "emphasis": [
+     "Gorgias of Leontini, partly because he was in a difficulty, partly in irony, said- 'Mortars are what is made by the mortar-makers, and the citizens of Larissa are those who are made by the magistrates; for it is their trade to make Larissaeans.'"
     ]
    }
   ]
@@ -68,7 +112,20 @@
     "translation_credit": "Lamb, 1925",
     "emphasis": [
      "For I want to find out from the man what is the function of his art, and what it is that he professes and teaches. As for the rest of his performance, he must give it us, as you suggest, on another occasion. Call. The best way is to ask our friend himself, Socrates: for indeed that was one of the features of his performance. Why, only this moment he was pressing for whatever questions anyone in the house might like to ask, and saying he would answer them all."
-    ]
+    ],
+    "trim": {
+     "start": "For I want to find out from the man",
+     "end": "saying he would answer them all."
+    },
+    "alt_loci": {
+     "jowett": "447b-447c"
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "for I want to hear from him what is the nature of his art",
+      "end": "that he would answer."
+     }
+    }
    },
    {
     "source_author": "Plato",
@@ -78,7 +135,20 @@
     "translation_credit": "Lamb, 1925",
     "emphasis": [
      "for indeed it is one of my claims that no one could express the same thing in briefer terms than myself. Soc. That is just what I want, Gorgias: give me a display of this very skill—in brevity of speech; your lengthy style will do another time."
-    ]
+    ],
+    "trim": {
+     "start": "for indeed it is one of my claims",
+     "end": "your lengthy style will do another time."
+    },
+    "alt_loci": {
+     "jowett": "449b-449c"
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "for a part of my profession is that I can be as short as any one.",
+      "end": "and the longer one at some other time."
+     }
+    }
    }
   ]
  },
@@ -92,7 +162,16 @@
     "translation_credit": "Lamb, 1924",
     "emphasis": [
      "That is a point, Socrates, for which I admire Gorgias: you will never hear him promising this, and he ridicules the others when he hears them promise it. Skill in speaking is what he takes it to be their business to produce."
-    ]
+    ],
+    "trim": {
+     "start": "That is a point, Socrates, for which I admire Gorgias",
+     "end": "their business to produce."
+    },
+    "alt_trims": {
+     "jowett": {
+      "end": "men should be taught to speak."
+     }
+    }
    }
   ]
  },
@@ -106,7 +185,46 @@
     "translation_credit": "Lamb, 1925",
     "emphasis": [
      "many and many a time have I gone with my brother or other doctors to visit one of their patients, and found him unwilling either to take medicine or submit to the surgeon’s knife or cautery; and when the doctor failed to persuade him I succeeded, by no other art than that of rhetoric."
+    ],
+    "trim": {
+     "start": "many and many a time",
+     "end": "by no other art than that of rhetoric."
+    }
+   }
+  ]
+ },
+ "1:A23": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Rhetoric",
+    "locus": "1406b15-1406b19",
+    "status": "translated",
+    "translation_credit": "Freese, 1926",
+    "emphasis": [
+     "As for what Gorgias said to the swallow which, flying over his head, let fall her droppings upon him, it was in the best tragic style. He exclaimed, Fie, for shame, Philomela!; for there would have been nothing in this act disgraceful for a bird, whereas it would have been for a young lady. The reproach therefore was appropriate, addressing her as she was, not as she is."
     ]
+   }
+  ]
+ },
+ "1:A25": {
+  "context_spans": [
+   {
+    "source_author": "Plato",
+    "source_work": "Phaedrus",
+    "locus": "267a-267b",
+    "status": "translated",
+    "translation_credit": "Fowler, 1914",
+    "trim": {
+     "start": "And shall we leave Gorgias and Tisias undisturbed",
+     "end": "measureless length on all subjects?"
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "But shall I 'to dumb forgetfulness consign' Tisias and Gorgias",
+      "end": "either short or going on to infinity."
+     }
+    }
    }
   ]
  },
@@ -120,8 +238,28 @@
     "translation_credit": "Fowler, 1925",
     "emphasis": [
      "I have often heard Gorgias constantly maintain that the art of persuasion surpasses all others for this, he said, makes all things subject to itself,",
-     "not by force, but by their free will,"
-    ]
+     "not by force, but by their free will"
+    ],
+    "trim": {
+     "start": "I have often heard Gorgias constantly maintain",
+     "end": "not by force, but by their free will"
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "I have often heard Gorgias maintain",
+      "end": "but of their own free will.",
+      "omit": [
+       [
+        "Socrates,",
+        "Socrates,"
+       ],
+       [
+        "is by far the best of them all,",
+        "is by far the best of them all,"
+       ]
+      ]
+     }
+    }
    }
   ]
  },
@@ -136,7 +274,17 @@
     "emphasis": [
      "the skill in those other arts is almost wholly concerned with manual work and similar activities, whereas in rhetoric there is no such manual working, but its whole activity",
      "and efficacy is by means of speech. For this reason I claim for the rhetorical art that it is concerned with speech, and it is a correct description, I maintain."
-    ]
+    ],
+    "trim": {
+     "start": "Because, Socrates, the skill in those other arts",
+     "end": "and it is a correct description, I maintain."
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "Because, Socrates, the knowledge of the other arts",
+      "end": "rhetoric treats of discourse."
+     }
+    }
    }
   ]
  },
@@ -150,7 +298,20 @@
     "translation_credit": "Lamb, 1925",
     "emphasis": [
      "and if I at all take your meaning, you say that rhetoric is a producer of persuasion, and has therein its whole business and main consummation."
-    ]
+    ],
+    "trim": {
+     "start": "and if I at all take your meaning",
+     "end": "has therein its whole business and main consummation."
+    },
+    "alt_loci": {
+     "jowett": "452e"
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "and you mean to say, if I am not mistaken",
+      "end": "and that this is her crown and end."
+     }
+    }
    },
    {
     "source_author": "Plato",
@@ -160,7 +321,62 @@
     "translation_credit": "Lamb, 1925",
     "emphasis": [
      "Thus rhetoric, it seems, is a producer of persuasion for belief, not for instruction in the matter of right and wrong."
+    ],
+    "trim": {
+     "end": "not for instruction in the matter of right and wrong."
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "Then rhetoric, as would appear"
+     }
+    },
+    "alt_loci": {
+     "jowett": "454e"
+    }
+   }
+  ]
+ },
+ "1:A29": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Rhetoric",
+    "locus": "1404a24-1404a28",
+    "status": "translated",
+    "translation_credit": "Freese, 1926",
+    "emphasis": [
+     "And as the poets, although their utterances were devoid of sense, appeared to have gained their reputation through their style, it was a poetical style that first came into being, as that of Gorgias. Even now the majority of the uneducated think that such persons express themselves most beautifully"
     ]
+   }
+  ]
+ },
+ "1:A6": {
+  "context_spans": [
+   {
+    "source_author": "pseudo-Plutarch",
+    "source_work": "Vitae Decem Oratorum",
+    "locus": "832f",
+    "status": "translated",
+    "translation_credit": "Fowler, 1936",
+    "trim": {
+     "start": "He was born at the time of the Persian wars",
+     "end": "who was somewhat older than he;"
+    }
+   }
+  ]
+ },
+ "1:A17": {
+  "context_spans": [
+   {
+    "source_author": "pseudo-Plutarch",
+    "source_work": "Vitae Decem Oratorum",
+    "locus": "838d",
+    "status": "translated",
+    "translation_credit": "Fowler, 1936",
+    "trim": {
+     "start": "There was also a tablet near by",
+     "end": "Isocrates standing beside him."
+    }
    }
   ]
  }

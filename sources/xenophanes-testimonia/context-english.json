@@ -6,7 +6,10 @@
     "source_work": "Lives of Eminent Philosophers",
     "locus": "9.18-20",
     "status": "translated",
-    "translation_credit": "Hicks, 1925"
+    "translation_credit": "Hicks, 1925",
+    "trim": {
+     "end": "There was also another Xenophanes, of Lesbos, an iambic poet."
+    }
    }
   ]
  },
@@ -20,7 +23,10 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "Parmenides, a native of Elea, son of Pyres, was a pupil of Xenophanes (Theophrastus in his Epitome makes him a pupil of Anaximander)."
-    ]
+    ],
+    "trim": {
+     "end": "makes him a pupil of Anaximander)."
+    }
    }
   ]
  },
@@ -34,7 +40,56 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "But Hermippus’s account is that he was an admirer not so much of Parmenides as of Xenophanes, with whom in fact he lived and whose writing of poetry he imitated"
+    ],
+    "trim": {
+     "end": "whose writing of poetry he imitated"
+    }
+   }
+  ]
+ },
+ "1:A12": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Rhetoric",
+    "locus": "1399b5-1399b9",
+    "status": "translated",
+    "translation_credit": "Freese, 1926",
+    "emphasis": [
+     "Another topic consists in concluding the identity of antecedents from the identity of results. Thus Xenophanes said: There is as much impiety in asserting that the gods are born as in saying that they die; for either way the result is that at some time or other they did not exist."
     ]
+   }
+  ]
+ },
+ "1:A14": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Rhetoric",
+    "locus": "1377a19-1377a21",
+    "status": "translated",
+    "translation_credit": "Freese, 1926",
+    "emphasis": [
+     "And the apophthegm of Xenophanes is apposite— that it is unfair for an impious man to challenge a pious one, for it is the same as a strong man challenging a weak one to hit or be hit."
+    ]
+   }
+  ]
+ },
+ "1:A15": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "1010a5-1010a6",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "and therefore, while they speak plausibly, they do not say what is true (for it is fitting to put the matter so rather than as Epicharmus put it against Xenophanes)"
+    ],
+    "trim": {
+     "start": "and therefore, while they speak plausibly",
+     "end": "as Epicharmus put it against Xenophanes)"
+    }
    }
   ]
  },
@@ -48,7 +103,11 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "Our philosopher too commits his doctrines to verse just as did Hesiod, Xenophanes and Empedocles."
-    ]
+    ],
+    "trim": {
+     "start": "Our philosopher too commits his doctrines to verse",
+     "end": "just as did Hesiod, Xenophanes and Empedocles."
+    }
    }
   ]
  },
@@ -63,7 +122,233 @@
     "emphasis": [
      "Every one of them seems to tell us a story, as if we were children. One says there are three principles, that some of them are sometimes waging a sort of war with each other, and sometimes",
      "become friends and marry and have children and bring them up; and another says there are two, wet and dry or hot and cold, which he settles together and unites in marriage. And the Eleatic sect in our region, beginning with Xenophanes and even earlier, have their story that all things, as they are called, are really one."
+    ],
+    "trim": {
+     "start": "Every one of them seems to tell us a story",
+     "end": "as they are called, are really one."
+    },
+    "alt_trims": {
+     "jowett": {
+      "start": "As if we had been children",
+      "end": "which goes back to Xenophanes, and is even older."
+     }
+    }
+   }
+  ]
+ },
+ "1:A30": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "986b18-986b27",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "Parmenides seems to fasten on that which is one in definition, Melissus on that which is one in matter, for which reason the former says that it is limited, the latter that it is unlimited; while Xenophanes, the first of these partisans of the One (for Parmenides is said to have been his pupil), gave no clear statement, nor does he seem to have grasped the nature of either of these causes, but with reference to the whole material universe he says the One is God. Now these thinkers, as we said, must be neglected for the purposes of the present inquiry-two of them entirely, as being a little too naive, viz. Xenophanes and Melissus"
     ]
+   }
+  ]
+ },
+ "1:A47": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On the Heavens",
+    "locus": "294a21-294a27",
+    "status": "translated",
+    "translation_credit": "Stocks, 1922",
+    "emphasis": [
+     "By these considerations some have been led to assert that the earth below us is infinite, saying, with Xenophanes of Colophon, that it has 'pushed its roots to infinity',-in order to save the trouble of seeking for the cause. Hence the sharp rebuke of Empedocles, in the words 'if",
+     "those who have seen"
+    ]
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.9",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Xenophanes, that the earth,",
+     "end": "an infinite depth."
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.11",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "The disciples of Thales",
+     "end": "the infinite space."
+    }
+   }
+  ]
+ },
+ "1:A48": {
+  "context_spans": [
+   {
+    "source_author": "pseudo-Aristotle",
+    "source_work": "De Mirabilibus Auscultationibus",
+    "locus": "833a15-833a17",
+    "status": "translated",
+    "translation_credit": "Dowdall, 1909",
+    "emphasis": [
+     "Xenophanes states that the fire in Lipara once failed for sixteen years, but returned in the seventeenth year."
+    ]
+   }
+  ]
+ },
+ "1:A37": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.4",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Xenophanes, that the world",
+     "end": "eternal and incorruptible."
+    }
+   }
+  ]
+ },
+ "1:A38": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.13",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Xenophanes, that they are",
+     "end": "quenching and kindling of them."
+    }
+   }
+  ]
+ },
+ "1:A41": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.24",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Xenophanes, that the sun",
+     "end": "day into night."
+    }
+   }
+  ]
+ },
+ "1:A41a": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.24",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Xenophanes, that there are",
+     "end": "infinite distance from us."
+    }
+   }
+  ]
+ },
+ "1:A43": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.25",
+    "head": "—II 25, 4 (D. 356)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Xenophanes, that it is",
+     "end": "a condensed cloud."
+    }
+   }
+  ]
+ },
+ "1:A44": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.2",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Xenophanes, that all such",
+     "end": "flashing motions of them."
+    }
+   }
+  ]
+ },
+ "1:A52": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.1",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Xenophanes and Epicurus utterly",
+     "end": "future contingencies."
+    }
+   }
+  ]
+ },
+ "1:A11": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Regum et Imperatorum Apophthegmata",
+    "locus": "175c",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1931",
+    "trim": {
+     "start": "In answer to Xenophanes of Colophon",
+     "end": "although he is dead.”"
+    }
+   }
+  ]
+ },
+ "1:A16": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Vitioso Pudore",
+    "locus": "530f",
+    "status": "translated",
+    "translation_credit": "De Lacy and Einarson, 1959",
+    "trim": {
+     "start": "do not yield or let his scoffing daunt you",
+     "end": "too faint-hearted to risk disgrace."
+    }
+   }
+  ]
+ },
+ "1:A17": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Communibus Notitiis adversus Stoicos",
+    "locus": "1084e",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Xenophanes indeed, when one told him",
+     "end": "boil them then in cold."
+    }
    }
   ]
  }

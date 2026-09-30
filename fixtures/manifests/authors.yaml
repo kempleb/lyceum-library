@@ -12,6 +12,20 @@ authors:
     works:
       - sample-work
     holdings: complete
+  - id: sample-english-author
+    name: Sample English Author
+    nativeName: ''
+    languages:
+      - en
+    period: late-antique
+    schools:
+      - stoic
+    floruit: Fixture
+    blurb: A fixture author for exercising English-language works before real content lands.
+    works:
+      - sample-english-work
+    holdings: complete
 school_groups: {}
 work_order:
   - sample-work
+  - sample-english-work

@@ -9,5 +9,107 @@
     "translation_credit": "Hicks, 1925"
    }
   ]
+ },
+ "1:A7": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "986b25-986b28",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "Now these thinkers, as we said, must be neglected for the purposes of the present inquiry-two of them entirely, as being a little too naive, viz. Xenophanes and Melissus; but Parmenides",
+     "with more insight"
+    ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "186a6-186a10",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "For both of them reason contentiously-I mean both Melissus and Parmenides.",
+     "Their premisses are false and their conclusions do not follow. Or rather the argument of Melissus is gross and palpable and offers no difficulty at all: admit one ridiculous proposition and the rest follows-a simple enough proceeding."
+    ]
+   }
+  ]
+ },
+ "1:A10": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Sophistical Refutations",
+    "locus": "167b13-167b18",
+    "status": "translated",
+    "translation_credit": "Pickard-Cambridge, 1928",
+    "emphasis": [
+     "e.g. Melissus' argument, that the universe is eternal, assumes that the universe has not come to be (for from what is not nothing could possibly come to be) and that what has come to be has done so from a first beginning. If, therefore, the universe has not come to be, it has no first beginning, and is therefore eternal. But this does not necessarily follow: for even if what has come to be always has a first beginning, it does not also follow that what has a first beginning has come to be"
+    ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "Sophistical Refutations",
+    "locus": "168b35-168b40",
+    "status": "translated",
+    "translation_credit": "Pickard-Cambridge, 1928",
+    "emphasis": [
+     "as in Melissus' argument, a man assumes that to 'have been generated' and to 'have a beginning' are the same thing, or to 'become equal' and to 'assume the same magnitude'.",
+     "For because what has been generated has a beginning, he claims also that what has a beginning has been generated, and argues as though both what has been generated and what is finite were the same because each has a beginning."
+    ],
+    "trim": {
+     "start": "as in Melissus' argument"
+    }
+   }
+  ]
+ },
+ "1:A11": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "185a32-185b3",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "Now Melissus says that Being is infinite. It is then a quantity.",
+     "For to define the infinite you must use quantity in your formula, but not substance or quality."
+    ],
+    "trim": {
+     "omit": [
+      [
+       "For the infinite is in the category of quantity",
+       "if at the same time they are also quantities."
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "1:A3": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Pericles",
+    "locus": "26-28",
+    "status": "translated",
+    "translation_credit": "Perrin, 1916",
+    "trim": {
+     "start": "For no sooner had he sailed off",
+     "omit": [
+      [
+       "Now the samaena is",
+       "had some built."
+      ],
+      [
+       "And since it was a hard task",
+       "he was called Periphoretus."
+      ]
+     ],
+     "end": "nor Aristotle."
+    }
+   }
+  ]
  }
 }

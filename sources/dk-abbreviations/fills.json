@@ -1,0 +1,3387 @@
+{
+ "_about": "DK abbreviations filled on the site (John's ruling, 2026-09-29): where DK, inside a source passage, prints a quotation as 'FIRST ... LAST' and gives the full text elsewhere, the reader shows the words between. Only the cases the 2026-09-29 survey marked CERTAIN. No Greek here: each entry locates the '...' (source line n + role, char offset `at`, `left`/`right` printed words) and the full text (target line n `from`/`to`, word index `after`/`before` of the words the fill lies strictly between). `survey` is the case number in that survey. Read by pipeline/reader_pipeline/stage1_dk_fills.py.",
+ "fills": [
+  {
+   "survey": 23,
+   "work": "anaxagoras-fragments",
+   "column": "B12",
+   "role": "text",
+   "n": 4,
+   "at": 15,
+   "left": 3,
+   "right": 3,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B12",
+    "role": "text",
+    "from": 6,
+    "after": 8,
+    "to": 6,
+    "before": 256
+   }
+  },
+  {
+   "survey": 24,
+   "work": "anaxagoras-fragments",
+   "column": "B15",
+   "role": "text",
+   "n": 4,
+   "at": 4,
+   "left": 5,
+   "right": 1,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B15",
+    "role": "text",
+    "from": 6,
+    "after": 3,
+    "to": 6,
+    "before": 30
+   }
+  },
+  {
+   "survey": 25,
+   "work": "anaxagoras-fragments",
+   "column": "B16",
+   "role": "text",
+   "n": 2,
+   "at": 5,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B16",
+    "role": "text",
+    "from": 6,
+    "after": 0,
+    "to": 6,
+    "before": 25
+   }
+  },
+  {
+   "survey": 26,
+   "work": "anaxagoras-fragments",
+   "column": "B16",
+   "role": "text",
+   "n": 4,
+   "at": 35,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B16",
+    "role": "text",
+    "from": 6,
+    "after": 6,
+    "to": 6,
+    "before": 15
+   }
+  },
+  {
+   "survey": 0,
+   "work": "anaxagoras-fragments",
+   "column": "B3",
+   "role": "text",
+   "n": 4,
+   "at": 5,
+   "left": 6,
+   "right": 1,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B3",
+    "role": "text",
+    "from": 14,
+    "after": 4,
+    "to": 14,
+    "before": 41
+   }
+  },
+  {
+   "survey": 1,
+   "work": "anaxagoras-fragments",
+   "column": "B3",
+   "role": "text",
+   "n": 6,
+   "at": 10,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B11",
+    "role": "text",
+    "from": 2,
+    "after": 1,
+    "to": 2,
+    "before": 12
+   }
+  },
+  {
+   "survey": 2,
+   "work": "anaxagoras-fragments",
+   "column": "B3",
+   "role": "text",
+   "n": 8,
+   "at": 13,
+   "left": 3,
+   "right": 1,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B12",
+    "role": "text",
+    "from": 6,
+    "after": 2,
+    "to": 6,
+    "before": 14
+   }
+  },
+  {
+   "survey": 3,
+   "work": "anaxagoras-fragments",
+   "column": "B3",
+   "role": "text",
+   "n": 10,
+   "at": 9,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B6",
+    "role": "text",
+    "from": 2,
+    "after": 1,
+    "to": 2,
+    "before": 66
+   }
+  },
+  {
+   "survey": 6,
+   "work": "anaxagoras-fragments",
+   "column": "B4",
+   "role": "text",
+   "n": 4,
+   "at": 8,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B4",
+    "role": "text",
+    "from": 30,
+    "after": 0,
+    "to": 30,
+    "before": 100
+   }
+  },
+  {
+   "survey": 8,
+   "work": "anaxagoras-fragments",
+   "column": "B4",
+   "role": "text",
+   "n": 8,
+   "at": 10,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B4",
+    "role": "text",
+    "from": 30,
+    "after": 16,
+    "to": 30,
+    "before": 20
+   }
+  },
+  {
+   "survey": 9,
+   "work": "anaxagoras-fragments",
+   "column": "B4",
+   "role": "text",
+   "n": 10,
+   "at": 8,
+   "left": 1,
+   "right": 6,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B4",
+    "role": "text",
+    "from": 30,
+    "after": 0,
+    "to": 30,
+    "before": 26
+   }
+  },
+  {
+   "survey": 10,
+   "work": "anaxagoras-fragments",
+   "column": "B4",
+   "role": "text",
+   "n": 12,
+   "at": 7,
+   "left": 6,
+   "right": 1,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B4",
+    "role": "text",
+    "from": 31,
+    "after": 4,
+    "to": 31,
+    "before": 56
+   }
+  },
+  {
+   "survey": 13,
+   "work": "anaxagoras-fragments",
+   "column": "B4",
+   "role": "text",
+   "n": 18,
+   "at": 15,
+   "left": 2,
+   "right": 12,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B4",
+    "role": "text",
+    "from": 30,
+    "after": 7,
+    "to": 30,
+    "before": 26
+   }
+  },
+  {
+   "survey": 14,
+   "work": "anaxagoras-fragments",
+   "column": "B4",
+   "role": "text",
+   "n": 20,
+   "at": 25,
+   "left": 4,
+   "right": 1,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B4",
+    "role": "text",
+    "from": 30,
+    "after": 41,
+    "to": 30,
+    "before": 82
+   }
+  },
+  {
+   "survey": 16,
+   "work": "anaxagoras-fragments",
+   "column": "B7",
+   "role": "text",
+   "n": 4,
+   "at": 13,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B4",
+    "role": "text",
+    "from": 31,
+    "after": 63,
+    "to": 31,
+    "before": 68
+   }
+  },
+  {
+   "survey": 17,
+   "work": "anaxagoras-fragments",
+   "column": "B7",
+   "role": "text",
+   "n": 8,
+   "at": 14,
+   "left": 3,
+   "right": 2,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B12",
+    "role": "text",
+    "from": 6,
+    "after": 128,
+    "to": 6,
+    "before": 142
+   }
+  },
+  {
+   "survey": 18,
+   "work": "anaxagoras-fragments",
+   "column": "B8",
+   "role": "text",
+   "n": 2,
+   "at": 18,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B12",
+    "role": "text",
+    "from": 6,
+    "after": 224,
+    "to": 6,
+    "before": 228
+   }
+  },
+  {
+   "survey": 19,
+   "work": "anaxagoras-fragments",
+   "column": "B8",
+   "role": "text",
+   "n": 4,
+   "at": 18,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B8",
+    "role": "text",
+    "from": 8,
+    "after": 9,
+    "to": 8,
+    "before": 22
+   }
+  },
+  {
+   "survey": 20,
+   "work": "anaxagoras-fragments",
+   "column": "B8",
+   "role": "context",
+   "n": 7,
+   "at": 0,
+   "left": 5,
+   "right": 1,
+   "target": {
+    "work": "anaxagoras-fragments",
+    "column": "B8",
+    "role": "text",
+    "from": 8,
+    "after": 1,
+    "to": 8,
+    "before": 10
+   }
+  },
+  {
+   "survey": 55,
+   "work": "anaximander-testimonia",
+   "column": "A9",
+   "role": "text",
+   "n": 7,
+   "at": 9,
+   "left": 6,
+   "right": 1,
+   "target": {
+    "work": "anaximander-fragments",
+    "column": "B1",
+    "role": "text",
+    "from": 4,
+    "after": 6,
+    "to": 4,
+    "before": 34
+   }
+  },
+  {
+   "survey": 62,
+   "work": "antiphon-sophist-fragments",
+   "column": "B15",
+   "role": "text",
+   "n": 2,
+   "at": 27,
+   "left": 3,
+   "right": 2,
+   "target": {
+    "work": "antiphon-sophist-fragments",
+    "column": "B15",
+    "role": "text",
+    "from": 8,
+    "after": 6,
+    "to": 8,
+    "before": 9
+   }
+  },
+  {
+   "survey": 99,
+   "work": "critias-fragments",
+   "column": "B18",
+   "role": "context",
+   "n": -1,
+   "at": 550,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "critias-fragments",
+    "column": "B18",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 5,
+    "before": 3
+   }
+  },
+  {
+   "survey": 100,
+   "work": "critias-fragments",
+   "column": "B19",
+   "role": "context",
+   "n": -1,
+   "at": 83,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "critias-fragments",
+    "column": "B19",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 5,
+    "before": 2
+   }
+  },
+  {
+   "survey": 93,
+   "work": "critias-fragments",
+   "column": "B2",
+   "role": "context",
+   "n": -1,
+   "at": 88,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "critias-fragments",
+    "column": "B2",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 14,
+    "before": 5
+   }
+  },
+  {
+   "survey": 94,
+   "work": "critias-fragments",
+   "column": "B2",
+   "role": "context",
+   "n": -1,
+   "at": 307,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "critias-fragments",
+    "column": "B2",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 2,
+    "before": 5
+   }
+  },
+  {
+   "survey": 101,
+   "work": "critias-fragments",
+   "column": "B25",
+   "role": "context",
+   "n": -1,
+   "at": 347,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "critias-fragments",
+    "column": "B25",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 43,
+    "before": 4
+   }
+  },
+  {
+   "survey": 102,
+   "work": "critias-fragments",
+   "column": "B25",
+   "role": "context",
+   "n": -1,
+   "at": 620,
+   "left": 5,
+   "right": 1,
+   "target": {
+    "work": "critias-fragments",
+    "column": "B25",
+    "role": "text",
+    "from": 1,
+    "after": 2,
+    "to": 2,
+    "before": 4
+   }
+  },
+  {
+   "survey": 103,
+   "work": "critias-fragments",
+   "column": "B25",
+   "role": "context",
+   "n": -1,
+   "at": 883,
+   "left": 2,
+   "right": 9,
+   "target": {
+    "work": "critias-fragments",
+    "column": "B25",
+    "role": "text",
+    "from": 17,
+    "after": 1,
+    "to": 17,
+    "before": 5
+   }
+  },
+  {
+   "survey": 104,
+   "work": "critias-fragments",
+   "column": "B25",
+   "role": "context",
+   "n": -1,
+   "at": 1026,
+   "left": 6,
+   "right": 1,
+   "target": {
+    "work": "critias-fragments",
+    "column": "B25",
+    "role": "text",
+    "from": 34,
+    "after": 0,
+    "to": 34,
+    "before": 4
+   }
+  },
+  {
+   "survey": 189,
+   "work": "democritus-fragments",
+   "column": "B119",
+   "role": "text",
+   "n": 8,
+   "at": 9,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "democritus-fragments",
+    "column": "B119",
+    "role": "text",
+    "from": 10,
+    "after": 0,
+    "to": 10,
+    "before": 19
+   }
+  },
+  {
+   "survey": 313,
+   "work": "democritus-testimonia",
+   "column": "A167",
+   "role": "text",
+   "n": 2,
+   "at": 12,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "democritus-fragments",
+    "column": "B170",
+    "role": "text",
+    "from": 2,
+    "after": 0,
+    "to": 2,
+    "before": 3
+   }
+  },
+  {
+   "survey": 396,
+   "work": "empedocles-fragments",
+   "column": "B100",
+   "role": "context",
+   "n": -1,
+   "at": 709,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B100",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 25,
+    "before": 6
+   }
+  },
+  {
+   "survey": 402,
+   "work": "empedocles-fragments",
+   "column": "B106",
+   "role": "context",
+   "n": -1,
+   "at": 121,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B106",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 5
+   }
+  },
+  {
+   "survey": 407,
+   "work": "empedocles-fragments",
+   "column": "B108",
+   "role": "context",
+   "n": -1,
+   "at": 132,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B108",
+    "role": "text",
+    "from": 1,
+    "after": 6,
+    "to": 2,
+    "before": 4
+   }
+  },
+  {
+   "survey": 409,
+   "work": "empedocles-fragments",
+   "column": "B109",
+   "role": "context",
+   "n": -1,
+   "at": 274,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B109",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 3,
+    "before": 7
+   }
+  },
+  {
+   "survey": 410,
+   "work": "empedocles-fragments",
+   "column": "B109",
+   "role": "context",
+   "n": -1,
+   "at": 371,
+   "left": 5,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B109",
+    "role": "text",
+    "from": 1,
+    "after": 3,
+    "to": 3,
+    "before": 7
+   }
+  },
+  {
+   "survey": 411,
+   "work": "empedocles-fragments",
+   "column": "B110",
+   "role": "context",
+   "n": -1,
+   "at": 267,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B110",
+    "role": "text",
+    "from": 1,
+    "after": 1,
+    "to": 10,
+    "before": 7
+   }
+  },
+  {
+   "survey": 413,
+   "work": "empedocles-fragments",
+   "column": "B110",
+   "role": "context",
+   "n": -1,
+   "at": 833,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B110",
+    "role": "text",
+    "from": 10,
+    "after": 0,
+    "to": 10,
+    "before": 7
+   }
+  },
+  {
+   "survey": 415,
+   "work": "empedocles-fragments",
+   "column": "B115",
+   "role": "context",
+   "n": -1,
+   "at": 92,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B115",
+    "role": "text",
+    "from": 13,
+    "after": 0,
+    "to": 13,
+    "before": 8
+   }
+  },
+  {
+   "survey": 416,
+   "work": "empedocles-fragments",
+   "column": "B115",
+   "role": "context",
+   "n": -1,
+   "at": 575,
+   "left": 3,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B115",
+    "role": "text",
+    "from": 4,
+    "after": 4,
+    "to": 5,
+    "before": 4
+   }
+  },
+  {
+   "survey": 417,
+   "work": "empedocles-fragments",
+   "column": "B115",
+   "role": "context",
+   "n": -1,
+   "at": 688,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B115",
+    "role": "text",
+    "from": 6,
+    "after": 0,
+    "to": 6,
+    "before": 6
+   }
+  },
+  {
+   "survey": 419,
+   "work": "empedocles-fragments",
+   "column": "B115",
+   "role": "context",
+   "n": -1,
+   "at": 992,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B115",
+    "role": "text",
+    "from": 8,
+    "after": 0,
+    "to": 8,
+    "before": 3
+   }
+  },
+  {
+   "survey": 421,
+   "work": "empedocles-fragments",
+   "column": "B115",
+   "role": "context",
+   "n": -1,
+   "at": 1582,
+   "left": 5,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B115",
+    "role": "text",
+    "from": 11,
+    "after": 0,
+    "to": 12,
+    "before": 7
+   }
+  },
+  {
+   "survey": 424,
+   "work": "empedocles-fragments",
+   "column": "B115",
+   "role": "context",
+   "n": -1,
+   "at": 2311,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B115",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 2,
+    "before": 3
+   }
+  },
+  {
+   "survey": 427,
+   "work": "empedocles-fragments",
+   "column": "B115",
+   "role": "context",
+   "n": -1,
+   "at": 2959,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B115",
+    "role": "text",
+    "from": 9,
+    "after": 0,
+    "to": 12,
+    "before": 7
+   }
+  },
+  {
+   "survey": 431,
+   "work": "empedocles-fragments",
+   "column": "B119",
+   "role": "context",
+   "n": -1,
+   "at": 328,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B119",
+    "role": "text",
+    "from": 1,
+    "after": 1,
+    "to": 1,
+    "before": 7
+   }
+  },
+  {
+   "survey": 322,
+   "work": "empedocles-fragments",
+   "column": "B12",
+   "role": "context",
+   "n": -1,
+   "at": 154,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B12",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 2,
+    "before": 6
+   }
+  },
+  {
+   "survey": 433,
+   "work": "empedocles-fragments",
+   "column": "B121",
+   "role": "context",
+   "n": -1,
+   "at": 170,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B121",
+    "role": "text",
+    "from": 2,
+    "after": 0,
+    "to": 2,
+    "before": 8
+   }
+  },
+  {
+   "survey": 436,
+   "work": "empedocles-fragments",
+   "column": "B122",
+   "role": "context",
+   "n": -1,
+   "at": 145,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B122",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 4,
+    "before": 5
+   }
+  },
+  {
+   "survey": 437,
+   "work": "empedocles-fragments",
+   "column": "B123",
+   "role": "context",
+   "n": -1,
+   "at": 95,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B123",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 2,
+    "before": 6
+   }
+  },
+  {
+   "survey": 440,
+   "work": "empedocles-fragments",
+   "column": "B126",
+   "role": "context",
+   "n": -1,
+   "at": 83,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B126",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 3
+   }
+  },
+  {
+   "survey": 441,
+   "work": "empedocles-fragments",
+   "column": "B126",
+   "role": "context",
+   "n": -1,
+   "at": 234,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B126",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 3
+   }
+  },
+  {
+   "survey": 442,
+   "work": "empedocles-fragments",
+   "column": "B127",
+   "role": "context",
+   "n": -1,
+   "at": 192,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B127",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 2,
+    "before": 5
+   }
+  },
+  {
+   "survey": 443,
+   "work": "empedocles-fragments",
+   "column": "B128",
+   "role": "context",
+   "n": -1,
+   "at": 528,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B128",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 3,
+    "before": 2
+   }
+  },
+  {
+   "survey": 445,
+   "work": "empedocles-fragments",
+   "column": "B128",
+   "role": "context",
+   "n": -1,
+   "at": 665,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B128",
+    "role": "text",
+    "from": 8,
+    "after": 1,
+    "to": 8,
+    "before": 6
+   }
+  },
+  {
+   "survey": 447,
+   "work": "empedocles-fragments",
+   "column": "B129",
+   "role": "context",
+   "n": -1,
+   "at": 234,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B129",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 6,
+    "before": 7
+   }
+  },
+  {
+   "survey": 451,
+   "work": "empedocles-fragments",
+   "column": "B136",
+   "role": "context",
+   "n": -1,
+   "at": 580,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B136",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 2,
+    "before": 3
+   }
+  },
+  {
+   "survey": 452,
+   "work": "empedocles-fragments",
+   "column": "B137",
+   "role": "context",
+   "n": -1,
+   "at": 25,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B137",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 6,
+    "before": 5
+   }
+  },
+  {
+   "survey": 454,
+   "work": "empedocles-fragments",
+   "column": "B141",
+   "role": "context",
+   "n": -1,
+   "at": 171,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B141",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 5
+   }
+  },
+  {
+   "survey": 455,
+   "work": "empedocles-fragments",
+   "column": "B141",
+   "role": "context",
+   "n": -1,
+   "at": 752,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B141",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 5
+   }
+  },
+  {
+   "survey": 457,
+   "work": "empedocles-fragments",
+   "column": "B146",
+   "role": "context",
+   "n": -1,
+   "at": 110,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B146",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 3,
+    "before": 4
+   }
+  },
+  {
+   "survey": 460,
+   "work": "empedocles-fragments",
+   "column": "B154c",
+   "role": "context",
+   "n": -1,
+   "at": 43,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B154c",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 7
+   }
+  },
+  {
+   "survey": 461,
+   "work": "empedocles-fragments",
+   "column": "B156",
+   "role": "context",
+   "n": -1,
+   "at": 63,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B156",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 4,
+    "before": 3
+   }
+  },
+  {
+   "survey": 323,
+   "work": "empedocles-fragments",
+   "column": "B16",
+   "role": "context",
+   "n": -1,
+   "at": 361,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B16",
+    "role": "text",
+    "from": 1,
+    "after": 1,
+    "to": 2,
+    "before": 4
+   }
+  },
+  {
+   "survey": 325,
+   "work": "empedocles-fragments",
+   "column": "B17",
+   "role": "context",
+   "n": -1,
+   "at": 83,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B17",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 35,
+    "before": 6
+   }
+  },
+  {
+   "survey": 326,
+   "work": "empedocles-fragments",
+   "column": "B17",
+   "role": "context",
+   "n": -1,
+   "at": 157,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B17",
+    "role": "text",
+    "from": 1,
+    "after": 2,
+    "to": 2,
+    "before": 9
+   }
+  },
+  {
+   "survey": 327,
+   "work": "empedocles-fragments",
+   "column": "B17",
+   "role": "context",
+   "n": -1,
+   "at": 250,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B17",
+    "role": "text",
+    "from": 20,
+    "after": 0,
+    "to": 21,
+    "before": 7
+   }
+  },
+  {
+   "survey": 315,
+   "work": "empedocles-fragments",
+   "column": "B2",
+   "role": "context",
+   "n": -1,
+   "at": 352,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B2",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 8,
+    "before": 2
+   }
+  },
+  {
+   "survey": 316,
+   "work": "empedocles-fragments",
+   "column": "B2",
+   "role": "context",
+   "n": -1,
+   "at": 539,
+   "left": 3,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B2",
+    "role": "text",
+    "from": 8,
+    "after": 5,
+    "to": 9,
+    "before": 6
+   }
+  },
+  {
+   "survey": 329,
+   "work": "empedocles-fragments",
+   "column": "B21",
+   "role": "context",
+   "n": -1,
+   "at": 230,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B21",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 14,
+    "before": 5
+   }
+  },
+  {
+   "survey": 330,
+   "work": "empedocles-fragments",
+   "column": "B22",
+   "role": "context",
+   "n": -1,
+   "at": 94,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B22",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 9,
+    "before": 5
+   }
+  },
+  {
+   "survey": 331,
+   "work": "empedocles-fragments",
+   "column": "B22",
+   "role": "context",
+   "n": -1,
+   "at": 217,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B22",
+    "role": "text",
+    "from": 5,
+    "after": 0,
+    "to": 5,
+    "before": 3
+   }
+  },
+  {
+   "survey": 332,
+   "work": "empedocles-fragments",
+   "column": "B25",
+   "role": "context",
+   "n": -1,
+   "at": 312,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B25",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 7
+   }
+  },
+  {
+   "survey": 334,
+   "work": "empedocles-fragments",
+   "column": "B26",
+   "role": "context",
+   "n": -1,
+   "at": 53,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B26",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 12,
+    "before": 6
+   }
+  },
+  {
+   "survey": 339,
+   "work": "empedocles-fragments",
+   "column": "B27",
+   "role": "context",
+   "n": -1,
+   "at": 755,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B27",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 5
+   }
+  },
+  {
+   "survey": 340,
+   "work": "empedocles-fragments",
+   "column": "B27",
+   "role": "context",
+   "n": -1,
+   "at": 787,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B27",
+    "role": "text",
+    "from": 3,
+    "after": 0,
+    "to": 4,
+    "before": 4
+   }
+  },
+  {
+   "survey": 317,
+   "work": "empedocles-fragments",
+   "column": "B3",
+   "role": "context",
+   "n": -1,
+   "at": 247,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B3",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 13,
+    "before": 7
+   }
+  },
+  {
+   "survey": 345,
+   "work": "empedocles-fragments",
+   "column": "B35",
+   "role": "context",
+   "n": -1,
+   "at": 241,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B35",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 15,
+    "before": 6
+   }
+  },
+  {
+   "survey": 346,
+   "work": "empedocles-fragments",
+   "column": "B35",
+   "role": "context",
+   "n": -1,
+   "at": 373,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B35",
+    "role": "text",
+    "from": 3,
+    "after": 1,
+    "to": 17,
+    "before": 4
+   }
+  },
+  {
+   "survey": 347,
+   "work": "empedocles-fragments",
+   "column": "B35",
+   "role": "context",
+   "n": -1,
+   "at": 524,
+   "left": 3,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B35",
+    "role": "text",
+    "from": 5,
+    "after": 2,
+    "to": 5,
+    "before": 8
+   }
+  },
+  {
+   "survey": 348,
+   "work": "empedocles-fragments",
+   "column": "B35",
+   "role": "context",
+   "n": -1,
+   "at": 671,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B35",
+    "role": "text",
+    "from": 10,
+    "after": 1,
+    "to": 13,
+    "before": 4
+   }
+  },
+  {
+   "survey": 351,
+   "work": "empedocles-fragments",
+   "column": "B36",
+   "role": "context",
+   "n": -1,
+   "at": 50,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B36",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 6
+   }
+  },
+  {
+   "survey": 352,
+   "work": "empedocles-fragments",
+   "column": "B36",
+   "role": "context",
+   "n": -1,
+   "at": 192,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B36",
+    "role": "text",
+    "from": 1,
+    "after": 3,
+    "to": 1,
+    "before": 6
+   }
+  },
+  {
+   "survey": 319,
+   "work": "empedocles-fragments",
+   "column": "B4",
+   "role": "context",
+   "n": -1,
+   "at": 38,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B4",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 3,
+    "before": 4
+   }
+  },
+  {
+   "survey": 353,
+   "work": "empedocles-fragments",
+   "column": "B40",
+   "role": "context",
+   "n": -1,
+   "at": 103,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B40",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 4
+   }
+  },
+  {
+   "survey": 354,
+   "work": "empedocles-fragments",
+   "column": "B42",
+   "role": "context",
+   "n": -1,
+   "at": 379,
+   "left": 3,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B42",
+    "role": "text",
+    "from": 2,
+    "after": 3,
+    "to": 3,
+    "before": 6
+   }
+  },
+  {
+   "survey": 360,
+   "work": "empedocles-fragments",
+   "column": "B53",
+   "role": "context",
+   "n": -1,
+   "at": 150,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B53",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 7
+   }
+  },
+  {
+   "survey": 361,
+   "work": "empedocles-fragments",
+   "column": "B53",
+   "role": "context",
+   "n": -1,
+   "at": 233,
+   "left": 3,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B54",
+    "role": "text",
+    "from": 1,
+    "after": 3,
+    "to": 1,
+    "before": 7
+   }
+  },
+  {
+   "survey": 362,
+   "work": "empedocles-fragments",
+   "column": "B53",
+   "role": "context",
+   "n": -1,
+   "at": 639,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B53",
+    "role": "text",
+    "from": 1,
+    "after": 2,
+    "to": 1,
+    "before": 7
+   }
+  },
+  {
+   "survey": 364,
+   "work": "empedocles-fragments",
+   "column": "B57",
+   "role": "context",
+   "n": -1,
+   "at": 485,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B57",
+    "role": "text",
+    "from": 1,
+    "after": 1,
+    "to": 1,
+    "before": 5
+   }
+  },
+  {
+   "survey": 365,
+   "work": "empedocles-fragments",
+   "column": "B59",
+   "role": "context",
+   "n": -1,
+   "at": 118,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B59",
+    "role": "text",
+    "from": 2,
+    "after": 1,
+    "to": 3,
+    "before": 6
+   }
+  },
+  {
+   "survey": 366,
+   "work": "empedocles-fragments",
+   "column": "B61",
+   "role": "context",
+   "n": -1,
+   "at": 199,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B61",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 4,
+    "before": 5
+   }
+  },
+  {
+   "survey": 369,
+   "work": "empedocles-fragments",
+   "column": "B65",
+   "role": "context",
+   "n": -1,
+   "at": 105,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B65",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 2,
+    "before": 1
+   }
+  },
+  {
+   "survey": 372,
+   "work": "empedocles-fragments",
+   "column": "B67",
+   "role": "context",
+   "n": -1,
+   "at": 239,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B67",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 3,
+    "before": 2
+   }
+  },
+  {
+   "survey": 373,
+   "work": "empedocles-fragments",
+   "column": "B76",
+   "role": "context",
+   "n": -1,
+   "at": 208,
+   "left": 1,
+   "right": 2,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B76",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 2,
+    "before": 5
+   }
+  },
+  {
+   "survey": 374,
+   "work": "empedocles-fragments",
+   "column": "B76",
+   "role": "context",
+   "n": -1,
+   "at": 240,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B76",
+    "role": "text",
+    "from": 3,
+    "after": 0,
+    "to": 3,
+    "before": 5
+   }
+  },
+  {
+   "survey": 375,
+   "work": "empedocles-fragments",
+   "column": "B76",
+   "role": "context",
+   "n": -1,
+   "at": 454,
+   "left": 1,
+   "right": 2,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B76",
+    "role": "text",
+    "from": 2,
+    "after": 0,
+    "to": 2,
+    "before": 5
+   }
+  },
+  {
+   "survey": 376,
+   "work": "empedocles-fragments",
+   "column": "B76",
+   "role": "context",
+   "n": -1,
+   "at": 536,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B76",
+    "role": "text",
+    "from": 3,
+    "after": 0,
+    "to": 3,
+    "before": 5
+   }
+  },
+  {
+   "survey": 378,
+   "work": "empedocles-fragments",
+   "column": "B77",
+   "role": "context",
+   "n": -1,
+   "at": 547,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B77",
+    "role": "text",
+    "from": 2,
+    "after": 0,
+    "to": 2,
+    "before": 5
+   }
+  },
+  {
+   "survey": 379,
+   "work": "empedocles-fragments",
+   "column": "B79",
+   "role": "context",
+   "n": -1,
+   "at": 253,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B79",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 6
+   }
+  },
+  {
+   "survey": 381,
+   "work": "empedocles-fragments",
+   "column": "B81",
+   "role": "context",
+   "n": -1,
+   "at": 198,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B81",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 7
+   }
+  },
+  {
+   "survey": 382,
+   "work": "empedocles-fragments",
+   "column": "B84",
+   "role": "context",
+   "n": -1,
+   "at": 136,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B84",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 11,
+    "before": 6
+   }
+  },
+  {
+   "survey": 384,
+   "work": "empedocles-fragments",
+   "column": "B85",
+   "role": "context",
+   "n": -2,
+   "at": 24,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B75",
+    "role": "text",
+    "from": 2,
+    "after": 0,
+    "to": 2,
+    "before": 5
+   }
+  },
+  {
+   "survey": 383,
+   "work": "empedocles-fragments",
+   "column": "B85",
+   "role": "context",
+   "n": -1,
+   "at": 104,
+   "left": 3,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B98",
+    "role": "text",
+    "from": 1,
+    "after": 2,
+    "to": 1,
+    "before": 6
+   }
+  },
+  {
+   "survey": 388,
+   "work": "empedocles-fragments",
+   "column": "B90",
+   "role": "context",
+   "n": -1,
+   "at": 251,
+   "left": 2,
+   "right": 4,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B90",
+    "role": "text",
+    "from": 1,
+    "after": 1,
+    "to": 2,
+    "before": 2
+   }
+  },
+  {
+   "survey": 389,
+   "work": "empedocles-fragments",
+   "column": "B90",
+   "role": "context",
+   "n": -1,
+   "at": 420,
+   "left": 1,
+   "right": 5,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B90",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 2,
+    "before": 4
+   }
+  },
+  {
+   "survey": 392,
+   "work": "empedocles-fragments",
+   "column": "B96",
+   "role": "context",
+   "n": -1,
+   "at": 128,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B96",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 4,
+    "before": 3
+   }
+  },
+  {
+   "survey": 393,
+   "work": "empedocles-fragments",
+   "column": "B96",
+   "role": "context",
+   "n": -1,
+   "at": 388,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B96",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 3,
+    "before": 7
+   }
+  },
+  {
+   "survey": 394,
+   "work": "empedocles-fragments",
+   "column": "B98",
+   "role": "context",
+   "n": -1,
+   "at": 235,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B98",
+    "role": "text",
+    "from": 1,
+    "after": 1,
+    "to": 5,
+    "before": 8
+   }
+  },
+  {
+   "survey": 395,
+   "work": "empedocles-fragments",
+   "column": "B98",
+   "role": "context",
+   "n": -1,
+   "at": 373,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B98",
+    "role": "text",
+    "from": 1,
+    "after": 1,
+    "to": 1,
+    "before": 6
+   }
+  },
+  {
+   "survey": 462,
+   "work": "empedocles-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 12,
+   "at": 3,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B112",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 2,
+    "before": 3
+   }
+  },
+  {
+   "survey": 463,
+   "work": "empedocles-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 15,
+   "at": 4,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B129",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 2,
+    "before": 5
+   }
+  },
+  {
+   "survey": 464,
+   "work": "empedocles-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 17,
+   "at": 9,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B111",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 9,
+    "before": 6
+   }
+  },
+  {
+   "survey": 466,
+   "work": "empedocles-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 21,
+   "at": 11,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B156",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 4,
+    "before": 3
+   }
+  },
+  {
+   "survey": 467,
+   "work": "empedocles-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 23,
+   "at": 9,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B112",
+    "role": "text",
+    "from": 1,
+    "after": 1,
+    "to": 11,
+    "before": 4
+   }
+  },
+  {
+   "survey": 468,
+   "work": "empedocles-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 25,
+   "at": 7,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B157",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 2,
+    "before": 4
+   }
+  },
+  {
+   "survey": 469,
+   "work": "empedocles-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 29,
+   "at": 9,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B112",
+    "role": "text",
+    "from": 4,
+    "after": 0,
+    "to": 5,
+    "before": 0
+   }
+  },
+  {
+   "survey": 470,
+   "work": "empedocles-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 36,
+   "at": 6,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B6",
+    "role": "text",
+    "from": 2,
+    "after": 0,
+    "to": 3,
+    "before": 6
+   }
+  },
+  {
+   "survey": 472,
+   "work": "empedocles-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 42,
+   "at": 8,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B17",
+    "role": "text",
+    "from": 7,
+    "after": 0,
+    "to": 8,
+    "before": 7
+   }
+  },
+  {
+   "survey": 473,
+   "work": "empedocles-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 44,
+   "at": 5,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B117",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 2,
+    "before": 7
+   }
+  },
+  {
+   "survey": 477,
+   "work": "empedocles-testimonia",
+   "column": "A28",
+   "role": "text",
+   "n": 4,
+   "at": 6,
+   "left": 1,
+   "right": 2,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B17",
+    "role": "text",
+    "from": 17,
+    "after": 2,
+    "to": 20,
+    "before": 7
+   }
+  },
+  {
+   "survey": 479,
+   "work": "empedocles-testimonia",
+   "column": "A33",
+   "role": "text",
+   "n": 2,
+   "at": 9,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B6",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 3,
+    "before": 6
+   }
+  },
+  {
+   "survey": 480,
+   "work": "empedocles-testimonia",
+   "column": "A33",
+   "role": "text",
+   "n": 18,
+   "at": 8,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B17",
+    "role": "text",
+    "from": 7,
+    "after": 0,
+    "to": 8,
+    "before": 7
+   }
+  },
+  {
+   "survey": 483,
+   "work": "empedocles-testimonia",
+   "column": "A55",
+   "role": "text",
+   "n": 2,
+   "at": 12,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B45",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 5
+   }
+  },
+  {
+   "survey": 489,
+   "work": "empedocles-testimonia",
+   "column": "A86",
+   "role": "text",
+   "n": 8,
+   "at": 11,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B107",
+    "role": "text",
+    "from": 1,
+    "after": 1,
+    "to": 2,
+    "before": 6
+   }
+  },
+  {
+   "survey": 491,
+   "work": "empedocles-testimonia",
+   "column": "A86",
+   "role": "text",
+   "n": 28,
+   "at": 5,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B102",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 8
+   }
+  },
+  {
+   "survey": 523,
+   "work": "gorgias-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 10,
+   "at": 8,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "gorgias-fragments",
+    "column": "B5b",
+    "role": "text",
+    "from": 2,
+    "after": 1,
+    "to": 2,
+    "before": 13
+   }
+  },
+  {
+   "survey": 534,
+   "work": "heraclitus-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 2,
+   "at": 11,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "heraclitus-fragments",
+    "column": "B40",
+    "role": "text",
+    "from": 2,
+    "after": 0,
+    "to": 2,
+    "before": 16
+   }
+  },
+  {
+   "survey": 535,
+   "work": "heraclitus-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 4,
+   "at": 13,
+   "left": 3,
+   "right": 1,
+   "target": {
+    "work": "heraclitus-fragments",
+    "column": "B41",
+    "role": "text",
+    "from": 2,
+    "after": 2,
+    "to": 2,
+    "before": 9
+   }
+  },
+  {
+   "survey": 537,
+   "work": "heraclitus-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 12,
+   "at": 7,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "heraclitus-fragments",
+    "column": "B43",
+    "role": "text",
+    "from": 2,
+    "after": 0,
+    "to": 2,
+    "before": 5
+   }
+  },
+  {
+   "survey": 539,
+   "work": "heraclitus-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 16,
+   "at": 7,
+   "left": 1,
+   "right": 2,
+   "target": {
+    "work": "heraclitus-fragments",
+    "column": "B121",
+    "role": "text",
+    "from": 2,
+    "after": 0,
+    "to": 2,
+    "before": 29
+   }
+  },
+  {
+   "survey": 540,
+   "work": "heraclitus-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 19,
+   "at": 7,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "heraclitus-fragments",
+    "column": "B45",
+    "role": "text",
+    "from": 2,
+    "after": 0,
+    "to": 2,
+    "before": 12
+   }
+  },
+  {
+   "survey": 550,
+   "work": "heraclitus-testimonia",
+   "column": "A16",
+   "role": "text",
+   "n": 2,
+   "at": 7,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "heraclitus-fragments",
+    "column": "B107",
+    "role": "text",
+    "from": 2,
+    "after": 0,
+    "to": 2,
+    "before": 8
+   }
+  },
+  {
+   "survey": 552,
+   "work": "heraclitus-testimonia",
+   "column": "A16",
+   "role": "text",
+   "n": 10,
+   "at": 5,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "heraclitus-fragments",
+    "column": "B2",
+    "role": "text",
+    "from": 4,
+    "after": 2,
+    "to": 4,
+    "before": 11
+   }
+  },
+  {
+   "survey": 582,
+   "work": "parmenides-fragments",
+   "column": "B1",
+   "role": "context",
+   "n": -1,
+   "at": 288,
+   "left": 1,
+   "right": 3,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B1",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 30,
+    "before": 7
+   }
+  },
+  {
+   "survey": 584,
+   "work": "parmenides-fragments",
+   "column": "B1",
+   "role": "context",
+   "n": -1,
+   "at": 681,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B1",
+    "role": "text",
+    "from": 7,
+    "after": 1,
+    "to": 8,
+    "before": 0
+   }
+  },
+  {
+   "survey": 585,
+   "work": "parmenides-fragments",
+   "column": "B1",
+   "role": "context",
+   "n": -1,
+   "at": 1192,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B1",
+    "role": "text",
+    "from": 30,
+    "after": 2,
+    "to": 30,
+    "before": 7
+   }
+  },
+  {
+   "survey": 586,
+   "work": "parmenides-fragments",
+   "column": "B1",
+   "role": "context",
+   "n": -1,
+   "at": 1548,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B1",
+    "role": "text",
+    "from": 28,
+    "after": 5,
+    "to": 32,
+    "before": 6
+   }
+  },
+  {
+   "survey": 618,
+   "work": "parmenides-fragments",
+   "column": "B10",
+   "role": "context",
+   "n": -1,
+   "at": 142,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B10",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 7,
+    "before": 2
+   }
+  },
+  {
+   "survey": 619,
+   "work": "parmenides-fragments",
+   "column": "B12",
+   "role": "context",
+   "n": -1,
+   "at": 134,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B12",
+    "role": "text",
+    "from": 1,
+    "after": 1,
+    "to": 3,
+    "before": 7
+   }
+  },
+  {
+   "survey": 620,
+   "work": "parmenides-fragments",
+   "column": "B12",
+   "role": "context",
+   "n": -1,
+   "at": 316,
+   "left": 3,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B12",
+    "role": "text",
+    "from": 2,
+    "after": 2,
+    "to": 6,
+    "before": 1
+   }
+  },
+  {
+   "survey": 621,
+   "work": "parmenides-fragments",
+   "column": "B13",
+   "role": "context",
+   "n": -1,
+   "at": 53,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B13",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 5
+   }
+  },
+  {
+   "survey": 622,
+   "work": "parmenides-fragments",
+   "column": "B13",
+   "role": "context",
+   "n": -1,
+   "at": 310,
+   "left": 4,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B13",
+    "role": "text",
+    "from": 1,
+    "after": 2,
+    "to": 1,
+    "before": 5
+   }
+  },
+  {
+   "survey": 623,
+   "work": "parmenides-fragments",
+   "column": "B13",
+   "role": "context",
+   "n": -1,
+   "at": 447,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B13",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 5
+   }
+  },
+  {
+   "survey": 587,
+   "work": "parmenides-fragments",
+   "column": "B2",
+   "role": "context",
+   "n": -1,
+   "at": 63,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B2",
+    "role": "text",
+    "from": 1,
+    "after": 1,
+    "to": 6,
+    "before": 6
+   }
+  },
+  {
+   "survey": 588,
+   "work": "parmenides-fragments",
+   "column": "B2",
+   "role": "context",
+   "n": -1,
+   "at": 86,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B2",
+    "role": "text",
+    "from": 7,
+    "after": 0,
+    "to": 8,
+    "before": 1
+   }
+  },
+  {
+   "survey": 589,
+   "work": "parmenides-fragments",
+   "column": "B2",
+   "role": "context",
+   "n": -1,
+   "at": 342,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B2",
+    "role": "text",
+    "from": 3,
+    "after": 1,
+    "to": 8,
+    "before": 1
+   }
+  },
+  {
+   "survey": 590,
+   "work": "parmenides-fragments",
+   "column": "B3",
+   "role": "context",
+   "n": -1,
+   "at": 138,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B3",
+    "role": "text",
+    "from": 1,
+    "after": 1,
+    "to": 1,
+    "before": 7
+   }
+  },
+  {
+   "survey": 593,
+   "work": "parmenides-fragments",
+   "column": "B4",
+   "role": "context",
+   "n": -1,
+   "at": 151,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B4",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 4,
+    "before": 1
+   }
+  },
+  {
+   "survey": 594,
+   "work": "parmenides-fragments",
+   "column": "B6",
+   "role": "context",
+   "n": -1,
+   "at": 176,
+   "left": 3,
+   "right": 2,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B6",
+    "role": "text",
+    "from": 1,
+    "after": 10,
+    "to": 3,
+    "before": 6
+   }
+  },
+  {
+   "survey": 595,
+   "work": "parmenides-fragments",
+   "column": "B6",
+   "role": "context",
+   "n": -1,
+   "at": 213,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B6",
+    "role": "text",
+    "from": 4,
+    "after": 0,
+    "to": 9,
+    "before": 6
+   }
+  },
+  {
+   "survey": 596,
+   "work": "parmenides-fragments",
+   "column": "B6",
+   "role": "context",
+   "n": -1,
+   "at": 304,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B6",
+    "role": "text",
+    "from": 8,
+    "after": 0,
+    "to": 9,
+    "before": 1
+   }
+  },
+  {
+   "survey": 597,
+   "work": "parmenides-fragments",
+   "column": "B6",
+   "role": "context",
+   "n": -1,
+   "at": 380,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B7",
+    "role": "text",
+    "from": 2,
+    "after": 0,
+    "to": 2,
+    "before": 7
+   }
+  },
+  {
+   "survey": 599,
+   "work": "parmenides-fragments",
+   "column": "B7",
+   "role": "context",
+   "n": -1,
+   "at": 385,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B7",
+    "role": "text",
+    "from": 1,
+    "after": 1,
+    "to": 1,
+    "before": 7
+   }
+  },
+  {
+   "survey": 603,
+   "work": "parmenides-fragments",
+   "column": "B7",
+   "role": "context",
+   "n": -1,
+   "at": 1053,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B8",
+    "role": "text",
+    "from": 3,
+    "after": 3,
+    "to": 14,
+    "before": 5
+   }
+  },
+  {
+   "survey": 608,
+   "work": "parmenides-fragments",
+   "column": "B7",
+   "role": "context",
+   "n": -1,
+   "at": 2001,
+   "left": 1,
+   "right": 3,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B8",
+    "role": "text",
+    "from": 43,
+    "after": 0,
+    "to": 45,
+    "before": 6
+   }
+  },
+  {
+   "survey": 612,
+   "work": "parmenides-fragments",
+   "column": "B7",
+   "role": "context",
+   "n": -1,
+   "at": 2746,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B8",
+    "role": "text",
+    "from": 50,
+    "after": 1,
+    "to": 52,
+    "before": 5
+   }
+  },
+  {
+   "survey": 613,
+   "work": "parmenides-fragments",
+   "column": "B7",
+   "role": "context",
+   "n": -1,
+   "at": 2969,
+   "left": 1,
+   "right": 2,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B8",
+    "role": "text",
+    "from": 53,
+    "after": 0,
+    "to": 59,
+    "before": 5
+   }
+  },
+  {
+   "survey": 614,
+   "work": "parmenides-fragments",
+   "column": "B7",
+   "role": "context",
+   "n": -1,
+   "at": 3305,
+   "left": 1,
+   "right": 2,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B8",
+    "role": "text",
+    "from": 53,
+    "after": 0,
+    "to": 59,
+    "before": 5
+   }
+  },
+  {
+   "survey": 617,
+   "work": "parmenides-fragments",
+   "column": "B9",
+   "role": "context",
+   "n": -1,
+   "at": 63,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B9",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 4,
+    "before": 5
+   }
+  },
+  {
+   "survey": 628,
+   "work": "parmenides-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 2,
+   "at": 6,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B1",
+    "role": "text",
+    "from": 28,
+    "after": 5,
+    "to": 30,
+    "before": 7
+   }
+  },
+  {
+   "survey": 629,
+   "work": "parmenides-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 4,
+   "at": 6,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B7",
+    "role": "text",
+    "from": 3,
+    "after": 0,
+    "to": 5,
+    "before": 6
+   }
+  },
+  {
+   "survey": 639,
+   "work": "parmenides-testimonia",
+   "column": "A46",
+   "role": "text",
+   "n": 4,
+   "at": 5,
+   "left": 5,
+   "right": 1,
+   "target": {
+    "work": "parmenides-fragments",
+    "column": "B16",
+    "role": "text",
+    "from": 1,
+    "after": 3,
+    "to": 4,
+    "before": 8
+   }
+  },
+  {
+   "survey": 641,
+   "work": "philolaus-fragments",
+   "column": "B14",
+   "role": "text",
+   "n": 2,
+   "at": 14,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "philolaus-fragments",
+    "column": "B14",
+    "role": "text",
+    "from": 12,
+    "after": 0,
+    "to": 12,
+    "before": 23
+   }
+  },
+  {
+   "survey": 646,
+   "work": "philolaus-fragments",
+   "column": "B20",
+   "role": "text",
+   "n": 4,
+   "at": 6,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "philolaus-fragments",
+    "column": "B20",
+    "role": "text",
+    "from": 15,
+    "after": 0,
+    "to": 15,
+    "before": 14
+   }
+  },
+  {
+   "survey": 648,
+   "work": "philolaus-fragments",
+   "column": "B20",
+   "role": "context",
+   "n": 11,
+   "at": 12,
+   "left": 3,
+   "right": 1,
+   "target": {
+    "work": "philolaus-fragments",
+    "column": "B20",
+    "role": "text",
+    "from": 15,
+    "after": 1,
+    "to": 15,
+    "before": 17
+   }
+  },
+  {
+   "survey": 649,
+   "work": "philolaus-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 7,
+   "at": 26,
+   "left": 6,
+   "right": 1,
+   "target": {
+    "work": "philolaus-fragments",
+    "column": "B1",
+    "role": "text",
+    "from": 4,
+    "after": 5,
+    "to": 4,
+    "before": 20
+   }
+  },
+  {
+   "survey": 677,
+   "work": "protagoras-testimonia",
+   "column": "A1",
+   "role": "text",
+   "n": 4,
+   "at": 8,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "protagoras-fragments",
+    "column": "B1",
+    "role": "text",
+    "from": 5,
+    "after": 0,
+    "to": 5,
+    "before": 16
+   }
+  },
+  {
+   "survey": 707,
+   "work": "thales-testimonia",
+   "column": "A1",
+   "role": "context",
+   "n": 1,
+   "at": 964,
+   "left": 3,
+   "right": 1,
+   "target": {
+    "work": "thales-testimonia",
+    "column": "A3a",
+    "role": "context",
+    "from": 4,
+    "after": 2,
+    "to": 5,
+    "before": 4
+   }
+  },
+  {
+   "survey": 715,
+   "work": "xenophanes-fragments",
+   "column": "B7",
+   "role": "context",
+   "n": -1,
+   "at": 99,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "xenophanes-fragments",
+    "column": "B7",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 7
+   }
+  },
+  {
+   "survey": 716,
+   "work": "xenophanes-fragments",
+   "column": "B7",
+   "role": "context",
+   "n": -1,
+   "at": 153,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "xenophanes-fragments",
+    "column": "B7",
+    "role": "text",
+    "from": 2,
+    "after": 0,
+    "to": 5,
+    "before": 4
+   }
+  },
+  {
+   "survey": 719,
+   "work": "xenophanes-testimonia",
+   "column": "A1",
+   "role": "context",
+   "n": 2,
+   "at": 624,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "xenophanes-fragments",
+    "column": "B8",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 4,
+    "before": 6
+   }
+  },
+  {
+   "survey": 721,
+   "work": "xenophanes-testimonia",
+   "column": "A24",
+   "role": "text",
+   "n": 2,
+   "at": 7,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "xenophanes-fragments",
+    "column": "B34",
+    "role": "text",
+    "from": 4,
+    "after": 4,
+    "to": 4,
+    "before": 8
+   }
+  },
+  {
+   "survey": 722,
+   "work": "xenophanes-testimonia",
+   "column": "A31",
+   "role": "text",
+   "n": 2,
+   "at": 8,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "xenophanes-fragments",
+    "column": "B26",
+    "role": "text",
+    "from": 1,
+    "after": 1,
+    "to": 2,
+    "before": 5
+   }
+  },
+  {
+   "survey": 723,
+   "work": "xenophanes-testimonia",
+   "column": "A31",
+   "role": "text",
+   "n": 4,
+   "at": 6,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "xenophanes-fragments",
+    "column": "B25",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 1,
+    "before": 6
+   }
+  },
+  {
+   "survey": 724,
+   "work": "xenophanes-testimonia",
+   "column": "A33",
+   "role": "text",
+   "n": 2,
+   "at": 8,
+   "left": 2,
+   "right": 1,
+   "target": {
+    "work": "xenophanes-fragments",
+    "column": "B34",
+    "role": "text",
+    "from": 3,
+    "after": 1,
+    "to": 4,
+    "before": 8
+   }
+  },
+  {
+   "survey": 725,
+   "work": "xenophanes-testimonia",
+   "column": "A35",
+   "role": "context",
+   "n": 10,
+   "at": 129,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "xenophanes-testimonia",
+    "column": "A35",
+    "role": "context",
+    "from": 8,
+    "after": 0,
+    "to": 10,
+    "before": 4
+   }
+  },
+  {
+   "survey": 730,
+   "work": "xenophanes-testimonia",
+   "column": "A47",
+   "role": "text",
+   "n": 2,
+   "at": 7,
+   "left": 1,
+   "right": 1,
+   "target": {
+    "work": "empedocles-fragments",
+    "column": "B39",
+    "role": "text",
+    "from": 1,
+    "after": 0,
+    "to": 3,
+    "before": 5
+   }
+  }
+ ]
+}

@@ -3,11 +3,13 @@
 # mount-corpus.mjs excludes when it flat-merges the corpus's work
 # directories into build/dist alongside the classical and aristotle works.
 #
-# HOLD (John's ruling, 2026-09-23): Plato stays out of any release sent to
-# the test copy until he lifts the hold. mount-corpus.mjs skips a held
-# corpus (clean no-op, logged) unless READER_INCLUDE_HELD=1 is set in its
-# environment.
-hold: true
+# HOLD (John's ruling, 2026-09-23): Plato stayed out of any release sent to
+# the test copy until he lifted the hold, so Brian's import test of the 103
+# works was not run against a moving list. LIFTED (John, 2026-09-30, "Let's
+# add plato"), after the plugin loaded the 103 and sent its first catalog.
+# mount-corpus.mjs skips a held corpus (clean no-op, logged) unless
+# READER_INCLUDE_HELD=1 is set in its environment.
+hold: false
 
 corpus: plato
 

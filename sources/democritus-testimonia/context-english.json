@@ -6,7 +6,29 @@
     "source_work": "Lives of Eminent Philosophers",
     "locus": "9.34-49",
     "status": "translated",
-    "translation_credit": "Hicks, 1925"
+    "translation_credit": "Hicks, 1925",
+    "trim": {
+     "omit": [
+      [
+       "The ethical works are the following:",
+       "So much for the books that he wrote and their number."
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "1:A7": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Meteorology",
+    "locus": "365a17-365a19",
+    "status": "translated",
+    "translation_credit": "Webster, 1923",
+    "emphasis": [
+     "Anaxagoras of Clazomenae, and before him Anaximenes of Miletus, and later Democritus of Abdera."
+    ]
    }
   ]
  },
@@ -24,7 +46,171 @@
      "Of the Different Shapes (of Atoms). Of Changes of Shape. VI. Confirmations (summaries of the aforesaid works). On Images, or On Foreknowledge of the Future. On Logic, or Criterion of Thought, three books. Problems. So much for the physical works. The following fall under no head: Causes of Celestial Phenomena. Causes of Phenomena in the Air. Causes on the Earth’s Surface. Causes concerned with Fire and Things in Fire. Causes concerned with Sounds. Causes concerned with Seeds, Plants and Fruits. Causes concerned with Animals, three books. Miscellaneous Causes. Concerning the Magnet. These works have not been arranged. The mathematical works are these: VII. On a Difference in an Angle, or On Contact with the Circle or the Sphere. On Geometry. Geometrica. Numbers. VIII. On Irrational Lines and Solids, two books. Extensions (Projections).",
      "The Great Year, or Astronomy, Calendar. Contention of the Water-clock [and the Heaven]. IX. Description of the Heaven. Geography. Description of the Pole. Description of Rays of Light. These are the mathematical works. The literary and musical works are these: X. On Rhythms and Harmony. On Poetry. On Beauty of Verses. On Euphonious and Cacophonous Letters. XI. Concerning Homer, or On Correct Epic Diction, and On Glosses. Of Song. On Words. A Vocabulary. So much for the works on literature and music. The works on the arts are these: XII. Prognostication. Of Diet, or Diaetetics. Medical Regimen. Causes concerned with Things Seasonable and Unseasonable. XIII. Of Agriculture, or Concerning Land Measurements. Of Painting. Treatise on Tactics, and On Fighting in Armour. So much for these works.",
      "Some include as separate items in the list the following works taken from his notes: Of the Sacred Writings in Babylon. Of those in Meroë. A Voyage round the Ocean. Of [the Right Use of] History. A Chaldaean Treatise. A Phrygian Treatise. Concerning Fever and those whose Malady makes them Cough. Legal Causes and Effects. Problems wrought by Hand. The other works which some attribute to Democritus are either compilations from his writings or admittedly not genuine. So much for the books that he wrote and their number."
+    ],
+    "trim": {
+     "start": "Of his works Thrasylus has made an ordered catalogue",
+     "end": "So much for the books that he wrote and their number."
+    }
+   }
+  ]
+ },
+ "1:A35": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "315a34-315b1",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "A similar criticism applies to all our predecessors with the single exception of Democritus. Not one of them penetrated below the surface or made a thorough examination of a single one of the problems.",
+     "Democritus, however, does seem not only to have thought carefully about all the problems, but also to be distinguished from the outset by his method."
     ]
+   }
+  ]
+ },
+ "1:A36": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Parts of Animals",
+    "locus": "642a24-642a30",
+    "status": "translated",
+    "translation_credit": "Ogle, 1912",
+    "emphasis": [
+     "The reason why our predecessors failed in hitting upon this method of treatment was, that they were not in possession of the notion of essence, nor of any definition of substance. The first who came near it was Democritus, and he was far from adopting it as a necessary method in natural science, but was merely brought to it, spite of himself, by constraint of facts. In the time of Socrates a nearer approach was made to the method. But at this period men gave up inquiring into the works of nature, and philosophers diverted their attention to political science and to the virtues which benefit mankind."
+    ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "1078b19-1078b21",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "for of the physicists Democritus only touched on the subject to a small extent, and defined, after a fashion, the hot and the cold"
+    ],
+    "trim": {
+     "start": "for of the physicists Democritus",
+     "end": "the hot and the cold"
+    }
+   }
+  ]
+ },
+ "1:A38": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "327a16-327a20",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "but we see the same body liquid at one time and solid at another, without losing its continuity. It has suffered this change not by 'division' and composition', nor yet by 'turning' and 'intercontact' as Democritus asserts; for it has passed from the liquid to the solid state"
+    ]
+   }
+  ]
+ },
+ "1:A41": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "203a33-203b2",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "Democritus, for his part, asserts the contrary, namely that no element arises from another element. Nevertheless for him the common body is a source of all things, differing from part to part in size and in shape."
+    ]
+   }
+  ]
+ },
+ "1:A42": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "1039a9-1039a11",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "he says one thing cannot be made out of two nor two out of one; for he identifies substances with his indivisible magnitudes."
+    ],
+    "trim": {
+     "start": "he says one thing cannot be made out of two"
+    }
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "318b6-318b7",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "Parmenides: for he says that the things into which change takes place are two, and he asserts that these two, viz. what is and what is not, are Fire and Earth."
+    ]
+   }
+  ]
+ },
+ "1:A45": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "188a22-188a26",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "Democritus",
+     "with his plenum and void, both of which exist, he says, the one as being, the other as not-being. Again he speaks of differences in position, shape, and order, and these are genera of which the species are contraries, namely, of position, above and below, before and behind; of shape, angular",
+     "straight and round."
+    ]
+   }
+  ]
+ },
+ "1:A46a": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On the Heavens",
+    "locus": "305b1-305b19",
+    "status": "translated",
+    "translation": "taylor",
+    "translation_credit": "Taylor, 1812",
+    "emphasis": [
+     "It has escaped the notice therefore of Empedocles and Democritus that they do not make the generation of things from each other, but introduce apparent generation.",
+     "for that which consists of more attenuated parts, exists in a more ample place. This is evident in mutation. For in consequence of that which is humid evaporating, and becoming inflated, the vessels containing the liquid bulks, burst through narrowness. Hence, if, in short, there is not a vacuum, and bodies are not extended as those assert who thus speak, the absurdity of this hypothesis is evident. But if there is a vacuum and extention, it is absurd that what is separated should always necessarily occupy a greater place."
+    ],
+    "trim": {
+     "omit": [
+      [
+       "For each thing being inherent in each",
+       "the air occupies a greater place;"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "1:A48b": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "316a13-316b16",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "Democritus would appear to have been convinced by arguments appropriate to the subject, i.e. drawn from the science of nature. Our meaning will become clear as we proceed. For to suppose that a body (i.e. a magnitude) is divisible through and through, and that this division is possible, involves a difficulty. What will there be in the body which escapes the division?",
+     "If it is divisible through and through, and if this division is possible, then it might be, at one and the same moment, divided through and through, even though the dividings had not been effected simultaneously: and the actual occurrence of this result would involve no impossibility. Hence the same principle will apply whenever a body is by nature divisible through and through, whether by bisection, or generally by any method whatever: nothing impossible will have resulted if it has actually been divided-not even if it has been divided into innumerable parts, themselves divided innumerable times. Nothing impossible will have resulted, though perhaps nobody in fact could so divide it.",
+     "Since, therefore, the body is divisible through and through, let it have been divided. What, then, will remain? A magnitude? No: that is impossible, since then there will be something not divided, whereas ex hypothesis the body was divisible through and through. But if it be admitted that neither a body nor a magnitude will remain, and yet division is to take place, the constituents of the body will either be points (i.e. without magnitude) or absolutely nothing. If its constituents are nothings, then it might both come-to-be out of nothings and exist as a composite of nothings: and thus presumably the whole body will be nothing but an appearance. But if it consists of points, a similar absurdity will result: it will not possess any magnitude. For when the points were in contact and coincided to form a single magnitude, they did not make the whole any bigger (since, when the body was divided into two or more parts, the whole was not a bit smaller or bigger than it was before the division): hence, even if all the points be put together, they will not make any magnitude.",
+     "But suppose that, as the body is being divided, a minute section-a piece of sawdust, as it were-is extracted, and that in this sense-a body 'comes away' from the magnitude, evading the division. Even then the same argument applies. For in what sense is that section divisible?",
+     "But if what 'came away' was not a body but a separable form or quality, and if the magnitude is 'points or contacts thus qualified': it is paradoxical that a magnitude should consist of elements, which are not magnitudes. Moreover, where will the points be? And are they motionless or moving? And every contact is always a contact of two somethings, i.e. there is always something besides the contact or the division or the point.",
+     "These, then, are the difficulties resulting from the supposition that any and every body, whatever its size, is divisible through and through. There is, besides, this further consideration. If, having divided a piece of wood or anything else, I put it together, it is again equal to what it was, and is one. Clearly this is so, whatever the point at which I cut the wood. The wood, therefore, has been divided potentially through and through. What, then, is there in the wood besides the division? For even if we suppose there is some quality, yet how is the wood dissolved into such constituents and how does it come-to-be out of them? Or how are such constituents separated so as to exist apart from one another? Since, therefore, it is impossible for magnitudes to consist of contacts or points, there must be indivisible bodies and magnitudes."
+    ],
+    "trim": {
+     "start": "Democritus would appear to have been convinced"
+    }
    }
   ]
  },
@@ -38,7 +224,913 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "According to Hermippus, however, he started as a schoolmaster, but on coming across the works of Democritus turned eagerly to philosophy."
+    ],
+    "trim": {
+     "start": "According to Hermippus, however, he started as a schoolmaster"
+    }
+   }
+  ]
+ },
+ "1:A57": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "1069b22-1069b23",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "and the account given by Democritus",
+     "'all things were together potentially but not actually'."
+    ],
+    "trim": {
+     "start": "and the account given by Democritus",
+     "omit": [
+      [
+       "-it is better to say",
+       "-it is better to say"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "1:A58": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "265b24-265b25",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "say that 'void' accounts for motion-they also hold that the motion of natural substance is motion in respect of place"
+    ],
+    "trim": {
+     "start": "but say that 'void' accounts for motion",
+     "end": "is motion in respect of place"
+    }
+   }
+  ]
+ },
+ "1:A60": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "326a9-326a10",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "And yet Democritus says 'the more any indivisible exceeds, the heavier it is'"
     ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "On the Heavens",
+    "locus": "309a1-310a11",
+    "status": "translated",
+    "translation_credit": "Stocks, 1922",
+    "emphasis": [
+     "but those who regard them as solids are in a better position to assert that of such bodies the larger is the heavier. But since in composite bodies the weight obviously does not correspond in this way to the bulk, the lesser bulk being often superior in weight (as, for instance, if one be wool and the other bronze), there are some who think and say that the cause is to be found elsewhere. The void, they say, which is imprisoned in bodies, lightens them and sometimes makes the larger body the lighter. The reason is that there is more void.",
+     "This is the way they put it themselves, but their account requires an addition. Relative lightness must depend not only on an excess of void, but also an a defect of solid: for if the ratio of solid to void exceeds a certain proportion, the relative lightness will disappear. Thus fire, they say, is the lightest of things just for this reason that it has the most void. But it would follow that a large mass of gold, as containing more void than a small mass of fire, is lighter than it, unless it also contains many times as much solid.",
+     "and if there is one matter and its contrary-the void, for instance, and the plenum-no reason can be given for the relative lightness and heaviness of the bodies intermediate between the absolutely light and heavy when compared either with one another or with these themselves. The view which bases the distinction upon differences of size is more like a mere fiction than those previously mentioned",
+     "that there is nothing absolutely light and nothing which moves upward (except as being passed by other things or forced up by them)",
+     "a multitude of small atoms are heavier than a few large ones"
+    ],
+    "trim": {
+     "start": "but those who regard them as solids",
+     "end": "a multitude of small atoms are heavier than a few large ones",
+     "omit": [
+      [
+       "And this would also account for the fact",
+       "when it contains a relatively large amount of void."
+      ],
+      [
+       "The addition is therefore necessary.",
+       "nothing can be absolutely heavy or light:"
+      ],
+      [
+       ", but, in that it is able to make distinctions",
+       "equally with the view that there is but one matter,"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "1:A60a": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On the Heavens",
+    "locus": "303a25-303a29",
+    "status": "translated",
+    "translation_credit": "Stocks, 1922",
+    "emphasis": [
+     "For if the elements are atomic, air, earth, and water cannot be differentiated by the relative sizes of their atoms, since then they could not be generated out of one another. The extrusion of the largest atoms is a process that will in time exhaust the supply; and it is by such a process that they account for the generation of water, air, and earth from one another."
+    ]
+   }
+  ]
+ },
+ "1:A62": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On the Heavens",
+    "locus": "313a21-313b5",
+    "status": "translated",
+    "translation_credit": "Stocks, 1922",
+    "emphasis": [
+     "With regard to these questions, it is wrong to accept the explanation offered by Democritus.",
+     "He says that the warm bodies moving up out of the water hold up heavy bodies which are broad, while the narrow ones fall through, because the bodies which offer this resistance are not numerous. But this would be even more likely to happen in air-an objection which he himself raises. His reply to the objection is feeble. In the air, he says, the 'drive' (meaning by drive the movement of the upward moving bodies) is not uniform in direction."
+    ]
+   }
+  ]
+ },
+ "1:A63": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "323b10-323b15",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "Democritus dissented from all the other thinkers and maintained a theory peculiar to himself. He asserts that agent and patient are identical, i.e. 'like'. It is not possible (he says) that 'others', i.e. 'differents', should suffer action from one another: on the contrary, even if two things, being 'others', do act in some way on one another, this happens to them not qua 'others' but qua possessing an identical property."
+    ]
+   }
+  ]
+ },
+ "1:A65": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "252a32-252b1",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "But it is a wrong assumption to suppose universally that we have an adequate first principle in virtue of the fact that something always is so or always happens so. Thus Democritus reduces the causes that explain nature to the fact that things happened in the past in the same way as they happen now: but he does not think fit to seek for a first principle to explain this 'always'"
+    ],
+    "trim": {
+     "end": "for a first principle to explain this 'always'"
+    }
+   }
+  ]
+ },
+ "1:A66": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Generation of Animals",
+    "locus": "789b2-789b4",
+    "status": "translated",
+    "translation_credit": "Platt, 1910",
+    "emphasis": [
+     "Democritus, however, neglecting the final cause, reduces to necessity all the operations of Nature."
+    ]
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "1.26",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Democritus makes it to",
+     "end": "force of matter."
+    }
+   }
+  ]
+ },
+ "1:A68": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "195b36-196a3",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "Some people even question whether they are real or not.",
+     "They say that nothing happens by chance, but that everything which we ascribe to chance or spontaneity has some definite cause"
+    ],
+    "trim": {
+     "end": "has some definite cause"
+    }
+   }
+  ]
+ },
+ "1:A71": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Physics",
+    "locus": "251b15-251b17",
+    "status": "translated",
+    "translation_credit": "Hardie and Gaye, 1930",
+    "emphasis": [
+     "in saying that it is uncreated: in fact, it is just this that enables Democritus to show that all things cannot have had a becoming: for time, he says, is uncreated."
+    ],
+    "trim": {
+     "start": "in saying that it is uncreated"
+    }
+   }
+  ]
+ },
+ "1:A97": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Meteorology",
+    "locus": "365b1-365b6",
+    "status": "translated",
+    "translation_credit": "Webster, 1923",
+    "emphasis": [
+     "Democritus says that the earth is full of water and that when a quantity of rain-water is added to this an earthquake is the result. The hollows in the earth being unable to admit the excess of water it forces its way in and so causes an earthquake. Or again, the earth as it dries draws the water from the fuller to the emptier parts, and the inrush of the water as it changes its place causes the earthquake."
+    ]
+   }
+  ]
+ },
+ "1:A100": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Meteorology",
+    "locus": "356b4-356b21",
+    "status": "translated",
+    "translation_credit": "Webster, 1923",
+    "emphasis": [
+     "We must now explain why the sea is salt, and ask whether it eternally exists as identically the same body, or whether it did not exist at all once and some day will exist no longer, but will dry up as some people think.",
+     "Every one admits this, that if the whole world originated the sea did too; for they make them come into being at the same time. It follows that if the universe is eternal the same must be true of the sea. Any one who thinks like Democritus that the sea is diminishing and will disappear in the end reminds us of Aesop's tales. His story was that Charybdis had twice sucked in the sea: the first time she made the mountains visible; the second time the islands; and when she sucks it in for the last time she will dry it up entirely. Such a tale is appropriate enough to Aesop in a rage with the ferryman, but not to serious inquirers. Whatever made the sea remain at first, whether it was its weight, as some even of those who hold these views say",
+     "or some other reason-clearly the same thing must make it persist for ever."
+    ]
+   }
+  ]
+ },
+ "1:A101": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "De Anima",
+    "locus": "404a27-404a31",
+    "status": "translated",
+    "translation_credit": "Smith, 1931",
+    "emphasis": [
+     "His position must, however, be distinguished from that of Democritus. Democritus roundly identifies soul and mind, for he identifies what appears with what is true-that is why he commends Homer for the phrase 'Hector lay with thought distraught'; he does not employ mind as a special faculty dealing with truth, but identifies soul and mind."
+    ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "De Anima",
+    "locus": "405a5-405a13",
+    "status": "translated",
+    "translation_credit": "Smith, 1931",
+    "emphasis": [
+     "some to regard it as fire, for fire is the subtlest of the elements and nearest to incorporeality; further, in the most primary sense, fire both is moved and originates movement in all the others.",
+     "Democritus has expressed himself more ingeniously than the rest on the grounds for ascribing each of these two characters to soul; soul and mind are, he says, one and the same thing, and this thing must be one of the primary and indivisible bodies, and its power of originating movement must be due to its fineness of grain and the shape of its atoms; he says that of all the shapes the spherical is the most mobile, and that this is the shape of the particles of fire and mind."
+    ]
+   }
+  ]
+ },
+ "1:A104": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "De Anima",
+    "locus": "406b15-406b22",
+    "status": "translated",
+    "translation_credit": "Smith, 1931",
+    "emphasis": [
+     "Some go so far as to hold that the movements which the soul imparts to the body in which it is are the same in kind as those with which it itself is moved. An example of this is Democritus, who uses language like that of the comic dramatist Philippus, who accounts for the movements that Daedalus imparted to his wooden Aphrodite by saying that he poured quicksilver into it; similarly Democritus says that the spherical atoms which according to him constitute soul, owing to their own ceaseless movements draw the whole body after them and so produce its movements."
+    ]
+   }
+  ]
+ },
+ "1:A104a": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "De Anima",
+    "locus": "409a32-409b4",
+    "status": "translated",
+    "translation_credit": "Smith, 1931",
+    "emphasis": [
+     "Democritus' way of describing the manner in which movement is originated by soul.",
+     "For if the soul is present throughout the whole percipient body, there must, if the soul be a kind of body, be two bodies in the same place"
+    ],
+    "trim": {
+     "start": "Democritus' way of describing",
+     "end": "two bodies in the same place"
+    }
+   }
+  ]
+ },
+ "1:A106": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Youth, Old Age, Life and Death, and Respiration",
+    "locus": "471b30-472a18",
+    "status": "translated",
+    "translation_credit": "G. R. T. Ross, 1908",
+    "emphasis": [
+     "Democritus, however, does teach that in the breathing animals there is a certain result produced by respiration; he asserts that it prevents the soul from being extruded from the body.",
+     "Nevertheless, he by no means asserts that it is for this purpose that Nature so contrives it, for he, like the other physical philosophers, altogether fails to attain to any such explanation. His statement is that the soul and the hot element are identical, being the primary forms among the spherical particles. Hence, when these are being crushed together by the surrounding atmosphere thrusting them out, respiration, according to his account, comes in to succour them.",
+     "For in the air there are many of those particles which he calls mind and soul. Hence, when we breathe and the air enters, these enter along with it, and by their action cancel the pressure, thus preventing the expulsion of the soul which resides in the animal.",
+     "This explains why life and death are bound up with the taking in and letting out of the breath; for death occurs when the compression by the surrounding air gains the upper hand, and, the animal being unable to respire, the air from outside can no longer enter and counteract the compression. Death is the departure of those forms owing to the expulsive pressure exerted by the surrounding air. Death, however, occurs not by haphazard but, when natural, owing to old age, and, when unnatural, to violence.",
+     "But the reason for this and why all must die Democritus has by no means made clear."
+    ]
+   }
+  ]
+ },
+ "1:A112": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Metaphysics",
+    "locus": "1009b7-1009b15",
+    "status": "translated",
+    "translation_credit": "Ross, 1928",
+    "emphasis": [
+     "And again, they say that many of the other animals receive impressions contrary to ours; and that even to the senses of each individual, things do not always seem the same. Which, then, of these impressions are true and which are false is not obvious; for the one set is no more true than the other, but both are alike. And this is why Democritus, at any rate, says that either there is no truth or to us at least it is not evident.",
+     "And in general it is because these thinkers suppose knowledge to be sensation, and this to be a physical alteration, that they say that what appears to our senses must be true"
+    ]
+   }
+  ]
+ },
+ "1:A119": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Sense and Sensibilia",
+    "locus": "442a29-442b3",
+    "status": "translated",
+    "translation_credit": "Beare, 1908",
+    "emphasis": [
+     "Democritus and most of the natural philosophers who treat of sense-perception proceed quite irrationally, for they represent all objects of sense as objects of Touch. Yet, if this is really so, it clearly follows that each of the other senses is a mode of Touch"
+    ]
+   }
+  ]
+ },
+ "1:A121": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Sense and Sensibilia",
+    "locus": "438a5-438a12",
+    "status": "translated",
+    "translation_credit": "Beare, 1908",
+    "emphasis": [
+     "Democritus, on the other hand, is right in his opinion that the eye is of water; not, however, when he goes on to explain seeing as mere mirroring.",
+     "But it would seem that even in his time there was no scientific knowledge of the general subject of the formation of images and the phenomena of reflexion. It is strange too, that it never occurred to him to ask why, if his theory be true, the eye alone sees, while none of the other things in which images are reflected do so."
+    ],
+    "trim": {
+     "omit": [
+      [
+       "The mirroring that takes place in an eye",
+       "For the case is merely one of reflexion."
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "1:A122": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "De Anima",
+    "locus": "419a15-419a17",
+    "status": "translated",
+    "translation_credit": "Smith, 1931",
+    "emphasis": [
+     "Democritus misrepresents the facts when he expresses the opinion that if the interspace were empty one could distinctly see an ant on the vault of the sky"
+    ]
+   }
+  ]
+ },
+ "1:A123": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "On Generation and Corruption",
+    "locus": "316a1-316a2",
+    "status": "translated",
+    "translation_credit": "Joachim, 1922",
+    "emphasis": [
+     "His denial of the reality of colour is a corollary from this position: for, according to him, things get coloured by 'turning' of the 'figures'."
+    ]
+   }
+  ]
+ },
+ "1:A126": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Sense and Sensibilia",
+    "locus": "442b11-442b12",
+    "status": "translated",
+    "translation_credit": "Beare, 1908",
+    "emphasis": [
+     "White and Black; for he asserts that the latter is [a mode of the] rough, and the former [a mode of the] smooth, while he reduces Savours to the atomic figures."
+    ]
+   }
+  ]
+ },
+ "1:A143": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Generation of Animals",
+    "locus": "764a6-764a11",
+    "status": "translated",
+    "translation_credit": "Platt, 1910",
+    "emphasis": [
+     "Democritus of Abdera also says that the differentiation of sex takes place within the mother; that however it is not because of heat and cold that one embryo becomes female and another male, but that it depends on the question which parent it is whose semen prevails — not the whole of the semen, but that which has come from the part by which male and female differ from one another."
+    ]
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.7",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Democritus, that the parts",
+     "end": "is more prevalent."
+    }
+   }
+  ]
+ },
+ "1:A144": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Generation of Animals",
+    "locus": "740a33-740a37",
+    "status": "translated",
+    "translation_credit": "Platt, 1910",
+    "emphasis": [
+     "The vessels join on to the uterus like the roots of plants, and through them the embryo receives its nourishment. This is why the animal remains in the uterus, not, as Democritus says, that the parts of the embryo may be moulded in conformity with those of the mother."
+    ]
+   },
+   {
+    "source_author": "Aristotle",
+    "source_work": "Generation of Animals",
+    "locus": "746a19-746a20",
+    "status": "translated",
+    "translation_credit": "Platt, 1910",
+    "emphasis": [
+     "Those who say that children are nourished in the uterus by sucking some lump of flesh or other are mistaken."
+    ]
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.16",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Democritus and Epicurus say,",
+     "end": "receive their nutriment."
+    }
+   }
+  ]
+ },
+ "1:A148": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Parts of Animals",
+    "locus": "665a30-665a33",
+    "status": "translated",
+    "translation_credit": "Ogle, 1912",
+    "emphasis": [
+     "while no bloodless animals have any at all. Democritus then seems to have been mistaken in the notion he formed of the viscera, if, that is to say, he fancied that the reason why none were discoverable in bloodless animals was that these animals were too small to allow them to be seen."
+    ],
+    "trim": {
+     "start": "while no bloodless animals have any at all"
+    }
+   }
+  ]
+ },
+ "1:A149": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Generation of Animals",
+    "locus": "747a29-747a31",
+    "status": "translated",
+    "translation_credit": "Platt, 1910",
+    "emphasis": [
+     "Democritus says that the genital passages of mules are spoilt in the mother’s uterus because the animals from the first are not produced from parents of the same kind."
+    ]
+   }
+  ]
+ },
+ "1:A150": {
+  "context_spans": [
+   {
+    "source_author": "pseudo-Aristotle",
+    "source_work": "History of Animals",
+    "locus": "623a30-623a33",
+    "status": "translated",
+    "translation_credit": "Thompson, 1910",
+    "emphasis": [
+     "Spiders can spin webs from the time of their birth, not from their interior as a superfluity or excretion, as Democritus avers, but off their body as a kind of tree-bark, like the creatures that shoot out with their hair, as for instance the porcupine."
+    ]
+   }
+  ]
+ },
+ "1:A151": {
+  "context_spans": [
+   {
+    "source_author": "Aristotle",
+    "source_work": "Generation of Animals",
+    "locus": "747a29-747a31",
+    "status": "translated",
+    "translation_credit": "Platt, 1910",
+    "emphasis": [
+     "Democritus says that the genital passages of mules are spoilt in the mother’s uterus because the animals from the first are not produced from parents of the same kind."
+    ]
+   }
+  ]
+ },
+ "1:A105": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "4.4",
+    "head": "AËT. IV 4, 6 (D. 390)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Democritus and Epicurus divide",
+     "end": "structure of the body."
+    }
+   }
+  ]
+ },
+ "1:A109": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "4.7",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Epicurus and Democritus, the",
+     "end": "perisheth with the body."
+    }
+   }
+  ]
+ },
+ "1:A116": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "4.10",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Democritus, that there are",
+     "end": "and to wise men."
+    }
+   }
+  ]
+ },
+ "1:A117": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "4.4",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Democritus, that the quality",
+     "end": "expired out of them."
+    }
+   }
+  ]
+ },
+ "1:A128": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "4.19",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "is broken into bodies of similar configuration",
+     "of the same form"
+    ],
+    "trim": {
+     "start": "Democritus, that the air",
+     "end": "infinite company of persons?"
+    }
+   }
+  ]
+ },
+ "1:A136": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.2",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Democritus says that dreams",
+     "end": "adventitious representations."
+    }
+   }
+  ]
+ },
+ "1:A140": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.4",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Strato and Democritus, that",
+     "end": "it is like spirit."
+    }
+   }
+  ]
+ },
+ "1:A142": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "5.5",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Epicurus, and Democritus say,",
+     "end": "a venereal appetite."
+    }
+   }
+  ]
+ },
+ "1:A47": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "1.3",
+    "head": "AËT. I 3, 18 (D. 285)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Democritus acknowledged but two,",
+     "end": "could not be moved."
+    }
+   },
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "1.23",
+    "head": "AËT. I 23, 3 (D. 319)",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "vibratory"
+    ],
+    "trim": {
+     "start": "Democritus, that there is",
+     "end": "which is vibratory."
+    }
+   }
+  ]
+ },
+ "1:A48": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "1.16",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Others hold that atoms",
+     "end": "division into infinity."
+    }
+   }
+  ]
+ },
+ "1:A86": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.15",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Democritus, that the fixed",
+     "end": "the moon, in their order."
+    }
+   }
+  ]
+ },
+ "1:A91": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.1",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Democritus, that it is",
+     "end": "enlighten one another."
+    }
+   }
+  ]
+ },
+ "1:A94": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.10",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Democritus, that it is",
+     "end": "hollow in the middle."
+    }
+   }
+  ]
+ },
+ "1:A95": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.13",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Democritus, that when the",
+     "end": "poised and fixed."
+    }
+   }
+  ]
+ },
+ "1:A96": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "3.12",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Democritus, because, the southern",
+     "end": "its own increase."
+    }
+   }
+  ]
+ },
+ "1:A99": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "4.1",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Democritus, that the snows",
+     "end": "hath its inundation."
+    }
+   }
+  ]
+ },
+ "1:A17a": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Convivales",
+    "locus": "628c",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "if in our disquisitions after truth",
+     "end": "natural and proper to the fruit."
+    }
+   }
+  ]
+ },
+ "1:A27": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Curiositate",
+    "locus": "521c-521d",
+    "status": "translated",
+    "translation_credit": "Helmbold, 1939",
+    "trim": {
+     "start": "though that story about Democritus is false",
+     "end": "windows which open on the street;"
+    }
+   }
+  ]
+ },
+ "1:A35a": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Virtute Morali",
+    "locus": "448a",
+    "status": "translated",
+    "translation_credit": "Helmbold, 1939",
+    "trim": {
+     "start": "Aristotle himself and Democritus and Chrysippus",
+     "end": "some of the dogmas they previously held?"
+    }
+   }
+  ]
+ },
+ "1:A53": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Adversus Colotem",
+    "locus": "1108e",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Epicurus for a long time called himself a Democritean",
+     "end": "had never attained to wisdom."
+    }
+   }
+  ]
+ },
+ "1:A77": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Convivales",
+    "locus": "734f-735b",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "images pass through the pores into the inmost parts of the body",
+     "being carried upward",
+     "their heat and the motion of their spirits"
+    ],
+    "trim": {
+     "start": "But Favorinus himself",
+     "omit": [
+      [
+       "though in all other things he admires",
+       "most probable,"
+      ]
+     ],
+     "end": "clear and evident."
+    }
+   },
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Convivales",
+    "locus": "682f-683a",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "Democritus’s images"
+    ],
+    "trim": {
+     "start": "Then it seems you make no more reckoning",
+     "end": "admirable and divine."
+    }
+   }
+  ]
+ },
+ "1:A89a": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Facie in Orbe Lunae",
+    "locus": "929c",
+    "status": "translated",
+    "translation_credit": "Cherniss, 1957",
+    "trim": {
+     "start": "rather, ‘standing in a straight line",
+     "end": "to let him shine through."
+    }
    }
   ]
  }

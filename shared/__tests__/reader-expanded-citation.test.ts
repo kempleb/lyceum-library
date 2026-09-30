@@ -278,6 +278,29 @@ function bookWithNoLocus(): BookData {
   };
 }
 
+// A work cited by its own name, not an author's (real Heraclitus B122): the
+// Suda's title is empty (no "Suda, Lexicon (Suda)" double-naming), so the
+// author's own trailing ", " is the only separator before the locus -- a
+// second, unconditional space before the locus would print "Suda,  s.v."
+// (GPT-6-Sol review, 2026-09-27).
+function bookWithNoTitle(): BookData {
+  return {
+    book: 1,
+    segments: [
+      {
+        id: 'seg-T1', column: 'T1',
+        greek: [{ n: 1, text: 'SUID. s. v. ἀγχιβατεῖν ἀμφισβατεῖν·', tokens: [], role: 'context' }],
+        english: { text: 'No title.', notes: [], markers: [] },
+        expandedCitation: [[{
+          verbatim: 'SUID. s. v.', resolution: 'direct', authorDisplay: 'Suda',
+          work: { title: '', italic: true }, locus: 's.v. ἀγχιβατεῖν',
+          flags: ['cited-by-lemma'], dashInherited: false,
+        }]],
+      },
+    ],
+  };
+}
+
 // The stage also reads a dash head from a line the spine marks as text
 // (Heraclitus B42) and from a later line of a context run (Democritus B82
 // "—*48."); the reader must count those lines as run starts too, or every
@@ -440,6 +463,13 @@ describe('Reader.svelte DK source-citation expansion (docs/citation-expansion-wi
     expect(alone?.textContent).toBe('Herodian (grammarian), Περὶ μονήρους λέξεως');
   });
 
+  it('an empty title adds no second space before the locus (Suda, real Heraclitus B122)', async () => {
+    render(Reader, { props: { work: 'ECFIX', bookNum: 1, bookData: bookWithNoTitle() } });
+    await flush();
+    const entry = document.querySelector('#col-T1 .expanded-citation-entry');
+    expect(entry?.textContent).toBe('Suda, s.v. ἀγχιβατεῖν');
+  });
+
   it('rule E: dash heads on a text line or later in a context run count as run starts', async () => {
     render(Reader, { props: { work: 'ECFIX', bookNum: 1, bookData: bookWithDashHeadLines() } });
     await flush();
@@ -461,4 +491,26 @@ describe('Reader.svelte DK source-citation expansion (docs/citation-expansion-wi
     expect(citations?.length).toBe(1);
     expect(citations?.[0]?.textContent?.trim()).toBe('[vgl. B 13],');
   });
+});
+
+it('renders each located citation, its expansion and matching source English in the same row', () => {
+  const text = 'ARIST. Metaph. A 3. λόγος. DIOG. II 22 λόγος.';
+  const heads = ['ARIST. Metaph. A 3.', 'DIOG. II 22'];
+  const bookData: BookData = { book: 1, segments: [{
+    id: 'located', column: 'A4', greek: [{ n: -1, text, role: 'context', tokens: [] }], english: null,
+    citationHeads: heads.map((head, i) => ({ lineIndex: 0, line: -1, start: text.indexOf(head), end: text.indexOf(head) + head.length, text: head,
+      expanded: [{ verbatim: head, resolution: 'direct', authorDisplay: i ? 'Diogenes Laertius' : 'Aristotle', work: { title: i ? 'Vitae Philosophorum' : 'Metaphysica', italic: true }, flags: [] }] })),
+    contextEnglish: [{ sourceAuthor: 'Diogenes Laertius', sourceWork: 'Lives of Eminent Philosophers', locus: 'II 22', status: 'translated', text: 'Source passage English.', translationCredit: 'Test' }],
+  }] };
+  const { container } = render(Reader, { props: { work: 'ECFIX', bookNum: 1, bookData } });
+  const rows = [...container.querySelectorAll('#col-A4 .seg-row')];
+  expect(rows).toHaveLength(2);
+  rows.forEach((row, i) => {
+    expect(row.querySelector('.frag-source-head')?.textContent).toBe(heads[i]);
+    expect(row.querySelector('.expanded-citation')?.textContent).toContain(i ? 'Diogenes Laertius' : 'Aristotle');
+    expect(row.querySelector('.frag-flow')?.textContent?.trim()).toBe('λόγος.');
+  });
+  expect(rows[0]!.querySelector('.context-english')).toBeNull();
+  expect(rows[1]!.querySelector('.context-english')?.textContent).toContain('Source passage English.');
+  expect(container.querySelectorAll('#LA4')).toHaveLength(1);
 });

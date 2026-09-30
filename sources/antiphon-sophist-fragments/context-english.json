@@ -1,0 +1,517 @@
+{
+ "1:B27": {
+  "context_spans": [
+   {
+    "source_author": "Aëtius",
+    "source_work": "Placita",
+    "locus": "2.28",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Antiphon, that the moon",
+     "end": "seen in other stars."
+    }
+   }
+  ]
+ },
+ "1:B4": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. ἄοπτα",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Aopta",
+     "On Truth book 1"
+    ]
+   }
+  ]
+ },
+ "1:B5": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. ἀπαθῆ",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Apathe",
+     "On Truth"
+    ]
+   }
+  ]
+ },
+ "1:B11": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. δεήσεις",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Deeseis",
+     "On Truth"
+    ]
+   }
+  ]
+ },
+ "1:B14": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. διάθεσις",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "On Truth 1 (says), “stripped of a starting point, it would have disposed even many good things badly"
+    ],
+    "trim": {
+     "omit": [
+      [
+       "For ‘sale:’",
+       "the disposition of the words.”"
+      ]
+     ],
+     "end": "many good things badly.”"
+    }
+   }
+  ]
+ },
+ "1:B15": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. ἔμβιος",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "On the Truth book one: “and the decay",
+     "should become alive"
+    ],
+    "trim": {
+     "omit": [
+      [
+       "of the wood",
+       "of the wood"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "1:B18": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. ἀναποδιζόμενα",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Anapodizomena",
+     "On Truth"
+    ]
+   }
+  ]
+ },
+ "1:B19": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. ἀνήκει",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Anekei",
+     "On Truth"
+    ]
+   }
+  ]
+ },
+ "1:B20": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. ἐπαλλάξεις",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Epallaxeis",
+     "On Truth"
+    ]
+   }
+  ]
+ },
+ "1:B21": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. ὀριγνηθῆναι",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Orignethenai",
+     "On Truth"
+    ]
+   }
+  ]
+ },
+ "1:B23": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. διάστασις",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Diastasis",
+     "Antiphon, On Truth book 2: “concerning the ordering that now prevails,”"
+    ]
+   }
+  ]
+ },
+ "1:B24": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. ἀδιάστατον",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Adiastaton"
+    ]
+   }
+  ]
+ },
+ "1:B33": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. πεφοριῶσθαι",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "in book two of On Truth",
+     "“thick skin”"
+    ],
+    "trim": {
+     "omit": [
+      [
+       "Lysias in the Letter",
+       "(phorine);"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "1:B43": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. ἄβιος",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "“abios”"
+    ]
+   }
+  ]
+ },
+ "1:B45": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. Σκιάποδες",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Skiapodes (shade-footed): Antiphon in On Concord"
+    ],
+    "trim": {
+     "end": "It is a Libyan people."
+    }
+   }
+  ]
+ },
+ "1:B46": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. Μακροκέφαλοι",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Makrokephaloi (bigheaded ones): Antiphon in On Concord"
+    ],
+    "trim": {
+     "end": "There is a nation so called"
+    }
+   }
+  ]
+ },
+ "1:B47": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. ὑπὸ γῆν οἰκοῦντες",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Hypo gen oikountes",
+     "in On Concord"
+    ]
+   }
+  ]
+ },
+ "1:B52": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. ἀναθέσθαι",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Anathesthai",
+     "Antiphon in On Concord: “to take back one’s life as if a draught-piece is not possible,”"
+    ],
+    "trim": {
+     "end": "from those playing draughts."
+    }
+   }
+  ]
+ },
+ "1:B63": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. διάθεσις",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "in On Concord (said), “but knowing the disposition they listen.”"
+    ],
+    "trim": {
+     "omit": [
+      [
+       "For ‘sale:’",
+       "endeixis of Kallias,"
+      ]
+     ],
+     "end": "the disposition they listen.”"
+    }
+   }
+  ]
+ },
+ "1:B67": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. ἀθεώρητος",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Atheoretos",
+     "in the speech On Concord"
+    ]
+   }
+  ]
+ },
+ "1:B67a": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. ἀνδρεία",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Andreia",
+     "in On Concord."
+    ]
+   }
+  ]
+ },
+ "1:B68": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. αὐλιζόμενοι",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Aulizomenoi",
+     "On Concord"
+    ]
+   }
+  ]
+ },
+ "1:B70": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. εὐηνιώτατα",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Eueniotata",
+     "On Concord"
+    ],
+    "trim": {
+     "end": "The metaphor is from horses."
+    }
+   }
+  ]
+ },
+ "1:B71": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. φηλώματα",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Phelomata",
+     "Antiphon in On Concord"
+    ]
+   }
+  ]
+ },
+ "1:B74": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. εὐσύμβολος",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Eusymbolos",
+     "Politikos"
+    ]
+   }
+  ]
+ },
+ "1:B75": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. ἡμιολιασμός",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Politikos, “doubling and multiplying by one and a half”"
+    ],
+    "trim": {
+     "end": "in calculations."
+    }
+   }
+  ]
+ },
+ "1:B87": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. ἀκαρῆ",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Akare"
+    ]
+   }
+  ]
+ },
+ "1:B88": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. βάσανος",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Basanos"
+    ],
+    "trim": {
+     "end": "by being rubbed against it."
+    }
+   }
+  ]
+ },
+ "1:B89": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. δυσάνιος",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Dysanios"
+    ],
+    "trim": {
+     "end": "even if it is small and negligible"
+    }
+   }
+  ]
+ },
+ "1:B90": {
+  "context_spans": [
+   {
+    "source_author": "Harpocration",
+    "source_work": "Lexicon in Decem Oratores",
+    "locus": "s.v. εἰσφρήσειν",
+    "status": "translated",
+    "translation_credit": "Harpokration On Line (CC BY 4.0)",
+    "emphasis": [
+     "Eisfresein"
+    ],
+    "trim": {
+     "end": "‘to admit:’ Antiphon"
+    }
+   }
+  ]
+ },
+ "1:B77": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Antonius",
+    "locus": "28",
+    "status": "translated",
+    "translation_credit": "Perrin, 1920",
+    "emphasis": [
+     "the most costly outlay, namely, time"
+    ],
+    "trim": {
+     "start": "he squandered and spent upon pleasures",
+     "end": "namely, time."
+    }
+   }
+  ]
+ }
+}

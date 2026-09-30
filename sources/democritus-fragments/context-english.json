@@ -9,7 +9,10 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "As regards chronology, he was, as he says himself in the Lesser Diacosmos, a young man when Anaxagoras was old, being forty years his junior. He says that the Lesser Diacosmos was compiled 730 years after the capture of Troy."
-    ]
+    ],
+    "trim": {
+     "end": "730 years after the capture of Troy."
+    }
    },
    {
     "source_author": "Diogenes Laertius",
@@ -20,7 +23,11 @@
     "emphasis": [
      "But Favorinus in his Miscellaneous History tells us that Democritus, speaking of Anaxagoras, declared that his views on the sun and the moon were not original but of great antiquity, and that he had simply stolen them.",
      "Democritus also pulled to pieces the views of Anaxagoras on cosmogony and on mind, having a spite against him, because Anaxagoras did not take to him."
-    ]
+    ],
+    "trim": {
+     "start": "But Favorinus in his Miscellaneous History",
+     "end": "because Anaxagoras did not take to him."
+    }
    }
   ]
  },
@@ -33,8 +40,12 @@
     "status": "translated",
     "translation_credit": "Hicks, 1925",
     "emphasis": [
-     "I came to Athens and no one knew me.’”"
-    ]
+     "I came to Athens and no one knew me."
+    ],
+    "trim": {
+     "start": "I came to Athens and no one knew me.",
+     "end": "I came to Athens and no one knew me."
+    }
    }
   ]
  },
@@ -48,7 +59,279 @@
     "translation_credit": "Hicks, 1925",
     "emphasis": [
      "Democritus because he rejects qualities, saying, “Opinion says hot or cold, but the reality is atoms and empty space,” and again, “Of a truth we know nothing, for truth is in a well.”"
-    ]
+    ],
+    "trim": {
+     "start": "Democritus because he rejects qualities",
+     "end": "for truth is in a well.”"
+    }
+   }
+  ]
+ },
+ "1:B3": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Tranquillitate Animi",
+    "locus": "465c",
+    "status": "translated",
+    "translation_credit": "Helmbold, 1939",
+    "emphasis": [
+     "The man who would be tranquil in his mind must not engage in many affairs, either private or public"
+    ],
+    "trim": {
+     "start": "Now he who said",
+     "end": "at the price of inactivity;"
+    }
+   }
+  ]
+ },
+ "1:B145": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Liberis Educandis",
+    "locus": "9f",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1927",
+    "emphasis": [
+     "A word is a deed’s shadow."
+    ],
+    "trim": {
+     "start": "for, according to Democritus",
+     "end": "A word is a deed’s shadow.”"
+    }
+   }
+  ]
+ },
+ "1:B146": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Profectibus in Virtute",
+    "locus": "81b",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1927",
+    "emphasis": [
+     "becoming accustomed to find within himself the sources of enjoyment."
+    ],
+    "trim": {
+     "start": "reason is already growing within him",
+     "end": "the sources of enjoyment.”"
+    }
+   }
+  ]
+ },
+ "1:B147": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Tuenda Sanitate Praecepta",
+    "locus": "129a",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1928",
+    "emphasis": [
+     "swine in their wild excitement over bedding"
+    ],
+    "trim": {
+     "start": "For it is absurd to give careful heed",
+     "end": "and is just about to break."
+    }
+   }
+  ]
+ },
+ "1:B148": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Amore Prolis",
+    "locus": "495e",
+    "status": "translated",
+    "translation_credit": "Helmbold, 1939",
+    "emphasis": [
+     "for the umbilical cord grows at first in the womb",
+     "as an anchorage against the swell and drift, a cable and vine” for the fruit now conceived that is to be"
+    ],
+    "trim": {
+     "start": "But when the womb receives the seed",
+     "end": "Nature shuts the monthly canals of purification"
+    }
+   }
+  ]
+ },
+ "1:B149": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Animine an Corporis Affectiones Sint Peiores",
+    "locus": "500d-500e",
+    "status": "translated",
+    "translation_credit": "Helmbold, 1939",
+    "emphasis": [
+     "a storehouse and treasury",
+     "of all manner of evils and many abnormal states"
+    ],
+    "trim": {
+     "start": "Shall we, then, say in our own case",
+     "end": "causes to gush forth”?"
+    }
+   }
+  ]
+ },
+ "1:B151": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Convivales",
+    "locus": "643e",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "in a fish eaten in common",
+     "there are no bones"
+    ],
+    "trim": {
+     "start": "for in a fish eaten in common",
+     "end": "there are no bones."
+    }
+   }
+  ]
+ },
+ "1:B152": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Convivales",
+    "locus": "665e-665f",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "Nothing, says Democritus, is blasted with lightning, that cannot resist and stop the motion of the pure flame"
+    ],
+    "trim": {
+     "start": "Lightning is wonderfully piercing",
+     "end": "the motion of the pure flame."
+    }
+   }
+  ]
+ },
+ "1:B153": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Praecepta Gerendae Reipublicae",
+    "locus": "820f-821a",
+    "status": "translated",
+    "translation_credit": "Fowler, 1936",
+    "emphasis": [
+     "pleasing his neighbours"
+    ],
+    "trim": {
+     "start": "the statesman will not despise the true honour",
+     "end": "as Democritus demanded."
+    }
+   }
+  ]
+ },
+ "1:B154": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Sollertia Animalium",
+    "locus": "974a",
+    "status": "translated",
+    "translation_credit": "Helmbold, 1957",
+    "emphasis": [
+     "we have been their pupils in matters of fundamental importance: of the spider in weaving and mending, of the swallow in homebuilding, of the sweet-voiced swan and nightingale in our imitation of their song"
+    ],
+    "trim": {
+     "start": "Yet perhaps it is ridiculous",
+     "end": "in our imitation of their song."
+    }
+   }
+  ]
+ },
+ "1:B155": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Communibus Notitiis adversus Stoicos",
+    "locus": "1079e",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "if a cone is divided by a plane parallel with its base, what is to be thought of the superficies of its segments, whether they are equal or unequal; for if they are unequal, they will render the cone uneven, receiving many step-like incisions and roughnesses; but if they are equal, the sections will be equal, and the cone will seem to have the same qualities as the cylinder, to wit, to be composed not of unequal but of equal circles; which is most absurd"
+    ],
+    "trim": {
+     "start": "See it yet farther, in what manner he answered Democritus",
+     "end": "which is most absurd."
+    }
+   }
+  ]
+ },
+ "1:B156": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Adversus Colotem",
+    "locus": "1108f-1109a",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "τὸ δέν is no more than τὸ μηδέν"
+    ],
+    "trim": {
+     "start": "Now the first thing he lays to his charge",
+     "end": "as well as the body."
+    }
+   }
+  ]
+ },
+ "1:B157": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Adversus Colotem",
+    "locus": "1126a",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "emphasis": [
+     "to the learning of political science, as being the greatest of all, and to the accustoming one’s self to bear fatigues, by which men attain to great wealth and honor"
+    ],
+    "trim": {
+     "start": "leaving those to expostulate",
+     "end": "great wealth and honor."
+    }
+   }
+  ]
+ },
+ "1:B159": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "De Tuenda Sanitate Praecepta",
+    "locus": "135e",
+    "head": "Vgl. de sanit. praec. 24 p. 135E",
+    "status": "translated",
+    "translation_credit": "Babbitt, 1928",
+    "trim": {
+     "start": "from a spirit of insolence, envy, or rivalry",
+     "end": "the soul would not be acquitted."
+    }
+   }
+  ]
+ },
+ "1:B300": {
+  "context_spans": [
+   {
+    "source_author": "Plutarch",
+    "source_work": "Quaestiones Convivales",
+    "locus": "641b",
+    "status": "translated",
+    "translation_credit": "Goodwin, 1874",
+    "trim": {
+     "start": "Others on this occasion talked very much of antipathies",
+     "end": "quiets an enraged elephant;"
+    }
    }
   ]
  }
