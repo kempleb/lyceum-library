@@ -238,16 +238,23 @@ const readHref = (q = '') => `${base}${workPath(workId, 1)}${q}`;
 // A work whose only language is English has no parallel text, translator
 // or dictionary to describe.
 const englishOnly = work.language === 'en';
+// A Greek or Latin work the registry lists no translation for.
+const noTranslation = !englishOnly && work.translations.length === 0;
+// ...and it is a Diels-Kranz testimonia work, every one of which shows English
+// under some source passages. Keyed on the DK scheme because that English
+// loads per book in the reader, not here; the 6 Latin no-translation works
+// are not DK.
+const sourcePassageEnglish = noTranslation && schemeFor(workId).id === 'dk';
 const sourceLangWord = LANGUAGE_LABEL[work.language];
 const sourceLangTag = work.language === 'lat' ? 'la' : work.language === 'en' ? 'en' : 'grc';
 const pageTitle = (englishOnly
   ? `${work.title} — ${authorName}`
-  : `${work.title} — ${authorName}, in ${sourceLangWord} & English`)
+  : `${work.title} — ${authorName}, in ${sourceLangWord}${noTranslation ? '' : ' & English'}`)
   + (lyceumChrome ? ` — ${siteName}` : '');
 const metaDescription = englishOnly
   ? `${work.title} by ${authorName}. ${work.blurb}`
   : `${work.title} by ${authorName}: the original ${sourceLangWord} (${work.greekSource.short})` +
-  ` with English translation` +
+  (noTranslation ? '' : ` with English translation`) +
   (metaTranslatorNames.length ? ` (${metaTranslatorNames.join(', ')})` : '') +
   `, table of contents, morphology, and ${citeWord} citation. ${work.blurb}`;
 const canonical = Astro.site
@@ -264,7 +271,7 @@ const jsonLd = {
   ...(metaTranslatorNames.length
     ? { translator: metaTranslatorNames.map((name) => ({ '@type': 'Person', name })) }
     : {}),
-  inLanguage: englishOnly ? ['en'] : [sourceLangTag, 'en'],
+  inLanguage: englishOnly ? ['en'] : noTranslation && !sourcePassageEnglish ? [sourceLangTag] : [sourceLangTag, 'en'],
   ...(canonical ? { url: canonical } : {}),
   numberOfPages: totalChapters,
   isPartOf: { '@type': 'CreativeWorkSeries', name: `The Works of ${authorName}` },
@@ -419,9 +426,10 @@ const breadcrumbLd = Astro.site
       </p>
     )}
     <p class="lp-desc">
-      {!englishOnly && `This edition presents the original ${sourceLangWord} (${work.greekSource.short}) side by side with ${translatorNames.length > 1 ? 'English translations' : 'an English translation'}${translatorNames.length
+      {sourcePassageEnglish && `This edition presents the original ${sourceLangWord} (${work.greekSource.short}). Source passages with a freely available English translation show it alongside the ${sourceLangWord}. With click-to-parse morphology, dictionary entries, and exact ${citeWord} citation.`}
+      {!englishOnly && !sourcePassageEnglish && `This edition presents the original ${sourceLangWord} (${work.greekSource.short})${noTranslation ? ',' : ` side by side with ${translatorNames.length > 1 ? 'English translations' : 'an English translation'}${translatorNames.length
         ? ` (${translatorNames.join(', ')}${work.alsoCredits ? `; ${work.alsoCredits}` : ''})`
-        : ''} — with click-to-parse morphology, dictionary entries, and exact ${citeWord} citation.`}
+        : ''} —`} with click-to-parse morphology, dictionary entries, and exact ${citeWord} citation.`}
       {(() => {
         // verse-line (Lucretius): drop the count entirely rather than show
         // "0 lines" when the manifest doesn't have it yet (see
@@ -532,10 +540,10 @@ const breadcrumbLd = Astro.site
       </>
     )}
 
-    <h2 class="lp-h">{englishOnly ? 'English text' : <>{sourceLangWord} text &amp; translations</>}</h2>
+    <h2 class="lp-h">{englishOnly ? 'English text' : noTranslation ? `${sourceLangWord} text` : <>{sourceLangWord} text &amp; translations</>}</h2>
     <p class="credits">
       <strong>{sourceLangWord}:</strong> {work.greekSource.full}<br />
-      {!englishOnly && <>
+      {!englishOnly && !noTranslation && <>
       <strong>{translatorNames.length > 1 ? 'Translations' : 'Translation'}:</strong>
       {' '}{editions.map((t) => t.name).join('; ')}.<br />
       </>}

@@ -173,7 +173,13 @@
   // A work whose only language is English: one column, no view or
   // translation controls, no claim of a parallel text.
   const englishOnly = workMeta?.language === 'en';
-  const copyHintTail = englishOnly ? '' : `, ${sourceLanguageLabel} or English`;
+  // A Greek or Latin work the registry lists no translation for: leave out
+  // the line that promises one.
+  const noTranslation = !englishOnly && workMeta?.translations.length === 0;
+  // The six Latin no-translation works have no English to select; the
+  // Diels-Kranz testimonia do, under some source passages (review item 128).
+  const copyHintTail = englishOnly || (noTranslation && schemeFor(work).id !== 'dk')
+    ? '' : `, ${sourceLanguageLabel} or English`;
   // The citation scheme this work is cited by (bekker / busse / stephanus) — the
   // single dispatch point for every scheme-conditional below, in place of
   // scattered string tests. See shared/lib/citation.ts.
@@ -3812,7 +3818,7 @@
       </div>
       {#if freemanCredit}<div class="rc-freeman-credit">{freemanCredit}</div>{/if}
       <div class="rc-controls">
-        {#if !hasEnglish && !englishOnly}
+        {#if !hasEnglish && !englishOnly && !noTranslation}
           <!-- design pin (task #4): PD translations often exist but aren't
                wired yet — never imply none exists. -->
           <span class="rc-no-english">No English translation wired yet.</span>
