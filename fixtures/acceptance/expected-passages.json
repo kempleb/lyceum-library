@@ -3,7 +3,7 @@
   "works": {
     "EN": {
       "edition": "Bywater, Aristotelis Ethica Nicomachea (OCT, 1894)",
-      "reviewed_by": null,
+      "reviewed_by": "John Boyer (TLG/PHI text accepted as keyed; not compared with the printed edition)",
       "passages": [
         {
           "position": "first",
@@ -28,7 +28,7 @@
     },
     "heraclitus-fragments": {
       "edition": "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951-52), 22 B",
-      "reviewed_by": null,
+      "reviewed_by": "John Boyer",
       "passages": [
         {
           "position": "first",
@@ -53,7 +53,7 @@
     },
     "epistulae-morales": {
       "edition": "Reynolds, L. D. (ed.), L. Annaei Senecae ad Lucilium Epistulae Morales, 2 vols. (Oxford Classical Texts, 1965)",
-      "reviewed_by": null,
+      "reviewed_by": "John Boyer (TLG/PHI text accepted as keyed; not compared with the printed edition)",
       "passages": [
         {
           "position": "first",

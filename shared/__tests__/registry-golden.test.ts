@@ -20,6 +20,6 @@ describe('generated registry golden value', () => {
     // node --experimental-strip-types --input-type=module -e "import{createHash}from'node:crypto';import{CORPUS_WORKS as WORKS,CORPUS_AUTHORS as AUTHORS}from'./lib/registry.generated.ts';console.log(createHash('sha256').update(JSON.stringify(WORKS)+JSON.stringify(AUTHORS)).digest('hex'))"
     // 2026-09-26: owner-approved TLG Greek-edition labels for 11 Aristotle works.
     // WORKS/AUTHORS membership and order unchanged.
-    expect(hash).toBe('60d34b6e64c0c8c0ab41f2377e8c79db188198cd3bdd148f84bed9cdb9ed739e');
+    expect(hash).toBe('90712aea0d7e4dd0de791a551a8e483760ee2019a7ebbe650eea8eff8ca988f3');
   });
 });

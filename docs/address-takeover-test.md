@@ -42,7 +42,7 @@ Every check asks the same thing: does `FRONT` answer exactly as `ORIGIN` does?
 
 | Check | Command | Expected | Result |
 | --- | --- | --- | --- |
-| 1. Acceptance script through the front | `node scripts/acceptance.mjs --origin "$FRONT" --data-origin "$FRONT/data/2026.09.30-1d87227"` (needs Playwright; add `--works a,b,c` to shorten) | The same PASS lines as the same script run with `"$ORIGIN"`; exit 0 | **Same as ORIGIN.** Both: 0 passed, 1 failed, 54 skipped, line for line. The skips are works with no reviewed passages yet; the one failure (`inactive-no-landing`, a draft work that has a landing page) is the test copy showing drafts on purpose. Neither comes from the front. |
+| 1. Acceptance script through the front | `node scripts/acceptance.mjs --origin "$FRONT" --data-origin "$FRONT/data/2026.09.30-1d87227"` (needs Playwright; add `--works a,b,c` to shorten) | The same PASS lines as the same script run with `"$ORIGIN"`; exit 0 | **Same as ORIGIN.** Both: 0 passed, 1 failed, 54 skipped, line for line. The skips are works with no reviewed passages yet; the one failure (`inactive-no-landing`, a draft work that has a landing page) is the test copy showing drafts on purpose. Neither comes from the front. The test copy is built with `PUBLIC_LYCEUM_DRAFTS=1`, so the run should have passed `--drafts`; rerun that way against the test copy (30 September, after the front was deleted): 0 passed, 0 failed, 55 skipped — the check skips because every non-active work in the catalog is a draft. |
 | 2. A wrong password is refused by the site, not the front | `curl -s -o /dev/null -w '%{http_code}\n' -X POST "$FRONT/api/catalog/publish" -H 'Authorization: Bearer wrong' -H 'Content-Type: application/json' -d '{}'` | `401`, as `"$ORIGIN"` gives (checked 30 September: the test copy answers 401) | **Pass.** `401` through the front, as from ORIGIN; also `401` with no password at all. |
 | 3. A text file served by the site itself | `curl -s -o /dev/null -w '%{http_code} %{size_download}\n' -H 'Range: bytes=0-99' "$FRONT/data/2026.09.26-165d80c/RELEASE.json"` (use the release named on the board if it has changed) | The same two numbers as the same request to `"$ORIGIN"` gives. On 30 September the test copy answered `200 233282`: it sends the whole file and ignores the range, so the front should too. | **Pass.** `200 301275` from both. The same etag, `Cache-Control: public, max-age=31536000, immutable`, and `304` on a repeat with `If-None-Match`, from both. |
 | 4. Reading page and offline copy | Open a reading page at `FRONT` in a browser. DevTools, Application, Service Workers. | The address bar stays on `lyceum-proxy-test.pages.dev`; `sw.js` is registered for that address; the text shows | **Pass.** `/read/plato/republic/book-1/` in a browser: the address stayed on `lyceum-proxy-test.pages.dev`; the Greek and its 136 sections loaded; `sw.js` registered for that address and controls the page. The site's own redirect (`/read/epictetus/enchiridion/text` → `…/text/`) points at the front's address, not at `workers.dev`. |
@@ -67,8 +67,9 @@ Measured 30 September: 22 requests for a first visit to a reading page. On
 the Free plan that is about 4,500 first visits a day, or about 2,250 if the
 test copy's own requests count as well. On Cloudflare's paid Workers plan the
 monthly allowance is 10 million requests, about 450,000 first visits (half
-that on the same caveat). Which plan the Lyceum account is on, and the
-Library's real traffic, are Brian's to confirm.
+that on the same caveat). The Lyceum account is on the paid plan
+(`docs/lyceum-shared-repo-plan.md`, checked 15 September), so the paid figure
+applies; the Library's real traffic is Brian's to confirm.
 
 Also checked, 30 September: eleven addresses (home, author, landing and
 reading pages, a redirect, `sw.js`, the catalog, the library page, search,
@@ -90,9 +91,8 @@ Worker. That step belongs to Brian, and a redeploy of his current site undoes
 it. Nothing changes at WordPress.com, and no domain has to be added to
 Cloudflare, which the other route needs.
 
-Two things to settle first: the request allowance (above: fine on the paid
-plan, tight on the free one at real traffic), and a first test of the front
-on a preview address of Brian's live project rather than its production
-address.
+One thing to settle first: a first test of the front on a preview address
+of Brian's live project rather than its production address. The request
+allowance is not a concern: the Lyceum account is on the paid plan.
 
 The throwaway project can now be deleted (README.md, "Delete afterwards").

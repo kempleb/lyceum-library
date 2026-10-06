@@ -98,6 +98,8 @@ const langLabel = languageLabel(work);
 // A work whose only language is English: one column, no parallel-text or
 // dictionary wording, no lexicon links.
 const englishOnly = work.language === 'en';
+// A Greek or Latin work the registry lists no translation for.
+const noTranslation = !englishOnly && work.translations.length === 0;
 const windowedBooks = work.books > 15;
 // Driven off the registry's divisionNoun (default 'book') -- the same field
 // shared/lib/works.ts's divisionId uses for the URL, so the page and the URL
@@ -268,7 +270,7 @@ const chapterHref = (b: number, chapter: string) =>
 // bookNounCap (declared above, with bookNoun) fixed finding 2, Sol review:
 // this used to hardcode "Book" for every scheme, so Seneca's Epistle 47 read
 // "…, Book 47" in the tab title and meta description.
-const titleSuffix = englishOnly ? '' : ` — ${langLabel} Text & English Translation`;
+const titleSuffix = englishOnly ? '' : ` — ${langLabel} Text${noTranslation ? '' : ' & English Translation'}`;
 const pageTitle = (bookless
   ? `${work.title}${titleSuffix}`
   : `${work.title}, ${bookNounCap} ${label}${titleSuffix}`)
@@ -302,9 +304,11 @@ const citeWord = citeDescriptorFor(workId);
 const metaDescription = englishOnly
   ? `${work.title}${bookSuffix} by ${authorName}. ${work.blurb}`
   : `Read ${authorName}'s ${work.title}${bookSuffix} — the original ${langLabel}` +
-  ` (${work.greekSource.short}) side by side with` +
-  (translatorName ? ` ${translatorName}'s` : ' an') +
-  ` English translation, with click-to-parse morphology, dictionary entries,` +
+  ` (${work.greekSource.short})` +
+  (noTranslation ? '' : ` side by side with` +
+    (translatorName ? ` ${translatorName}'s` : ' an') +
+    ` English translation`) +
+  `, with click-to-parse morphology, dictionary entries,` +
   ` and ${citeWord} citation.`;
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -315,7 +319,11 @@ const jsonLd = {
   ...(translatorName
     ? { translator: { '@type': 'Person', name: translatorName } }
     : {}),
-  inLanguage: englishOnly ? ['en'] : [work.language, 'en'],
+  // The Diels-Kranz testimonia show English under some source passages, so
+  // they keep 'en', as on their landing pages (review item 128).
+  inLanguage: englishOnly ? ['en']
+    : noTranslation && citeScheme.id !== 'dk' ? [work.language]
+    : [work.language, 'en'],
   ...(canonical ? { url: canonical } : {}),
   isPartOf: { '@type': 'CreativeWorkSeries', name: `The Works of ${authorName}` },
   description: metaDescription,
@@ -340,7 +348,7 @@ const breadcrumbLd = Astro.site
     }
   : null;
 const h1Text =
-  `${authorName}, ${work.title}${bookSuffix}` + (englishOnly ? '' : ` — ${langLabel} text with English translation`);
+  `${authorName}, ${work.title}${bookSuffix}` + (englishOnly ? '' : ` — ${langLabel} text${noTranslation ? '' : ' with English translation'}`);
 // A short topical paragraph (the curated one-line blurb, framed with the Greek
 // source and translator) so the page carries real descriptive prose for search
 // snippets and screen readers, distinct from the dense parallel-text body.

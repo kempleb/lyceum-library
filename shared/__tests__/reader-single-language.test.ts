@@ -35,6 +35,10 @@ vi.mock('../lib/works', async (importOriginal) => {
       id: 'ENOTRANS', title: 'Fixture Greek No-English Work', abbr: 'ENOTRANS', ...common,
       language: 'grc', translations: trans,
     },
+    NOTRANS: {
+      id: 'NOTRANS', title: 'Fixture Latin No-Translation Work', abbr: 'NOTRANS', ...common,
+      language: 'lat', translations: [],
+    },
     PLAIN: {
       id: 'PLAIN', title: 'Fixture Plain Book-Section Work', abbr: 'PLAIN', ...common,
       language: 'grc', translations: trans,
@@ -95,6 +99,31 @@ describe('Reader.svelte for a work whose only language is English', () => {
     expect(document.querySelector('.line-text')?.getAttribute('lang')).toBe('grc');
     expect(document.querySelector('.tok')).toBeTruthy();
     expect(document.body.textContent).toContain('Applies to any selection, Greek or English');
+  });
+});
+
+// Review item 128, option (a): a Greek or Latin work the registry lists no
+// translation for leaves out the line that promises one; it keeps its
+// source-language column and controls. Keyed on `translations.length === 0`.
+describe('Reader.svelte for a work with no translation (item 128)', () => {
+  it('drops the "wired yet" line and keeps the source-language view', async () => {
+    render(Reader, { props: { work: 'NOTRANS', bookNum: 1, bookData: book('1', 'lorem ipsum') } });
+    await flush();
+
+    expect(document.querySelector('.rc-no-english')).toBeFalsy();
+    expect(document.body.textContent).not.toContain('No English translation wired yet.');
+    const buttons = Array.from((document.querySelector('.view-toggle') as HTMLElement).querySelectorAll('button')).map((b) => b.textContent?.trim());
+    expect(buttons).toEqual(['Latin']);
+    expect(document.querySelector('.line-text')?.getAttribute('lang')).toBe('la');
+    // The copy-settings hint names no English for a work that has none.
+    expect(document.body.textContent).toContain('Applies to any selection');
+    expect(document.body.textContent).not.toContain('Latin or English');
+  });
+
+  it('control: a work with a translation but no English in this book still shows the note', async () => {
+    render(Reader, { props: { work: 'ENOTRANS', bookNum: 1, bookData: book() } });
+    await flush();
+    expect(document.querySelector('.rc-no-english')?.textContent?.trim()).toBe('No English translation wired yet.');
   });
 });
 
