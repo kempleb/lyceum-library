@@ -1,0 +1,12 @@
+# Held: John and Brian review rights before this work reaches a release or the test copy.
+hold: true
+corpus: vergil
+source_env: LYCEUM_HANDOFF_DIR
+source_default: ../lyceum-corpus-handoff/handoff/2026-10-08
+adapter: lyceum-handoff
+latin: phi
+phi_author: '0690'
+phi_work: '003'
+phi_latin_env: LYCEUM_PHI_LATIN
+phi_latin_default: build/handoff/phi0690003.latin.json
+phi_sourcedesc: 'P. Vergilius Maro. Aeneis (P. Vergili Maronis Opera, ed. R. A. B. Mynors, 1972).  (0690: 003)'

@@ -20,6 +20,7 @@ work:
   no_english: true
   phi_author: "0474"
   phi_work: "044"
+  export_verse_mode: true
   latin_edition: "de Plinval, G. (ed.), Cicéron: Traité des Lois (Paris: Les Belles Lettres, 1968)"
   # FATAL sourceDesc gate (post-1930 edition — mandatory per the Atzert
   # precedent): verified verbatim against the real PHI export

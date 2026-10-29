@@ -20,6 +20,7 @@ work:
   language: "grc"
   tlg_author: "1461"
   tlg_work: "002"
+  export_verse_mode: false
   greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 2 (Berlin: Weidmann, 1951–52), 67 B"
   # FATAL sourceDesc gate -- verified verbatim against
   # build/export/.../tlg1461002.xml.

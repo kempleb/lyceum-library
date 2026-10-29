@@ -102,8 +102,11 @@ vi.mock('../lib/works', async (importOriginal) => {
       books: 6, bookLabels: Array.from({ length: 6 }, (_, i) => String(i + 1)),
       greekEdition: 'Test edition',
       greekSource: { short: 'Test', full: 'Test edition, full citation.' },
-      translations: [],
-      citation: { scheme: 'verse-line' },
+      translations: [
+        { id: 'primary', name: 'First translation', short: 'First', slot: 'english' },
+        { id: 'secondary', name: 'Second translation', short: 'Second', slot: 'secondary' },
+      ],
+      citation: { scheme: 'verse-line', copyAbbr: 'Aen.' },
       blurb: 'Fixture work for CommandPalette tests (verse-line scheme, lacuna ranges).',
     },
     // Two same-titled fixture works under different (real) authors — the
@@ -729,6 +732,64 @@ describe('CommandPalette.svelte — citation jump', () => {
 });
 
 describe('Reader.svelte', () => {
+  it('keeps leading untranslated verse lines in their own full-width group', () => {
+    const book: BookData = { book: 1, segments: [
+      { id: 'before', column: '1.1', greek: [{ n: 1, text: 'Before', tokens: [] }], english: null },
+      { id: 'lead', column: '1.2', greek: [{ n: 1, text: 'Lead', tokens: [] }],
+        english: { text: 'Translated lead', notes: [], markers: [] } },
+    ] };
+    const { container } = render(Reader, { props: { work: 'Verse', bookNum: 1, bookData: book } });
+    const groups = container.querySelectorAll('.verse-group');
+    expect(groups).toHaveLength(2);
+    expect(groups[0]).toHaveClass('verse-group-untranslated');
+    expect(groups[0]?.querySelectorAll('.segment')).toHaveLength(1);
+    expect(groups[0]?.querySelector('.english-col')).toBeNull();
+    expect(groups[1]?.querySelectorAll('.segment')).toHaveLength(1);
+    expect(groups[1]?.querySelectorAll('.english-col')).toHaveLength(1);
+  });
+
+  it('groups verse lines by passage and keeps both translations inside each group', async () => {
+    const book: BookData = {
+      book: 1,
+      segments: Array.from({ length: 6 }, (_, i) => ({
+        id: `verse-${i + 1}`,
+        column: `1.${i + 1}`,
+        greek: [{ n: 1, text: `Latin line ${i + 1}`, tokens: [] }],
+        english: i % 3 === 0 ? { text: `Passage ${Math.floor(i / 3) + 1}`, notes: [], markers: [], bekker: [] } : null,
+        secondary: i % 3 === 0 ? [{ chapter: '1', cont: false, text: `Second ${Math.floor(i / 3) + 1}`, bekker: [] }] : undefined,
+      })),
+    };
+    const { container } = render(Reader, { props: { work: 'Verse', bookNum: 1, bookData: book } });
+    const groups = container.querySelectorAll('.verse-group');
+    expect(groups).toHaveLength(2);
+    for (const [i, group] of [...groups].entries()) {
+      expect(group.querySelectorAll('.segment')).toHaveLength(3);
+      expect(group.querySelectorAll('.english-col')).toHaveLength(1);
+      for (let n = 1; n <= 3; n++) {
+        const col = `1.${i * 3 + n}`;
+        expect(group.querySelector(`[id="col-${col}"]`)).toBeInTheDocument();
+        expect(group.querySelector(`[id="L${col}-1"]`)).toBeInTheDocument();
+      }
+    }
+    await fireEvent.click(screen.getAllByRole('button', { name: 'English' })[0]);
+    expect(container.querySelector('.reader-body')).toHaveClass('view-english');
+    await fireEvent.click(screen.getAllByRole('button', { name: 'Both' })[0]);
+    await fireEvent.change(container.querySelectorAll('input[name="trans-mode"]')[1]!);
+    expect(container.querySelector('.reader-body')).toHaveClass('trans-compare');
+    for (const group of container.querySelectorAll('.verse-group')) {
+      expect(group.querySelectorAll('.english-col')).toHaveLength(1);
+      expect(group.querySelectorAll('.overlay-col')).toHaveLength(1);
+    }
+  });
+  it('renders handoff anchors inside the segment', async () => {
+    const book: BookData = structuredClone(fixtureBook);
+    book.segments[0].anchors = ['line-62b', 'aeneid-10-62-62b'];
+    const { container } = render(Reader, { props: { work: 'EN', bookNum: 1, bookData: book } });
+    expect(await screen.findByText('1094a')).toBeInTheDocument();
+    const segment = container.querySelector('.segment');
+    expect(segment?.firstElementChild).toHaveAttribute('id', 'line-62b');
+    expect(segment?.querySelector('#aeneid-10-62-62b')).toHaveAttribute('aria-hidden', 'true');
+  });
   it('labels the source-only view from the work language without changing its internal view value', () => {
     const greekReader = render(Reader, { props: { work: 'EN', bookNum: 1, bookData: fixtureBook } });
     expect(screen.getAllByRole('button', { name: 'Greek' }).length).toBeGreaterThan(0);
@@ -869,6 +930,18 @@ describe('Reader.svelte — copy-with-citation (Blocker 2)', () => {
     target.dispatchEvent(event);
     return captured;
   }
+
+  it('copies a Latin line inside a passage with its verse citation', async () => {
+    const book: BookData = { book: 10, segments: [
+      { id: 'line-62', column: '10.62', greek: [{ n: 1, text: 'Latin sixty two', tokens: [] }],
+        english: { text: 'A translated passage.', notes: [], markers: [] } },
+      { id: 'line-63', column: '10.63', greek: [{ n: 1, text: 'Latin sixty three', tokens: [] }], english: null },
+    ] };
+    const { container } = render(Reader, { props: { work: 'Verse', bookNum: 10, bookData: book } });
+    await waitFor(() => expect(container.querySelector('[id="L10.63-1"]')).toBeTruthy());
+    selectGreekLines(container, 'L10.63-1');
+    expect(fireCopy(container)).toContain('(Aen. 10.63)');
+  });
 
   it('dk-lettered: single-column selection copies "(DK 22 B30)", not the short UI abbr', async () => {
     window.history.replaceState(null, '', '/DkLet/book/1');

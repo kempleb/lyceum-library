@@ -25,6 +25,7 @@ work:
   no_english: true
   phi_author: "1017"
   phi_work: "012"
+  export_verse_mode: false
   latin_edition: "Reynolds, L. D. (ed.), L. Annaei Senecae Dialogorum Libri Duodecim (Oxford: Clarendon Press, 1977)"
   # FATAL sourceDesc gate (De Officiis precedent): verified verbatim against
   # the real PHI export (build/phi-test/out-seneca/Diogenes-Resources/xml/

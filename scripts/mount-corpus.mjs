@@ -42,6 +42,7 @@ import { adaptManifest, APPARATUS_FILES } from './lib/corpus-adapter/manifest.mj
 import { adaptSearchFiles } from './lib/corpus-adapter/search.mjs';
 import { assertNoPrivate } from './lib/corpus-adapter/private.mjs';
 import { mergeShards } from './lib/corpus-adapter/lsj-merge.mjs';
+import { convertHandoff, verifyHandoffChecksums } from './lib/corpus-adapter/lyceum-handoff.mjs';
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 
@@ -77,6 +78,13 @@ async function main() {
       `mount-corpus: ${mountConfigPath} declares corpus ${JSON.stringify(mountConfig.corpus)}, expected ${JSON.stringify(corpus)}`,
     );
   }
+  if (mountConfig.adapter && mountConfig.adapter !== 'lyceum-handoff') {
+    throw new Error(`mount-corpus: unknown adapter ${JSON.stringify(mountConfig.adapter)}`);
+  }
+  const latin = mountConfig.latin ?? 'perseus';
+  if (mountConfig.adapter === 'lyceum-handoff' && corpus === 'vergil' && !['phi', 'perseus'].includes(latin)) {
+    throw new Error(`mount-corpus: unknown latin ${JSON.stringify(latin)}`);
+  }
 
   if (shouldSkipForHold(mountConfig, process.env)) {
     console.log(
@@ -108,6 +116,14 @@ async function main() {
   if (workIds.length === 0) {
     throw new Error(`mount-corpus: ${registryPath} declares no works under registry:`);
   }
+  if (mountConfig.adapter === 'lyceum-handoff') verifyHandoffChecksums(sourceDir);
+  let phiLatin;
+  if (corpus === 'vergil' && latin === 'phi') {
+    phiLatin = resolveMaybeAbsolute(ROOT, process.env[mountConfig.phi_latin_env] || mountConfig.phi_latin_default);
+    if (!existsSync(phiLatin)) {
+      throw new Error(`mount-corpus: missing PHI Latin ${phiLatin}. Run: cd pipeline && uv run python -m reader_pipeline.handoff_phi_latin --phi-author ${mountConfig.phi_author} --phi-work ${mountConfig.phi_work} --expect-sourcedesc '${mountConfig.phi_sourcedesc}' --out ../${mountConfig.phi_latin_default}`);
+    }
+  }
 
   const distDir = join(ROOT, 'build', 'dist');
   mkdirSync(distDir, { recursive: true });
@@ -123,7 +139,7 @@ async function main() {
   for (const id of workIds) {
     const registryWork = registry[id];
     const srcWorkDir = join(sourceDir, id);
-    if (!existsSync(srcWorkDir)) {
+    if (mountConfig.adapter !== 'lyceum-handoff' && !existsSync(srcWorkDir)) {
       console.warn(`  skip ${id}: no source directory at ${srcWorkDir}`);
       skippedMissing += 1;
       continue;
@@ -135,17 +151,23 @@ async function main() {
     mkdirSync(destWorkDir, { recursive: true });
     assertDestInsideRepo(destWorkDir);
 
-    const searchExclude = new Set(mountConfig.search_exclude ?? []);
-    const count = copyWorkDir(srcWorkDir, destWorkDir, searchExclude);
-    fileCounts[id] = count;
+    if (mountConfig.adapter === 'lyceum-handoff') {
+      fileCounts[id] = convertHandoff(sourceDir, destWorkDir, registryWork, corpusVersion,
+        { latin: corpus === 'vergil' ? latin : 'perseus', phiLatin, phiAuthor: mountConfig.phi_author, phiWork: mountConfig.phi_work,
+          divisionHeads: mountConfig.division_heads ? join(corpusDir, mountConfig.division_heads) : undefined });
+    } else {
+      const searchExclude = new Set(mountConfig.search_exclude ?? []);
+      fileCounts[id] = copyWorkDir(srcWorkDir, destWorkDir, searchExclude);
 
-    const legacyManifest = JSON.parse(readFileSync(join(destWorkDir, 'manifest.json'), 'utf8'));
-    const apparatus = {};
-    for (const name of APPARATUS_FILES) {
-      apparatus[name] = existsSync(join(destWorkDir, `${name}.json`));
+      const legacyManifest = JSON.parse(readFileSync(join(destWorkDir, 'manifest.json'), 'utf8'));
+      const apparatus = {};
+      for (const name of APPARATUS_FILES) {
+        apparatus[name] = existsSync(join(destWorkDir, `${name}.json`));
+      }
+      const adapted = adaptManifest(legacyManifest, registryWork, { corpusVersion, apparatus });
+      writeFileSync(join(destWorkDir, 'manifest.json'), JSON.stringify(adapted, null, 1), 'utf8');
+
     }
-    const adapted = adaptManifest(legacyManifest, registryWork, { corpusVersion, apparatus });
-    writeFileSync(join(destWorkDir, 'manifest.json'), JSON.stringify(adapted, null, 1), 'utf8');
 
     const bookData = readdirSync(destWorkDir)
       .filter((f) => /^book-\d+\.json$/.test(f))
@@ -154,16 +176,17 @@ async function main() {
     if (bookData.length === 0) {
       throw new Error(`mount-corpus: ${id}: no book-NN.json files found under ${destWorkDir}`);
     }
-
     assertNoPrivate(bookData, registryWork);
 
-    const analysesPath = join(destWorkDir, 'analyses.json');
-    const analyses = existsSync(analysesPath)
-      ? JSON.parse(readFileSync(analysesPath, 'utf8'))
-      : {};
-    const searchDir = join(destWorkDir, 'search');
-    if (existsSync(searchDir)) {
-      await adaptSearchFiles(searchDir, bookData, analyses, registryWork.language);
+    if (mountConfig.adapter !== 'lyceum-handoff') {
+      const analysesPath = join(destWorkDir, 'analyses.json');
+      const analyses = existsSync(analysesPath)
+        ? JSON.parse(readFileSync(analysesPath, 'utf8'))
+        : {};
+      const searchDir = join(destWorkDir, 'search');
+      if (existsSync(searchDir)) {
+        await adaptSearchFiles(searchDir, bookData, analyses, registryWork.language);
+      }
     }
 
     mounted += 1;

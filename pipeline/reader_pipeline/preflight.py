@@ -420,6 +420,12 @@ def _validate_manifest_schema(manifest: WorkManifest, problems: list[Problem]) -
         if not isinstance(work.get(key), str) or not work.get(key):
             problems.append((manifest.work_id, file_name, f"work.{key} must be a non-empty string"))
 
+    # Stage 1 reads work.export_verse_mode only when build/export lacks the
+    # work's file, so a missing value would otherwise surface only on a
+    # fresh export (stage1_greek.export_verse_mode).
+    if not isinstance(work.get("export_verse_mode"), bool):
+        problems.append((manifest.work_id, file_name, "work.export_verse_mode must be true or false"))
+
     if scheme.bekker_native:
         _validate_bekker_manifest_schema(manifest, problems)
     else:

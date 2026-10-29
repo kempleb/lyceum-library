@@ -14,6 +14,7 @@ work:
   language: "grc"
   tlg_author: "0557"
   tlg_work: "001"
+  export_verse_mode: false
   greek_edition: "Schenkl, H. (ed.), Epicteti dissertationes ab Arriano digestae (Leipzig: Teubner, 1916, repr. 1965)"
   # FATAL sourceDesc gate (Wave 1c Sol nit, backfilled onto this committed
   # work since verifying it was trivial): stage1's _check_sourcedesc

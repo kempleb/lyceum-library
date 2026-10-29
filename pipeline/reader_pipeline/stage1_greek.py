@@ -12,7 +12,9 @@ import copy
 from functools import partial
 import hashlib
 import json
+import os
 import re
+import shutil
 import subprocess
 import unicodedata
 from pathlib import Path
@@ -35,6 +37,8 @@ from .lined import (
 )
 
 EXPORT_DIR = BUILD_DIR / "export"
+# Whole-author Diogenes exports, one directory per mode (see run_export).
+RAW_EXPORT_DIR = BUILD_DIR / "export-raw"
 
 
 def exported_xml_path(manifest: Manifest) -> Path:
@@ -48,30 +52,62 @@ def exported_xml_path(manifest: Manifest) -> Path:
     )
 
 
+def export_verse_mode(manifest: Manifest) -> bool:
+    """The manifest's `work.export_verse_mode`: True runs Diogenes with -y
+    (verse mode), False without it (Diogenes' own prose/verse heuristic).
+    Required on every TLG/PHI work: each value reproduces the export the
+    release was built from (docs/tlg-phi-export.md), and a guessed default
+    would change a work's text silently."""
+    value = manifest.data["work"].get("export_verse_mode")
+    if not isinstance(value, bool):
+        raise ValueError(
+            f"{manifest.work_id}: work.export_verse_mode must be true or "
+            f"false, got {value!r}"
+        )
+    return value
+
+
 def run_export(manifest: Manifest) -> Path:
-    """Run Diogenes xml-export.pl in verse mode (-y) unless already done."""
+    """Run Diogenes xml-export.pl for this work's author unless already done.
+
+    -y applies to every work of the author in one invocation, and some
+    authors mix modes (Empedocles: verse Fragmenta, plain Testimonia), so
+    each mode exports into its own directory under RAW_EXPORT_DIR and only
+    this work's file is copied to `exported_xml_path`."""
     out = exported_xml_path(manifest)
     if out.exists():
         return out
     w = manifest.data["work"]
-    EXPORT_DIR.mkdir(parents=True, exist_ok=True)
-    subprocess.run(
-        [
-            "perl",
-            "xml-export.pl",
-            "-c", "tlg",
-            "-n", w["tlg_author"],
-            "-y",
-            "-o", str(EXPORT_DIR),
-        ],
-        cwd=manifest.diogenes_server(),
-        env={"TLG_DIR": str(manifest.tlg_dir()), "PATH": "/usr/bin:/bin"},
-        check=True,
-        capture_output=True,
-        text=True,
-    )
-    if not out.exists():
-        raise FileNotFoundError(f"export ran but {out} is missing")
+    verse = export_verse_mode(manifest)
+    raw_dir = RAW_EXPORT_DIR / ("verse" if verse else "plain")
+    raw = raw_dir / out.relative_to(EXPORT_DIR)
+    if not raw.exists():
+        raw_dir.mkdir(parents=True, exist_ok=True)
+        subprocess.run(
+            [
+                "perl",
+                "xml-export.pl",
+                "-c", "tlg",
+                "-n", w["tlg_author"],
+                *(["-y"] if verse else []),
+                "-o", str(raw_dir),
+            ],
+            cwd=manifest.diogenes_server(),
+            # HOME: Diogenes' Base.pm dies without it ("Could not find user
+            # profile dir!"), unnoticed while build/export was already cached.
+            env={
+                "TLG_DIR": str(manifest.tlg_dir()),
+                "PATH": "/usr/bin:/bin",
+                "HOME": os.environ["HOME"],
+            },
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        if not raw.exists():
+            raise FileNotFoundError(f"export ran but {raw} is missing")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(raw, out)
     return out
 
 
@@ -2747,6 +2783,9 @@ def _parse_fragments(tree, sch, manifest: Manifest, xml_path=None) -> tuple[list
     return flat, []
 
 
+_SOURCEDESC_DATES_RE = re.compile(r" \([^()]*(?:B\.C\.|A\.D\.)[^()]*\),")
+
+
 def _check_sourcedesc(tree, manifest: Manifest, xml_path) -> None:
     """FATAL gate (Wave 1c Sol nit): the export XML's own <teiHeader>
     <sourceDesc> text must CONTAIN this work's manifest-declared
@@ -2765,7 +2804,12 @@ def _check_sourcedesc(tree, manifest: Manifest, xml_path) -> None:
     work, ...) needs no special-casing.
 
     Optional: a work with no `work.expected_sourcedesc` declared skips
-    this check entirely -- not every work has been backfilled with it."""
+    this check entirely -- not every work has been backfilled with it.
+
+    Diogenes 4.7 adds the author's dates after the name ("Anaxagoras Phil.
+    (c. 6-5 B.C.), Fragmenta ..."); 4.5 printed none. A dated " (... B.C.),"
+    or " (... A.D. ...)," group is dropped from both sides before
+    comparing, so either header form matches either manifest form."""
     expected = manifest.data.get("work", {}).get("expected_sourcedesc")
     if not expected:
         return
@@ -2773,7 +2817,7 @@ def _check_sourcedesc(tree, manifest: Manifest, xml_path) -> None:
     actual = " ".join(
         re.sub(r"\s+", " ", "".join(node.itertext())).strip() for node in nodes
     )
-    if expected not in actual:
+    if _SOURCEDESC_DATES_RE.sub(",", expected) not in _SOURCEDESC_DATES_RE.sub(",", actual):
         raise ValueError(
             f"{xml_path or manifest.work_id}: export XML's <sourceDesc> "
             f"does not contain the manifest-declared work.expected_sourcedesc "

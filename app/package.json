@@ -9,7 +9,7 @@
     "predev": "node ../scripts/build-registry.mjs",
     "dev": "PUBLIC_SHOW_PRIVATE=1 astro dev",
     "pretest:watch": "node ../scripts/build-registry.mjs",
-    "build": "node ../scripts/build-registry.mjs && node scripts/stage-fixtures.mjs && node --experimental-strip-types scripts/build-lemmata.mjs && astro build && node scripts/postbuild-robots.mjs && node scripts/postbuild-sw.mjs",
+    "build": "node ../scripts/build-registry.mjs && node scripts/stage-fixtures.mjs && node --experimental-strip-types scripts/build-lemmata.mjs && astro build && node scripts/postbuild-robots.mjs && node scripts/postbuild-sw.mjs && node scripts/postbuild-held.mjs",
     "build:lemmata": "node --experimental-strip-types scripts/build-lemmata.mjs",
     "preview": "astro preview",
     "astro": "astro",

@@ -13,6 +13,7 @@ work:
   no_english: true
   phi_author: "0474"
   phi_work: "999"
+  export_verse_mode: false
   latin_edition: "Fixture Edition"
 
 citation:

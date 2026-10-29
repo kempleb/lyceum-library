@@ -55,9 +55,9 @@ from lxml import etree
 
 from . import lined
 from . import scheme as scheme_mod
-from .config import BUILD_DIR, REPO_ROOT, Manifest
+from .config import BUILD_DIR, Manifest
 from .lined import LinedAlphabet, _fold_hyphen_final_sigma
-from .stage1_greek import _check_sourcedesc
+from .stage1_greek import RAW_EXPORT_DIR, _check_sourcedesc, export_verse_mode
 
 EXPORT_DIR = BUILD_DIR / "export"
 
@@ -81,13 +81,7 @@ def _diogenes_scratch_config_dir(manifest: Manifest) -> Path:
     `Base.pm` reads its corpus paths from this prefs file only; a `TLG_DIR`/
     `PHI_DIR` env var passed directly to the subprocess is NOT read by the
     installed 4.5 Diogenes.app at all — verified empirically against the
-    real app during Batch 1a's PHI export). De Officiis is prose, so no
-    `-y`/`-Y` verse-mode flag or patched export script is needed here — the
-    STOCK `/Applications/Diogenes.app/Contents/server/xml-export.pl`
-    correctly auto-detects prose vs. verse per work (confirmed: its own
-    export log prints "(prose)" for De Officiis). Lucretius (Batch 2, verse)
-    will need the patched script's `-y` flag; this function only sets up
-    what prose export needs."""
+    real app during Batch 1a's PHI export)."""
     cfg_dir = BUILD_DIR / "diogenes-scratch"
     cfg_dir.mkdir(parents=True, exist_ok=True)
     prefs = cfg_dir / "diogenes.prefs"
@@ -95,106 +89,42 @@ def _diogenes_scratch_config_dir(manifest: Manifest) -> Path:
     return cfg_dir
 
 
-_PATCH_FILE = REPO_ROOT / "docs" / "diogenes-xml-export-y.patch"
-
-
-def _patched_export_script(manifest: Manifest) -> Path:
-    """Bootstrap (or reuse) a scratch copy of Diogenes' `xml-export.pl` with
-    `docs/diogenes-xml-export-y.patch` applied — the `-y`/`-Y` verse-mode
-    flags the installed 4.5 build's stock script lacks (docs/tlg-phi-
-    export.md's TLG recipe, step 1: "Copy ... to a writable scratch
-    location and apply docs/diogenes-xml-export-y.patch"). The stock
-    `/Applications/Diogenes.app` install is never modified in place — this
-    always derives a fresh scratch copy from the tracked patch file rather
-    than hardcoding a path to a pre-built patched script (the one at
-    build/phi-test/scratch-script/ is untracked, throwaway scratch — not a
-    dependency). Mirrors `_diogenes_scratch_config_dir`'s bootstrap-or-reuse
-    shape under `build/` (gitignored, regenerated per clone).
-
-    Needed for verse-line Latin works (Lucretius, Batch 2): unlike De
-    Officiis (book-section, prose), a verse-line PHI export must run in
-    strict verse mode (`-y`) rather than trust the stock script's prose/
-    verse auto-detect heuristic, which is unverified against PHI works.
-    `tei_all.rnc` is copied alongside the script (same doc step) since the
-    patched script validates against it from its own directory."""
-    scratch_dir = BUILD_DIR / "diogenes-scratch"
-    script = scratch_dir / "xml-export-local-y.pl"
-    if script.exists():
-        return script
-    scratch_dir.mkdir(parents=True, exist_ok=True)
-    stock_server = manifest.diogenes_server()
-    shutil.copy(stock_server / "xml-export.pl", script)
-    result = subprocess.run(
-        ["patch", str(script), str(_PATCH_FILE)],
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode != 0:
-        script.unlink(missing_ok=True)
-        raise RuntimeError(
-            f"applying {_PATCH_FILE} to a scratch copy of xml-export.pl "
-            f"failed (exit {result.returncode}): {result.stdout}{result.stderr}"
-        )
-    shutil.copy(stock_server / "tei_all.rnc", scratch_dir / "tei_all.rnc")
-    return script
-
-
 def run_export(manifest: Manifest) -> Path:
     """Run Diogenes xml-export.pl for a PHI author (-c phi) unless already
     done. Exports every work of the declared author in one invocation (the
-    same one-invocation-per-author shape as stage1_greek.run_export) — the
-    caller only reads the one file it needs (`exported_xml_path`).
-
-    Prose (book-section) works run the STOCK script with no verse flag —
-    its own prose/verse auto-detect heuristic is confirmed correct for De
-    Officiis (Batch 1a; see `_diogenes_scratch_config_dir`'s doc comment).
-    A verse-line work instead dispatches through `_patched_export_script`'s
-    scratch copy with `-y` forced (docs/tlg-phi-export.md: "Use -y for
-    verse works ... omit it for prose") — the two `-I` includes mirror
-    that doc's own worked TLG command exactly (Diogenes' own modules, then
-    its CPAN dependencies), and `cwd` moves to the patched script's own
-    scratch directory so it finds its `tei_all.rnc` neighbor."""
+    same one-invocation-per-author shape as stage1_greek.run_export), with
+    -y when `work.export_verse_mode` is true, into a per-mode directory
+    under RAW_EXPORT_DIR (Cicero mixes modes), then copies only this work's
+    file to `exported_xml_path`."""
     out = exported_xml_path(manifest)
     if out.exists():
         return out
     w = manifest.data["work"]
-    EXPORT_DIR.mkdir(parents=True, exist_ok=True)
-    cfg_dir = _diogenes_scratch_config_dir(manifest)
-    sch = scheme_mod.for_manifest(manifest)
-    env = {"Diogenes_Config_Dir": str(cfg_dir), "PATH": "/usr/bin:/bin"}
-    if sch.verse_line_scheme:
-        script = _patched_export_script(manifest)
-        stock_server = manifest.diogenes_server()
-        cmd = [
-            "perl",
-            "-I", str(stock_server),
-            "-I", str(stock_server.parent / "dependencies" / "CPAN"),
-            str(script),
-            "-c", "phi",
-            "-n", w["phi_author"],
-            "-y",
-            "-o", str(EXPORT_DIR),
-        ]
-        cwd = script.parent
-    else:
-        cmd = [
-            "perl",
-            "xml-export.pl",
-            "-c", "phi",
-            "-n", w["phi_author"],
-            "-o", str(EXPORT_DIR),
-        ]
-        cwd = manifest.diogenes_server()
-    subprocess.run(
-        cmd,
-        cwd=cwd,
-        env=env,
-        check=True,
-        capture_output=True,
-        text=True,
-    )
-    if not out.exists():
-        raise FileNotFoundError(f"export ran but {out} is missing")
+    verse = export_verse_mode(manifest)
+    raw_dir = RAW_EXPORT_DIR / ("verse" if verse else "plain")
+    raw = raw_dir / out.relative_to(EXPORT_DIR)
+    if not raw.exists():
+        raw_dir.mkdir(parents=True, exist_ok=True)
+        cfg_dir = _diogenes_scratch_config_dir(manifest)
+        subprocess.run(
+            [
+                "perl",
+                "xml-export.pl",
+                "-c", "phi",
+                "-n", w["phi_author"],
+                *(["-y"] if verse else []),
+                "-o", str(raw_dir),
+            ],
+            cwd=manifest.diogenes_server(),
+            env={"Diogenes_Config_Dir": str(cfg_dir), "PATH": "/usr/bin:/bin"},
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        if not raw.exists():
+            raise FileNotFoundError(f"export ran but {raw} is missing")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(raw, out)
     return out
 
 

@@ -65,6 +65,7 @@ work:
   lexicon: true
   phi_author: "1017"
   phi_work: "015"
+  export_verse_mode: false
   latin_edition: "Reynolds, L. D. (ed.), L. Annaei Senecae ad Lucilium Epistulae Morales, 2 vols. (Oxford Classical Texts, 1965)"
   # FATAL sourceDesc gate (De Officiis/De Providentia precedent): verified
   # verbatim against the real PHI export (build/export/Diogenes-Resources/

@@ -202,6 +202,9 @@ export interface Work {
     // gutter tick (≥681px) or inline tick (≤680px). Book-section only;
     // default off. The plan-of-record flag; no work sets it until stage 5.
     sectionFlow?: boolean;
+    // With sectionFlow: show no section numbers at all, neither in the margin
+    // nor inline (the Federalist, John 2026-10-09). Sections stay addressable.
+    hideSectionNumbers?: boolean;
     // Per-work Copy Citation prefix, e.g. 'M.Ant.' for Marcus Aurelius'
     // Meditations ("M.Ant. 4.23"). For a dk work this is "DK <dkChapter>"
     // (e.g. 'DK 22' for Heraclitus), composed with the column by

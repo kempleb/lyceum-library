@@ -4,6 +4,7 @@ work:
   author: "Aristotle"
   tlg_author: "0086"
   tlg_work: "998"
+  export_verse_mode: false
   greek_edition: "Fixture Greek"
   english_translation: "Fixture English"
 

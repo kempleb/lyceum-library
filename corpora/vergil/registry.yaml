@@ -1,0 +1,71 @@
+# Reader-facing strings are placeholders pending John's approval.
+{
+  "registry": {
+    "aeneid": {
+      "id": "aeneid",
+      "slug": "aeneid",
+      "title": "Aeneid",
+      "abbr": "Aen.",
+      "author": "vergil",
+      "language": "lat",
+      "workType": "verse",
+      "books": 12,
+      "bookLabels": [
+        "I",
+        "II",
+        "III",
+        "IV",
+        "V",
+        "VI",
+        "VII",
+        "VIII",
+        "IX",
+        "X",
+        "XI",
+        "XII"
+      ],
+      "greekEdition": "R. A. B. Mynors, P. Vergili Maronis Opera (OCT, 1972)",
+      "greekSource": {
+        "short": "Mynors (OCT, 1972)",
+        "full": "R. A. B. Mynors, ed. P. Vergili Maronis Opera. Oxford: Clarendon Press, 1972."
+      },
+      "translations": [
+        {
+          "id": "williams-en",
+          "name": "Theodore C. Williams (1910)",
+          "short": "Williams",
+          "slot": "english",
+          "license": {
+            "status": "unverified",
+            "rationale": "Underlying historical translation public domain in the United States; Perseus digital transcription CC BY-SA 4.0 unless otherwise indicated."
+          }
+        },
+        {
+          "id": "dryden-en",
+          "name": "John Dryden (1697)",
+          "short": "Dryden",
+          "slot": "secondary",
+          "license": {
+            "status": "unverified",
+            "rationale": "Project Gutenberg identifies this ebook as public domain in the United States. Retain source attribution; assess other jurisdictions separately."
+          }
+        },
+        {
+          "id": "mackail-en",
+          "name": "J. W. Mackail (1885)",
+          "short": "Mackail",
+          "slot": "third",
+          "license": {
+            "status": "unverified",
+            "rationale": "Project Gutenberg identifies this ebook as public domain in the United States. Retain source attribution; assess other jurisdictions separately."
+          }
+        }
+      ],
+      "citation": {
+        "scheme": "verse-line",
+        "copyAbbr": "Aen."
+      },
+      "blurb": ""
+    }
+  }
+}

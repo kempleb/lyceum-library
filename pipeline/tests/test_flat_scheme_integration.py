@@ -54,6 +54,7 @@ MANIFEST_DATA = {
         "tlg_author": "0557",
         "tlg_work": "002",
         "greek_edition": "Fixture",
+        "export_verse_mode": False,
     },
     "citation": {"scheme": "section"},
     "english": {

@@ -52,7 +52,8 @@ def _manifest_data(citation_extra: dict | None = None, with_english: bool = Fals
     citation.update(citation_extra or {})
     data = {
         "work": {"id": "HERFIX", "title": "Fixture", "author": "heraclitus",
-                 "tlg_author": "9999", "tlg_work": "001", "greek_edition": "Fixture"},
+                 "tlg_author": "9999", "tlg_work": "001", "greek_edition": "Fixture",
+                 "export_verse_mode": False},
         "citation": citation,
         "sources": {"tlg_dir_env": "TLG_DIR", "tlg_dir_default": "build"},
         "section_spine": {"count": 1, "sha256": "0" * 64},
@@ -347,7 +348,8 @@ def test_unconditional_stopword_exemption_is_bound_to_exact_run_text(tmp_path, m
 def _synth_exempt_manifest_data(work_id: str) -> dict:
     return {
         "work": {"id": work_id, "title": "Fixture", "author": "fixture-author",
-                 "tlg_author": "9999", "tlg_work": "001", "greek_edition": "Fixture"},
+                 "tlg_author": "9999", "tlg_work": "001", "greek_edition": "Fixture",
+                 "export_verse_mode": False},
         "citation": {"scheme": "dk", "series": "A"},
         "sources": {"tlg_dir_env": "TLG_DIR", "tlg_dir_default": "build"},
         "section_spine": {"count": 1, "sha256": "0" * 64},

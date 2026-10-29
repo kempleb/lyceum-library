@@ -1,0 +1,23 @@
+{
+  "authors": [
+    {
+      "id": "vergil",
+      "name": "Vergil",
+      "nativeName": "P. Vergilius Maro",
+      "languages": [
+        "lat"
+      ],
+      "period": "roman",
+      "schools": [],
+      "floruit": "70–19 BC",
+      "blurb": "",
+      "holdings": "complete",
+      "works": [
+        "aeneid"
+      ]
+    }
+  ],
+  "work_order": [
+    "aeneid"
+  ]
+}

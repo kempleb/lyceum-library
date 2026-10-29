@@ -27,6 +27,7 @@ work:
   language: "grc"
   tlg_author: "0537"
   tlg_work: "013"
+  export_verse_mode: false
   greek_edition: "Arrighetti, G. (ed.), Epicuro: Opere, 2nd ed. (Turin: Einaudi, 1973)"
   # FATAL sourceDesc gate: verified verbatim against the real export
   # (build/phi-test/out-epicurus/Diogenes-Resources/xml/tlg/tlg0537013.xml).

@@ -8,14 +8,16 @@
 // This suite covers the shared helper both call sites now use.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { spawnSync } from 'node:child_process';
 
 import {
   findHeldWorksInDist,
   formatHeldWorksFindings,
   listHeldCorpora,
+  markHeldBuildUndeployable,
   shouldRefuseForHeld,
 } from '../lib/held-works.mjs';
 import { REPO_ROOT } from '../lib/load-yaml.mjs';
@@ -159,4 +161,99 @@ test('shouldRefuseForHeld: findings refuse unless READER_INCLUDE_HELD=1', () => 
   assert.equal(shouldRefuseForHeld(findings, { READER_INCLUDE_HELD: '0' }), true);
   assert.equal(shouldRefuseForHeld(findings, { READER_INCLUDE_HELD: 'true' }), true);
   assert.equal(shouldRefuseForHeld(findings, { READER_INCLUDE_HELD: '1' }), false);
+});
+
+// Deploy gate (2026-10-08): a held-on app build must not be deployable. The
+// gate writes a failing build.command into the Worker config the build
+// emitted, which `wrangler deploy` runs before uploading anything.
+function writeWorkerConfig(serverDir) {
+  mkdirSync(serverDir, { recursive: true });
+  const configPath = join(serverDir, 'wrangler.json');
+  writeFileSync(
+    configPath,
+    JSON.stringify({ name: 'gate-test', main: 'entry.mjs', compatibility_date: '2026-09-01' }),
+  );
+  writeFileSync(join(serverDir, 'entry.mjs'), "export default { fetch() { return new Response('ok'); } };\n");
+  return configPath;
+}
+
+test('markHeldBuildUndeployable: with no held work in the data, the Worker config is left byte-identical', async () => {
+  await withTmpDir(async (root) => {
+    writeFixtureCorpus(root, 'held-corpus', { hold: true, workIds: ['WorkA'] });
+    writeFixtureCorpus(root, 'open-corpus', { hold: false, workIds: ['WorkB'] });
+    const dataDir = join(root, 'data');
+    mkdirSync(join(dataDir, 'WorkB'), { recursive: true });
+    const configPath = writeWorkerConfig(join(root, 'server'));
+    const before = readFileSync(configPath);
+    const findings = await markHeldBuildUndeployable({ dataDir, serverDir: join(root, 'server'), root });
+    assert.deepEqual(findings, []);
+    assert.deepEqual(readFileSync(configPath), before);
+  });
+});
+
+test('markHeldBuildUndeployable: a held work in the data writes a failing build command naming the corpus', async () => {
+  await withTmpDir(async (root) => {
+    writeFixtureCorpus(root, 'held-corpus', { hold: true, workIds: ['WorkA'] });
+    const dataDir = join(root, 'data');
+    mkdirSync(join(dataDir, 'WorkA'), { recursive: true });
+    const configPath = writeWorkerConfig(join(root, 'server'));
+    const findings = await markHeldBuildUndeployable({ dataDir, serverDir: join(root, 'server'), root });
+    assert.equal(findings.length, 1);
+    const config = JSON.parse(readFileSync(configPath, 'utf8'));
+    assert.equal(config.name, 'gate-test', 'the rest of the config is kept');
+    assert.match(config.build.command, /refusing to deploy/);
+    assert.match(config.build.command, /held-corpus/);
+    assert.match(config.build.command, /exit 1$/);
+  });
+});
+
+test('markHeldBuildUndeployable: a held work with no Worker config to mark is an error', async () => {
+  await withTmpDir(async (root) => {
+    writeFixtureCorpus(root, 'held-corpus', { hold: true, workIds: ['WorkA'] });
+    const dataDir = join(root, 'data');
+    mkdirSync(join(dataDir, 'WorkA'), { recursive: true });
+    await assert.rejects(
+      markHeldBuildUndeployable({ dataDir, serverDir: join(root, 'server'), root }),
+      /cannot be marked undeployable/,
+    );
+  });
+});
+
+// End to end against the real wrangler: `wrangler deploy --dry-run` from an
+// app-shaped directory, through the same .wrangler/deploy/config.json
+// redirect astro build writes, passes before the gate and fails after it.
+// --dry-run never contacts Cloudflare.
+const WRANGLER = join(REPO_ROOT, 'app', 'node_modules', '.bin', 'wrangler');
+
+test('markHeldBuildUndeployable: `wrangler deploy` refuses a marked build', {
+  skip: existsSync(WRANGLER) ? false : 'app/node_modules has no wrangler (run npm ci in app/)',
+  timeout: 120_000,
+}, async () => {
+  await withTmpDir(async (root) => {
+    writeFixtureCorpus(root, 'held-corpus', { hold: true, workIds: ['WorkA'] });
+    const dataDir = join(root, 'data');
+    mkdirSync(join(dataDir, 'WorkA'), { recursive: true });
+    const appDir = join(root, 'app');
+    const serverDir = join(appDir, 'dist', 'server');
+    writeWorkerConfig(serverDir);
+    mkdirSync(join(appDir, '.wrangler', 'deploy'), { recursive: true });
+    writeFileSync(
+      join(appDir, '.wrangler', 'deploy', 'config.json'),
+      JSON.stringify({ configPath: '../../dist/server/wrangler.json', auxiliaryWorkers: [] }),
+    );
+    const deploy = () =>
+      spawnSync(WRANGLER, ['deploy', '--dry-run'], {
+        cwd: appDir,
+        encoding: 'utf8',
+        env: { ...process.env, WRANGLER_SEND_METRICS: 'false', CI: '1' },
+      });
+
+    const unmarked = deploy();
+    assert.equal(unmarked.status, 0, `an unmarked build must dry-run cleanly:\n${unmarked.stdout}${unmarked.stderr}`);
+
+    await markHeldBuildUndeployable({ dataDir, serverDir, root });
+    const marked = deploy();
+    assert.notEqual(marked.status, 0, 'wrangler deploy must refuse a build marked as carrying held works');
+    assert.match(`${marked.stdout}${marked.stderr}`, /refusing to deploy/);
+  });
 });

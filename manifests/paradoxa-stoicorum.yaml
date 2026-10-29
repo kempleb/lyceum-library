@@ -49,6 +49,7 @@ work:
   no_english: true
   phi_author: "0474"
   phi_work: "047"
+  export_verse_mode: false
   latin_edition: "Mueller, C. F. W. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Part 4, Vol. 3 (Leipzig: Teubner, 1890)"
   # FATAL sourceDesc gate (De Officiis/De Rerum Natura precedent): verified
   # verbatim against the real PHI export

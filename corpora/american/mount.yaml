@@ -1,0 +1,8 @@
+# Held: John and Brian review rights before this work reaches a release or the test copy.
+hold: true
+corpus: american
+source_env: LYCEUM_HANDOFF_DIR
+source_default: ../lyceum-corpus-handoff/handoff/2026-10-08
+adapter: lyceum-handoff
+# Title, author, publication and date per essay (Library of Congress table).
+division_heads: essay-heads.json

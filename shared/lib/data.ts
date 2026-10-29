@@ -461,6 +461,14 @@ export interface CitationHead {
 }
 
 export interface Segment {
+  // Lyceum handoff works only; absent from other works.
+  anchors?: string[];
+  // Lyceum handoff's native numeric line reference; absent elsewhere.
+  ref?: number;
+  // A line kept in the data (and addressable) but not shown: the Federalist's
+  // opening publication/author lines, which the essay heading replaces
+  // (John 2026-10-09). Absent elsewhere.
+  hidden?: boolean;
   citationHeads?: CitationHead[];
   id: string;
   column: string;
