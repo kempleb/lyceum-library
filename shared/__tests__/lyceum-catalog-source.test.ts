@@ -332,3 +332,157 @@ describe('compareWorkTitles: only identical titles tie (Sol re-review)', () => {
     }
   });
 });
+
+// Historical shelves (Brian, to-claude/0009-0010, plugin 0.8.0): the four
+// ages are the Library's top level; each work sits in exactly one;
+// collections cut across them. A catalog without historical_shelves parses
+// exactly as before.
+const AGES = [
+  { id: 'greek-age', name: 'Greek Age', sort_order: 1 },
+  { id: 'latin-age', name: 'Latin Age', sort_order: 2 },
+  { id: 'modern-age', name: 'Modern Age', sort_order: 3 },
+  { id: 'age-of-relation', name: 'Age of Relation', sort_order: 4 },
+];
+
+function shelvedWork(id: string, shelf: unknown, collectionIds: string[], extra: Record<string, unknown> = {}): Record<string, unknown> {
+  return rawWork(id, { facts: { title: id, author: id }, editorial: { collection_ids: collectionIds, historical_shelf_id: shelf, ...extra } });
+}
+
+describe('parseCatalog: historical shelves', () => {
+  const shelfAware = () => validLive({
+    // Declared out of order, to prove sort_order wins.
+    historical_shelves: [AGES[2], AGES[0], AGES[3], AGES[1]],
+    collections: [rawCollection({ id: 'politics', name: 'Politics' })],
+    works: [
+      shelvedWork('lyceum:publius.federalist', 'modern-age', ['politics']),
+      shelvedWork('lyceum:vergil.aeneid', 'greek-age', []),
+      shelvedWork('lyceum:aristotle.politics', 'greek-age', ['politics']),
+    ],
+  });
+
+  it('lists the ages in sort_order, each with its own works, an empty age kept', () => {
+    const catalog = parseCatalog(shelfAware(), undefined, { includeDrafts: false });
+    expect(catalog.shelves?.map((s) => [s.id, s.name, s.works.map((w) => w.id)])).toEqual([
+      ['greek-age', 'Greek Age', ['lyceum:aristotle.politics', 'lyceum:vergil.aeneid']],
+      ['latin-age', 'Latin Age', []],
+      ['modern-age', 'Modern Age', ['lyceum:publius.federalist']],
+      ['age-of-relation', 'Age of Relation', []],
+    ]);
+  });
+
+  it('keeps collections cutting across ages, listing the same work object, never a copy', () => {
+    const catalog = parseCatalog(shelfAware(), undefined, { includeDrafts: false });
+    const politics = catalog.collections.find((c) => c.id === 'politics')!;
+    expect(politics.works.map((w) => [w.id, w.historicalShelfId])).toEqual([
+      ['lyceum:aristotle.politics', 'greek-age'],
+      ['lyceum:publius.federalist', 'modern-age'],
+    ]);
+    const shelved = catalog.shelves!.flatMap((s) => s.works);
+    expect(shelved).toHaveLength(catalog.works.length);
+    expect(new Set(shelved.map((w) => w.id)).size).toBe(shelved.length);
+    for (const w of politics.works) expect(shelved).toContain(w);
+  });
+
+  // The age names may change (John, 2026-10-08): nothing here may hardcode
+  // an age's name, id, order or count -- all come from the catalog.
+  it('takes names, ids, order and count from the catalog alone (five renamed ages)', () => {
+    const live = validLive({
+      historical_shelves: [
+        { id: 'later', name: 'Later Thought', sort_order: 20 },
+        { id: 'ancient', name: 'Ancient Thought', sort_order: 1 },
+        { id: 'medieval', name: 'Medieval Thought', sort_order: 5 },
+        { id: 'early-modern', name: 'Early Modern Thought', sort_order: 10 },
+        { id: 'today', name: 'Recent Thought', sort_order: 30 },
+      ],
+      works: [
+        shelvedWork('lyceum:publius.federalist', 'early-modern', []),
+        shelvedWork('lyceum:vergil.aeneid', 'ancient', []),
+      ],
+    });
+    const catalog = parseCatalog(live, undefined, { includeDrafts: false });
+    expect(catalog.shelves?.map((s) => [s.id, s.name, s.works.map((w) => w.id)])).toEqual([
+      ['ancient', 'Ancient Thought', ['lyceum:vergil.aeneid']],
+      ['medieval', 'Medieval Thought', []],
+      ['early-modern', 'Early Modern Thought', ['lyceum:publius.federalist']],
+      ['later', 'Later Thought', []],
+      ['today', 'Recent Thought', []],
+    ]);
+    // An id from Brian's current four is unknown to a catalog that does not declare it.
+    (live.works as unknown[]).push(shelvedWork('lyceum:x.old', 'greek-age', []));
+    expect(() => parseCatalog(live, undefined, { includeDrafts: false })).toThrow(/unknown age 'greek-age'/);
+  });
+
+  it('works with two ages, too', () => {
+    const live = validLive({
+      historical_shelves: [{ id: 'b', name: 'Second', sort_order: 2 }, { id: 'a', name: 'First', sort_order: 1 }],
+      works: [shelvedWork('lyceum:x.one', 'b', [])],
+    });
+    expect(parseCatalog(live, undefined, { includeDrafts: false }).shelves?.map((s) => [s.name, s.works.length]))
+      .toEqual([['First', 0], ['Second', 1]]);
+  });
+
+  it('drops a draft work from its age unless drafts are on', () => {
+    const live = shelfAware();
+    (live.works as unknown[]).push(shelvedWork('lyceum:x.draft', 'latin-age', [], { state: 'draft' }));
+    expect(parseCatalog(live, undefined, { includeDrafts: false }).shelves![1].works).toEqual([]);
+    expect(parseCatalog(live, undefined, { includeDrafts: true }).shelves![1].works.map((w) => w.id)).toEqual(['lyceum:x.draft']);
+  });
+
+  it('a catalog without historical_shelves parses exactly as before: no ages, stray ids ignored', () => {
+    const legacy = omit(shelfAware(), 'historical_shelves');
+    (legacy.works as unknown[]).push(rawWork('lyceum:x.unshelved', { facts: { title: 'u', author: 'u' } }));
+    const catalog = parseCatalog(legacy, undefined, { includeDrafts: false });
+    expect(catalog.shelves).toBeNull();
+    expect(catalog.unshelved).toEqual([]);
+    expect(catalog.collections.map((c) => [c.id, c.works.map((w) => w.id)])).toEqual([
+      ['politics', ['lyceum:aristotle.politics', 'lyceum:publius.federalist']],
+    ]);
+    expect(catalog.works).toHaveLength(4);
+  });
+
+  const invalid: [string, (live: Record<string, unknown>) => void, RegExp][] = [
+    ['a work with no age', (l) => { (l.works as unknown[]).push(rawWork('lyceum:x.none')); }, /'lyceum:x\.none' has no editorial\.historical_shelf_id/],
+    ['a work with an empty age', (l) => { (l.works as unknown[]).push(shelvedWork('lyceum:x.empty', '', [])); }, /'lyceum:x\.empty' has no/],
+    ['a draft work with no age', (l) => { (l.works as unknown[]).push(rawWork('lyceum:x.d', { editorial: { state: 'draft' } })); }, /'lyceum:x\.d' has no/],
+    ['an unknown age id', (l) => { (l.works as unknown[]).push(shelvedWork('lyceum:x.bad', 'roman-age', [])); }, /unknown age 'roman-age'/],
+    ['more than one age (an array)', (l) => { (l.works as unknown[]).push(shelvedWork('lyceum:x.two', ['greek-age', 'latin-age'], [])); }, /more than one age/],
+    ['more than one age (one work listed twice)', (l) => { (l.works as unknown[]).push(shelvedWork('lyceum:vergil.aeneid', 'latin-age', [])); }, /listed twice, in two ages \('greek-age' and 'latin-age'\)/],
+    ['an age id that is not a string', (l) => { (l.works as unknown[]).push(shelvedWork('lyceum:x.num', 3, [])); }, /must name one age id/],
+    ['historical_shelves not an array', (l) => { l.historical_shelves = {}; }, /"historical_shelves" must be an array/],
+    ['an age missing its name', (l) => { l.historical_shelves = [{ id: 'greek-age', sort_order: 1 }]; }, /"historical_shelves" entry needs/],
+    ['an age declared twice', (l) => { l.historical_shelves = [...AGES, AGES[0]]; }, /declares the age 'greek-age' twice/],
+  ];
+
+  it.each(invalid)('rejects %s', (_label, mutate, message) => {
+    const live = shelfAware();
+    mutate(live);
+    expect(() => parseCatalog(live, undefined, { includeDrafts: false })).toThrow(message);
+  });
+
+  it('seed-only works (our seed carries no ages) go in their own unplaced group and keep their collections', () => {
+    const catalog = parseCatalog(shelfAware(), {
+      collections: [],
+      works: [
+        rawWork('lyceum:x.seed', { facts: { title: 'b', author: 'b' }, editorial: { collection_ids: ['politics'], state: 'draft' } }),
+        rawWork('lyceum:x.seed-two', { facts: { title: 'a', author: 'a' }, editorial: { collection_ids: [], state: 'draft' } }),
+        // A seed record the live catalog also carries: live wins, so it is placed.
+        rawWork('lyceum:vergil.aeneid', { editorial: { state: 'draft' } }),
+      ],
+    }, { includeDrafts: true });
+    expect(catalog.shelves!.flatMap((s) => s.works).map((w) => w.id)).not.toContain('lyceum:x.seed');
+    expect(catalog.unshelved.map((w) => w.id)).toEqual(['lyceum:x.seed-two', 'lyceum:x.seed']);
+    expect(catalog.collections[0].works.map((w) => w.id)).toContain('lyceum:x.seed');
+    expect(catalog.collections[0].works.find((w) => w.id === 'lyceum:x.seed')).toBe(catalog.unshelved[1]);
+    // Every kept work is in exactly one place: an age or the unplaced group.
+    const placed = [...catalog.shelves!.flatMap((s) => s.works), ...catalog.unshelved].map((w) => w.id);
+    expect(placed.sort()).toEqual(catalog.works.map((w) => w.id).sort());
+  });
+
+  it('drops seed-only drafts from the unplaced group when drafts are off', () => {
+    const catalog = parseCatalog(shelfAware(), {
+      collections: [],
+      works: [rawWork('lyceum:x.seed', { editorial: { state: 'draft' } })],
+    }, { includeDrafts: false });
+    expect(catalog.unshelved).toEqual([]);
+  });
+});

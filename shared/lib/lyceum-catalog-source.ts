@@ -21,8 +21,23 @@ export interface CatalogWork {
   defaultTranslation: string;
   preset: string;
   collectionIds: string[];
+  /** editorial.historical_shelf_id: the one age this work sits in, or ''
+   *  (a legacy catalog, or a seed-only work with no age). */
+  historicalShelfId: string;
   featured: boolean;
   state: string;
+}
+
+/** One of the partner's historical shelves -- the ages (Brian, 2026-10-08).
+ *  Names, ids, order and count all come from the catalog; nothing here fixes
+ *  them (the names may change, John, 2026-10-08). Each kept work sits in
+ *  exactly one; collections cut across them. */
+export interface CatalogShelf {
+  id: string;
+  name: string;
+  sortOrder: number;
+  /** This age's kept works, ordered (author, then title); may be empty. */
+  works: CatalogWork[];
 }
 
 export interface CatalogPreset {
@@ -63,6 +78,13 @@ export interface CatalogCollection {
 
 export interface Catalog {
   collections: CatalogCollection[];
+  /** The ages in sort_order, or null for a catalog that carries no
+   *  historical_shelves (every catalog before plugin 0.8.0). */
+  shelves: CatalogShelf[] | null;
+  /** Kept works in no age, ordered (author, then title): only ever seed-only
+   *  works (our editorial seed carries no ages, and the live catalog must give
+   *  each of its own works one). Always empty when `shelves` is null. */
+  unshelved: CatalogWork[];
   /** Every kept work, flat, whether or not a kept collection lists it. */
   works: CatalogWork[];
   presets: Record<string, CatalogPreset>;
@@ -149,6 +171,56 @@ function validateLive(json: unknown): Record<string, unknown> {
   return json;
 }
 
+interface RawShelf { id: string; name: string; sortOrder: number }
+
+/**
+ * A shelf-aware catalog (one carrying top-level historical_shelves -- plugin
+ * 0.8.0's additive field, Brian, to-claude/0010) must give EVERY work in its
+ * `works` list exactly one editorial.historical_shelf_id naming a declared
+ * shelf, as the partner's snapshot.v2 schema requires. Throws on the first
+ * problem; returns null for a legacy catalog with no historical_shelves,
+ * which then parses exactly as before (any stray historical_shelf_id is
+ * ignored). The shelf ids are the catalog's own, not a list kept here.
+ */
+function validateShelves(live: Record<string, unknown>): RawShelf[] | null {
+  if (!('historical_shelves' in live)) return null;
+  if (!Array.isArray(live.historical_shelves)) fail('the live catalog\'s "historical_shelves" must be an array');
+  const shelves: RawShelf[] = [];
+  const ids = new Set<string>();
+  for (const raw of live.historical_shelves) {
+    if (!isPlainObject(raw) || typeof raw.id !== 'string' || !raw.id
+      || typeof raw.name !== 'string' || typeof raw.sort_order !== 'number') {
+      fail(`every "historical_shelves" entry needs a string "id" and "name" and a numeric "sort_order", got ${JSON.stringify(raw)}`);
+    }
+    if (ids.has(raw.id)) fail(`"historical_shelves" declares the age '${raw.id}' twice`);
+    ids.add(raw.id);
+    shelves.push({ id: raw.id, name: raw.name, sortOrder: raw.sort_order });
+  }
+
+  const seen = new Map<string, string>();
+  for (const raw of live.works as unknown[]) {
+    if (!isPlainObject(raw) || typeof raw.id !== 'string' || !raw.id) continue;
+    const editorial = isPlainObject(raw.editorial) ? raw.editorial : {};
+    const shelf = editorial.historical_shelf_id;
+    if (shelf === undefined || shelf === '' || shelf === null) {
+      fail(`work '${raw.id}' has no editorial.historical_shelf_id, but the catalog declares historical_shelves`);
+    }
+    if (Array.isArray(shelf)) {
+      fail(`work '${raw.id}' names more than one age in editorial.historical_shelf_id (${JSON.stringify(shelf)}); a work sits in exactly one`);
+    }
+    if (typeof shelf !== 'string') {
+      fail(`work '${raw.id}' must name one age id in editorial.historical_shelf_id, got ${JSON.stringify(shelf)}`);
+    }
+    if (!ids.has(shelf)) fail(`work '${raw.id}' names unknown age '${shelf}' in editorial.historical_shelf_id`);
+    const earlier = seen.get(raw.id);
+    if (earlier !== undefined && earlier !== shelf) {
+      fail(`work '${raw.id}' is listed twice, in two ages ('${earlier}' and '${shelf}'); a work sits in exactly one`);
+    }
+    seen.set(raw.id, shelf);
+  }
+  return shelves;
+}
+
 /** The seed is our own generated file; validated loosely (never fatal to a
  *  build over our own data) and defaults to empty when absent. */
 function normalizeSeed(json: unknown): { collections: RawCollection[]; works: RawWork[] } {
@@ -190,6 +262,7 @@ function toWork(raw: RawWork, presetIds: Set<string>): CatalogWork | null {
     defaultTranslation: typeof editorial.default_translation === 'string' ? editorial.default_translation : '',
     preset: typeof editorial.preset === 'string' && presetIds.has(editorial.preset) ? editorial.preset : '',
     collectionIds,
+    historicalShelfId: typeof editorial.historical_shelf_id === 'string' ? editorial.historical_shelf_id : '',
     featured: editorial.featured === true,
     state: typeof editorial.state === 'string' ? editorial.state : 'draft',
   };
@@ -263,6 +336,7 @@ function sortCollections(collections: CatalogCollection[]): CatalogCollection[] 
  */
 export function parseCatalog(liveJson: unknown, seedJson: unknown, opts: { includeDrafts: boolean }): Catalog {
   const live = validateLive(liveJson);
+  const rawShelves = validateShelves(live);
   const seed = normalizeSeed(seedJson);
   const presentation = live.presentation as Record<string, unknown>;
   const presets = parsePresets(presentation);
@@ -293,6 +367,19 @@ export function parseCatalog(liveJson: unknown, seedJson: unknown, opts: { inclu
     }
   }
   for (const c of mergedCollections) c.works = sortWorks(c.works);
+
+  // The same CatalogWork objects as the collections above -- an age and a
+  // collection list one work, never a copy. A seed-only work (our own
+  // editorial seed carries no ages) sits in no age: it goes in `unshelved`,
+  // and still appears in `works` and in its collections.
+  const shelves = rawShelves === null ? null : [...rawShelves]
+    .sort((a, b) => a.sortOrder - b.sortOrder || a.name.localeCompare(b.name))
+    .map((shelf) => ({
+      ...shelf,
+      works: sortWorks(mergedWorks.filter((w) => w.historicalShelfId === shelf.id)),
+    }));
+  const shelfIds = new Set(rawShelves?.map((shelf) => shelf.id));
+  const unshelved = rawShelves === null ? [] : sortWorks(mergedWorks.filter((w) => !shelfIds.has(w.historicalShelfId)));
 
   // A child whose parent_id names no collection we kept -- absent entirely,
   // or itself filtered out (a draft parent while drafts are off) -- is
@@ -325,5 +412,5 @@ export function parseCatalog(liveJson: unknown, seedJson: unknown, opts: { inclu
     )
     : {};
 
-  return { collections: sortCollections(topLevel), works: mergedWorks, presets, defaultPreset, content, visibility };
+  return { collections: sortCollections(topLevel), shelves, unshelved, works: mergedWorks, presets, defaultPreset, content, visibility };
 }

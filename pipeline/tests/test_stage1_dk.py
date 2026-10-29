@@ -1818,6 +1818,58 @@ def test_check_sourcedesc_matches_across_source_whitespace_wrapping():
     _check_sourcedesc(tree, m, "fixture")  # must not raise
 
 
+@pytest.mark.parametrize("header", [
+    # Diogenes 4.5: no dates after the author.
+    'Anaxagoras Phil., Fragmenta (0713: 002) "Die Fragmente der '
+    'Vorsokratiker, vol. 2, 6th edn.", Ed. Diels, H., Kranz, W.',
+    # Diogenes 4.7: the author's dates follow the name.
+    'Anaxagoras Phil. (c. 6-5 B.C.), Fragmenta (0713: 002) "Die Fragmente '
+    'der Vorsokratiker, vol. 2, 6th edn.", Ed. Diels, H., Kranz, W.',
+])
+@pytest.mark.parametrize("expected", [
+    'Anaxagoras Phil., Fragmenta (0713: 002) "Die Fragmente der '
+    "Vorsokratiker, vol. 2",
+    'Anaxagoras Phil. (c. 6-5 B.C.), Fragmenta (0713: 002) "Die Fragmente '
+    "der Vorsokratiker, vol. 2",
+])
+def test_check_sourcedesc_accepts_header_with_or_without_author_dates(header, expected):
+    tree = _sourcedesc_tree(header)
+    _check_sourcedesc(tree, _manifest_with_expected_sourcedesc(expected), "fixture")
+
+
+def test_check_sourcedesc_accepts_ad_dates():
+    tree = _sourcedesc_tree(
+        'Diogenes Laertius Biogr. (c. A.D. 3), Vitae philosophorum '
+        '(0004: 001) "Diogenis Laertii vitae philosophorum, 2 vols."'
+    )
+    m = _manifest_with_expected_sourcedesc(
+        'Diogenes Laertius Biogr., Vitae philosophorum (0004: 001) '
+        '"Diogenis Laertii vitae philosophorum'
+    )
+    _check_sourcedesc(tree, m, "fixture")  # must not raise
+
+
+def test_check_sourcedesc_dates_do_not_hide_a_wrong_author():
+    tree = _sourcedesc_tree(
+        'Zeno Phil. (5 B.C.), Fragmenta (0595: 002) "Die Fragmente der '
+        'Vorsokratiker, vol. 1, 6th edn."'
+    )
+    m = _manifest_with_expected_sourcedesc(
+        'Anaxagoras Phil., Fragmenta (0713: 002) "Die Fragmente der '
+        "Vorsokratiker, vol. 2"
+    )
+    with pytest.raises(ValueError, match="expected_sourcedesc"):
+        _check_sourcedesc(tree, m, "fixture")
+
+
+def test_check_sourcedesc_still_compares_a_bracketed_group_without_dates():
+    # Only a dated group is dropped; any other " (...)," must still match.
+    tree = _sourcedesc_tree('Anaxagoras Phil. (spurious), Fragmenta (0713: 002)')
+    m = _manifest_with_expected_sourcedesc('Anaxagoras Phil., Fragmenta (0713: 002)')
+    with pytest.raises(ValueError, match="expected_sourcedesc"):
+        _check_sourcedesc(tree, m, "fixture")
+
+
 # --- quote-mark polarity fix (_dk_normalize_quote_marks) --------------------
 #
 # Owner ruling 2026-08-05 ("we fix it and make damn sure every instance is

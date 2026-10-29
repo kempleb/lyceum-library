@@ -7,6 +7,7 @@ work:
   language: "grc"
   tlg_author: "0059"
   tlg_work: "001"
+  export_verse_mode: false
   greek_edition: "Burnet, Platonis Opera vol. 1 (OCT, 1900)"
 
 citation:

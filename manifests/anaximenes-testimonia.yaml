@@ -33,6 +33,7 @@ work:
   language: "grc"
   tlg_author: "0617"
   tlg_work: "001"
+  export_verse_mode: false
   greek_edition: "Diels, H. and Kranz, W. (eds.), Die Fragmente der Vorsokratiker, 6th ed., vol. 1 (Berlin: Weidmann, 1951–52), 13 A"
   # FATAL sourceDesc gate: stage1's _check_sourcedesc asserts this exact
   # substring is present in the export XML's own <teiHeader><sourceDesc>

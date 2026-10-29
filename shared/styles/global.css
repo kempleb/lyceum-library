@@ -985,15 +985,6 @@ body {
 .reader-body.trans-compare.view-both .seg-row { grid-template-columns: 1fr 1fr 1fr; }
 .reader-body.trans-compare.view-english .seg-row { grid-template-columns: 1fr 1fr; }
 .reader-body.trans-compare.view-english .english-col { max-width: none; margin: 0; }
-/* verse-line, no English (fix round, re-review finding 3): the row's
-   english-col is omitted outright (Reader.svelte's `.verse-untranslated`
-   class marks the row), so every view/compare grid above — 2 or 3 tracks —
-   must yield to a single track; otherwise the sole greek-col sits in the
-   first track with one or two empty tracks beside it. !important because
-   this signal must win over every context-specific track count, present
-   and future, the same way the mobile compare override at the foot of this
-   file does. */
-.seg-row.verse-untranslated { grid-template-columns: 1fr !important; }
 .overlay-col {
   font-family: var(--font-english);
   font-size: var(--fs-english);
@@ -1021,6 +1012,12 @@ body {
   border-top: 1px solid var(--border);
   padding-top: 0.8rem;
   /* clear the sticky header + the controls strip when jumped to */
+  scroll-margin-top: calc(var(--header-h, 92px) + 3.5rem);
+}
+
+.seg-anchor {
+  display: block;
+  height: 0;
   scroll-margin-top: calc(var(--header-h, 92px) + 3.5rem);
 }
 
@@ -2077,12 +2074,37 @@ body {
    idiom as every other scheme's per-line numeral. */
 .reader-body.verse-line .segment { border-top: none; padding-top: 0; margin-bottom: 0; }
 .reader-body.verse-line .seg-row + .seg-row { margin-top: 0; }
+.reader-body.verse-line .verse-group { grid-template-columns: 1fr 1fr; }
+.reader-body.verse-line .verse-group.verse-group-untranslated { grid-template-columns: 1fr !important; }
+.reader-body.verse-line.trans-compare.view-both .verse-group { grid-template-columns: 1fr 1fr 1fr; }
+.reader-body.verse-line.view-english .verse-group,
+.reader-body.verse-line.view-greek .verse-group { grid-template-columns: 1fr; }
+.reader-body.verse-line.trans-compare.view-english .verse-group { grid-template-columns: 1fr 1fr; }
+.reader-body.verse-line .verse-group + .verse-group { margin-top: 0; }
 /* Fix round, finding 6 (Sol review): the blanket rule above removes ALL
    separation, including at real editorial discontinuities (a lacuna gap, a
    transposition seam note) — give those segments back a modest explicit
    margin so the gap/seam still reads as a break in the verse, not a seam
    silently absorbed into the surrounding lines. */
 .reader-body.verse-line .segment[data-discontinuity] { margin-top: 0.6em; margin-bottom: 0.6em; }
+/* English-only view: the Latin column must stay laid out, because every
+   line's .segment, anchors and ids live in it (deep links, scroll-spy,
+   resume position). Only the lines themselves are hidden, so the segments
+   collapse to zero-height boxes at the top of their passage. */
+.reader-body.verse-line.view-english .verse-group > .verse-group-latin { display: block; }
+.reader-body.verse-line.view-english .verse-group-latin .segment > :not(.seg-anchor) { display: none; }
+.reader-body.verse-line.view-english .verse-group-latin .segment[data-discontinuity] { margin: 0; }
+/* A passage whose first line is a seam or lacuna: the break goes above the
+   whole passage, not above its Latin side only. */
+.reader-body.verse-line .verse-group-latin > .segment:first-child[data-discontinuity] { margin-top: 0; }
+.reader-body.verse-line .verse-group:has(> .verse-group-latin > .segment:first-child[data-discontinuity]) { margin-top: 0.6em; }
+@media (max-width: 680px) {
+  .reader-body.verse-line .verse-group { grid-template-columns: 1fr !important; }
+  /* Stacked: a little air between a passage's Latin and its English, and
+     between passages. */
+  .reader-body.verse-line.view-both .verse-group > .english-col { margin-top: 0.6rem; }
+  .reader-body.verse-line.view-both .verse-group + .verse-group { margin-top: 1.1rem; }
+}
 
 /* ── section-flow (docs/section-flow-plan.md) ────────────────────────
    Book-section works that opt in: keep per-section .segment rows (pairing)
@@ -2107,6 +2129,48 @@ body {
   height: 0;
   overflow: hidden;
 }
+/* An English-only work's sections are its paragraphs (the Federalist, John
+   2026-10-09): indent each one's first line, as printed prose does. Not for
+   Greek/Latin section flow, where a section can begin mid-sentence. */
+.reader-body.section-flow.english-only .greek-line.bs-flow .line-text { text-indent: 1.5em; }
+/* A line kept for its address but not shown (Segment.hidden): only its
+   empty anchor spans remain on the page. */
+.segment.segment-hidden > :not(.seg-anchor) { display: none !important; }
+/* Section flow in one language: every section gets the same full-width box,
+   so a short section (the Federalist's salutation) keeps the left margin
+   instead of shrinking and centring (same fix as .turn-flow above). */
+.reader-body.section-flow.view-greek .greek-col,
+.reader-body.section-flow.view-english .english-col { width: 100%; }
+/* A work that shows no section numbers at all (the Federalist). */
+.reader-body.no-section-numbers .sect-tick,
+.reader-body.no-section-numbers .sect-tick-inline { display: none !important; }
+/* A division's own heading (division-heads.json): label, title, byline. */
+.division-head {
+  max-width: calc(42rem * var(--colw-scale, 1));
+  margin: 1.5rem auto 2rem;
+  text-align: center;
+}
+.division-label {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+.division-title {
+  font-family: var(--font-english);
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  margin: 0.3rem 0 0.4rem;
+  text-wrap: balance;
+}
+.division-byline {
+  font-family: var(--font-english);
+  font-style: italic;
+  color: var(--text-light);
+  margin: 0;
+}
 /* Both view: .seg-row is 1fr 1fr, so the column-gap centre is 50%. */
 .reader-body.section-flow.view-both .segment > .sect-tick {
   left: 50%;
@@ -2119,7 +2183,10 @@ body {
 /* Greek-only and English-only: left gutter. */
 .reader-body.section-flow.view-greek .segment > .sect-tick,
 .reader-body.section-flow.view-english .segment > .sect-tick {
-  left: -2.6rem;
+  /* The single-language text column is centred at max-width 42rem (see
+     .view-english .english-col / .view-greek .greek-col), so the tick sits
+     just left of that column, not at the segment's far edge. */
+  left: calc((100% - min(100%, 42rem * var(--colw-scale, 1))) / 2 - 2.6rem);
   width: 2.2rem;
   text-align: right;
 }

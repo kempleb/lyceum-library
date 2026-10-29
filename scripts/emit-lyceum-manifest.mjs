@@ -443,6 +443,16 @@ export function toLyceumManifest(ourManifest, work, author) {
   return ordered(result);
 }
 
+export function applyLyceumOverrides(derived, overridePath) {
+  if (!existsSync(overridePath)) return derived;
+  const overrides = JSON.parse(readFileSync(overridePath, 'utf8'));
+  for (const key of ['schema_version', 'corpus_version', 'source_manifest', 'generator']) {
+    if (Object.hasOwn(overrides, key)) throw new Error(`forbidden Lyceum override: ${key}`);
+  }
+  return ordered({ ...derived, ...overrides,
+    navigation: { ...derived.navigation, ...overrides.navigation } });
+}
+
 // build/dist/<work>/book-NN.json -- the same padding shared/lib/data.ts's
 // fetchBook uses (book-100.json, not book-0100.json).
 function bookFileName(n) {
@@ -979,11 +989,11 @@ export async function main(argv = process.argv.slice(2)) {
     try {
       lyceum = toLyceumManifest(ourManifest, work, author);
       const navigation = buildNavigation(ourManifest, work, workDir);
-      const semanticErrors = validateNavigationSemantics(navigation, ourManifest.translations ?? []);
+      lyceum = applyLyceumOverrides(ordered({ ...lyceum, navigation }), join(workDir, 'lyceum-overrides.json'));
+      const semanticErrors = validateNavigationSemantics(lyceum.navigation, ourManifest.translations ?? []);
       if (semanticErrors.length) {
         throw new Error(`navigation failed semantic validation:\n${semanticErrors.join('\n')}`);
       }
-      lyceum = ordered({ ...lyceum, navigation });
     } catch (error) {
       console.error(`ERROR ${id}: ${error instanceof Error ? error.message : error}`);
       failed = true;

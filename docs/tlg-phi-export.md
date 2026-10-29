@@ -15,9 +15,10 @@ dependencies/data carry the stage-4/5 morphology data (`greek-analyses.txt`,
 The installed app updated from 4.5 to 4.7.2 at some point after this recipe
 was written. `xml-export.pl` (`getopts ('alprho:c:sn:N:vdetxPyY')`, `is_work_verse`
 at ~line 2452) now supports `-y`/`-Y` out of the box — **step 1 below (copy +
-patch) is obsolete and must be skipped.** `docs/diogenes-xml-export-y.patch`
-mis-applies against 4.7.2 (it half-lands inside `write_file`) and is kept on
-disk only as **historical record** of the 4.5-era workaround; do not apply it.
+patch) is obsolete and must be skipped.** The 4.5-era
+`docs/diogenes-xml-export-y.patch` mis-applied against 4.7.2 (it half-landed
+inside `write_file`) and was removed 2026-10-09; git history keeps it. Stock
+4.7.2 `-y` reproduces the patched script's output exactly.
 Use the installed script directly (or an unpatched copy of it — never modify
 `/Applications/Diogenes.app` itself either way).
 
@@ -95,7 +96,33 @@ author (e.g. Parmenides: prose Testimonia 001 + verse Fragmenta 002), run TWO
 invocations into two outdirs — one plain, one with `-y` — and take each work's
 file from the correct outdir.
 
+**The pipeline does this itself (2026-10-09).** Each TLG/PHI manifest declares
+`work.export_verse_mode: true|false`; stage 1 exports the author into
+`build/export-raw/verse` (with `-y`) or `build/export-raw/plain` (without) and
+copies only that work's file into `build/export`. The values reproduce the
+exports the release was built from. Diogenes 4.5 silently ignored `-y`, so most
+saved TLG files are plain-mode; only Lives, Empedocles/Parmenides/Xenophanes
+Fragmenta, and five Cicero works (De Divinatione, De Finibus, De Legibus, De
+Officiis, Tusculan Disputations — exported with the old patched script) are
+`true`. De Rerum Natura is `false`: its saved file matches the plain export.
+A fresh 4.7.2 export differs from the saved 4.5 PHI files only where 4.5 printed
+"." for the PHI text's "!".
+
 ## PHI (Latin) — extension for Wave 2
+
+For the held Aeneid, extract the lines from a verified Diogenes TEI file with:
+
+```
+cd pipeline
+uv run python -m reader_pipeline.handoff_phi_latin \
+  --phi-author 0690 --phi-work 003 \
+  --expect-sourcedesc 'P. Vergilius Maro. Aeneis (P. Vergili Maronis Opera, ed. R. A. B. Mynors, 1972).  (0690: 003)' \
+  --out ../build/handoff/phi0690003.latin.json
+```
+
+Add `--xml <path>` to read an existing export, or `--phi-dir <path>` to set
+the PHI corpus location for a new export. The JSON stays under ignored
+`build/`; do not commit its Latin text.
 
 PHI export follows the same script and scratch-prefs mechanism as TLG above
 (native 4.7.2 `-y`/`-Y`, no patch step — see the UPDATE at the top of this

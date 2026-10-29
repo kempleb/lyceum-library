@@ -1301,24 +1301,19 @@ describe('Reader.svelte verse-line mode (Lucretius\' DRN — John\'s flag 2026-0
     expect(segments[3]?.hasAttribute('data-discontinuity')).toBe(false);
   });
 
-  // Re-review finding 3: an untranslated verse-line row renders no
-  // english-col at all, but used to keep whatever grid-template-columns the
-  // active view/compare mode set (2 tracks in "both", 3 in compare+both) —
-  // the sole greek-col sat in the first track with one or two empty tracks
-  // beside it. `.verse-untranslated` on the seg-row is the structural signal
-  // CSS hangs a single-track override on; assert the class, not child counts.
-  it('finding 3 (re-review): a no-English verse-line row carries .verse-untranslated; a row with English does not', async () => {
+  // A passage now holds its untranslated line segments beside the one
+  // translation column, with no separate grids for those lines.
+  it('keeps untranslated verse lines in the translated passage group', async () => {
     const { container } = render(Reader, { props: { work: 'VERSELINE', bookNum: 1, bookData: verseBook() } });
     await flush();
 
-    const rows = [...container.querySelectorAll('.seg-row')];
-    // seg-1.1 carries English (verseBook()'s first segment); every other
-    // segment in the fixture has none.
-    expect(rows[0]?.classList.contains('verse-untranslated')).toBe(false);
-    expect(rows.slice(1).every((r) => r.classList.contains('verse-untranslated'))).toBe(true);
+    const groups = [...container.querySelectorAll('.verse-group')];
+    expect(groups).toHaveLength(1);
+    expect(groups[0]?.querySelectorAll('.segment')).toHaveLength(verseBook().segments.length);
+    expect(groups[0]?.querySelectorAll('.english-col')).toHaveLength(1);
   });
 
-  it('finding 3 (re-review): the same signal is present in compare mode, where the untranslated row would otherwise keep a 3-track grid', async () => {
+  it('keeps both compare columns beside the full verse passage', async () => {
     const book: BookData = {
       book: 1,
       segments: [
@@ -1336,9 +1331,11 @@ describe('Reader.svelte verse-line mode (Lucretius\' DRN — John\'s flag 2026-0
     await fireEvent.change(compareRadio);
     await flush();
 
-    const rows = [...container.querySelectorAll('.seg-row')];
-    expect(rows[0]?.classList.contains('verse-untranslated')).toBe(false);
-    expect(rows[1]?.classList.contains('verse-untranslated')).toBe(true);
+    const groups = [...container.querySelectorAll('.verse-group')];
+    expect(groups).toHaveLength(1);
+    expect(groups[0]?.querySelectorAll('.segment')).toHaveLength(2);
+    expect(groups[0]?.querySelectorAll('.english-col')).toHaveLength(1);
+    expect(groups[0]?.querySelectorAll('.overlay-col')).toHaveLength(1);
   });
 });
 

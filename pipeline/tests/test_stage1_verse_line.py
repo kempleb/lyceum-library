@@ -384,74 +384,16 @@ def test_parse_spine_dispatches_to_verse_and_preserves_document_order():
     assert spine["edition"] == "Fixture"
 
 
-# --- run_export dispatch: verse-line -> patched exporter with -y -------------
+# --- run_export: work.export_verse_mode picks -y, per-mode export dir -------
 
 
-def test_run_export_dispatches_verse_line_through_patched_script_with_y(monkeypatch, tmp_path):
-    # Adversarial-review blocker: a verse-line work's PHI export must run
-    # through the patched exporter (docs/diogenes-xml-export-y.patch) with
-    # `-y` forced, not the stock xml-export.pl (whose prose/verse
-    # auto-detect heuristic is unverified for PHI works). No real export
-    # runs here: subprocess.run is captured rather than executed, and
-    # `_patched_export_script` is stubbed to a fake path -- this test has
-    # zero corpus/Diogenes.app dependency.
-    monkeypatch.setattr(stage1_latin, "BUILD_DIR", tmp_path)
-    monkeypatch.setattr(stage1_latin, "EXPORT_DIR", tmp_path / "export")
-    monkeypatch.setattr(stage1_latin, "_diogenes_scratch_config_dir", lambda manifest: tmp_path / "cfg")
-
-    fake_script = tmp_path / "scratch" / "xml-export-local-y.pl"
-    monkeypatch.setattr(stage1_latin, "_patched_export_script", lambda manifest: fake_script)
-
-    captured: dict = {}
-
-    def fake_run(cmd, **kwargs):
-        captured["cmd"] = cmd
-        captured["cwd"] = kwargs.get("cwd")
-
-    monkeypatch.setattr(stage1_latin.subprocess, "run", fake_run)
-
-    manifest = Manifest(
+def _latin_export_manifest(verse):
+    work = {"id": "OFFFIX", "phi_author": "0474", "phi_work": "055", "language": "lat"}
+    if verse is not None:
+        work["export_verse_mode"] = verse
+    return Manifest(
         {
-            "work": {"id": "DRNFIX", "phi_author": "0550", "phi_work": "001", "language": "lat"},
-            "citation": {"scheme": "verse-line", "div_types": {"page": "book"}},
-            "books": [{"n": 1, "start": "1.1", "end": "1.10"}],
-            "sources": {"diogenes_server": "/Applications/Diogenes.app/Contents/server"},
-        },
-        ROOT / "manifests" / "fake.yaml",
-    )
-
-    # The fake export never actually writes the output file, so run_export
-    # fails at its own post-export existence check -- expected; the command
-    # it constructed before that point is what this test asserts on.
-    with pytest.raises(FileNotFoundError):
-        stage1_latin.run_export(manifest)
-
-    cmd = captured["cmd"]
-    assert "-y" in cmd
-    assert str(fake_script) in cmd
-    assert "xml-export.pl" not in cmd  # never the stock, unpatched script
-    assert captured["cwd"] == fake_script.parent
-
-
-def test_run_export_prose_work_keeps_stock_script_with_no_verse_flag(monkeypatch, tmp_path):
-    # Prose (book-section) works keep running the stock script with no
-    # verse flag -- only the verse-line dispatch changes (Batch 1a's
-    # existing, working De Officiis export path is untouched by this fix).
-    monkeypatch.setattr(stage1_latin, "BUILD_DIR", tmp_path)
-    monkeypatch.setattr(stage1_latin, "EXPORT_DIR", tmp_path / "export")
-    monkeypatch.setattr(stage1_latin, "_diogenes_scratch_config_dir", lambda manifest: tmp_path / "cfg")
-
-    captured: dict = {}
-
-    def fake_run(cmd, **kwargs):
-        captured["cmd"] = cmd
-        captured["cwd"] = kwargs.get("cwd")
-
-    monkeypatch.setattr(stage1_latin.subprocess, "run", fake_run)
-
-    manifest = Manifest(
-        {
-            "work": {"id": "OFFFIX", "phi_author": "0474", "phi_work": "055", "language": "lat"},
+            "work": work,
             "citation": {"scheme": "book-section", "div_types": {"page": "book", "section": "section"}},
             "books": [{"n": 1, "start": "1.1", "end": "1.10"}],
             "sources": {"diogenes_server": "/Applications/Diogenes.app/Contents/server"},
@@ -459,10 +401,53 @@ def test_run_export_prose_work_keeps_stock_script_with_no_verse_flag(monkeypatch
         ROOT / "manifests" / "fake.yaml",
     )
 
-    with pytest.raises(FileNotFoundError):
-        stage1_latin.run_export(manifest)
 
-    cmd = captured["cmd"]
-    assert "-y" not in cmd
+def _capture_latin_export(monkeypatch, tmp_path, writes=False):
+    monkeypatch.setattr(stage1_latin, "EXPORT_DIR", tmp_path / "export")
+    monkeypatch.setattr(stage1_latin, "RAW_EXPORT_DIR", tmp_path / "export-raw")
+    monkeypatch.setattr(stage1_latin, "_diogenes_scratch_config_dir", lambda manifest: tmp_path / "cfg")
+    calls: list = []
+
+    def fake_run(cmd, **kwargs):
+        calls.append({"cmd": cmd, "cwd": kwargs.get("cwd")})
+        if writes:
+            outdir = Path(cmd[cmd.index("-o") + 1])
+            for work in ("048", "055"):
+                f = outdir / "Diogenes-Resources" / "xml" / "phi" / f"phi0474{work}.xml"
+                f.parent.mkdir(parents=True, exist_ok=True)
+                f.write_text(f"{work} {'-y' in cmd}", encoding="utf-8")
+
+    monkeypatch.setattr(stage1_latin.subprocess, "run", fake_run)
+    return calls
+
+
+@pytest.mark.parametrize("verse,mode_dir", [(True, "verse"), (False, "plain")])
+def test_run_export_uses_stock_script_with_y_only_in_verse_mode(monkeypatch, tmp_path, verse, mode_dir):
+    calls = _capture_latin_export(monkeypatch, tmp_path)
+    # The fake export writes nothing, so run_export fails its own
+    # post-export check; the command it built is what this test asserts on.
+    with pytest.raises(FileNotFoundError):
+        stage1_latin.run_export(_latin_export_manifest(verse))
+    cmd = calls[0]["cmd"]
     assert cmd[:2] == ["perl", "xml-export.pl"]
-    assert captured["cwd"] == Path("/Applications/Diogenes.app/Contents/server")
+    assert ("-y" in cmd) is verse
+    assert cmd[cmd.index("-o") + 1] == str(tmp_path / "export-raw" / mode_dir)
+    assert calls[0]["cwd"] == Path("/Applications/Diogenes.app/Contents/server")
+
+
+def test_run_export_copies_only_this_work_and_reuses_the_author_export(monkeypatch, tmp_path):
+    calls = _capture_latin_export(monkeypatch, tmp_path, writes=True)
+    out = stage1_latin.run_export(_latin_export_manifest(True))
+    assert out == tmp_path / "export" / "Diogenes-Resources" / "xml" / "phi" / "phi0474055.xml"
+    assert out.read_text(encoding="utf-8") == "055 True"
+    assert sorted(p.name for p in out.parent.iterdir()) == ["phi0474055.xml"]
+    out.unlink()
+    stage1_latin.run_export(_latin_export_manifest(True))
+    assert len(calls) == 1  # the per-mode author export is reused
+
+
+def test_run_export_requires_export_verse_mode(monkeypatch, tmp_path):
+    calls = _capture_latin_export(monkeypatch, tmp_path)
+    with pytest.raises(ValueError, match="export_verse_mode"):
+        stage1_latin.run_export(_latin_export_manifest(None))
+    assert calls == []

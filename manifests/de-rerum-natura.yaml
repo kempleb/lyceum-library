@@ -39,6 +39,7 @@ work:
   language: "lat"
   phi_author: "0550"
   phi_work: "001"
+  export_verse_mode: false
   latin_edition: "Martin, J. (ed.), T. Lucreti Cari De Rerum Natura Libri Sex (Leipzig: Teubner, 1969)"
   lexicon: true
   # FATAL sourceDesc gate (De Officiis precedent): verified verbatim against

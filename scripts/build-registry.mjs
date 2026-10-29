@@ -31,6 +31,7 @@
 
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { loadYaml, REPO_ROOT as ROOT } from './lib/load-yaml.mjs';
 
 const MANIFESTS = join(ROOT, 'manifests');
@@ -38,6 +39,7 @@ const FIXTURE_MANIFESTS = join(ROOT, 'fixtures', 'manifests');
 const TAXONOMY_PATH = join(ROOT, 'fixtures', 'taxonomy.json');
 const ARISTOTLE_DIR = join(ROOT, 'corpora', 'aristotle');
 const PLATO_DIR = join(ROOT, 'corpora', 'plato');
+const HANDOFF_CORPORA = ['american', 'vergil'];
 const OUT_PATH = join(ROOT, 'shared', 'lib', 'registry.generated.ts');
 
 // P1 rule (plan §1 data-placement table): route ownership lives ONLY in the
@@ -189,6 +191,22 @@ async function platoVendoredSource(yaml) {
 
 const CORPUS_SOURCES = [yamlManifestSource, aristotleVendoredSource, platoVendoredSource];
 
+async function enabledHandoffSources(yaml) {
+  const sources = [];
+  for (const corpus of HANDOFF_CORPORA) {
+    const dir = join(ROOT, 'corpora', corpus);
+    const mount = yaml.load(readFileSync(join(dir, 'mount.yaml'), 'utf8'));
+    if (shouldIncludeHandoff(mount, process.env)) {
+      sources.push(await vendoredCorpusSource(yaml, dir, corpus));
+    }
+  }
+  return sources;
+}
+
+export function shouldIncludeHandoff(mount, env) {
+  return !mount.hold || env.READER_INCLUDE_HELD === '1';
+}
+
 // Vendored group data (Lyceum P3, [author]/index.astro grouped-Works
 // rendering) -- see vendor-aristotle-registry.mjs's extractGroups doc
 // comment (aristotle's CATEGORIES) and vendor-plato-registry.mjs's
@@ -295,6 +313,7 @@ async function main() {
 
   const sources = [];
   for (const loadSource of CORPUS_SOURCES) sources.push(await loadSource(yaml));
+  sources.push(...await enabledHandoffSources(yaml));
   const corpusWorks = stripPrivateTranslations(sources.flatMap((source) => source.works));
   const corpusAuthors = sources.flatMap((source) => source.authors);
   const schoolGroups = Object.assign({}, ...sources.map((source) => source.schoolGroups));
@@ -357,4 +376,4 @@ if (!existsSync(join(ROOT, 'shared', 'lib'))) {
   throw new Error(`build-registry: ${join(ROOT, 'shared', 'lib')} does not exist.`);
 }
 
-await main();
+if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) await main();

@@ -12,7 +12,7 @@
 // held corpus's data actually present in this dist directory" -- both call
 // sites report through it rather than re-deriving the hold list or the
 // work-id -> dist-dir-name mapping themselves.
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { loadYaml, REPO_ROOT } from './load-yaml.mjs';
@@ -140,4 +140,44 @@ export function formatHeldWorksFindings(findings) {
  */
 export function shouldRefuseForHeld(findings, env) {
   return findings.length > 0 && env.READER_INCLUDE_HELD !== '1';
+}
+
+/**
+ * Deploy gate for a held-on app build (2026-10-08, approved by John). The
+ * checks above cover publish-release.mjs and build-public.mjs --from-dist,
+ * but a full READER_INCLUDE_HELD=1 build:public still renders the held
+ * works' text into app/dist, and the deploy is a bare `npx wrangler deploy`
+ * from app/ that no script of ours wraps. So when `dataDir` (the data the
+ * app was just built from) holds any held work, this writes a failing
+ * `build.command` into the Worker config the build emitted
+ * (`<serverDir>/wrangler.json`): wrangler runs a config's build command
+ * before every deploy and stops when it fails, while `astro preview` ignores
+ * it, so a local held-on test build still previews. The next build without
+ * held works writes a fresh config, which clears the refusal. With no held
+ * work present the config is left untouched.
+ * @param {{ dataDir: string, serverDir: string, root?: string }} opts
+ * @returns {Promise<{ corpus: string, workId: string, evidence: string[] }[]>} the findings
+ */
+export async function markHeldBuildUndeployable({ dataDir, serverDir, root = REPO_ROOT }) {
+  const findings = await findHeldWorksInDist(dataDir, { root });
+  if (findings.length === 0) return findings;
+
+  const configPath = join(serverDir, 'wrangler.json');
+  if (!existsSync(configPath)) {
+    throw new Error(
+      `held works are present but ${configPath} does not exist, so the build cannot be marked undeployable:\n` +
+        formatHeldWorksFindings(findings),
+    );
+  }
+  // Corpus names go into a shell command; keep only characters that are
+  // inert there.
+  const corpora = [...new Set(findings.map((f) => f.corpus.replace(/[^A-Za-z0-9_-]/g, '')))].join(', ');
+  const config = JSON.parse(readFileSync(configPath, 'utf8'));
+  config.build = {
+    command:
+      `echo 'refusing to deploy: this build carries held works (corpora: ${corpora}). ` +
+      `Rebuild without READER_INCLUDE_HELD=1 before deploying.' >&2; exit 1`,
+  };
+  writeFileSync(configPath, JSON.stringify(config));
+  return findings;
 }

@@ -8,6 +8,7 @@ work:
   language: "grc"
   tlg_author: "0562"
   tlg_work: "001"
+  export_verse_mode: false
   greek_edition: "Fixture Greek"
 
 citation:

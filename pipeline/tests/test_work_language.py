@@ -33,6 +33,7 @@ def _bekker_manifest_data(work_overrides: dict | None = None) -> dict:
         "author": "aristotle",
         "tlg_author": "0086",
         "tlg_work": "999",
+        "export_verse_mode": False,
         "greek_edition": "Fixture Greek",
         "english_translation": "Fixture English",
     }
@@ -126,6 +127,17 @@ def test_preflight_schema_omitted_language_is_fine():
     data = _bekker_manifest_data()
     assert "language" not in data["work"]
     assert _schema_problems(data) == []
+
+
+@pytest.mark.parametrize("value", [None, "false", 0])
+def test_preflight_schema_requires_boolean_export_verse_mode(value):
+    data = _bekker_manifest_data()
+    if value is None:
+        del data["work"]["export_verse_mode"]
+    else:
+        data["work"]["export_verse_mode"] = value
+    problems = _schema_problems(data)
+    assert any("work.export_verse_mode must be true or false" in p for p in problems), problems
 
 
 # --- Blocker 1(a): work.lexicon must not fail open for a grc work (Sol) -----

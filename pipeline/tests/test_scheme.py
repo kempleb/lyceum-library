@@ -491,7 +491,7 @@ def _flat_manifest_data(model: str = "archive", books: list | None = None) -> di
     return {
         "work": {"id": "ENCH", "title": "Enchiridion", "author": "epictetus",
                  "tlg_author": "0557", "tlg_work": "002",
-                 "greek_edition": "Fixture"},
+                 "greek_edition": "Fixture", "export_verse_mode": False},
         "citation": {"scheme": "section"},
         "english": {"primary": {"id": "fx", "name": "Fixture", "model": model,
                                 "file": "fx.md"}},

@@ -111,7 +111,10 @@
       "additionalProperties": false,
       "required": ["kind", "author", "work"],
       "properties": {
-        "kind": { "enum": ["tlg", "phi"] },
+        "kind": {
+          "enum": ["tlg", "phi", "perseus"],
+          "description": "Digitization channel. 'perseus' (Lyceum handoff works only): author/work are the Perseus CTS ids, e.g. phi0690 / phi003.perseus-lat2."
+        },
         "author": { "type": "string", "minLength": 1 },
         "work": { "type": "string", "minLength": 1 }
       }

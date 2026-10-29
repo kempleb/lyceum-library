@@ -17,6 +17,7 @@ work:
   language: "lat"
   phi_author: "0474"
   phi_work: "055"
+  export_verse_mode: true
   latin_edition: "Atzert, C. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Fasc. 48 (Leipzig: Teubner, 1932)"
   # FATAL sourceDesc gate (Wave 1c Sol nit, ported to PHI here): verified
   # verbatim against the real PHI export

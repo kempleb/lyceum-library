@@ -238,6 +238,12 @@ try {
     readFileSync(`public/data/${workId}/chapter-titles.json`, 'utf-8'),
   );
 } catch { /* no titles yet */ }
+// Per-division headings (division-heads.json, e.g. the Federalist's title,
+// author, publication and date per essay); absent for most works.
+let divisionHeads: Record<string, { label?: string; title: string; author?: string | null; publication?: string | null; date?: string | null }> = {};
+try {
+  divisionHeads = JSON.parse(readFileSync(`public/data/${workId}/division-heads.json`, 'utf-8'));
+} catch { /* no division headings */ }
 
 // The full-work outline for the sidebar: every book, its chapters in order.
 // `tocCount`/`tocNoun`: the sidebar drawer's per-book "N sections" count
@@ -1022,7 +1028,7 @@ const lycStartColumn = sections[0]?.column ?? chapters[0]?.chapter ?? '';
     }
   </script>
 
-  <Reader work={workId} bookNum={n} bookData={bookData} chapterTitles={chapterTitles[String(n)] ?? {}} speakerRoster={roster} grammataLookup={lyceumChrome} client:load />
+  <Reader work={workId} bookNum={n} bookData={bookData} chapterTitles={chapterTitles[String(n)] ?? {}} speakerRoster={roster} grammataLookup={lyceumChrome} {...(divisionHeads[String(n)] ? { divisionHead: divisionHeads[String(n)] } : {})} client:load />
   <CommandPalette work={workId} works={builtWorks()} client:load />
 </body>
 </html>

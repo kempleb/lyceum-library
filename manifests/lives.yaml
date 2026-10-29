@@ -17,6 +17,7 @@ work:
   language: "grc"
   tlg_author: "0004"
   tlg_work: "001"
+  export_verse_mode: true
   greek_edition: "Long, H. S. (ed.), Diogenis Laertii Vitae philosophorum, 2 vols. (Oxford: Clarendon Press, 1964, repr. 1966)"
   # FATAL sourceDesc gate (Wave 1c Sol nit, backfilled onto this committed
   # work since verifying it was trivial): stage1's _check_sourcedesc

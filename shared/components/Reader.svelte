@@ -159,6 +159,10 @@
   // to WordPopup, which mounts the Grammata T8 lookup widget when true.
   // Default false so every other host's popup is unchanged.
   export let grammataLookup: boolean = false;
+  // This division's own heading, from the work's division-heads.json (the
+  // Federalist's No./title/author/publication/date, John 2026-10-09). Null
+  // for every work without that file.
+  export let divisionHead: { label?: string; title: string; author?: string | null; publication?: string | null; date?: string | null } | null = null;
 
   const workMeta = getWork(work);
   // `workMeta.author` is an author-registry slug, not a display name — see
@@ -1019,6 +1023,25 @@
     });
   })();
 
+  function hasPassageTranslation(seg: Segment): boolean {
+    return !!(seg.english || seg.secondary?.length || seg.ross?.length || seg.third?.length ||
+      Object.values(seg.overlays ?? {}).some(parts => parts.length));
+  }
+
+  // Keep the original segment index for gutter numbers and line addresses.
+  $: versePassages = (() => {
+    type Member = { seg: Segment; blocks: EnrichedBlock[]; index: number };
+    const groups: { members: Member[]; lead: Member | null }[] = [];
+    if (!verseLine) return groups;
+    enrichedSegments.forEach(({ seg, blocks }, index) => {
+      const member = { seg, blocks, index };
+      const translated = hasPassageTranslation(seg);
+      if (translated || !groups.length) groups.push({ members: [], lead: translated ? member : null });
+      groups[groups.length - 1]!.members.push(member);
+    });
+    return groups;
+  })();
+
   // Ordered list of distinct chapter identifiers present in the loaded book.
   // Empty-string entries (no chapter assignment yet) are filtered out.
   $: chaptersInBook = [...new Set(
@@ -1224,8 +1247,15 @@
     // English-only view has no Greek lines to observe: section segments carry
     // ids in the segment layout; in the turn flow the row-level English ticks
     // ([data-etick]) stand in for them.
-    const els = Array.from(document.querySelectorAll(
-      greekVisible ? '.greek-line[id]' : '.segment[id], [data-etick]'));
+    // A verse passage in English-only view: its lines are zero-height boxes at
+    // the passage top, so the passage block itself is observed instead and
+    // reports its first line.
+    const els = greekVisible
+      ? Array.from(document.querySelectorAll('.greek-line[id]'))
+      : [
+          ...Array.from(document.querySelectorAll('.segment[id], [data-etick]')).filter((el) => !el.closest('.verse-group')),
+          ...Array.from(document.querySelectorAll('.verse-group')),
+        ];
     if (!els.length) return;
     const headerH = Math.round(document.querySelector('.page-header')?.getBoundingClientRect().height ?? 60);
     // The reading area starts below the sticky header AND the sticky controls
@@ -1241,7 +1271,8 @@
       for (const [el, top] of spyState) {
         if (top != null && top < bestTop) { bestTop = top; best = el; }
       }
-      if (best) updateHash(citeOf(best));
+      const target = best?.classList.contains('verse-group') ? best.querySelector('.segment[id]') : best;
+      if (target) updateHash(citeOf(target));
     }, { rootMargin: `-${topInset + 8}px 0px -82% 0px`, threshold: 0 });
     els.forEach((el) => spyObserver!.observe(el));
   }
@@ -3796,6 +3827,8 @@
     class:dk-verse={dkVerse}
     class:verse-line={verseLine}
     class:section-flow={sectionFlow}
+    class:no-section-numbers={workMeta?.citation?.hideSectionNumbers === true}
+    class:english-only={englishOnly}
     class:word-open={!!popup}
     style="--fs-greek:{fsGreek}rem;--fs-english:{fsEng}rem;--lh-greek:{lhGreek};--lh-english:{lhEng};--colw-scale:{colScale};--fs-scale:{fsScale}"
     on:copy={handleCopy}>
@@ -3875,12 +3908,205 @@
         {/if}
       </div>
     {/if}
-    {#if flowRows}
-      <!-- Dialogue book: the continuous turn flow replaces the per-section
-           segment blocks; Stephanus tokens float as gutter ticks. -->
-      {@render flowRowsView(flowRows)}
-    {:else}
-    {#each enrichedSegments as {seg, blocks}, si (seg.id)}
+{#snippet passageEnglishColumns(seg: Segment, block: EnrichedBlock, bi: number, blocks: EnrichedBlock[], segTransId: string, citationByBlock: ExpandedCitationEntry[][][])}
+            {#if !verseLine || hasPassageTranslation(seg)}
+            {@const engColTrans = trans === 'compare' ? compareLeft : segTransId}
+            {@const engCardFilled = (engColTrans === engSlot?.id ? block.flow : (block.oflows[engColTrans] ?? [])).length > 0 || !!((block.dkRow ? block.dkRow.ownsEnglish : bi === blocks.length - 1) && seg.english?.credit && engColTrans === engSlot?.id)}
+            <!-- data-eng-credit backs the copy-with-citation path's English
+                 side (finding 2, Sol review): handleCopy/clickCopyBtn walk up
+                 to this attribute for an English-only selection, same shape
+                 as the Greek column's data-column fallback above. Absent
+                 (undefined) for an uncredited passage — nothing to copy.
+                 Item 84: gated on the DISPLAYED chunk being the primary slot
+                 (segTransId, not the bare work-level `trans`) — after a
+                 per-passage switch to an alternate, this segment's own
+                 seg.english?.credit must never leak onto that alternate's
+                 copy (overlay translations carry no per-chunk credit of
+                 their own, so an alternate's copy simply carries none). -->
+            <div class="english-col" data-trans={trans === 'compare' ? compareLeft : segTransId} data-eng-credit={engCreditFor(trans === 'compare' ? compareLeft : segTransId, seg)}>
+              <!-- Fix round, finding 3 (Sol xhigh review): this label used
+                   to read the compare slot's work-level `short` unconditionally,
+                   so a segment whose primary chunk carries a per-passage
+                   credit (the Parnassos-style swap) still labeled the column
+                   with the WORK's usual translator ("Freeman") even though
+                   the text on screen is someone else's — the same mislabel
+                   item 84's segTransToggle already fixed for the non-compare
+                   picker. Same rule here: when this column shows the
+                   primary slot AND that chunk carries a credit, the label is
+                   the credited translator's own surname. -->
+              {#if trans === 'compare'}
+                {@const leftLabel = compareLeft === engSlot?.id && seg.english?.credit
+                  ? (surnameFromCredit(seg.english.credit.translator) || (transById(compareLeft)?.short ?? 'English'))
+                  : compareLeft === engSlot?.id && seg.english?.summary
+                    ? summaryTranslationLabel(transById(compareLeft)?.short ?? 'English')
+                    : (transById(compareLeft)?.short ?? 'English')}
+                <div class="col-label">{leftLabel}</div>
+              {/if}
+              <!-- John's review, 2026-07-28: the same teal accent-line +
+                   tinted-background card he liked on the source-passage
+                   English block (.context-english below) now wraps the
+                   segment's OWN translation content too, for a dk-scheme
+                   (fragment/testimonia) work only — book-section, turn-flow
+                   and verse-line works are untouched (his ask named
+                   fragment translations specifically). `.frag-eng-card`
+                   reuses .context-english's exact tokens (same --accent-light
+                   border, same tinted background, same padding rhythm) —
+                   see the CSS comment beside .context-english in global.css.
+                   Wraps the citation and translation content; the .context-english
+                   block further down is a SIBLING, outside this div, so a
+                   segment carrying both never gets a card nested inside an
+                   identical card — .context-english keeps the exact look it
+                   had before this change. Item 84's per-passage translation
+                   picker used to render as this card's first child; it now
+                   renders on the segment's `.seg-ref` line instead
+                   (translator-picker alignment fix), so the card's own top
+                   margin/padding is zeroed in global.css -- nothing occupies
+                   that space here anymore. -->
+              <!-- Each expanded source run starts its English block beside
+                   the Greek source head. Keep distinct runs on distinct lines.
+                   John, 2026-09-27 ("no block quote style for the english
+                   attribution citation title"): the citation sits above the
+                   card, not inside it. A card left holding nothing once the
+                   citation moved out loses its card class (it would draw an
+                   empty accent bar); a card that was empty before stays as
+                   it was. -->
+              {@render expandedCitationRuns(citationByBlock[bi] ?? [])}
+              <div class:frag-eng-card={cscheme.id === 'dk' && (engCardFilled || !citationByBlock[bi]?.some((run) => run.length))}>
+              <!-- A chapter's own descriptive heading (Discourses' Oldfather
+                   subtitle — see EnglishChunk.title). Chunk-level, not
+                   chapterStarts-driven (book-section works have no
+                   chapterStarts at all — chapter = segment, 1:1), and shown
+                   only when the PRIMARY translation is the one on screen
+                   here (Oldfather carries it; Long, the secondary, never
+                   does). CSS hides the whole column in Greek-only view, so
+                   no extra `view` check is needed. Suppressed here whenever
+                   the segment's own `.seg-ref` header ALSO renders this
+                   title (`!busse && !verseLine`, the header's own gate —
+                   Discourses and de-finibus both hit this, John's ruling
+                   2026-08-28: "keep the header, lose it in the english").
+                   DRN (verseLine, no `.seg-ref` header at all) is the one
+                   work where this is the ONLY place the title shows, so it
+                   stays. -->
+              {#if seg.english?.title && (trans === 'compare' ? compareLeft : segTransId) === engSlot?.id && (busse || verseLine)}
+                <div class="overlay-chapter-title eng-chapter-title">{seg.english.title}</div>
+              {/if}
+              {#if isUnpairedDialogue(seg)}
+                <!-- A dialogue segment whose turns did not reconcile (and a
+                     narrated work's said-bearing chunk): the English renders as
+                     a STACK of turn paragraphs — each speech its own block with
+                     its small-caps lead-in (em-dash for an unattributed turn),
+                     the leading pre-turn continuation an unlabeled block. Block
+                     boundaries, not inline splices, so a label can never butt
+                     against the previous sentence. -->
+                <div class="overlay-prose turn-eng turn-stack">
+                  {#each englishTurnBlocks(seg) as b}
+                    <p class="turn-para">{#if !b.lead}{#if b.display}<span class="speaker">{b.display}</span>{:else}<span class="speaker speaker-dash">—</span>{/if}{/if}<!-- eslint-disable-next-line svelte/no-at-html-tags -->{@html highlightEng(b.text)}</p>
+                  {/each}
+                </div>
+              {:else}
+              {@render transFlow(block, trans === 'compare' ? compareLeft : segTransId, seg.kind, sectionFlow ? seg.column : undefined)}
+              {/if}
+              <!-- Per-passage translation credit (see EnglishChunk.credit):
+                   a passage whose English comes from a different translation
+                   than the work's own primary one names its translator,
+                   edition and licence here, on the reading page itself --
+                   the control bar's work-level credit names the primary
+                   translation, so without this the passage would read as
+                   that translator's work. Same treatment as the source-
+                   passage English's own credit line, so the page reads
+                   consistently. Shown once per segment (last block only),
+                   and only when the PRIMARY translation is the one on
+                   screen in this column -- the credit belongs to that
+                   chunk's text, not to an alternate translation's overlay
+                   (item 84: segTransId, so a per-passage switch away from
+                   the primary hides this too). -->
+              {#if (block.dkRow ? block.dkRow.ownsEnglish : bi === blocks.length - 1) && seg.english?.credit && (trans === 'compare' ? compareLeft : segTransId) === engSlot?.id}
+                {@render translationCredit(seg.english.credit)}
+              {/if}
+              </div>
+              <!-- Source-passage English (docs/source-passage-english-scoping.md):
+                   the quoting source author's own English for this column's
+                   context run(s), by locus pointer -- present only for a
+                   segment the work's sources/<work>/context-english.json
+                   declares. Lives in the ENGLISH COLUMN itself, appended
+                   after whichever translation is on screen here (same
+                   posture regardless of which translation is picked --
+                   design decision, task follow-up to the docs memo: the
+                   source passage belongs with its testimonium context, not
+                   any one translation choice) -- reuses the standard
+                   Greek/English parallel layout rather than a separate
+                   full-width block. Rendered once per segment (on the last
+                   block only, so a chaptered segment doesn't repeat it),
+                   after its column's ordinary rows. NOT duplicated into the
+                   right compare column. Bug fix (John 2026-07-24): used to
+                   render as a full-width block below the Greek column when
+                   the work had no primary translation, because such a work
+                   forced view='greek' and hid the English column outright;
+                   `hasEnglish` now counts contextEnglish too, so view is no
+                   longer force-greek and the standard column-hiding CSS
+                   applies exactly as it does for any other translation. -->
+              {#if (block.dkRow || bi === blocks.length - 1) && seg.contextEnglish?.length}
+                {#each (block.dkRow?.contextIndexes ?? seg.contextEnglish.map((_, i) => i)) as spanIdx}
+                  {@render contextEnglishSpan(seg, spanIdx, false)}
+                {/each}
+              {/if}
+              <!-- Inline diagrams ([[figN]] markers), e.g. the Tree of Porphyry. -->
+              {#if busse && view !== 'greek' && block.figs.length}
+                {#each block.figs as fig}
+                  {#if figuresData[String(fig)]}<!-- eslint-disable-next-line svelte/no-at-html-tags -->{@html figuresData[String(fig)]}{/if}
+                {/each}
+              {/if}
+            </div>
+            {/if}
+
+            <!-- Right compare column: the second chosen translation beside the
+                 first (hidden in Greek-only). verse-line: same non-null
+                 guard as the english-col above (finding 5, Sol review) — a
+                 verse-line segment with no English never renders a compare
+                 column either, so a 3-track grid (Greek + two empty English
+                 tracks) never appears for a line with no English at all. -->
+            {#if trans === 'compare' && view !== 'greek' && (!verseLine || hasPassageTranslation(seg))}
+              <!-- Fix round, finding 3 (Sol xhigh review): same surname
+                   override as the left column above — the credited
+                   translator's own surname wins over the slot's
+                   work-level `short` whenever this column shows the
+                   credited primary chunk. -->
+              {@const rightLabel = compareRight === engSlot?.id && seg.english?.credit
+                  ? (surnameFromCredit(seg.english.credit.translator) || (transById(compareRight)?.short ?? ''))
+                  : compareRight === engSlot?.id && seg.english?.summary
+                    ? summaryTranslationLabel(transById(compareRight)?.short ?? '')
+                    : (transById(compareRight)?.short ?? '')}
+              <!-- Same data-eng-credit fallback as the primary english-col
+                   above: the credited primary chunk's text travels into this
+                   compare column too (see the translationCredit render just
+                   below), so the copy path must find its credit here too.
+                   Fix round, finding 2 (Sol xhigh review): this used to set
+                   the attribute whenever `seg.english?.credit` existed, with
+                   no check that the credited PRIMARY chunk is actually the
+                   one shown in this column — so switching the right column
+                   to an alternate translation left the primary's credit
+                   attached to that alternate's (uncredited) text. Gated on
+                   compareRight === engSlot?.id, the same condition the
+                   visible credit below already uses. -->
+              <div class="overlay-col" data-trans={compareRight} data-eng-credit={engCreditFor(compareRight, seg)}>
+                <div class="col-label">{rightLabel}</div>
+                {#if seg.english?.title && compareRight === engSlot?.id && (busse || verseLine)}
+                  <div class="overlay-chapter-title eng-chapter-title">{seg.english.title}</div>
+                {/if}
+                {@render transFlow(block, compareRight, seg.kind)}
+                <!-- The primary chunk's own per-passage credit travels with
+                     its text into the right compare column too: a licensed
+                     translation may never render uncredited, whichever
+                     column the reader put it in. -->
+                {#if (block.dkRow ? block.dkRow.ownsEnglish : bi === blocks.length - 1) && seg.english?.credit && compareRight === engSlot?.id}
+                  {@render translationCredit(seg.english.credit)}
+                {/if}
+              </div>
+            {/if}
+
+{/snippet}
+
+    {#snippet segmentView(seg: Segment, blocks: EnrichedBlock[], si: number, grouped: boolean)}
       {@const leadChapter = blocks[0]?.chapter ? blocks[0] : null}
       {@const citationByBlock = expandedCitationByBlock(seg, blocks)}
       <!-- Freeman Ancilla group-header paratext (design note §1/§3.7): a
@@ -3898,7 +4124,8 @@
            transposition seam note is a real discontinuity that must stay
            visually set off. data-discontinuity backs global.css's targeted
            margin exception; every ordinary verse-line segment is untouched. -->
-      <div class="segment" id="col-{seg.column}" data-kind={seg.kind} data-discontinuity={verseDiscontinuity}>
+      <div class="segment" id="col-{seg.column}" data-kind={seg.kind} data-discontinuity={verseDiscontinuity} class:segment-hidden={seg.hidden}>
+        {#each seg.anchors ?? [] as a}<span class="seg-anchor" id={a} aria-hidden="true"></span>{/each}
         {#if sectionFlow}<span class="sect-tick" aria-hidden="true" data-n={seg.column}></span>{/if}
         <!-- A chapter that opens this column heads the segment, ABOVE the column
              reference (the column ref is a marker within the chapter, not a
@@ -4340,16 +4567,11 @@
               ></div>
             </div>
           {:else}
-          <!-- verse-line, no English (fix round, re-review finding 3): this
-               segment renders no english-col at all (see the english-col
-               `{#if !verseLine || seg.english}` guard below) — without this
-               class the row still carries every other view/compare rule's
-               grid-template-columns (2 or 3 tracks), leaving the sole
-               greek-col squeezed into the first track with empty tracks
-               beside it. verse-untranslated forces a single track. -->
+          {#if grouped}
+            {@render greekColumnItems(blockGreekItems(seg, block), seg, si)}
+          {:else}
           <div
             class="seg-row"
-            class:verse-untranslated={verseLine && !seg.english}
             data-chapter={block.currentChapter}
           >
             <!-- Greek column. data-column backs the copy-with-citation
@@ -4538,207 +4760,9 @@
               {/each}
             </div>
 
-            <!-- English column: the selected translation (single view), or the
-                 left compare column. Prose laid out beside its Bekker-line
-                 gutter — real anchors full weight, estimates lighter/italic.
-                 verse-line: only a segment that actually carries English
-                 (Munro's declared multi-line spread) gets this column at
-                 all — every other line-segment renders no english-col, so
-                 the continuous verse block never carries an empty cell. -->
-            {#if !verseLine || seg.english}
-            {@const engColTrans = trans === 'compare' ? compareLeft : segTransId}
-            {@const engCardFilled = (engColTrans === engSlot?.id ? block.flow : (block.oflows[engColTrans] ?? [])).length > 0 || !!((block.dkRow ? block.dkRow.ownsEnglish : bi === blocks.length - 1) && seg.english?.credit && engColTrans === engSlot?.id)}
-            <!-- data-eng-credit backs the copy-with-citation path's English
-                 side (finding 2, Sol review): handleCopy/clickCopyBtn walk up
-                 to this attribute for an English-only selection, same shape
-                 as the Greek column's data-column fallback above. Absent
-                 (undefined) for an uncredited passage — nothing to copy.
-                 Item 84: gated on the DISPLAYED chunk being the primary slot
-                 (segTransId, not the bare work-level `trans`) — after a
-                 per-passage switch to an alternate, this segment's own
-                 seg.english?.credit must never leak onto that alternate's
-                 copy (overlay translations carry no per-chunk credit of
-                 their own, so an alternate's copy simply carries none). -->
-            <div class="english-col" data-trans={trans === 'compare' ? compareLeft : segTransId} data-eng-credit={engCreditFor(trans === 'compare' ? compareLeft : segTransId, seg)}>
-              <!-- Fix round, finding 3 (Sol xhigh review): this label used
-                   to read the compare slot's work-level `short` unconditionally,
-                   so a segment whose primary chunk carries a per-passage
-                   credit (the Parnassos-style swap) still labeled the column
-                   with the WORK's usual translator ("Freeman") even though
-                   the text on screen is someone else's — the same mislabel
-                   item 84's segTransToggle already fixed for the non-compare
-                   picker. Same rule here: when this column shows the
-                   primary slot AND that chunk carries a credit, the label is
-                   the credited translator's own surname. -->
-              {#if trans === 'compare'}
-                {@const leftLabel = compareLeft === engSlot?.id && seg.english?.credit
-                  ? (surnameFromCredit(seg.english.credit.translator) || (transById(compareLeft)?.short ?? 'English'))
-                  : compareLeft === engSlot?.id && seg.english?.summary
-                    ? summaryTranslationLabel(transById(compareLeft)?.short ?? 'English')
-                    : (transById(compareLeft)?.short ?? 'English')}
-                <div class="col-label">{leftLabel}</div>
-              {/if}
-              <!-- John's review, 2026-07-28: the same teal accent-line +
-                   tinted-background card he liked on the source-passage
-                   English block (.context-english below) now wraps the
-                   segment's OWN translation content too, for a dk-scheme
-                   (fragment/testimonia) work only — book-section, turn-flow
-                   and verse-line works are untouched (his ask named
-                   fragment translations specifically). `.frag-eng-card`
-                   reuses .context-english's exact tokens (same --accent-light
-                   border, same tinted background, same padding rhythm) —
-                   see the CSS comment beside .context-english in global.css.
-                   Wraps the citation and translation content; the .context-english
-                   block further down is a SIBLING, outside this div, so a
-                   segment carrying both never gets a card nested inside an
-                   identical card — .context-english keeps the exact look it
-                   had before this change. Item 84's per-passage translation
-                   picker used to render as this card's first child; it now
-                   renders on the segment's `.seg-ref` line instead
-                   (translator-picker alignment fix), so the card's own top
-                   margin/padding is zeroed in global.css -- nothing occupies
-                   that space here anymore. -->
-              <!-- Each expanded source run starts its English block beside
-                   the Greek source head. Keep distinct runs on distinct lines.
-                   John, 2026-09-27 ("no block quote style for the english
-                   attribution citation title"): the citation sits above the
-                   card, not inside it. A card left holding nothing once the
-                   citation moved out loses its card class (it would draw an
-                   empty accent bar); a card that was empty before stays as
-                   it was. -->
-              {@render expandedCitationRuns(citationByBlock[bi] ?? [])}
-              <div class:frag-eng-card={cscheme.id === 'dk' && (engCardFilled || !citationByBlock[bi]?.some((run) => run.length))}>
-              <!-- A chapter's own descriptive heading (Discourses' Oldfather
-                   subtitle — see EnglishChunk.title). Chunk-level, not
-                   chapterStarts-driven (book-section works have no
-                   chapterStarts at all — chapter = segment, 1:1), and shown
-                   only when the PRIMARY translation is the one on screen
-                   here (Oldfather carries it; Long, the secondary, never
-                   does). CSS hides the whole column in Greek-only view, so
-                   no extra `view` check is needed. Suppressed here whenever
-                   the segment's own `.seg-ref` header ALSO renders this
-                   title (`!busse && !verseLine`, the header's own gate —
-                   Discourses and de-finibus both hit this, John's ruling
-                   2026-08-28: "keep the header, lose it in the english").
-                   DRN (verseLine, no `.seg-ref` header at all) is the one
-                   work where this is the ONLY place the title shows, so it
-                   stays. -->
-              {#if seg.english?.title && (trans === 'compare' ? compareLeft : segTransId) === engSlot?.id && (busse || verseLine)}
-                <div class="overlay-chapter-title eng-chapter-title">{seg.english.title}</div>
-              {/if}
-              {#if isUnpairedDialogue(seg)}
-                <!-- A dialogue segment whose turns did not reconcile (and a
-                     narrated work's said-bearing chunk): the English renders as
-                     a STACK of turn paragraphs — each speech its own block with
-                     its small-caps lead-in (em-dash for an unattributed turn),
-                     the leading pre-turn continuation an unlabeled block. Block
-                     boundaries, not inline splices, so a label can never butt
-                     against the previous sentence. -->
-                <div class="overlay-prose turn-eng turn-stack">
-                  {#each englishTurnBlocks(seg) as b}
-                    <p class="turn-para">{#if !b.lead}{#if b.display}<span class="speaker">{b.display}</span>{:else}<span class="speaker speaker-dash">—</span>{/if}{/if}<!-- eslint-disable-next-line svelte/no-at-html-tags -->{@html highlightEng(b.text)}</p>
-                  {/each}
-                </div>
-              {:else}
-              {@render transFlow(block, trans === 'compare' ? compareLeft : segTransId, seg.kind, sectionFlow ? seg.column : undefined)}
-              {/if}
-              <!-- Per-passage translation credit (see EnglishChunk.credit):
-                   a passage whose English comes from a different translation
-                   than the work's own primary one names its translator,
-                   edition and licence here, on the reading page itself --
-                   the control bar's work-level credit names the primary
-                   translation, so without this the passage would read as
-                   that translator's work. Same treatment as the source-
-                   passage English's own credit line, so the page reads
-                   consistently. Shown once per segment (last block only),
-                   and only when the PRIMARY translation is the one on
-                   screen in this column -- the credit belongs to that
-                   chunk's text, not to an alternate translation's overlay
-                   (item 84: segTransId, so a per-passage switch away from
-                   the primary hides this too). -->
-              {#if (block.dkRow ? block.dkRow.ownsEnglish : bi === blocks.length - 1) && seg.english?.credit && (trans === 'compare' ? compareLeft : segTransId) === engSlot?.id}
-                {@render translationCredit(seg.english.credit)}
-              {/if}
-              </div>
-              <!-- Source-passage English (docs/source-passage-english-scoping.md):
-                   the quoting source author's own English for this column's
-                   context run(s), by locus pointer -- present only for a
-                   segment the work's sources/<work>/context-english.json
-                   declares. Lives in the ENGLISH COLUMN itself, appended
-                   after whichever translation is on screen here (same
-                   posture regardless of which translation is picked --
-                   design decision, task follow-up to the docs memo: the
-                   source passage belongs with its testimonium context, not
-                   any one translation choice) -- reuses the standard
-                   Greek/English parallel layout rather than a separate
-                   full-width block. Rendered once per segment (on the last
-                   block only, so a chaptered segment doesn't repeat it),
-                   after its column's ordinary rows. NOT duplicated into the
-                   right compare column. Bug fix (John 2026-07-24): used to
-                   render as a full-width block below the Greek column when
-                   the work had no primary translation, because such a work
-                   forced view='greek' and hid the English column outright;
-                   `hasEnglish` now counts contextEnglish too, so view is no
-                   longer force-greek and the standard column-hiding CSS
-                   applies exactly as it does for any other translation. -->
-              {#if (block.dkRow || bi === blocks.length - 1) && seg.contextEnglish?.length}
-                {#each (block.dkRow?.contextIndexes ?? seg.contextEnglish.map((_, i) => i)) as spanIdx}
-                  {@render contextEnglishSpan(seg, spanIdx, false)}
-                {/each}
-              {/if}
-              <!-- Inline diagrams ([[figN]] markers), e.g. the Tree of Porphyry. -->
-              {#if busse && view !== 'greek' && block.figs.length}
-                {#each block.figs as fig}
-                  {#if figuresData[String(fig)]}<!-- eslint-disable-next-line svelte/no-at-html-tags -->{@html figuresData[String(fig)]}{/if}
-                {/each}
-              {/if}
-            </div>
-            {/if}
-
-            <!-- Right compare column: the second chosen translation beside the
-                 first (hidden in Greek-only). verse-line: same non-null
-                 guard as the english-col above (finding 5, Sol review) — a
-                 verse-line segment with no English never renders a compare
-                 column either, so a 3-track grid (Greek + two empty English
-                 tracks) never appears for a line with no English at all. -->
-            {#if trans === 'compare' && view !== 'greek' && (!verseLine || seg.english)}
-              <!-- Fix round, finding 3 (Sol xhigh review): same surname
-                   override as the left column above — the credited
-                   translator's own surname wins over the slot's
-                   work-level `short` whenever this column shows the
-                   credited primary chunk. -->
-              {@const rightLabel = compareRight === engSlot?.id && seg.english?.credit
-                  ? (surnameFromCredit(seg.english.credit.translator) || (transById(compareRight)?.short ?? ''))
-                  : compareRight === engSlot?.id && seg.english?.summary
-                    ? summaryTranslationLabel(transById(compareRight)?.short ?? '')
-                    : (transById(compareRight)?.short ?? '')}
-              <!-- Same data-eng-credit fallback as the primary english-col
-                   above: the credited primary chunk's text travels into this
-                   compare column too (see the translationCredit render just
-                   below), so the copy path must find its credit here too.
-                   Fix round, finding 2 (Sol xhigh review): this used to set
-                   the attribute whenever `seg.english?.credit` existed, with
-                   no check that the credited PRIMARY chunk is actually the
-                   one shown in this column — so switching the right column
-                   to an alternate translation left the primary's credit
-                   attached to that alternate's (uncredited) text. Gated on
-                   compareRight === engSlot?.id, the same condition the
-                   visible credit below already uses. -->
-              <div class="overlay-col" data-trans={compareRight} data-eng-credit={engCreditFor(compareRight, seg)}>
-                <div class="col-label">{rightLabel}</div>
-                {#if seg.english?.title && compareRight === engSlot?.id && (busse || verseLine)}
-                  <div class="overlay-chapter-title eng-chapter-title">{seg.english.title}</div>
-                {/if}
-                {@render transFlow(block, compareRight, seg.kind)}
-                <!-- The primary chunk's own per-passage credit travels with
-                     its text into the right compare column too: a licensed
-                     translation may never render uncredited, whichever
-                     column the reader put it in. -->
-                {#if (block.dkRow ? block.dkRow.ownsEnglish : bi === blocks.length - 1) && seg.english?.credit && compareRight === engSlot?.id}
-                  {@render translationCredit(seg.english.credit)}
-                {/if}
-              </div>
-            {/if}
+            <!-- The same English columns serve the ordinary row and the
+                 translated lead of a verse passage. -->
+            {@render passageEnglishColumns(seg, block, bi, blocks, segTransId, citationByBlock)}
 
             <!-- Analytical sidenotes (Owen's marginal notes), floated into a
                  right rail on desktop; on mobile they fall inline below the
@@ -4752,6 +4776,7 @@
             {/if}
           </div>
           {/if}
+          {/if}
         {/each}
         <!-- Edition-reference notes for print (dk-edition-notes.ts): the
              pop-ups cannot open on paper, so print lists this column's
@@ -4762,7 +4787,41 @@
           </ol>
         {/if}
       </div>
-    {/each}
+    {/snippet}
+
+    {#if divisionHead}
+      <header class="division-head">
+        {#if divisionHead.label}<div class="division-label">{divisionHead.label}</div>{/if}
+        <h2 class="division-title">{divisionHead.title}</h2>
+        {#if divisionHead.author || divisionHead.publication || divisionHead.date}<p class="division-byline">{[divisionHead.author, divisionHead.publication, divisionHead.date].filter(Boolean).join(' · ')}</p>{/if}
+      </header>
+    {/if}
+    {#if flowRows}
+      <!-- Dialogue book: the continuous turn flow replaces the per-section
+           segment blocks; Stephanus tokens float as gutter ticks. -->
+      {@render flowRowsView(flowRows)}
+    {:else}
+    {#if verseLine}
+      {#each versePassages as passage}
+        <div class="seg-row verse-group" class:verse-group-untranslated={!passage.lead} data-chapter={passage.members[0]?.blocks[0]?.currentChapter}>
+          <div class="greek-col verse-group-latin" lang={sourceLang}>
+            {#each passage.members as member (member.seg.id)}
+              {@render segmentView(member.seg, member.blocks, member.index, true)}
+            {/each}
+          </div>
+          {#if passage.lead}
+            {#each passage.lead.blocks as block, bi}
+              {@const segTransId = segTransOverride[passage.lead.seg.id] ?? trans}
+              {@render passageEnglishColumns(passage.lead.seg, block, bi, passage.lead.blocks, segTransId, expandedCitationByBlock(passage.lead.seg, passage.lead.blocks))}
+            {/each}
+          {/if}
+        </div>
+      {/each}
+    {:else}
+      {#each enrichedSegments as {seg, blocks}, si (seg.id)}
+        {@render segmentView(seg, blocks, si, false)}
+      {/each}
+    {/if}
     {/if}
   </div>
 {/if}

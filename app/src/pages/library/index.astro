@@ -50,6 +50,19 @@ Astro.cache.set(readerCacheOptions(fallback));
 // published yet -- same header, same values, as catalog.snapshot.json.ts.
 Astro.response.headers.set('x-catalog-source', catalogSourceHeader(source, fallback));
 
+// Historical shelves (Brian, to-claude/0009-0010): a shelf-aware catalog
+// puts its ages first, each listing its works, with the collections after
+// them (collections cut across ages, so a work appears under its one age
+// and under each of its collections -- one work, one route, listed twice).
+// A catalog without ages renders exactly as before. Wording here is a
+// DRAFT for John (copy rule).
+const shelves = catalog.shelves;
+// Works in no age -- seed-only drafts, shown only on a drafts build -- get
+// their own group after the ages, and only when there are any.
+const unshelved = catalog.unshelved;
+const CollectionHeading = shelves ? 'h3' : 'h2';
+const collectionsLabel = catalog.content['nav.collections'] ?? 'Collections';
+
 function workTitle(w: { id: string; facts: Record<string, unknown> }): string {
   return typeof w.facts.title === 'string' ? w.facts.title : w.id;
 }
@@ -71,10 +84,48 @@ function workAuthor(w: { id: string; facts: Record<string, unknown> }): string {
   </div>
   <main class="page">
     <p class="lbl">M2 probe -- catalog source: {source}</p>
+    {shelves && (
+      <nav class="note" aria-label="Ages">
+        {shelves.map((a, i) => (<>{i > 0 && ' · '}<a href={`#age-${a.id}`}>{a.name}</a></>))}
+        {unshelved.length > 0 && <>{' · '}<a href="#age-unplaced">Not yet placed in an age</a></>}
+        {' · '}<a href="#collections">{collectionsLabel}</a>
+      </nav>
+    )}
+    {shelves && shelves.map((a) => (
+      <section class="ledger" id={`age-${a.id}`}>
+        <header>
+          <h2>{a.name}</h2>
+        </header>
+        {a.works.length === 0
+          ? <p class="note">No works in this age yet.</p>
+          : <ul>
+              {a.works.map((w) => (
+                <li>
+                  <strong>{workAuthor(w)}</strong>{workAuthor(w) && ', '}{workTitle(w)}
+                </li>
+              ))}
+            </ul>}
+      </section>
+    ))}
+    {unshelved.length > 0 && (
+      <section class="ledger" id="age-unplaced">
+        <header>
+          <h2>Not yet placed in an age</h2>
+        </header>
+        <ul>
+          {unshelved.map((w) => (
+            <li>
+              <strong>{workAuthor(w)}</strong>{workAuthor(w) && ', '}{workTitle(w)}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+    {shelves && <h2 id="collections">{collectionsLabel}</h2>}
     {catalog.collections.map((c) => (
       <section class={c.accent ? `ledger ${c.accent}` : 'ledger'}>
         <header>
-          <h2>{c.name}</h2>
+          <CollectionHeading>{c.name}</CollectionHeading>
         </header>
         {c.description && <p class="note">{c.description}</p>}
         {c.works.length === 0

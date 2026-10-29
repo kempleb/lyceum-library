@@ -1,0 +1,24 @@
+# PLACEHOLDER: the taxonomy has no modern period yet; Brian's four ages replace this.
+{
+  "authors": [
+    {
+      "id": "publius",
+      "name": "Alexander Hamilton, James Madison, and John Jay",
+      "nativeName": "",
+      "languages": [
+        "en"
+      ],
+      "period": "late-antique",
+      "schools": [],
+      "floruit": "1787–1788",
+      "blurb": "",
+      "holdings": "complete",
+      "works": [
+        "federalist"
+      ]
+    }
+  ],
+  "work_order": [
+    "federalist"
+  ]
+}

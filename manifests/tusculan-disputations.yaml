@@ -14,6 +14,7 @@ work:
   no_english: true
   phi_author: "0474"
   phi_work: "049"
+  export_verse_mode: true
   latin_edition: "Pohlenz, M. (ed.), M. Tulli Ciceronis Scripta Quae Manserunt Omnia, Fasc. 44 (Leipzig: Teubner, 1918)"
   # FATAL sourceDesc gate (De Officiis/De Rerum Natura precedent): verified
   # verbatim against the real PHI export
